@@ -1,0 +1,86 @@
+{
+  "dashboard": {
+    "projectId": "EC-XX",
+    "projectTitle": "Engineering Challenge Title",
+    "client": "Client",
+    "location": "Location",
+    "priority": "Medium",
+    "estimatedDuration": "90 minutes",
+    "difficulty": "Intermediate",
+    "courseOutcome": "CO",
+    "submissionMode": "Individual or Group"
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
+      { "name": "name", "label": "Name", "required": true, "nameOnly": true },
+      { "name": "division", "label": "Division", "required": true }
+    ],
+    "group": [
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "groupName", "label": "Group Name", "required": false },
+      { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
+      { "name": "division", "label": "Division", "required": true }
+    ]
+  },
+  "resources": [
+    { "id": "resource-1", "type": "line-diagram", "title": "Diagram Title", "path": "assignments/challenge-slug/images/diagram.svg", "required": false }
+  ],
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "hint", "title": "Engineering Hint", "icon": "bi-lightbulb", "cardType": "hint", "text": "Faculty-configured hint appears here." },
+    { "id": "note", "title": "Important Note", "icon": "bi-exclamation-triangle", "cardType": "warning", "text": "Faculty-configured note appears here." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Project Charter",
+      "cards": [
+        { "type": "information", "title": "Client Context", "body": "Describe the client and project situation." },
+        { "type": "warning", "title": "Professional Responsibility", "body": "Explain safety, ethics, and documentation expectations." }
+      ],
+      "acceptanceText": "I accept the project charter."
+    },
+    "engineering-background": {
+      "title": "Engineering Background",
+      "cards": [
+        { "type": "theory", "title": "Background", "body": "Explain the engineering system or principle." }
+      ]
+    },
+    "learning-outcomes": {
+      "title": "Learning Outcomes",
+      "cards": [
+        { "type": "information", "title": "Outcomes", "items": ["Outcome 1", "Outcome 2", "Outcome 3"] }
+      ]
+    },
+    "activity-1": {
+      "title": "Engineering Activity 1",
+      "image": "assignments/challenge-slug/images/diagram.svg",
+      "figure": "Figure 1",
+      "description": "Configurable diagram description."
+    },
+    "activity-2": {
+      "title": "Engineering Activity 2",
+      "prompt": "Write the engineering response prompt.",
+      "mcq": {
+        "question": "Optional concept check question",
+        "options": ["Option A", "Option B", "Option C", "Option D"]
+      }
+    },
+    "engineering-notebook": {
+      "title": "Report / Engineering Notebook",
+      "questions": ["Observations", "Calculations", "Assumptions", "Design Notes", "Conclusion"]
+    },
+    "reflection": {
+      "title": "Reflection",
+      "questions": ["What did you learn?", "Which concept became clearer?", "How would you improve this design?"]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Review responses and submit the challenge package."
+    }
+  }
+}

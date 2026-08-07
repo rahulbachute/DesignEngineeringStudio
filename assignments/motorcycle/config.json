@@ -1,0 +1,46 @@
+{
+  "id": "EC-02",
+  "slug": "motorcycle",
+  "title": "Motorcycle Side Stand Stability Analysis",
+  "subject": "PCC303-MEC",
+  "courseName": "Design of Machine Elements",
+  "unit": "Unit I",
+  "courseOutcome": "CO1",
+  "po": ["PO1", "PO2"],
+  "pso": ["PSO1"],
+  "cceType": "Engineering Challenge",
+  "assignmentWeightage": "Faculty configurable",
+  "client": "Urban Mobility Service Workshop",
+  "location": "Pune",
+  "priority": "Medium",
+  "estimatedDuration": "75 minutes",
+  "difficulty": "Intermediate",
+  "submissionMode": "Individual or Group",
+  "version": "1.0.0",
+  "settings": {
+    "attemptMode": "both",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true
+  },
+  "tasks": [
+    { "id": "project-charter", "type": "information", "title": "Project Charter" },
+    { "id": "engineering-background", "type": "information", "title": "Engineering Background" },
+    { "id": "identify-stand-parts", "type": "image-label", "title": "Identify Side Stand Elements" },
+    { "id": "stability-principle", "type": "text-mcq", "title": "Stability Principle" },
+    { "id": "material-decision", "type": "selection", "title": "Material Decision" },
+    { "id": "load-estimation", "type": "calculation", "title": "Load Estimation" },
+    { "id": "engineering-notebook", "type": "notebook", "title": "Report / Engineering Notebook" },
+    { "id": "reflection", "type": "reflection", "title": "Reflection" },
+    { "id": "submit", "type": "submission", "title": "Submit" }
+  ],
+  "dataFiles": {
+    "workflow": "assignments/motorcycle/workflow.json",
+    "content": "assignments/motorcycle/content.json",
+    "rubric": "assignments/motorcycle/rubric.json",
+    "engineeringBrief": "assignments/motorcycle/engineering-brief.md",
+    "instructorGuide": "assignments/motorcycle/instructor-guide.md",
+    "studentGuide": "assignments/motorcycle/student-guide.md"
+  }
+}

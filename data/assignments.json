@@ -1,0 +1,26 @@
+{
+  "assignments": [
+    {
+      "id": "EC-01",
+      "title": "Safety Verification of Elevator Suspension Cables",
+      "discipline": "Design of Machine Elements",
+      "summary": "Configuration-driven engineering challenge for independent elevator suspension cable review.",
+      "status": "Ready",
+      "tasks": 9,
+      "icon": "bi-building-gear",
+      "configPath": "assignments/elevator/config.json",
+      "launchPath": "assignment-workbench.html?assignment=elevator"
+    },
+    {
+      "id": "EC-02",
+      "title": "Motorcycle Side Stand Stability Analysis",
+      "discipline": "Design of Machine Elements",
+      "summary": "Template-authored engineering challenge for side stand stability and load reasoning.",
+      "status": "Ready",
+      "tasks": 9,
+      "icon": "bi-bicycle",
+      "configPath": "assignments/motorcycle/config.json",
+      "launchPath": "assignment-workbench.html?assignment=motorcycle"
+    }
+  ]
+}

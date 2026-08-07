@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEILP Student User Manual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #334155;
+            --accent-color: #2563eb;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--secondary-color);
+            background-color: var(--background);
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--surface);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h4 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .note {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            color: #1e3a8a;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2.5rem 0;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Mechanical Engineering Interactive Learning Platform (MEILP)</h1>
+        <h2>Student User Manual</h2>
+
+        <p>Welcome to <strong>MEILP</strong>! This platform is designed to help you solve real-world engineering design problems interactively. This guide will walk you through everything you need to know to complete your assignments and submit your engineering calculations.</p>
+
+        <hr>
+
+        <h3>1. Accessing the Platform</h3>
+        <ol>
+            <li><strong>Open the Platform</strong>: Navigate to the MEILP URL provided by your faculty.</li>
+            <li><strong>Dashboard Overview</strong>: When you land on the homepage, you will see your available assignments (e.g., <em>Elevator Design Project</em>).</li>
+            <li><strong>Start an Assignment</strong>: Click the <strong>Start Assignment</strong> or <strong>Open Workbench</strong> button on the assignment card to begin.</li>
+        </ol>
+
+        <hr>
+
+        <h3>2. Assignment Workbench Layout</h3>
+        <p>The Workbench is where you will spend most of your time. It is divided into two main panels:</p>
+
+        <ul>
+            <li><strong>Left Panel (Reference &amp; Data):</strong>
+                <ul>
+                    <li><strong>Instructions:</strong> Read the overarching problem statement and step-by-step goals.</li>
+                    <li><strong>Given Data:</strong> View the constraints and initial parameters given to you (e.g., Car weight, number of passengers).</li>
+                    <li><strong>Rubric:</strong> See exactly how you will be graded on this assignment.</li>
+                </ul>
+            </li>
+            <li><strong>Right Panel (Interactive Workspace):</strong>
+                <ul>
+                    <li><strong>Student Information:</strong> Enter your identity details here first.</li>
+                    <li><strong>Task Progression:</strong> The actual tasks (like Engineering Notebooks, Diagrams, or Standard Selections) appear here. You must complete them sequentially.</li>
+                    <li><strong>Action Buttons:</strong> Use "Next", "Previous", and "Submit" at the bottom of the screen to navigate through the tasks.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h3>3. Setting Up Your Identity</h3>
+        <p>Before you can start working on the calculations, you must declare who is completing the assignment.</p>
+        <ol>
+            <li>Locate the <strong>Student Information</strong> card at the top of the right panel.</li>
+            <li>Select your <strong>Attempt Mode</strong>:
+                <ul>
+                    <li><strong>Individual</strong>: Enter your College Name, Class and Year (e.g., TE-A), Roll Number, and Full Name.</li>
+                    <li><strong>Group</strong>: Enter your College Name, Class and Year, Group Number, and the Names of all team members.</li>
+                </ul>
+            </li>
+            <li>The <strong>Academic Year</strong> field will be automatically populated for you.</li>
+        </ol>
+        <div class="note">
+            <strong>Note:</strong> You cannot submit the assignment until this section is completely filled out.
+        </div>
+
+        <hr>
+
+        <h3>4. Completing Tasks (Detailed Walkthrough: Elevator Design Project)</h3>
+        <p>Assignments are broken down into small, manageable tasks. Below is a highly detailed, step-by-step guide of exactly what you will see, what you should click, and <strong>examples of exactly what you should write</strong> for your first assignment: <strong>Safety Verification of Elevator Suspension Cables (EC-01)</strong>.</p>
+        <p><em>(Note: You can use these sample answers as a guide, but ensure your final submission reflects your own understanding.)</em></p>
+
+        <h4>Step 1: Understand the Project Charter</h4>
+        <ul>
+            <li><strong>What you will see:</strong> A series of information cards detailing the client (ABC Commercial Complex), project background, objectives, and safety standards (ASME A17.1 requires a minimum Factor of Safety of 10).</li>
+            <li><strong>What you must do:</strong> Read all the information carefully.</li>
+            <li><strong>Action:</strong> Scroll to the bottom and click the button labeled: <strong>"I have read and accepted the EC-01 Project Charter"</strong>.</li>
+        </ul>
+
+        <h4>Step 2: Identify Components (Interactive Diagrams)</h4>
+        <ul>
+            <li><strong>What you will see:</strong> An engineering drawing of a Traction Elevator System with numbered callouts (1 to 20).</li>
+            <li><strong>What you must do:</strong> Click on each number and select the correct component name from the dropdown list.</li>
+            <li><strong>Sample Actions:</strong>
+                <ul>
+                    <li>For <strong>Callout 1</strong>: Select <code>"Electric Motor"</code></li>
+                    <li>For <strong>Callout 2</strong>: Select <code>"Drive Sheave"</code></li>
+                    <li>For <strong>Callout 3</strong>: Select <code>"Suspension Wire Ropes"</code></li>
+                    <li>For <strong>Callout 4</strong>: Select <code>"Elevator Car"</code></li>
+                    <li>For <strong>Callout 6</strong>: Select <code>"Counterweight"</code></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>Step 3: Working Principle of Traction Elevator</h4>
+        <ul>
+            <li><strong>What you will see:</strong> A text box asking you to explain how the elevator works, and a Multiple Choice Question (MCQ).</li>
+            <li><strong>What you must do:</strong> Type a detailed explanation and select the correct MCQ answer.</li>
+            <li><strong>Sample Text Answer:</strong>
+                <blockquote><em>"The electric motor drives the traction sheave. The suspension ropes connect the elevator car and the counterweight and pass over this sheave. Friction between the ropes and the sheave moves the car along the guide rails. The controller manages the operation, and safety gears are installed to stop the car in emergencies."</em></blockquote>
+            </li>
+            <li><strong>MCQ Question:</strong> Which component directly provides traction to move the suspension ropes?</li>
+            <li><strong>MCQ Answer:</strong> Select <strong><code>Traction Sheave</code></strong>.</li>
+        </ul>
+
+        <h4>Step 4: Free Body Diagram Analysis</h4>
+        <ul>
+            <li><strong>What you will see:</strong> An interactive diagram focusing on the forces acting on the elevator.</li>
+            <li><strong>What you must do:</strong> Label the force vectors correctly.</li>
+            <li><strong>Sample Actions:</strong>
+                <ul>
+                    <li>For the <strong>Upward Arrow</strong> (Callout 3): Select <code>"Tensile Force (Upwards)"</code></li>
+                    <li>For the <strong>Downward Arrow</strong> (Callout 4): Select <code>"Weight of Elevator Car (Downwards)"</code></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>Step 5: Engineering Model</h4>
+        <ul>
+            <li><strong>What you will see:</strong> A text box asking for the load path, and an MCQ.</li>
+            <li><strong>What you must do:</strong> Explain how the passenger weight transfers to the ropes.</li>
+            <li><strong>Sample Text Answer:</strong>
+                <blockquote><em>"The passenger load acts on the elevator car floor. This load transfers to the rigid car frame, which then distributes the total downward force evenly to the suspension ropes as a tensile load."</em></blockquote>
+            </li>
+            <li><strong>MCQ Question:</strong> Which sequence correctly represents the static load path for the elevator car?</li>
+            <li><strong>MCQ Answer:</strong> Select <strong><code>Weight -> Load Distribution -> Tension in Rope</code></strong>.</li>
+        </ul>
+
+        <h4>Step 6: Design Requirements & Safety Standards</h4>
+        <ul>
+            <li><strong>What you will see:</strong> Input fields to enter the numerical constraints given in the project brief.</li>
+            <li><strong>What you must do:</strong> Type the exact numbers into the boxes.</li>
+            <li><strong>Sample Data to Enter:</strong>
+                <ul>
+                    <li>Maximum Passenger Load: Type <strong><code>10</code></strong></li>
+                    <li>Cabin Weight: Type <strong><code>700</code></strong></li>
+                    <li>Number of Ropes: Type <strong><code>4</code></strong></li>
+                    <li>Standard Required FoS: Type <strong><code>10</code></strong></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>Step 7: Engineering Assumptions</h4>
+        <ul>
+            <li><strong>What you will see:</strong> Text boxes asking you to state your assumptions for the calculations.</li>
+            <li><strong>What you must do:</strong> Write clear, professional engineering assumptions.</li>
+            <li><strong>Sample Answers:</strong>
+                <ul>
+                    <li><strong>Loading Type:</strong> <em>"We assume the loading is purely static to simplify the calculation, ignoring dynamic acceleration and deceleration forces."</em></li>
+                    <li><strong>Load Distribution:</strong> <em>"We assume the total combined load is distributed perfectly equally among all 4 suspension ropes."</em></li>
+                    <li><strong>Rope Weight:</strong> <em>"The self-weight of the suspension ropes is considered negligible compared to the heavy cabin and passenger load."</em></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>Step 8: Material Selection</h4>
+        <ul>
+            <li><strong>What you will see:</strong> A list of candidate materials (Mild Steel, High Carbon Steel, Stainless Steel, Synthetic Rope).</li>
+            <li><strong>What you must do:</strong> Select the most appropriate material.</li>
+            <li><strong>Action:</strong> Click on the card for <strong><code>High Carbon Steel (Syt = 800 MPa)</code></strong> because it offers the high tensile strength required for heavy-duty suspension applications.</li>
+        </ul>
+
+        <h4>Step 9: Engineering Calculations (The Engineering Notebook)</h4>
+        <ul>
+            <li><strong>What you will see:</strong> A structured calculation sheet. You must calculate the values using a calculator (assuming 75 kg per passenger and gravity g = 9.81 m/s²) and type in the final numbers.</li>
+            <li><strong>What you must do (Exact Sample Calculation Flow):</strong>                <ul>
+                    <li><strong>Passenger Mass (kg):</strong> Type <strong><code>750</code></strong> <em>(Calculation: 10 pax &times; 75 kg)</em></li>
+                    <li><strong>Total Elevator Mass (kg):</strong> Type <strong><code>1450</code></strong> <em>(Calculation: 750 kg + 700 kg cabin)</em></li>
+                    <li><strong>Total Load (N):</strong> Type <strong><code>14224.5</code></strong> <em>(Calculation: 1450 kg &times; 9.81)</em></li>
+                    <li><strong>Load on One Rope (N):</strong> Type <strong><code>3556.125</code></strong> <em>(Calculation: 14224.5 / 4 ropes)</em></li>
+                    <li><strong>Required Breaking Load (N):</strong> Type <strong><code>35561.25</code></strong> <em>(Calculation: 3556.125 &times; 10 FoS)</em></li>
+                    <li><strong>Required Rope Diameter (mm):</strong> Type <strong><code>8.43</code></strong> <em>(Calculation: using Pb = 500 d&sup2;)</em></li>
+                    <li><strong>Standard Rope Diameter (mm):</strong> Type <strong><code>12</code></strong> <em>(Selection of the nearest higher standard size).</em></li>
+                    <li><strong>Actual Tensile Stress (MPa):</strong> Type <strong><code>64.98</code></strong> <em>(Calculation: Load on One Rope / (0.38 &times; d&sup2;), where 0.38 d&sup2; is the effective metallic cross-sectional area as per Bhandari).</em></li>
+                    <li><strong>Actual Factor of Safety:</strong> Type <strong><code>12.31</code></strong> <em>(Calculation: 800 MPa / Actual Stress).</em></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>Step 10: Engineering Decision</h4>
+        <ul>
+            <li><strong>What you will see:</strong> A choice to approve or reject the design, and a text box for justification.</li>
+            <li><strong>What you must do:</strong> Make the final call and explain why.</li>
+            <li><strong>Action:</strong> Select <strong><code>SAFE: Approve Procurement</code></strong>.</li>
+            <li><strong>Sample Justification Answer:</strong>
+                <blockquote><em>"The selected standard diameter of 12 mm gives an actual Factor of Safety of 12.31, which is greater than the required standard Factor of Safety of 10. Therefore, the design is safe for procurement."</em></blockquote>
+            </li>
+        </ul>
+
+        <h4>Step 11: Report / Engineering Notebook and Reflection</h4>
+        <ul>
+            <li><strong>What you will see:</strong> Final reflection questions regarding what you learned.</li>
+            <li><strong>What you must do:</strong> Write brief reflections on your experience.</li>
+            <li><strong>Sample Answers:</strong>
+                <ul>
+                    <li><strong>What did you learn from this project?</strong> <em>"I learned how to apply Factor of Safety standards to a real-world mechanical design problem and how to transition from theoretical calculations to standard component selection."</em></li>
+                    <li><strong>Which engineering concept became clearer?</strong> <em>"The load path—understanding exactly how forces transfer from the passengers through the cabin frame and into the suspension ropes—became much clearer."</em></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>Final Step: Submit</h4>
+        <p>Once all tasks are completed, navigate to the <strong>Submission Summary</strong> screen, verify your progress is at <strong>100%</strong>, and click the green <strong>Submit Assignment</strong> button.</p>
+
+        <hr>
+
+        <h3>5. Design Review Stations (Materials Selection)</h3>
+        <p>In assignments like the <strong>Materials Selection</strong> project, you will encounter <strong>Design Review Stations</strong>. These stations feature a split-screen layout designed to speed up your workflow:</p>
+        <ul>
+            <li><strong>Left Side (Component Details):</strong> Displays the Component ID and Name, along with brief instructions.</li>
+            <li><strong>Right Side (Decision Canvas):</strong> Provides a grid of dropdown menus. You simply select the correct <strong>Function</strong>, <strong>Loading</strong>, <strong>Service Environment</strong>, and <strong>Materials</strong> from the predefined lists, saving you from typing them out.</li>
+            <li><strong>Engineering Justification:</strong> You are still required to type out your full engineering reasoning in the text box provided at the bottom of the canvas.</li>
+        </ul>
+
+        <hr>
+
+        <h3>6. Submitting Your Assignment</h3>
+        <p>Once you have completed all tasks, you will reach the <strong>Submission Summary</strong> screen.</p>
+        <ol>
+            <li><strong>Review:</strong> The system will show a progress bar indicating how many activities you've completed. Make sure it says <strong>100%</strong>.</li>
+            <li><strong>Submit:</strong> Click the green <strong>Submit Assignment</strong> button.</li>
+            <li><strong>Wait for Confirmation:</strong> The system will validate your answers and communicate with the server. If successful, you will see a <strong>"Submission successful!"</strong> alert.</li>
+        </ol>
+
+        <h4>Offline / Network Error Handling</h4>
+        <p>If your internet connection drops while you are submitting, <strong>do not panic</strong>. MEILP has a built-in offline queue.</p>
+        <ul>
+            <li>The system will save your submission locally on your device.</li>
+            <li>It will automatically try to resubmit when the network is restored.</li>
+            <li>You can safely close the tab if the system tells you your submission has been queued locally.</li>
+        </ul>
+
+        <hr>
+
+        <h3>7. Need Help?</h3>
+        <ul>
+            <li><strong>Want to start over?</strong> You can reset the entire assignment by clicking the red <strong>Reset Assignment</strong> button (circular arrow icon) located in the top right corner of the workbench. This will permanently delete your progress and return you to the registration screen.</li>
+            <li><strong>Lost your progress?</strong> The platform auto-saves your current draft to your browser. If you accidentally refresh the page, your answers will still be there as long as you are using the same device and browser.</li>
+            <li><strong>Locked Fields?</strong> If a field is greyed out, it means it is automatically calculated or populated by the system.</li>
+            <li><strong>Incorrect Answers?</strong> For some assignments, the system will auto-grade your standard selections. Ensure you are following proper rounding and Factor of Safety (FOS) rules as taught in class.</li>
+        </ul>
+
+        <p style="text-align: center; margin-top: 3rem; font-weight: 500;">Good luck with your design engineering projects!</p>
+    </div>
+
+</body>
+</html>

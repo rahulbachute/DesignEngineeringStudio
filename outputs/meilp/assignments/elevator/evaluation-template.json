@@ -1,0 +1,13 @@
+{
+  "maxMarks": {
+    "project-charter": 1,
+    "identify-components": 2,
+    "working-principle": 2,
+    "free-body-diagram": 2,
+    "engineering-model": 2,
+    "design-requirements": 2,
+    "material-selection": 2,
+    "engineering-calculations": 9,
+    "engineering-decision": 2
+  }
+}

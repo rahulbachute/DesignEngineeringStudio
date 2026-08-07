@@ -1,0 +1,118 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f5f7fb 0%, #eef3ff 100%);
+}
+
+.faculty-shell {
+  min-height: 100vh;
+}
+
+.faculty-sidebar {
+  width: 280px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+}
+
+.faculty-sidebar .nav-link {
+  border-radius: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.faculty-sidebar .nav-link:hover,
+.faculty-sidebar .nav-link.active {
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff !important;
+}
+
+.topbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.faculty-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.dashboard-stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  border-left: 4px solid #2563eb;
+}
+
+.dashboard-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -0.1rem;
+  top: 0.25rem;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.table thead th {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.table tbody td {
+  vertical-align: middle;
+}
+
+.modal-content {
+  border: 0;
+  box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.16);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+}
+
+.badge {
+  font-weight: 600;
+}
+
+.card .form-control,
+.card .form-select,
+.card .form-textarea {
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 991.98px) {
+  .faculty-sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+}

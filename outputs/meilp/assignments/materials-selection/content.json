@@ -1,0 +1,405 @@
+{
+  "status": "published",
+  "dashboard": {
+    "projectId": "EC-03",
+    "projectTitle": "Engineering Materials Selection in Two-Wheeler Components",
+    "client": "Two-Wheeler Product Engineering Team",
+    "location": "Pune",
+    "priority": "Medium",
+    "estimatedDuration": "90 minutes",
+    "difficulty": "Intermediate",
+    "courseOutcome": "CO1",
+    "submissionMode": "Individual or Group"
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College Name",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "rollNumber",
+        "label": "Roll Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College Name",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "groupName",
+        "label": "Group Name",
+        "required": false
+      },
+      {
+        "name": "student1",
+        "label": "Student 1",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "resources": [
+    {
+      "id": "ea-03a-student",
+      "asset": "engineeringAssetStudent",
+      "required": true
+    },
+    {
+      "id": "ea-03b-material-board",
+      "asset": "materialBoard",
+      "required": false
+    },
+    {
+      "id": "ea-03c-failure-board",
+      "asset": "failureBoard",
+      "required": false
+    }
+  ],
+  "widgets": [
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    }
+  ],
+  "activities": {
+    "welcome": {
+      "title": "Welcome",
+      "cards": [
+        {
+          "title": "Engineering Materials Selection Challenge",
+          "body": "Welcome to the Engineering Materials Selection challenge. In this module, you will apply fundamental material science principles to evaluate and select the optimal materials for various critical two-wheeler components.",
+          "variant": "primary",
+          "icon": "bi-cpu"
+        }
+      ]
+    },
+    "project-charter": {
+      "title": "Project Charter",
+      "cards": [
+        {
+          "title": "Client Objective",
+          "body": "The Two-Wheeler Product Engineering Team requires a formal review of material specifications across four main sub-systems: Chassis, Engine, Wheels & Braking, and Fuel System.",
+          "icon": "bi-briefcase"
+        },
+        {
+          "title": "Deliverables",
+          "body": "You are required to evaluate 12 specific components. For each component, you must identify its function, define its loading and service environment, specify required material properties, and formally recommend a primary and alternative material with engineering justification.",
+          "icon": "bi-file-earmark-text"
+        }
+      ],
+      "acceptanceText": "I accept the project charter and will document engineering reasoning."
+    },
+    "engineering-background": {
+      "title": "Engineering Background",
+      "cards": [
+        {
+          "title": "Material Properties & Selection",
+          "body": "Material selection involves finding the best match between the performance requirements of a component and the properties of the material. Key mechanical properties include tensile strength, yield strength, stiffness (Young's modulus), toughness, and fatigue resistance.",
+          "icon": "bi-book"
+        }
+      ]
+    },
+    "mission-brief": {
+      "title": "Mission Brief",
+      "cards": [
+        {
+          "title": "Design Review Stations (DRS)",
+          "body": "You will rotate through four virtual Design Review Stations (DRS-01 through DRS-04). At each station, use the provided Engineering Asset sketch to identify the components.",
+          "icon": "bi-geo-alt"
+        },
+        {
+          "title": "Task Instructions",
+          "body": "For every component, complete the Decision Canvas. Be thorough in your 'Engineering Justification' \u2013 clearly explain *why* your selected material is superior to alternatives for the specific loading conditions.",
+          "icon": "bi-list-check"
+        }
+      ]
+    },
+    "drs-01-chassis": {
+      "title": "Design Review Station 1 (Chassis)",
+      "stationCode": "DRS-01",
+      "asset": "engineeringAssetStudent",
+      "figure": "Engineering Asset EA-03A",
+      "imageAlt": "Two-wheeler component identification engineering asset",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Main Frame"
+        },
+        {
+          "id": "C02",
+          "name": "Front Fork"
+        },
+        {
+          "id": "C12",
+          "name": "Side Stand"
+        }
+      ],
+      "metadata": {
+        "activityNumber": 1,
+        "marks": 6,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "15 minutes"
+      }
+    },
+    "drs-02-engine": {
+      "title": "Design Review Station 2 (Engine)",
+      "stationCode": "DRS-02",
+      "asset": "engineeringAssetStudent",
+      "figure": "Engineering Asset EA-03A",
+      "imageAlt": "Two-wheeler component identification engineering asset",
+      "components": [
+        {
+          "id": "C04",
+          "name": "Cylinder Block"
+        },
+        {
+          "id": "C05",
+          "name": "Cylinder Liner"
+        },
+        {
+          "id": "C06",
+          "name": "Piston"
+        },
+        {
+          "id": "C07",
+          "name": "Inlet Valve"
+        },
+        {
+          "id": "C08",
+          "name": "Exhaust Valve"
+        }
+      ],
+      "metadata": {
+        "activityNumber": 2,
+        "marks": 10,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "25 minutes"
+      }
+    },
+    "drs-03-wheels-braking": {
+      "title": "Design Review Station 3 (Wheels & Braking)",
+      "stationCode": "DRS-03",
+      "asset": "engineeringAssetStudent",
+      "figure": "Engineering Asset EA-03A",
+      "imageAlt": "Two-wheeler component identification engineering asset",
+      "components": [
+        {
+          "id": "C09",
+          "name": "Brake Disc"
+        },
+        {
+          "id": "C10",
+          "name": "Wheel Rim"
+        },
+        {
+          "id": "C11",
+          "name": "Tyre"
+        }
+      ],
+      "metadata": {
+        "activityNumber": 3,
+        "marks": 6,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "15 minutes"
+      }
+    },
+    "drs-04-fuel-system": {
+      "title": "Design Review Station 4 (Fuel System)",
+      "stationCode": "DRS-04",
+      "asset": "engineeringAssetStudent",
+      "figure": "Engineering Asset EA-03A",
+      "imageAlt": "Two-wheeler component identification engineering asset",
+      "components": [
+        {
+          "id": "C03",
+          "name": "Fuel Tank"
+        }
+      ],
+      "metadata": {
+        "activityNumber": 4,
+        "marks": 2,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "5 minutes"
+      }
+    },
+    "engineering-notebook": {
+      "title": "Engineering Notebook",
+      "questions": [
+        {
+          "id": "q1",
+          "label": "Summarize your overall material selection strategy.",
+          "helpText": "Did you prioritize weight reduction, cost, manufacturing ease, or raw performance? Give examples."
+        },
+        {
+          "id": "q2",
+          "label": "Which component was the most difficult to select a material for?",
+          "helpText": "Explain the conflicting requirements (e.g., needing high strength but low weight) for that component."
+        },
+        {
+          "id": "q3",
+          "label": "How did manufacturing constraints influence your choices?",
+          "helpText": "Discuss how the ability to cast, forge, machine, or mold the material affected your final selections."
+        }
+      ]
+    },
+    "reflection": {
+      "title": "Reflection",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "What is the most important lesson you learned about material science from this exercise?",
+          "helpText": "Reflect on how your theoretical understanding of materials translated to these practical applications."
+        },
+        {
+          "id": "r2",
+          "label": "Future Consideration: Electric Vehicles",
+          "helpText": "How would your material choices for the chassis and drivetrain differ if this were an electric two-wheeler instead of an internal combustion engine?"
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "You have completed all Design Review Stations and documented your engineering notebook. Please review your responses before final submission."
+    }
+  },
+  "options": {
+    "functions": [
+      "",
+      "Structural Support",
+      "Power Generation",
+      "Power Transmission",
+      "Enclosure",
+      "Braking",
+      "Fuel Storage",
+      "Suspension"
+    ],
+    "loadings": [
+      "",
+      "Static",
+      "Dynamic",
+      "Fatigue",
+      "Impact",
+      "Thermal",
+      "Combined"
+    ],
+    "environments": [
+      "",
+      "Ambient",
+      "High Temperature",
+      "Corrosive",
+      "High Wear",
+      "Vibration-heavy"
+    ],
+    "materials": [
+      "",
+      "Mild Steel",
+      "High Tensile Steel",
+      "Aluminum Alloy",
+      "Cast Iron",
+      "Carbon Fiber",
+      "ABS Plastic",
+      "Rubber",
+      "Titanium"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "totalCceMarks": 24,
+  "steps": [
+    {
+      "id": "project-charter",
+      "type": "activity",
+      "component": "information-card",
+      "next": "identify-components",
+      "isStart": true
+    },
+    {
+      "id": "identify-components",
+      "type": "activity",
+      "component": "image-label",
+      "next": "working-principle"
+    },
+    {
+      "id": "working-principle",
+      "type": "activity",
+      "component": "text-mcq",
+      "next": "free-body-diagram"
+    },
+    {
+      "id": "free-body-diagram",
+      "type": "activity",
+      "component": "image-label",
+      "next": "engineering-model"
+    },
+    {
+      "id": "engineering-model",
+      "type": "activity",
+      "component": "text-mcq",
+      "next": "design-requirements"
+    },
+    {
+      "id": "design-requirements",
+      "type": "activity",
+      "component": "calculation-inputs",
+      "next": "material-selection"
+    },
+    {
+      "id": "material-selection",
+      "type": "activity",
+      "component": "selection-cards",
+      "next": "engineering-calculations"
+    },
+    {
+      "id": "engineering-calculations",
+      "type": "activity",
+      "component": "guided-workflow",
+      "next": "engineering-decision"
+    },
+    {
+      "id": "engineering-decision",
+      "type": "activity",
+      "component": "recommendation",
+      "next": "submit"
+    },
+    {
+      "id": "submit",
+      "type": "activity",
+      "component": "submission-summary",
+      "isEnd": true
+    }
+  ]
+}

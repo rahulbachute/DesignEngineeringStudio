@@ -1,0 +1,159 @@
+Design Engineering Studio (DES)
+Engineering Asset EA-02
+Motorcycle Side Stand Assembly (Student Version)
+You are an expert technical illustrator specializing in Mechanical Engineering education.
+Create a clean, textbook-quality engineering illustration of a Motorcycle Side Stand Assembly for a Design Engineering Studio (DES) challenge in Design of Machine Elements.
+The illustration is intended for student learning and assessment, where students will identify the components of the side stand assembly.
+The illustration must resemble an engineering drawing found in standard Mechanical Engineering textbooks.
+1. DIAGRAM TYPE
+Generate a 2D engineering technical illustration (side view).
+Style requirements:
+
+
+Vector-style drawing
+
+Engineering textbook appearance
+
+Uniform line thickness
+
+No perspective
+
+No 3D rendering
+
+No gradients
+
+No shadows
+
+No textures
+
+White background
+2. ENGINEERING CONTEXT
+Illustrate a motorcycle side stand in deployed (parking) position supporting the motorcycle.
+Include only the lower portion of the motorcycle required to understand the side stand mechanism.
+The illustration should clearly show the relationship between the motorcycle frame, pivot mechanism, side stand, spring, and ground.
+The side stand should appear in a realistic parked position.
+3. COMPONENTS TO BE SHOWN
+Illustrate the following engineering components.
+Do NOT write their names on the drawing.
+Instead, identify each component using numbered orange circular callouts connected by clean leader lines.
+The numbered callouts should correspond to:
+
+
+Motorcycle Frame
+
+Side Stand Mounting Bracket
+
+Pivot Pin
+
+Side Stand Arm
+
+Return Spring
+
+Spring Hook
+
+Foot Pad
+
+Ground Contact Point
+
+Ground Line
+The numbers must be clearly visible.
+Leader lines should never overlap or intersect.
+4. VISUAL STYLE
+Use:
+
+
+Dark navy engineering line colour (#1A2B5C)
+
+Orange numbered callout circles (#F28C28)
+
+White number inside each circle
+
+Thin leader lines
+
+White background
+
+Clean engineering proportions
+
+No dimensions
+
+No hidden lines
+
+No centre lines
+
+No section views
+
+No labels other than the numbered callouts
+The appearance should resemble engineering figures used in undergraduate laboratory manuals.
+5. LAYOUT
+The drawing should occupy approximately 70% of the canvas.
+Maintain generous white space around the illustration.
+Arrange the assembly so that:
+
+
+Motorcycle frame appears at the upper left.
+
+Mounting bracket is clearly visible.
+
+Pivot pin is easy to identify.
+
+Side stand arm extends diagonally downward.
+
+Return spring is clearly visible between the bracket and stand arm.
+
+Foot pad touches the ground.
+
+Ground line is shown beneath the foot pad.
+Leader lines should remain uncluttered and easy to follow.
+6. EDUCATIONAL REQUIREMENTS
+The illustration should support the following learning activity:
+
+Identify the components of a Motorcycle Side Stand Assembly.
+Students should be able to identify each numbered component by observing the illustration without ambiguity.
+The diagram should be suitable for:
+
+
+Image Label Activities
+
+Drag-and-Drop Component Identification
+
+Multiple Choice Questions
+
+Viva Examination
+
+Engineering Observation Exercises
+7. OUTPUT SPECIFICATIONS
+Resolution:
+
+300 DPI minimum
+Aspect Ratio:
+4 : 3 (Landscape)
+Output Format:
+
+PNG
+Background:
+
+Pure White
+Suitable for:
+
+
+HTML-based Design Engineering Studio
+
+Interactive Web Learning
+
+Classroom Presentation
+
+Laboratory Manual
+
+Printed Worksheets
+8. CAPTION
+Centered below the illustration:
+EA-02 Motorcycle Side Stand Assembly (Student Version)
+IMPORTANT INSTRUCTIONS
+
+Do NOT label the components with text.
+
+Use numbered orange circular callouts only.
+
+The illustration must be technically accurate and mechanically realistic.
+
+Maintain the same illustration style, colour palette, typography, and layout used in Engineering Asset EA-01 (Elevator Suspension System) to ensure visual consistency across the Design Engineering Studio.

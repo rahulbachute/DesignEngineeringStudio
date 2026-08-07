@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Generic engineering assembly diagram</title>
+  <desc id="desc">A neutral technical illustration with numbered areas for component demonstrations.</desc>
+  <rect width="1200" height="760" fill="#f6f8fb"/>
+  <rect x="70" y="55" width="1060" height="650" fill="#ffffff" stroke="#1A365D" stroke-width="8"/>
+  <g stroke="#dce3ec" stroke-width="1">
+    <path d="M130 55v650M190 55v650M250 55v650M310 55v650M370 55v650M430 55v650M490 55v650M550 55v650M610 55v650M670 55v650M730 55v650M790 55v650M850 55v650M910 55v650M970 55v650M1030 55v650"/>
+    <path d="M70 115h1060M70 175h1060M70 235h1060M70 295h1060M70 355h1060M70 415h1060M70 475h1060M70 535h1060M70 595h1060M70 655h1060"/>
+  </g>
+  <g fill="none" stroke="#1A365D" stroke-linejoin="round">
+    <path d="M335 580V220l210-95 210 95v360z" stroke-width="10"/>
+    <path d="M335 220h420M545 125v455M335 580h420" stroke-width="7"/>
+    <circle cx="545" cy="365" r="98" stroke-width="10"/>
+    <rect x="415" y="455" width="260" height="70" rx="8" stroke-width="8"/>
+    <path d="M755 250l155 95v185l-155 50" stroke-width="8"/>
+    <path d="M335 250l-150 90v190l150 50" stroke-width="8"/>
+  </g>
+  <g fill="#F4B400" stroke="#1A365D" stroke-width="5">
+    <circle cx="545" cy="125" r="24"/>
+    <circle cx="755" cy="250" r="24"/>
+    <circle cx="675" cy="490" r="24"/>
+    <circle cx="335" cy="580" r="24"/>
+  </g>
+  <g fill="#1A365D" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="24">
+    <text x="537" y="134">1</text>
+    <text x="747" y="259">2</text>
+    <text x="667" y="499">3</text>
+    <text x="327" y="589">4</text>
+  </g>
+  <text x="90" y="730" fill="#5C6878" font-family="Poppins, Arial, sans-serif" font-size="24">Generic Engineering Diagram</text>
+</svg>

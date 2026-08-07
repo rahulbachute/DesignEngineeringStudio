@@ -1,0 +1,16 @@
+{
+  "start": "project-charter",
+  "requiresAttemptMode": true,
+  "requiresAcceptance": true,
+  "steps": [
+    { "id": "project-charter", "title": "Project Charter", "component": "information-card", "statusGroup": "setup" },
+    { "id": "engineering-background", "title": "Engineering Background", "component": "information-card", "statusGroup": "setup" },
+    { "id": "identify-stand-parts", "title": "Identify Side Stand Elements", "component": "image-label", "statusGroup": "analysis" },
+    { "id": "stability-principle", "title": "Stability Principle", "component": "text-mcq", "statusGroup": "concept" },
+    { "id": "material-decision", "title": "Material Decision", "component": "selection-cards", "statusGroup": "decision" },
+    { "id": "load-estimation", "title": "Load Estimation", "component": "calculation-inputs", "statusGroup": "calculation" },
+    { "id": "engineering-notebook", "title": "Report / Engineering Notebook", "component": "reflection", "statusGroup": "report" },
+    { "id": "reflection", "title": "Reflection", "component": "reflection", "statusGroup": "reflection" },
+    { "id": "submit", "title": "Submit", "component": "submission-summary", "statusGroup": "submission" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "start": "project-charter",
+  "requiresAttemptMode": true,
+  "requiresAcceptance": true,
+  "steps": [
+    { "id": "project-charter", "title": "Project Charter", "component": "information-card", "statusGroup": "setup" },
+    { "id": "engineering-background", "title": "Engineering Background", "component": "information-card", "statusGroup": "setup" },
+    { "id": "learning-outcomes", "title": "Learning Outcomes", "component": "information-card", "statusGroup": "setup" },
+    { "id": "activity-1", "title": "Engineering Activity 1", "component": "image-viewer", "statusGroup": "analysis" },
+    { "id": "activity-2", "title": "Engineering Activity 2", "component": "text-mcq", "statusGroup": "concept" },
+    { "id": "engineering-notebook", "title": "Report / Engineering Notebook", "component": "reflection", "statusGroup": "report" },
+    { "id": "reflection", "title": "Reflection", "component": "reflection", "statusGroup": "reflection" },
+    { "id": "submit", "title": "Submit", "component": "submission-summary", "statusGroup": "submission" }
+  ]
+}

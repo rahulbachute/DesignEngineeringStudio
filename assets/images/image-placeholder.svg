@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Image placeholder</title>
+  <desc id="desc">A neutral placeholder for configurable image components.</desc>
+  <rect width="1200" height="760" fill="#f6f8fb"/>
+  <rect x="80" y="80" width="1040" height="600" rx="8" fill="#ffffff" stroke="#dce3ec" stroke-width="6"/>
+  <circle cx="600" cy="330" r="82" fill="#E8EEF6"/>
+  <path d="M562 330h76M600 292v76" stroke="#1A365D" stroke-width="16" stroke-linecap="round"/>
+  <text x="600" y="475" text-anchor="middle" fill="#1A365D" font-family="Poppins, Arial, sans-serif" font-size="34" font-weight="700">Image Placeholder</text>
+  <text x="600" y="522" text-anchor="middle" fill="#5C6878" font-family="Poppins, Arial, sans-serif" font-size="24">Configure an image source to display media here</text>
+</svg>

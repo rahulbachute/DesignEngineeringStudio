@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mechanical Engineering Interactive Learning Platform foundation for static, configuration-driven engineering assignments.">
+  <title>MEILP | Interactive Engineering Learning Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="navbar navbar-expand-lg" aria-label="Primary navigation">
+      <div class="container">
+        <a class="navbar-brand brand-lockup" href="index.html" aria-label="MEILP home">
+          <span class="brand-mark" aria-hidden="true">ME</span>
+          <span>
+            <strong>MEILP</strong>
+            <small>Engineering Learning Platform</small>
+          </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNav" aria-controls="primaryNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="primaryNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0" data-nav-list></ul>
+          <button class="btn btn-icon ms-lg-3" type="button" data-theme-toggle aria-label="Toggle theme">
+            <i class="bi bi-moon-stars" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-8">
+            <span class="section-kicker">Design Engineering Studio</span>
+            <h1>Mechanical Engineering Interactive Learning Platform</h1>
+            <p class="hero-copy">
+              A professional interactive environment for mastering design of machine elements through active problem solving.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Current Course & Continue Learning -->
+    <section class="content-band muted-band">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Course Info -->
+          <div class="col-lg-4">
+            <div class="system-panel h-100" style="background: var(--meilp-primary); color: white;">
+              <div class="panel-header" style="border-bottom-color: rgba(255,255,255,0.2);">
+                <span style="color: white;">Current Course</span>
+                <i class="bi bi-mortarboard" aria-hidden="true"></i>
+              </div>
+              <div class="mt-4">
+                <h3 class="h4" style="color: white; font-weight: 600;">PCC303-MEC</h3>
+                <p style="opacity: 0.9;">Design of Machine Elements</p>
+                <div class="d-flex justify-content-between mt-4" style="opacity: 0.8; font-size: 0.875rem;">
+                  <span>Semester 5</span>
+                  <span>Prof. Rahul Bachute</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Continue Learning -->
+          <div class="col-lg-8">
+            <div class="system-panel h-100 d-flex flex-column justify-content-center">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <span class="section-kicker mb-1 d-block">Up Next</span>
+                  <h3 class="h4 mb-2">Safety Verification of Elevator Suspension Cables</h3>
+                  <p class="text-muted mb-0">Evaluate factors of safety and verify design criteria for wire ropes.</p>
+                </div>
+                <span class="badge bg-warning text-dark px-3 py-2">In Progress</span>
+              </div>
+              <div class="mt-4">
+                <a href="assignment-workbench.html?assignment=elevator" class="btn btn-primary btn-lg">
+                  Continue Assignment <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress & Assignments -->
+    <section class="content-band" id="assignments">
+      <div class="container">
+        <div class="row g-5">
+          
+          <!-- Assignments -->
+          <div class="col-lg-8">
+            <div class="section-heading mb-4">
+              <span class="section-kicker">Coursework</span>
+              <h2>Your Assignments</h2>
+            </div>
+            <div class="row g-4" data-assignment-grid>
+              <!-- Assignments injected here via app.js -->
+            </div>
+          </div>
+
+          <!-- My Progress -->
+          <div class="col-lg-4">
+            <div class="section-heading mb-4">
+              <span class="section-kicker">Analytics</span>
+              <h2>My Progress</h2>
+            </div>
+            <div class="system-panel">
+              <div class="mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                  <strong>Overall Completion</strong>
+                  <span>25%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              
+              <ul class="list-group list-group-flush mb-0">
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
+                  Assignments Completed
+                  <span class="badge bg-secondary rounded-pill">1 / 4</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
+                  Marks Obtained
+                  <span class="badge bg-secondary rounded-pill">85 / 100</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 border-bottom-0">
+                  Average Score
+                  <span class="badge bg-primary rounded-pill">85%</span>
+                </li>
+              </ul>
+              <div class="mt-4 pt-3 border-top">
+                <a href="analytics-dashboard.html" class="btn btn-outline-primary btn-sm w-100">View Detailed Analytics</a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Announcements & Quick Links -->
+    <section class="content-band muted-band" id="resources">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Announcements -->
+          <div class="col-md-7">
+            <div class="system-panel h-100">
+              <div class="panel-header mb-4">
+                <span>Announcements</span>
+                <i class="bi bi-bell" aria-hidden="true"></i>
+              </div>
+              <div class="list-group list-group-flush">
+                <div class="list-group-item bg-transparent px-0 py-3">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">Submission Deadline Update</h6>
+                    <small class="text-muted">3 days ago</small>
+                  </div>
+                  <p class="mb-1 text-muted small">The deadline for EC-02: Motorcycle Side Stand Analysis has been extended to Friday, 5 PM.</p>
+                </div>
+                <div class="list-group-item bg-transparent px-0 py-3">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">New Reference Material Uploaded</h6>
+                    <small class="text-muted">1 week ago</small>
+                  </div>
+                  <p class="mb-1 text-muted small">Added Bhandari's text chapter on Wire Ropes in the reference section.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quick Links -->
+          <div class="col-md-5">
+            <div class="system-panel h-100">
+              <div class="panel-header mb-4">
+                <span>Quick Links</span>
+                <i class="bi bi-link-45deg" aria-hidden="true"></i>
+              </div>
+              <div class="doc-link-grid">
+                <a href="#"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Syllabus (PCC303)</a>
+                <a href="#"><i class="bi bi-journal-bookmark" aria-hidden="true"></i> Design Data Book</a>
+                <a href="#"><i class="bi bi-camera-video" aria-hidden="true"></i> Lecture Recordings</a>
+                <a href="#" id="facultyAccessBtn"><i class="bi bi-shield-lock" aria-hidden="true"></i> Faculty Portal</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-3">
+      <span>MEILP Platform Engine | Static HTML, Bootstrap 5, CSS3, Vanilla ES6</span>
+      <span data-build-label></span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/event-bus.js" defer></script>
+  <script src="js/state-manager.js" defer></script>
+  <script src="js/component-registry.js" defer></script>
+  <script src="js/base-component.js" defer></script>
+  <script src="js/progress-manager.js" defer></script>
+  <script src="js/router.js" defer></script>
+  <script src="js/assignment-loader.js" defer></script>
+  <script src="js/navigation.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/validator.js" defer></script>
+  <script src="js/engine.js" defer></script>
+  <script src="js/app.js" defer></script>
+
+  <!-- Faculty Login Modal -->
+  <div class="modal fade" id="facultyLoginModal" tabindex="-1" aria-labelledby="facultyLoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--meilp-surface); color: var(--meilp-text); border: 1px solid var(--meilp-border);">
+        <div class="modal-header" style="border-bottom-color: var(--meilp-border);">
+          <h5 class="modal-title" id="facultyLoginModalLabel"><i class="bi bi-shield-lock me-2"></i>Faculty Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="facultyLoginForm">
+            <div class="mb-3">
+              <label for="facultyUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="facultyUsername" required style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
+            </div>
+            <div class="mb-3">
+              <label for="facultyPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="facultyPassword" required style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
+            </div>
+            <div id="loginError" class="text-danger small d-none mb-3">Incorrect username or password.</div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const facultyBtn = document.getElementById("facultyAccessBtn");
+      const loginForm = document.getElementById("facultyLoginForm");
+      const loginError = document.getElementById("loginError");
+      let loginModal;
+
+      if (facultyBtn) {
+        facultyBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (!loginModal && window.bootstrap) {
+            loginModal = new bootstrap.Modal(document.getElementById('facultyLoginModal'));
+          }
+          if (loginModal) {
+            loginError.classList.add("d-none");
+            document.getElementById("facultyUsername").value = "";
+            document.getElementById("facultyPassword").value = "";
+            loginModal.show();
+          }
+        });
+      }
+
+      if (loginForm) {
+        // Authorized faculty credentials
+        const authorizedFaculties = {
+          "rahul.bachute@dypic.in": "dypic123",
+          "niranjan.shegokar@dypic.in": "dypic123",
+          "atul.gowardipe@dypic.in": "dypic123"
+        };
+
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const user = document.getElementById("facultyUsername").value.trim().toLowerCase();
+          const pass = document.getElementById("facultyPassword").value.trim();
+          
+          if (authorizedFaculties[user] && authorizedFaculties[user] === pass) {
+            // Save login state
+            localStorage.setItem("loggedInFaculty", user);
+            window.location.href = "../../faculty/index.html"; 
+          } else {
+            loginError.classList.remove("d-none");
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

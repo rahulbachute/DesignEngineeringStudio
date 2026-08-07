@@ -1,0 +1,26 @@
+{
+  "totalMarks": 12,
+  "criteria": [
+    {
+      "activityId": "activity-1",
+      "activityNumber": 2,
+      "title": "Engineering Activity 1",
+      "marks": 3,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L3 Apply",
+      "facultyRemarks": "",
+      "commonErrors": ["Missing engineering justification"],
+      "outcomeAttainment": {
+        "coEvidence": "Response applies course concept.",
+        "poEvidence": "Response demonstrates engineering analysis.",
+        "psoEvidence": "Response connects to program-specific practice."
+      },
+      "autoEvaluation": {
+        "enabled": false,
+        "futureRule": "Future validation rule"
+      }
+    }
+  ]
+}

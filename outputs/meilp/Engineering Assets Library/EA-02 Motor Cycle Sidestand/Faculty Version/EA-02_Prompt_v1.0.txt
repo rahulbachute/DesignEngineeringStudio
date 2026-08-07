@@ -1,0 +1,148 @@
+Design Engineering Studio (DES) – Engineering Asset EA-02
+Motorcycle Side Stand Assembly (Faculty Reference Version)
+You are an expert technical illustrator specializing in engineering education and machine design.
+Create a high-quality engineering reference illustration of a Motorcycle Side Stand Assembly for a Design Engineering Studio (DES) challenge used in undergraduate Mechanical Engineering.
+This is the Faculty Reference Version.
+The illustration must be technically accurate, clean, uncluttered and suitable for assessment reference.
+1. DIAGRAM TYPE
+Produce a 2D engineering technical illustration (side view).
+Style requirements:
+
+
+Vector drawing
+
+Engineering textbook style
+
+Uniform line thickness
+
+No perspective
+
+No shading
+
+No gradients
+
+No textures
+
+White background
+The illustration should resemble an engineering handbook figure rather than a marketing illustration.
+2. ENGINEERING CONTEXT
+Illustrate the motorcycle side stand in deployed (parking) position supporting a stationary motorcycle.
+Only include the essential structural elements required for understanding:
+
+
+Lower portion of motorcycle frame
+
+Mounting bracket
+
+Pivot arrangement
+
+Side stand arm
+
+Return spring
+
+Foot pad
+
+Ground line
+The motorcycle body should NOT dominate the illustration.
+The focus is the side stand mechanism.
+3. COMPONENT LABELS
+Replace numbered balloons with engineering labels connected using clean leader lines.
+Label the following components:
+• Motorcycle Frame
+• Side Stand Mounting Bracket
+• Pivot Pin
+• Side Stand Arm
+• Return Spring
+• Spring Hook
+• Foot Pad
+• Ground Contact Point
+• Ground Line
+4. VISUAL STYLE
+Use:
+
+
+Dark navy engineering line colour (#1A2B5C)
+
+Thin leader lines
+
+Professional engineering typography
+
+Sans-serif font
+
+Consistent font size
+
+White background
+
+No coloured callout circles
+
+No dimensions
+
+No hidden lines
+
+No centre lines
+
+No sectioning
+The drawing should look similar to illustrations found in:
+
+
+PSG Design Data Book
+
+V.B. Bhandari
+
+Engineering Machine Design textbooks
+5. LAYOUT
+Maintain generous white space.
+The side stand should occupy approximately 70% of the drawing height.
+The mounting bracket should appear at the upper left.
+The side stand should extend diagonally downward.
+The foot pad must touch the ground.
+The spring should clearly connect:
+Mounting Bracket ↔ Side Stand Arm
+The leader lines should never intersect.
+6. ENGINEERING ACCURACY
+The drawing should clearly communicate:
+
+
+Pivoted support mechanism
+
+Load transfer path
+
+Inclined support member
+
+Contact with ground
+
+Spring assisted retraction
+
+Stable parked configuration
+The geometry should resemble a real production motorcycle side stand.
+Avoid cartoon-like proportions.
+7. OUTPUT SPECIFICATIONS
+Resolution:
+
+300 DPI minimum
+Aspect Ratio:
+
+4 : 3 (Landscape)
+Output Format:
+
+PNG
+Background:
+
+Pure White
+Suitable for:
+
+
+HTML web platform
+
+Faculty Manual
+
+Assessment Rubrics
+
+Classroom Presentation
+
+Printed Laboratory Manual
+8. CAPTION
+Centered below the illustration:
+EA-02 Motorcycle Side Stand Assembly (Faculty Reference Version)
+Expected Output
+The final figure should resemble the quality of engineering assets used in V.B. Bhandari, PSG Design Data Book, or Machine Design laboratory manuals, with all components clearly identified by engineering names rather than numbers.

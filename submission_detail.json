@@ -1,0 +1,505 @@
+{
+  "success": true,
+  "timestamp": "2026-08-03T04:07:32.211Z",
+  "data": {
+    "action": "submit",
+    "submission": {
+      "submissionId": "ec-01-44-20260731092628313",
+      "submittedAt": "2026-07-31T09:26:28.313Z",
+      "status": "submitted",
+      "attemptMode": "individual",
+      "submissionHash": "rskze1"
+    },
+    "studentInformation": {
+      "rollNumber": "44",
+      "name": "daf",
+      "division": "aa",
+      "attemptMode": "individual",
+      "saved": true
+    },
+    "challengeMetadata": {
+      "id": "EC-01",
+      "slug": "elevator",
+      "title": "Safety Verification of Elevator Suspension Cables",
+      "version": "1.0.0",
+      "subject": "PCC303-MEC",
+      "courseCode": "PCC303-MEC",
+      "courseName": "Design of Machine Elements",
+      "cceType": "Engineering Challenge",
+      "cceMarks": 12,
+      "courseOutcome": {
+        "code": "CO1",
+        "statement": "Design levers and components subjected to eccentric loading by selecting appropriate materials."
+      },
+      "programOutcomes": [
+        "PO1",
+        "PO2",
+        "PO3",
+        "PO5",
+        "PO7",
+        "PO8",
+        "PO9",
+        "PO11"
+      ],
+      "programSpecificOutcomes": [
+        "PSO1",
+        "PSO2"
+      ],
+      "bloomLevelsCovered": [
+        "L1 Understand",
+        "L2 Understand",
+        "L3 Apply",
+        "L4 Analyse",
+        "L5 Evaluate"
+      ]
+    },
+    "submissionData": {
+      "completedActivities": 7,
+      "totalActivities": 7,
+      "completionPercent": 100,
+      "activityResponses": [
+        {
+          "activityId": "project-charter",
+          "title": "Understand the Project Charter",
+          "component": "information-card",
+          "cceMarks": 1,
+          "coMapping": "CO1",
+          "poMapping": [
+            "PO1",
+            "PO8",
+            "PO11"
+          ],
+          "psoMapping": [
+            "PSO1"
+          ],
+          "bloomLevel": "L1 Understand",
+          "status": "completed",
+          "response": {
+            "accepted": true
+          }
+        },
+        {
+          "activityId": "identify-components",
+          "title": "Identify Elevator Components",
+          "component": "image-label",
+          "cceMarks": 2,
+          "coMapping": "CO1",
+          "poMapping": [
+            "PO1",
+            "PO2"
+          ],
+          "psoMapping": [
+            "PSO1"
+          ],
+          "bloomLevel": "L2 Understand",
+          "status": "completed",
+          "response": {
+            "activityType": "image-label",
+            "activityId": "identify-components",
+            "startedAt": "2026-07-24T09:49:22.680Z",
+            "updatedAt": "2026-07-31T09:26:04.900Z",
+            "attemptNumber": 1,
+            "timeTakenSeconds": 603402,
+            "answers": {
+              "component1": "Top Clearance",
+              "component2": "Suspension Wire Ropes",
+              "component3": "Pit Buffer",
+              "component4": "Pit",
+              "component5": "Pit Buffer",
+              "component6": "Counterweight",
+              "component7": "Top Clearance",
+              "component8": "Counterweight",
+              "component9": "Top Clearance",
+              "component10": "Top Clearance",
+              "component11": "Elevator Car",
+              "component12": "Car Frame",
+              "component13": "Elevator Car",
+              "component14": "Pit Buffer",
+              "component15": "Guide Rails (Counterweight)",
+              "component16": "Guide Rails (Car)",
+              "component17": "Car Frame",
+              "component18": "Pit Buffer",
+              "component19": "Deflector Sheave",
+              "component20": "Guide Rails (Counterweight)"
+            },
+            "componentResponses": [
+              {
+                "componentNumber": 1,
+                "studentAnswer": "Top Clearance",
+                "correctAnswer": "Electric Motor",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The electric motor provides rotational input for the traction drive."
+              },
+              {
+                "componentNumber": 2,
+                "studentAnswer": "Suspension Wire Ropes",
+                "correctAnswer": "Drive Sheave",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The drive sheave transmits traction to the suspension ropes."
+              },
+              {
+                "componentNumber": 3,
+                "studentAnswer": "Pit Buffer",
+                "correctAnswer": "Suspension Wire Ropes",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The suspension wire ropes carry the elevator car and counterweight."
+              },
+              {
+                "componentNumber": 4,
+                "studentAnswer": "Pit",
+                "correctAnswer": "Elevator Car",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The elevator car carries passengers between floor levels."
+              },
+              {
+                "componentNumber": 5,
+                "studentAnswer": "Pit Buffer",
+                "correctAnswer": "Car Frame",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The car frame supports and guides the elevator car assembly."
+              },
+              {
+                "componentNumber": 6,
+                "studentAnswer": "Counterweight",
+                "correctAnswer": "Counterweight",
+                "correct": true,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The counterweight balances part of the car load."
+              },
+              {
+                "componentNumber": 7,
+                "studentAnswer": "Top Clearance",
+                "correctAnswer": "Guide Rails (Car)",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "Car guide rails constrain elevator car motion."
+              },
+              {
+                "componentNumber": 8,
+                "studentAnswer": "Counterweight",
+                "correctAnswer": "Guide Rails (Counterweight)",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "Counterweight guide rails constrain counterweight motion."
+              },
+              {
+                "componentNumber": 9,
+                "studentAnswer": "Top Clearance",
+                "correctAnswer": "Deflector Sheave",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The deflector sheave guides the rope path."
+              },
+              {
+                "componentNumber": 10,
+                "studentAnswer": "Top Clearance",
+                "correctAnswer": "Machine Beam",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The machine beam supports machinery loads."
+              },
+              {
+                "componentNumber": 11,
+                "studentAnswer": "Elevator Car",
+                "correctAnswer": "Elevator Shaft",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The shaft is the vertical space in which the elevator system operates."
+              },
+              {
+                "componentNumber": 12,
+                "studentAnswer": "Car Frame",
+                "correctAnswer": "Pit",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The pit is the lower space beneath the lowest landing."
+              },
+              {
+                "componentNumber": 13,
+                "studentAnswer": "Elevator Car",
+                "correctAnswer": "Pit Buffer",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The pit buffer absorbs impact at the bottom limit of travel."
+              },
+              {
+                "componentNumber": 14,
+                "studentAnswer": "Pit Buffer",
+                "correctAnswer": "Top Clearance",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "Top clearance is the space above the car at upper travel."
+              },
+              {
+                "componentNumber": 15,
+                "studentAnswer": "Guide Rails (Counterweight)",
+                "correctAnswer": "Landing Doors",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "Landing doors separate each floor from the elevator shaft."
+              },
+              {
+                "componentNumber": 16,
+                "studentAnswer": "Guide Rails (Car)",
+                "correctAnswer": "Floor Levels",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "Floor levels indicate the building landings served by the elevator."
+              },
+              {
+                "componentNumber": 17,
+                "studentAnswer": "Car Frame",
+                "correctAnswer": "Passenger",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The passenger represents the live load carried by the elevator car."
+              },
+              {
+                "componentNumber": 18,
+                "studentAnswer": "Pit Buffer",
+                "correctAnswer": "Rope Path",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The rope path shows how the suspension ropes are routed."
+              },
+              {
+                "componentNumber": 19,
+                "studentAnswer": "Deflector Sheave",
+                "correctAnswer": "Direction of Elevator Motion",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The elevator motion arrow indicates car travel direction."
+              },
+              {
+                "componentNumber": 20,
+                "studentAnswer": "Guide Rails (Counterweight)",
+                "correctAnswer": "Direction of Rope Movement",
+                "correct": false,
+                "timestamp": "2026-07-31T09:26:04.900Z",
+                "attemptNumber": 1,
+                "timeTakenSeconds": 603402,
+                "feedback": "The rope movement arrow indicates rope travel over the sheaves."
+              }
+            ],
+            "validation": {
+              "valid": true,
+              "missing": []
+            }
+          }
+        },
+        {
+          "activityId": "working-principle",
+          "title": "Working Principle of Traction Elevator",
+          "component": "text-mcq",
+          "cceMarks": 2,
+          "coMapping": "CO1",
+          "poMapping": [
+            "PO1",
+            "PO2",
+            "PO3"
+          ],
+          "psoMapping": [
+            "PSO1"
+          ],
+          "bloomLevel": "L2 Understand",
+          "status": "completed",
+          "response": {
+            "text": "",
+            "mcq": "Elevator Car"
+          }
+        },
+        {
+          "activityId": "material-selection",
+          "title": "Material Selection",
+          "component": "selection-cards",
+          "cceMarks": 2,
+          "coMapping": "CO1",
+          "poMapping": [
+            "PO1",
+            "PO2",
+            "PO5",
+            "PO7"
+          ],
+          "psoMapping": [
+            "PSO1",
+            "PSO2"
+          ],
+          "bloomLevel": "L3 Apply",
+          "status": "completed",
+          "response": {
+            "justification": "asach",
+            "selection": "stainless-steel"
+          }
+        },
+        {
+          "activityId": "engineering-calculations",
+          "title": "Engineering Calculations",
+          "component": "calculation-inputs",
+          "cceMarks": 2,
+          "coMapping": "CO1",
+          "poMapping": [
+            "PO1",
+            "PO2",
+            "PO3"
+          ],
+          "psoMapping": [
+            "PSO1"
+          ],
+          "bloomLevel": "L3 Apply",
+          "status": "completed",
+          "response": {
+            "passengerLoad": "350",
+            "totalLoad": "145620",
+            "loadPerRope": "244"
+          }
+        },
+        {
+          "activityId": "engineering-decision",
+          "title": "Engineering Decision",
+          "component": "recommendation",
+          "cceMarks": 2,
+          "coMapping": "CO1",
+          "poMapping": [
+            "PO2",
+            "PO3",
+            "PO7",
+            "PO8",
+            "PO11"
+          ],
+          "psoMapping": [
+            "PSO1",
+            "PSO2"
+          ],
+          "bloomLevel": "L4 Analyse",
+          "status": "completed",
+          "response": {
+            "justification": "ugichrffflk",
+            "decision": "Approve"
+          }
+        },
+        {
+          "activityId": "reflection",
+          "title": "Report / Engineering Notebook and Reflection",
+          "component": "reflection",
+          "cceMarks": 1,
+          "coMapping": "CO1",
+          "poMapping": [
+            "PO8",
+            "PO9",
+            "PO11"
+          ],
+          "psoMapping": [
+            "PSO2"
+          ],
+          "bloomLevel": "L5 Evaluate",
+          "status": "completed",
+          "response": {
+            "q1": "trtetklj",
+            "q2": "tretrerrfff",
+            "q3": "tre",
+            "q4": "ter",
+            "q5": "rte",
+            "q6": "tre",
+            "q7": "tertr",
+            "q8": "rtertre",
+            "q9": "rtreterter"
+          }
+        }
+      ],
+      "reflection": [
+        {
+          "q1": "trtetklj",
+          "q2": "tretrerrfff",
+          "q3": "tre",
+          "q4": "ter",
+          "q5": "rte",
+          "q6": "tre",
+          "q7": "tertr",
+          "q8": "rtertre",
+          "q9": "rtreterter"
+        }
+      ]
+    },
+    "facultyEvaluation": null,
+    "analytics": {
+      "studentDashboard": {
+        "challengeId": "EC-01",
+        "studentName": "daf",
+        "rollNumber": "44",
+        "attemptMode": "individual",
+        "completionPercent": 100,
+        "submissionStatus": "submitted"
+      },
+      "learningAnalytics": {
+        "coAttainment": {
+          "CO1": 7
+        },
+        "poMapping": {
+          "PO1": 5,
+          "PO8": 3,
+          "PO11": 3,
+          "PO2": 5,
+          "PO3": 3,
+          "PO5": 1,
+          "PO7": 2,
+          "PO9": 1
+        },
+        "psoMapping": {
+          "PSO1": 6,
+          "PSO2": 3
+        },
+        "bloomDistribution": {
+          "L1 Understand": 1,
+          "L2 Understand": 2,
+          "L3 Apply": 2,
+          "L4 Analyse": 1,
+          "L5 Evaluate": 1
+        }
+      }
+    }
+  },
+  "version": "3.0.0"
+}

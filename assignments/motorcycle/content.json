@@ -1,0 +1,109 @@
+{
+  "dashboard": {
+    "projectId": "EC-02",
+    "projectTitle": "Motorcycle Side Stand Stability Analysis",
+    "client": "Urban Mobility Service Workshop",
+    "location": "Pune",
+    "priority": "Medium",
+    "estimatedDuration": "75 minutes",
+    "difficulty": "Intermediate",
+    "courseOutcome": "CO1",
+    "submissionMode": "Individual or Group"
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
+      { "name": "name", "label": "Name", "required": true, "nameOnly": true },
+      { "name": "division", "label": "Division", "required": true }
+    ],
+    "group": [
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "groupName", "label": "Group Name", "required": false },
+      { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
+      { "name": "division", "label": "Division", "required": true }
+    ]
+  },
+  "resources": [
+    { "id": "side-stand-diagram", "type": "line-diagram", "title": "Side stand layout", "path": "assignments/motorcycle/images/side-stand-diagram.svg", "required": true }
+  ],
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "hint", "title": "Engineering Hint", "icon": "bi-lightbulb", "cardType": "hint", "text": "Think about load path, contact patch, lean angle, and overturning tendency." },
+    { "id": "note", "title": "Important Note", "icon": "bi-exclamation-triangle", "cardType": "warning", "text": "A stable parked motorcycle depends on geometry, material strength, and ground contact conditions." },
+    { "id": "outcome", "title": "Learning Outcome", "icon": "bi-bullseye", "cardType": "theory", "text": "Analyze a mechanical support member using design reasoning." },
+    { "id": "co", "title": "CO Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 with PO1, PO2, and PSO1 mapping." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Project Charter",
+      "cards": [
+        { "type": "information", "title": "Client Context", "body": "A service workshop wants to review side stand stability for commuter motorcycles parked on typical urban surfaces." },
+        { "type": "warning", "title": "Professional Responsibility", "body": "A side stand failure can damage the vehicle and injure users. Recommendations must consider safety, manufacturability, and field use." },
+        { "type": "student-response", "title": "Deliverables", "items": ["Identify side stand elements", "Explain stability principle", "Choose material", "Estimate support load", "Prepare engineering notebook", "Submit recommendation"] }
+      ],
+      "acceptanceText": "I accept the project charter and will document engineering reasoning."
+    },
+    "engineering-background": {
+      "title": "Engineering Background",
+      "cards": [
+        { "type": "theory", "title": "Stability Background", "body": "A motorcycle on a side stand remains stable when the combined center of gravity projects within the support polygon formed by the tires and stand foot." },
+        { "type": "hint", "title": "Design Focus", "body": "Consider compressive load, bending tendency, pivot support, return spring, and ground contact." }
+      ]
+    },
+    "identify-stand-parts": {
+      "title": "Identify Side Stand Elements",
+      "image": "assignments/motorcycle/images/side-stand-diagram.svg",
+      "figure": "Figure 1",
+      "description": "Configurable motorcycle side stand diagram.",
+      "labels": [
+        { "id": 1, "x": 28, "y": 39, "placeholder": "Component 1" },
+        { "id": 2, "x": 43, "y": 47, "placeholder": "Component 2" },
+        { "id": 3, "x": 57, "y": 55, "placeholder": "Component 3" },
+        { "id": 4, "x": 69, "y": 72, "placeholder": "Component 4" }
+      ]
+    },
+    "stability-principle": {
+      "title": "Stability Principle",
+      "prompt": "Explain how side stand geometry helps keep a motorcycle stable when parked.",
+      "mcq": {
+        "question": "Which factor most directly affects whether the parked motorcycle tips over?",
+        "options": ["Support polygon and center of gravity projection", "Paint colour", "Seat cover material", "Headlamp shape"]
+      }
+    },
+    "material-decision": {
+      "title": "Material Decision",
+      "prompt": "Compare possible materials for the side stand and recommend one.",
+      "options": [
+        { "id": "mild-steel", "title": "Mild Steel", "note": "Economical and easy to fabricate for common stands." },
+        { "id": "aluminium-alloy", "title": "Aluminium Alloy", "note": "Lightweight but may require larger section and careful design." },
+        { "id": "stainless-steel", "title": "Stainless Steel", "note": "Corrosion resistant but higher cost." },
+        { "id": "polymer-composite", "title": "Polymer Composite", "note": "Lightweight but requires validation for impact and creep." }
+      ]
+    },
+    "load-estimation": {
+      "title": "Load Estimation",
+      "given": ["Motorcycle mass: 150 kg", "Approximate load share on side stand: 35%", "Use gravitational acceleration as 9.81 m/s2"],
+      "fields": [
+        { "id": "vehicleWeight", "label": "Vehicle Weight (N)", "placeholder": "150 x 9.81" },
+        { "id": "standLoad", "label": "Approximate Side Stand Load (N)", "placeholder": "Vehicle weight x 0.35" },
+        { "id": "designLoad", "label": "Suggested Design Load (N)", "placeholder": "Apply suitable safety factor" }
+      ]
+    },
+    "engineering-notebook": {
+      "title": "Report / Engineering Notebook",
+      "questions": ["Observations", "Calculations", "Assumptions", "Design Notes", "Conclusion"]
+    },
+    "reflection": {
+      "title": "Reflection",
+      "questions": ["What did you learn?", "Which engineering concept became clearer?", "How would you improve this design?"]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Review your motorcycle side stand analysis and prepare the response package for future export."
+    }
+  }
+}
