@@ -1,0 +1,156 @@
+{
+  "totalMarks": 12,
+  "cceType": "Engineering Challenge",
+  "courseOutcome": "CO1",
+  "criteria": [
+    {
+      "activityId": "project-charter",
+      "activityNumber": 1,
+      "title": "Project Charter",
+      "marks": 0,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO8", "PO11"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L1 Understand",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Acknowledge project charter" }
+    },
+    {
+      "activityId": "engineering-context",
+      "activityNumber": 2,
+      "title": "Engineering Context",
+      "marks": 0,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO8"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L1 Understand",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Acknowledge engineering context" }
+    },
+    {
+      "activityId": "component-identification",
+      "activityNumber": 3,
+      "title": "Component Identification",
+      "marks": 1,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L2 Understand",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Match labels with plate geometry and load direction" }
+    },
+    {
+      "activityId": "engineering-assumptions",
+      "activityNumber": 4,
+      "title": "Engineering Assumptions",
+      "marks": 0.5,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L2 Understand",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Evaluate validity of assumptions" }
+    },
+    {
+      "activityId": "free-body-diagram",
+      "activityNumber": 5,
+      "title": "Free Body Diagram",
+      "marks": 1,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2", "PO3"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L3 Apply",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Check FBD force vectors" }
+    },
+    {
+      "activityId": "engineering-calculations",
+      "activityNumber": 6,
+      "title": "Engineering Calculations",
+      "marks": 2,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2", "PO3"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L3 Apply",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Verify net area and nominal stress calculation" }
+    },
+    {
+      "activityId": "stress-concentration",
+      "activityNumber": 7,
+      "title": "Stress Concentration",
+      "marks": 2,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2", "PO3"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L3 Apply",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Verify d/W ratio and Kt factor" }
+    },
+    {
+      "activityId": "maximum-stress",
+      "activityNumber": 8,
+      "title": "Maximum Stress",
+      "marks": 1.5,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2", "PO3"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L3 Apply",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Verify peak stress calculation" }
+    },
+    {
+      "activityId": "material-selection",
+      "activityNumber": 9,
+      "title": "Material Selection",
+      "marks": 1,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2", "PO5", "PO7"],
+      "psoMapping": ["PSO1", "PSO2"],
+      "bloomLevel": "L3 Apply",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Evaluate material comparison" }
+    },
+    {
+      "activityId": "factor-of-safety",
+      "activityNumber": 10,
+      "title": "Factor of Safety",
+      "marks": 1,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2", "PO3"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L3 Apply",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Check FOS calculation and safety conclusion" }
+    },
+    {
+      "activityId": "engineering-decision",
+      "activityNumber": 11,
+      "title": "Engineering Decision",
+      "marks": 1,
+      "coMapping": "CO1",
+      "poMapping": ["PO2", "PO3", "PO7", "PO8", "PO11"],
+      "psoMapping": ["PSO1", "PSO2"],
+      "bloomLevel": "L5 Evaluate",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Check recommended geometric improvements" }
+    },
+    {
+      "activityId": "engineering-report",
+      "activityNumber": 12,
+      "title": "Engineering Report",
+      "marks": 1,
+      "coMapping": "CO1",
+      "poMapping": ["PO8", "PO9", "PO11"],
+      "psoMapping": ["PSO2"],
+      "bloomLevel": "L5 Evaluate",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Evaluate technical report completeness" }
+    }
+  ],
+  "levels": [
+    { "level": "Excellent", "description": "Accurate stress concentration reasoning, precise calculations, and professional engineering report." },
+    { "level": "Satisfactory", "description": "Mostly correct response with minor numerical or justification gaps." },
+    { "level": "Needs Improvement", "description": "Incomplete response, incorrect Kt calculation, or weak design recommendations." }
+  ]
+}

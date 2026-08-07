@@ -265,6 +265,8 @@
   inset: 0;
   z-index: 3;
   pointer-events: none;
+  transform-origin: center;
+  transition: transform 0.12s ease;
 }
 
 .label-marker {

@@ -1,0 +1,10 @@
+{
+  "maxMarks": {
+    "drs-01-chassis": 6,
+    "drs-02-engine": 10,
+    "drs-03-wheels-braking": 6,
+    "drs-04-fuel-system": 2,
+    "engineering-notebook": 4,
+    "reflection": 2
+  }
+}

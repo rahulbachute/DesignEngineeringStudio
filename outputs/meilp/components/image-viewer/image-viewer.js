@@ -239,7 +239,15 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
 
   applyTransform() {
     const image = this.getImageElement();
-    image.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.zoomLevel})`;
+    const stage = this.getStageElement();
+    const markerLayer = stage ? stage.querySelector(".label-marker-layer") : null;
+    const transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.zoomLevel})`;
+    if (image) {
+      image.style.transform = transform;
+    }
+    if (markerLayer) {
+      markerLayer.style.transform = transform;
+    }
     this.element.querySelector("[data-image-zoom-out]").disabled = this.zoomLevel <= this.minZoom;
     this.element.querySelector("[data-image-zoom-in]").disabled = this.zoomLevel >= this.maxZoom;
   }

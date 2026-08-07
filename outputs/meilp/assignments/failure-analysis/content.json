@@ -40,18 +40,22 @@
   },
   "attemptMode": {
     "individual": [
+      { "name": "collegeName", "label": "College Name", "required": true },
+      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
       { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
       { "name": "name", "label": "Name", "required": true, "nameOnly": true },
-      { "name": "division", "label": "Division", "required": true }
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
     ],
     "group": [
+      { "name": "collegeName", "label": "College Name", "required": true },
+      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
       { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
       { "name": "groupName", "label": "Group Name", "required": false },
       { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
       { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
       { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
       { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
-      { "name": "division", "label": "Division", "required": true }
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
     ]
   },
   "widgets": [
