@@ -41,6 +41,18 @@
         "required": true,
         "readonly": true,
         "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
       }
     ],
     "group": [
@@ -96,6 +108,18 @@
         "required": true,
         "readonly": true,
         "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
       }
     ]
   },
@@ -239,10 +263,22 @@
       "title": "Design Requirements",
       "description": "Enter the required design parameters based on the problem statement.",
       "given": [
-        { "label": "Pump Resistance", "value": "250 N" },
-        { "label": "Stroke Length", "value": "100 mm" },
-        { "label": "Required Factor of Safety", "value": "2.5" },
-        { "label": "Max Ergonomic Effort", "value": "50 N" }
+        {
+          "label": "Pump Resistance",
+          "value": "250 N"
+        },
+        {
+          "label": "Stroke Length",
+          "value": "100 mm"
+        },
+        {
+          "label": "Required Factor of Safety",
+          "value": "2.5"
+        },
+        {
+          "label": "Max Ergonomic Effort",
+          "value": "50 N"
+        }
       ],
       "fields": [
         {
@@ -349,9 +385,18 @@
       "title": "Force & Effort Analysis",
       "description": "Calculate the Mechanical Advantage, Required Human Effort, and Reaction Force at the fulcrum.",
       "given": [
-        { "label": "Pump Resistance (F_r)", "value": "250 N" },
-        { "label": "Effort Arm Length (b)", "value": "750 mm" },
-        { "label": "Load Arm Length (a)", "value": "150 mm" }
+        {
+          "label": "Pump Resistance (F_r)",
+          "value": "250 N"
+        },
+        {
+          "label": "Effort Arm Length (b)",
+          "value": "750 mm"
+        },
+        {
+          "label": "Load Arm Length (a)",
+          "value": "150 mm"
+        }
       ],
       "fields": [
         {
@@ -391,9 +436,18 @@
       "title": "Structural Analysis",
       "description": "Calculate the Maximum Bending Moment, Section Properties, and Bending Stress in the lever.",
       "given": [
-        { "label": "Pump Resistance (F_r)", "value": "250 N" },
-        { "label": "Load Arm Length (a)", "value": "150 mm" },
-        { "label": "Lever Arm Diameter (d_i)", "value": "30 mm" }
+        {
+          "label": "Pump Resistance (F_r)",
+          "value": "250 N"
+        },
+        {
+          "label": "Load Arm Length (a)",
+          "value": "150 mm"
+        },
+        {
+          "label": "Lever Arm Diameter (d_i)",
+          "value": "30 mm"
+        }
       ],
       "fields": [
         {
@@ -404,19 +458,19 @@
         },
         {
           "id": "area",
-          "label": "Cross-sectional Area (mm\u00b2)",
+          "label": "Cross-sectional Area (mm²)",
           "type": "number",
           "required": true
         },
         {
           "id": "inertia",
-          "label": "Moment of Inertia (mm\u2074)",
+          "label": "Moment of Inertia (mm⁴)",
           "type": "number",
           "required": true
         },
         {
           "id": "modulus",
-          "label": "Section Modulus (mm\u00b3)",
+          "label": "Section Modulus (mm³)",
           "type": "number",
           "required": true
         },

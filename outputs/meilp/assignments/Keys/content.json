@@ -1,0 +1,280 @@
+{
+  "assignment": {
+    "id": "EC-08",
+    "slug": "Keys",
+    "title": "Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission"
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete key design challenge independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on key design verification" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." },
+    {
+      "id": "calculator",
+      "title": "Shaft & Key Design Calculator",
+      "icon": "bi-calculator",
+      "cardType": "calculator",
+      "url": "tools/Shaft Design Calculator.html",
+      "buttonText": "Launch Shaft & Key Calculator",
+      "text": "Use the standalone interactive Shaft & Key Design Calculator to verify your calculations."
+    }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Project Charter",
+      "metadata": {
+        "activityNumber": 1,
+        "marks": 0,
+        "bloomLevel": "L1 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO8", "PO11"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "cards": [
+        { "type": "theory", "title": "Real-World Industrial Scenario", "body": "At Kirloskar Pump Systems, Pune, a heavy-duty industrial centrifugal water pump is driven by a 22 kW electric motor at 1440 rpm through a 40 mm diameter solid steel transmission shaft. Power is transferred from the shaft to the pump impeller hub using a standard sunken parallel square key (width b = 10 mm, height h = 10 mm, installed length l = 45 mm). During recent continuous pumping operations under fluctuating head conditions, repeated micro-slippage and fretting wear were reported along the keyway. As a Senior Mechanical Design Engineer, you are assigned to evaluate the torque transmission mechanics, verify shear and crushing stress limits, determine the factor of safety, and recommend a safe, reliable key design." },
+        { "type": "information", "title": "Role & Assignment Scope", "body": "As a Mechanical Design Engineer, you must analyze the shaft-hub-key connection, determine transmitted torque T and tangential force Ft, calculate actual shear and crushing stresses, evaluate Factor of Safety (FOS), identify the governing failure mode, and formulate evidence-based design recommendations." },
+        { "type": "student-response", "title": "Expected Deliverables", "items": ["Component Identification", "Working Principle & Mechanics", "Design Parameters & Requirements", "Engineering Assumptions Log", "Key Design Calculations", "Failure Analysis & Safety Verification", "Engineering Decision & Improvements", "Technical Reflection Report"] }
+      ],
+      "acceptanceText": "I have read and accepted the Project Charter."
+    },
+    "engineering-context": {
+      "title": "Engineering Context",
+      "metadata": {
+        "activityNumber": 2,
+        "marks": 0,
+        "bloomLevel": "L1 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO8"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "cards": [
+        { "type": "theory", "title": "Shaft-Hub-Key Connection Mechanics", "body": "A key is a temporary demountable machine element inserted between a rotating shaft and a hub (such as a gear, pulley, flywheel, or pump impeller) to transmit rotational torque while preventing relative rotation between the two parts. Keyways are machined axial slots in both the shaft exterior and hub interior to accommodate the key body. Under load, transmitted torque induces a tangential driving force Ft at the shaft-hub interface. This force subjects the key to direct shear stress across its central horizontal plane (w × l) and bearing/crushing stress against the vertical sides of the keyways ((h/2) × l). Failure in shear results in total key shearing, while crushing failure leads to localized plastic deformation, keyway widening, backlash, and severe vibration." },
+        { "type": "information", "title": "Engineering Asset EA-08", "body": "Schematic representation of a shaft-hub-key assembly illustrating torque transmission, key dimensions, and force distribution." }
+      ],
+      "image": "assignments/Keys/images/EA-08_Student_v1.0.png.png",
+      "figure": "Engineering Asset EA-08",
+      "description": "Shaft-hub-key torque transmission schematic showing key geometry, keyway fit, and applied loads."
+    },
+    "component-identification": {
+      "activityCode": "EC08-A03",
+      "activityType": "image-label",
+      "title": "Component Identification",
+      "metadata": {
+        "activityNumber": 3,
+        "marks": 1,
+        "bloomLevel": "L2 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "image": "assignments/Keys/images/EA-08_Student_v1.0.png.png",
+      "figure": "Engineering Asset EA-08",
+      "description": "Interactive identification of key elements in a shaft-hub connection.",
+      "options": [
+        "Transmission Shaft",
+        "Machine Hub",
+        "Drive Key",
+        "Shaft Keyway",
+        "Hub Keyway",
+        "Transmitted Torque (T)",
+        "Tangential Load (Ft)",
+        "Key Width / Height (b x h)"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 60, "y": 50, "correctAnswer": "Transmission Shaft", "feedback": "Solid cylindrical rotating member carrying torque." },
+        { "componentNumber": 2, "x": 35, "y": 30, "correctAnswer": "Machine Hub", "feedback": "Mating hub element of pulley, gear, or pump impeller." },
+        { "componentNumber": 3, "x": 48, "y": 42, "correctAnswer": "Drive Key", "feedback": "Demountable metallic key transmitting torque between shaft and hub." },
+        { "componentNumber": 4, "x": 52, "y": 56, "correctAnswer": "Shaft Keyway", "feedback": "Slot milled into the shaft circumference." },
+        { "componentNumber": 5, "x": 45, "y": 25, "correctAnswer": "Hub Keyway", "feedback": "Slot broached or slotted into the hub bore." },
+        { "componentNumber": 6, "x": 78, "y": 45, "correctAnswer": "Transmitted Torque (T)", "feedback": "Applied torsional moment around shaft longitudinal axis." },
+        { "componentNumber": 7, "x": 48, "y": 20, "correctAnswer": "Tangential Load (Ft)", "feedback": "Driving force acting at the pitch surface radius r = d/2." },
+        { "componentNumber": 8, "x": 30, "y": 48, "correctAnswer": "Key Width / Height (b x h)", "feedback": "Cross-sectional dimensions of square or flat key." }
+      ]
+    },
+    "working-principle": {
+      "title": "Working Principle",
+      "metadata": {
+        "activityNumber": 4,
+        "marks": 1,
+        "bloomLevel": "L2 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "prompt": "Explain the mechanical force path and stress states in a shaft-hub-key connection during torque transmission.",
+      "mcq": {
+        "question": "For a standard square key where width b = h, what is the theoretical ratio of crushing stress to shear stress under pure torque transmission?",
+        "options": [
+          "Crushing stress is equal to shear stress (sigma_c / tau = 1.0)",
+          "Crushing stress is twice the shear stress (sigma_c / tau = 2.0)",
+          "Crushing stress is half the shear stress (sigma_c / tau = 0.5)",
+          "Crushing stress is four times the shear stress (sigma_c / tau = 4.0)"
+        ],
+        "answer": "Crushing stress is twice the shear stress (sigma_c / tau = 2.0)"
+      }
+    },
+    "design-requirements": {
+      "title": "Design Requirements",
+      "metadata": {
+        "activityNumber": 5,
+        "marks": 1,
+        "bloomLevel": "L3 Apply",
+        "co": "CO2",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "given": [
+        "Transmitted Power (P): 22 kW = 22,000 W",
+        "Shaft Speed (N): 1440 rpm",
+        "Shaft Diameter (d): 40 mm",
+        "Key Material: Plain Carbon Steel C45 (Syt = 360 MPa, Sut = 600 MPa)",
+        "Key Proportions (Square Key): Width b = 10 mm, Height h = 10 mm",
+        "Installed Key Length (l): 45 mm",
+        "Target Factor of Safety (FOS_target): >= 2.5"
+      ],
+      "fields": [
+        { "id": "reqPower", "label": "Power (kW)", "placeholder": "22" },
+        { "id": "reqSpeed", "label": "Speed (rpm)", "placeholder": "1440" },
+        { "id": "reqShaftDia", "label": "Shaft Diameter (mm)", "placeholder": "40" },
+        { "id": "reqKeyLength", "label": "Installed Key Length (mm)", "placeholder": "45" }
+      ]
+    },
+    "engineering-assumptions": {
+      "title": "Engineering Assumptions",
+      "metadata": {
+        "activityNumber": 6,
+        "marks": 0.5,
+        "bloomLevel": "L2 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "prompt": "Record key engineering assumptions for static key design under torque transmission.",
+      "questions": [
+        "1. State assumptions regarding uniform distribution of tangential force along the key length.",
+        "2. State assumptions regarding keyway fit, stress concentration at keyway ends, and key material isotropy.",
+        "3. State assumptions regarding allowable shear and crushing stress limits relative to yield strength."
+      ]
+    },
+    "key-design-calculation": {
+      "title": "Key Design Calculation",
+      "toolUrl": "tools/Shaft Design Calculator.html",
+      "toolButtonText": "Launch Shaft & Key Calculator",
+      "metadata": {
+        "activityNumber": 7,
+        "marks": 3,
+        "bloomLevel": "L3 Apply",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO5"],
+        "pso": ["PSO1"],
+        "estimatedTime": "15 minutes"
+      },
+      "given": [
+        "Power P = 22 kW, Speed N = 1440 rpm, Shaft Diameter d = 40 mm",
+        "Key Material C45 (Syt = 360 MPa), FOS_target = 2.5",
+        "Formula: Transmitted Torque T = (60 * 10^6 * P) / (2 * pi * N) N-mm",
+        "Formula: Tangential Force Ft = (2 * T) / d N",
+        "Formula: Minimum Length for Shear l_shear = (2 * T) / (d * b * tau_allow) mm",
+        "Formula: Minimum Length for Crushing l_crush = (4 * T) / (d * h * sigma_c_allow) mm"
+      ],
+      "fields": [
+        { "id": "transmittedTorque", "label": "Transmitted Torque T (N-mm)", "placeholder": "(60*10^6*22)/(2*pi*1440) = 145887" },
+        { "id": "tangentialForce", "label": "Tangential Force Ft (N)", "placeholder": "(2 * 145887) / 40 = 7294" },
+        { "id": "minKeyLength", "label": "Minimum Required Key Length (mm)", "placeholder": "10.13" }
+      ],
+      "expectedProcess": "Torque T = 145,887 N-mm. Tangential Force Ft = 7,294 N. Min required length for FOS=2.5 is l = 10.13 mm."
+    },
+    "failure-analysis-safety": {
+      "title": "Failure Analysis & Safety Verification",
+      "toolUrl": "tools/Shaft Design Calculator.html",
+      "toolButtonText": "Launch Shaft & Key Calculator",
+      "metadata": {
+        "activityNumber": 8,
+        "marks": 2.5,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO4"],
+        "pso": ["PSO1", "PSO2"],
+        "estimatedTime": "15 minutes"
+      },
+      "given": [
+        "Installed Key: Square Key b = 10 mm, h = 10 mm, Length l = 45 mm",
+        "Transmitted Torque T = 145,887 N-mm, Shaft Diameter d = 40 mm",
+        "Formula: Actual Shear Stress tau_act = (2 * T) / (d * b * l) MPa",
+        "Formula: Actual Crushing Stress sigma_c_act = (4 * T) / (d * h * l) MPa",
+        "Key Material C45: Syt = 360 MPa, Ssy = 0.5 * Syt = 180 MPa",
+        "Formula: Factor of Safety (FOS) = Ssy / tau_act or Syt / sigma_c_act"
+      ],
+      "fields": [
+        { "id": "actualShearStress", "label": "Actual Shear Stress tau_act (MPa)", "placeholder": "(2 * 145887) / (40 * 10 * 45) = 16.21" },
+        { "id": "actualCrushingStress", "label": "Actual Crushing Stress sigma_c_act (MPa)", "placeholder": "(4 * 145887) / (40 * 10 * 45) = 32.42" },
+        { "id": "factorOfSafety", "label": "Calculated Factor of Safety (FOS)", "placeholder": "180 / 16.21 = 11.1" }
+      ],
+      "expectedProcess": "Actual Shear Stress tau_act = 16.21 MPa. Actual Crushing Stress sigma_c_act = 32.42 MPa. FOS = 11.1 (or 4.44 relative to design allowable)."
+    },
+    "engineering-decision": {
+      "title": "Engineering Decision & Design Improvement",
+      "metadata": {
+        "activityNumber": 9,
+        "marks": 1.5,
+        "bloomLevel": "L5 Evaluate",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+        "pso": ["PSO1", "PSO2"],
+        "estimatedTime": "10 minutes"
+      },
+      "options": [
+        "SAFE - Installed key (10 x 10 x 45 mm) provides adequate shear and crushing strength with high FOS",
+        "UNSAFE - Installed key will fail due to excessive shear or crushing stress under operating load"
+      ],
+      "prompt": "Evaluate the safety of the installed key (10 x 10 x 45 mm) and provide your engineering decision with technical justification."
+    },
+    "design-recommendation": {
+      "title": "Engineering Report & Reflection",
+      "metadata": {
+        "activityNumber": 10,
+        "marks": 1.5,
+        "bloomLevel": "L5 Evaluate",
+        "co": "CO2",
+        "po": ["PO8", "PO9", "PO11"],
+        "pso": ["PSO2"],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Synthesize your technical findings and answer the engineering reflection questions.",
+      "questions": [
+        "1. Summarize the key design verification (Torque T, Tangential Force Ft, Actual Stresses, and FOS).",
+        "2. Explain why a square key designed with b = h experiences equal factors of safety in shear and crushing when Ssy = 0.5 Syt.",
+        "3. Recommend keyway chamfering/fillet tolerances and material selection to mitigate fretting corrosion in industrial pump drives."
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Key Design Challenge response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

@@ -46,50 +46,46 @@
       <div class="container">
         <div class="row align-items-center g-5">
           <div class="col-lg-7">
-            <span class="section-kicker">Sprint 1 Platform Engine</span>
+            <span class="section-kicker">Design Engineering Studio</span>
             <h1>Mechanical Engineering Interactive Learning Platform</h1>
             <p class="hero-copy">
-              A reusable static platform for configuration-driven engineering assignments, built for SPPU mechanical engineering now and broader engineering subjects later.
+              A professional interactive environment for mastering design of machine elements through active problem solving.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary btn-lg" href="#assignments">
                 <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i>
-                Browse Placeholders
-              </a>
-              <a class="btn btn-outline-primary btn-lg" href="docs/Architecture.md">
-                <i class="bi bi-diagram-3" aria-hidden="true"></i>
-                View Architecture
+                Browse Assignments
               </a>
             </div>
           </div>
           <div class="col-lg-5">
             <div class="system-panel" aria-label="Platform capability summary">
               <div class="panel-header">
-                <span>Static Core</span>
+                <span>Platform Core</span>
                 <i class="bi bi-cpu" aria-hidden="true"></i>
               </div>
               <div class="capability-grid">
                 <div>
-                  <strong>20+</strong>
+                  <strong>8</strong>
                   <span>Assignments</span>
                 </div>
                 <div>
-                  <strong>100+</strong>
-                  <span>Tasks</span>
+                  <strong>90+</strong>
+                  <span>Activities</span>
                 </div>
                 <div>
-                  <strong>0</strong>
-                  <span>Backend Required</span>
+                  <strong>OBE</strong>
+                  <span>Attainment</span>
                 </div>
                 <div>
                   <strong>LMS</strong>
-                  <span>Engine Services</span>
+                  <span>Engine</span>
                 </div>
               </div>
               <ol class="foundation-list">
-                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Assignment loader and JSON validation</li>
-                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Router, state manager, and event bus</li>
-                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Component registry and progress tracking</li>
+                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Configuration-driven assignment engine</li>
+                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Interactive engineering calculators &amp; diagrams</li>
+                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Real-time analytics and outcome assessment</li>
               </ol>
             </div>
           </div>
@@ -101,29 +97,29 @@
       <div class="container">
         <div class="section-heading">
           <span class="section-kicker">Platform Architecture</span>
-          <h2>Built as a reusable classroom foundation</h2>
-          <p>MEILP separates platform shell, shared components, data, assignment configuration, validation, and storage so future assignments can be added without redesigning the core.</p>
+          <h2>Built for interactive engineering learning</h2>
+          <p>DES separates platform shell, shared components, data, assignment configuration, validation, and storage so engineering assignments run seamlessly.</p>
         </div>
         <div class="row g-4">
           <div class="col-md-4">
             <article class="feature-card">
               <i class="bi bi-sliders" aria-hidden="true"></i>
-              <h3>Configuration First</h3>
-              <p>Assignment metadata and cards are loaded from data files, with a migration path to assignment-level JSON configuration.</p>
+              <h3>Configuration Driven</h3>
+              <p>Assignment metadata, activities, and rubrics are loaded dynamically from structured configuration files.</p>
             </article>
           </div>
           <div class="col-md-4">
             <article class="feature-card">
               <i class="bi bi-box-seam" aria-hidden="true"></i>
-              <h3>Component Ready</h3>
-              <p>Components are isolated by contract so future reusable tools and dashboards can be added cleanly.</p>
+              <h3>Interactive Tools</h3>
+              <p>Integrated Machine Design tools, SFD/BMD plotters, and diagram labelers empower active engineering analysis.</p>
             </article>
           </div>
           <div class="col-md-4">
             <article class="feature-card">
               <i class="bi bi-database-check" aria-hidden="true"></i>
-              <h3>Storage Adapter</h3>
-              <p>Local storage powers Sprint 0 while keeping Google Sheets, Forms, auth, and progress tracking behind future adapters.</p>
+              <h3>Analytics &amp; OBE</h3>
+              <p>Automated submission processing, faculty evaluation portal, and direct CO-PO-PSO attainment mapping.</p>
             </article>
           </div>
         </div>
@@ -134,58 +130,25 @@
       <div class="container">
         <div class="section-heading">
           <span class="section-kicker">Assignment Registry</span>
-          <h2>Configuration-driven assignments</h2>
-          <p>No assignment is bundled in Sprint 1. Future assignments will be loaded from assignment-level configuration files.</p>
+          <h2>Coursework Assignments</h2>
+          <p>Select an assignment below to launch the interactive engineering workbench.</p>
         </div>
         <div class="row g-4" data-assignment-grid>
-          <div class="col-12">
-            <article class="assignment-card empty-state-card">
-              <span class="card-icon"><i class="bi bi-hdd-network" aria-hidden="true"></i></span>
-              <h3>Engine Ready</h3>
-              <p>The platform engine is active. Future assignments can be loaded from assignment-level configuration files through the router.</p>
-              <footer>
-                <span class="status-pill">Sprint 1</span>
-                <span class="status-pill">No bundled assignments</span>
-              </footer>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="content-band" id="docs">
-      <div class="container">
-        <div class="section-heading">
-          <span class="section-kicker">Developer Docs</span>
-          <h2>Extension points for Sprint 2</h2>
-          <p>The project includes concise documentation for the platform engine, component development, and roadmap planning.</p>
-        </div>
-        <div class="doc-link-grid">
-          <a href="https://sites.google.com/view/drrahulbachute/design-of-machine-elements-2024-pattern/syllabi-2024" target="_blank" rel="noopener noreferrer"><i class="bi bi-file-earmark-pdf text-danger" aria-hidden="true"></i> Syllabus (PCC303)</a>
-          <a href="docs/README.md"><i class="bi bi-book" aria-hidden="true"></i> README</a>
-          <a href="docs/Architecture.md"><i class="bi bi-diagram-3" aria-hidden="true"></i> Architecture</a>
-          <a href="docs/CodingStandards.md"><i class="bi bi-code-square" aria-hidden="true"></i> Coding Standards</a>
-          <a href="docs/ComponentGuide.md"><i class="bi bi-ui-checks-grid" aria-hidden="true"></i> Component Guide</a>
-          <a href="docs/Roadmap.md"><i class="bi bi-signpost-split" aria-hidden="true"></i> Roadmap</a>
-          <a href="docs/WorkbenchGuide.md"><i class="bi bi-columns-gap" aria-hidden="true"></i> Workbench Guide</a>
-          <a href="workbench-demo.html"><i class="bi bi-tools" aria-hidden="true"></i> Workbench Demo</a>
-          <a href="assignment-workbench.html?assignment=elevator"><i class="bi bi-building-gear" aria-hidden="true"></i> EC-01 Challenge</a>
-          <a href="assignment-workbench.html?assignment=motorcycle"><i class="bi bi-bicycle" aria-hidden="true"></i> EC-02 Challenge</a>
-          <a href="authoring/AuthoringGuide.md"><i class="bi bi-pencil-square" aria-hidden="true"></i> Authoring Guide</a>
-          <a href="challenge-framework/ChallengeDevelopmentGuide.md"><i class="bi bi-journal-richtext" aria-hidden="true"></i> Challenge Framework</a>
-          <a href="analytics-dashboard.html"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i> Analytics Dashboard</a>
-          <a href="components/demo.html"><i class="bi bi-window-sidebar" aria-hidden="true"></i> Component Demo</a>
-          <a href="components/demo/image-viewer-demo.html"><i class="bi bi-image" aria-hidden="true"></i> Image Viewer Demo</a>
-          <a href="components/demo/image-label-demo.html"><i class="bi bi-tags" aria-hidden="true"></i> Image Label Demo</a>
+          <!-- Assignments loaded dynamically -->
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container d-flex flex-column flex-md-row justify-content-between gap-3">
-      <span>MEILP Platform Engine | Static HTML, Bootstrap 5, CSS3, Vanilla ES6</span>
-      <span data-build-label></span>
+  <footer class="site-footer bg-dark text-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <div>
+        <strong class="d-block text-white fs-6">Design Engineering Studio (DES)</strong>
+        <span class="text-white-50 small">Developed by Dr. Rahul P. Bachute | Ajeenkya DY Patil School of Engineering, Pune</span>
+      </div>
+      <div class="text-md-end text-white-50 small">
+        <span>Interactive Engineering Learning &amp; Design Platform</span>
+      </div>
     </div>
   </footer>
 

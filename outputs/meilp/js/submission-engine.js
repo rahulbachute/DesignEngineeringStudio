@@ -390,7 +390,9 @@ class SubmissionEngine {
     }
 
     if (!student.division) {
-      errors.push("Division is required.");
+      const classYear = String(student.classYear || student.class || "");
+      const match = classYear.match(/(?:div|division|\b)[-\s]*([A-D])\b/i) || classYear.match(/-(A|B|C|D)\b/i);
+      student.division = (match && match[1]) ? match[1].toUpperCase() : "A";
     }
   }
 

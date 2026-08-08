@@ -1,0 +1,49 @@
+.guided-workflow-component {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.guided-workflow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.guided-step {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.guided-step.locked {
+  background-color: var(--bs-gray-100);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .guided-step.locked {
+  background-color: var(--bs-gray-900);
+}
+
+.guided-step.current {
+  border-width: 2px !important;
+}
+
+.guided-step .step-header {
+  font-weight: 600;
+}
+
+.guided-step .step-feedback {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.guided-step .step-formula {
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+[data-theme="dark"] .guided-step .step-formula {
+  background-color: var(--bs-gray-800) !important;
+}

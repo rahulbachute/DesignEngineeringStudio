@@ -76,6 +76,17 @@
       "icon": "bi-gear-wide-connected",
       "configPath": "assignments/shafts/config.json",
       "launchPath": "assignment-workbench.html?assignment=shafts"
+    },
+    {
+      "id": "EC-08",
+      "title": "Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze shaft-hub-key connections, transmitted torque, tangential force, key width and height, shear and crushing failure modes, factor of safety, and final key selection.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-key-fill",
+      "configPath": "assignments/Keys/config.json",
+      "launchPath": "assignment-workbench.html?assignment=Keys"
     }
   ]
 }

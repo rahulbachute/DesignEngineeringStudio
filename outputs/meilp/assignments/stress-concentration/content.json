@@ -41,30 +41,151 @@
   },
   "attemptMode": {
     "individual": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
-      { "name": "name", "label": "Name", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "rollNumber",
+        "label": "Roll Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ],
     "group": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
-      { "name": "groupName", "label": "Group Name", "required": false },
-      { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
-      { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "groupName",
+        "label": "Group Name",
+        "required": false
+      },
+      {
+        "name": "student1",
+        "label": "Student 1",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ]
   },
   "widgets": [
-    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
-    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
-    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
-    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 with PO1, PO2, PO3, PO5, PO7, PO8, PO11 and PSO1, PSO2." },
-    { "id": "hint", "title": "Engineering Hint", "icon": "bi-lightbulb", "cardType": "hint", "text": "Peak stress occurs at the transverse boundary of the hole (perpendicular to the tensile load)." }
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO1 with PO1, PO2, PO3, PO5, PO7, PO8, PO11 and PSO1, PSO2."
+    },
+    {
+      "id": "hint",
+      "title": "Engineering Hint",
+      "icon": "bi-lightbulb",
+      "cardType": "hint",
+      "text": "Peak stress occurs at the transverse boundary of the hole (perpendicular to the tensile load)."
+    }
   ],
   "activities": {
     "project-charter": {
@@ -74,14 +195,43 @@
         "marks": 0,
         "bloomLevel": "L1 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO8", "PO11"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "cards": [
-        { "type": "theory", "title": "Problem Scenario", "body": "A flat steel plate with a central circular hole subjected to an axial tensile force P = 40 kN needs safety verification." },
-        { "type": "information", "title": "Role & Assignment Scope", "body": "You are a Mechanical Design Engineer in the Design Verification Dept tasked with determining maximum stress and proposing design modifications." },
-        { "type": "student-response", "title": "Deliverables", "items": ["Component Identification", "Assumptions", "FBD", "Net Area & Stress", "Kt Determination", "Maximum Stress", "Material Selection", "Factor of Safety", "Design Improvements", "Technical Report"] }
+        {
+          "type": "theory",
+          "title": "Problem Scenario",
+          "body": "A flat steel plate with a central circular hole subjected to an axial tensile force P = 40 kN needs safety verification."
+        },
+        {
+          "type": "information",
+          "title": "Role & Assignment Scope",
+          "body": "You are a Mechanical Design Engineer in the Design Verification Dept tasked with determining maximum stress and proposing design modifications."
+        },
+        {
+          "type": "student-response",
+          "title": "Deliverables",
+          "items": [
+            "Component Identification",
+            "Assumptions",
+            "FBD",
+            "Net Area & Stress",
+            "Kt Determination",
+            "Maximum Stress",
+            "Material Selection",
+            "Factor of Safety",
+            "Design Improvements",
+            "Technical Report"
+          ]
+        }
       ],
       "acceptanceText": "I have read and accepted the Project Charter."
     },
@@ -92,14 +242,31 @@
         "marks": 0,
         "bloomLevel": "L1 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO8"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO8"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "cards": [
-        { "type": "theory", "title": "Applications of Plates with Holes", "body": "Plates with holes are widely used as structural links, gusset plates, pressure vessel walls, aircraft skin panels, and mounting brackets." },
-        { "type": "warning", "title": "Importance of Stress Concentration", "body": "Geometric discontinuities (holes, notches, fillets) disrupt uniform stress flow lines, creating localized peak stresses much higher than nominal stress." },
-        { "type": "information", "title": "Real-World Examples", "body": "In 1954, De Havilland Comet commercial aircraft crashed due to fatigue crack initiation from square window corners acting as severe stress raisers." }
+        {
+          "type": "theory",
+          "title": "Applications of Plates with Holes",
+          "body": "Plates with holes are widely used as structural links, gusset plates, pressure vessel walls, aircraft skin panels, and mounting brackets."
+        },
+        {
+          "type": "warning",
+          "title": "Importance of Stress Concentration",
+          "body": "Geometric discontinuities (holes, notches, fillets) disrupt uniform stress flow lines, creating localized peak stresses much higher than nominal stress."
+        },
+        {
+          "type": "information",
+          "title": "Real-World Examples",
+          "body": "In 1954, De Havilland Comet commercial aircraft crashed due to fatigue crack initiation from square window corners acting as severe stress raisers."
+        }
       ],
       "acceptanceText": "I understand the engineering context of stress concentration."
     },
@@ -112,8 +279,13 @@
         "marks": 1,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "image": "./Engineering Assets Library/EA-06 Stress Concentration Analysis/Student Version/EA-06_Student_v1.0.png",
@@ -128,12 +300,48 @@
         "Critical Section (Net Area)"
       ],
       "labels": [
-        { "componentNumber": 1, "x": 38, "y": 38, "correctAnswer": "Flat Plate", "feedback": "Main structural tensile member." },
-        { "componentNumber": 2, "x": 48, "y": 44, "correctAnswer": "Central Circular Hole", "feedback": "Geometric discontinuity causing stress concentration." },
-        { "componentNumber": 3, "x": 64, "y": 50, "correctAnswer": "Plate Width (W = 100 mm)", "feedback": "Total width perpendicular to load." },
-        { "componentNumber": 4, "x": 58, "y": 55, "correctAnswer": "Plate Thickness (t = 10 mm)", "feedback": "Cross-sectional thickness." },
-        { "componentNumber": 5, "x": 26, "y": 38, "correctAnswer": "Tensile Loading Direction (P)", "feedback": "Applied axial pull force." },
-        { "componentNumber": 6, "x": 43, "y": 40, "correctAnswer": "Critical Section (Net Area)", "feedback": "Plane of reduced cross-sectional area." }
+        {
+          "componentNumber": 1,
+          "x": 38,
+          "y": 38,
+          "correctAnswer": "Flat Plate",
+          "feedback": "Main structural tensile member."
+        },
+        {
+          "componentNumber": 2,
+          "x": 48,
+          "y": 44,
+          "correctAnswer": "Central Circular Hole",
+          "feedback": "Geometric discontinuity causing stress concentration."
+        },
+        {
+          "componentNumber": 3,
+          "x": 64,
+          "y": 50,
+          "correctAnswer": "Plate Width (W = 100 mm)",
+          "feedback": "Total width perpendicular to load."
+        },
+        {
+          "componentNumber": 4,
+          "x": 58,
+          "y": 55,
+          "correctAnswer": "Plate Thickness (t = 10 mm)",
+          "feedback": "Cross-sectional thickness."
+        },
+        {
+          "componentNumber": 5,
+          "x": 26,
+          "y": 38,
+          "correctAnswer": "Tensile Loading Direction (P)",
+          "feedback": "Applied axial pull force."
+        },
+        {
+          "componentNumber": 6,
+          "x": 43,
+          "y": 40,
+          "correctAnswer": "Critical Section (Net Area)",
+          "feedback": "Plane of reduced cross-sectional area."
+        }
       ]
     },
     "engineering-assumptions": {
@@ -143,15 +351,32 @@
         "marks": 0.5,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "prompt": "Document key engineering assumptions required for static stress concentration analysis of a plate with a hole.",
       "prompts": [
-        { "id": "materialAssumption", "label": "Material Properties", "placeholder": "e.g., Material is homogeneous, isotropic, and obeys Hooke's Law." },
-        { "id": "loadingAssumption", "label": "Loading Characteristics", "placeholder": "e.g., Load is static, axial, uniformly distributed across ends, and aligned with longitudinal axis." },
-        { "id": "geometryAssumption", "label": "Geometric Tolerances", "placeholder": "e.g., Thickness is constant, hole is perfectly circular and centrally located." }
+        {
+          "id": "materialAssumption",
+          "label": "Material Properties",
+          "placeholder": "e.g., Material is homogeneous, isotropic, and obeys Hooke's Law."
+        },
+        {
+          "id": "loadingAssumption",
+          "label": "Loading Characteristics",
+          "placeholder": "e.g., Load is static, axial, uniformly distributed across ends, and aligned with longitudinal axis."
+        },
+        {
+          "id": "geometryAssumption",
+          "label": "Geometric Tolerances",
+          "placeholder": "e.g., Thickness is constant, hole is perfectly circular and centrally located."
+        }
       ]
     },
     "free-body-diagram": {
@@ -162,8 +387,14 @@
         "marks": 1,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "image": "./Engineering Assets Library/EA-06 Stress Concentration Analysis/Faculty Version/EA-06_Faculty_v1.0.png",
@@ -175,9 +406,27 @@
         "Net Section Boundary"
       ],
       "labels": [
-        { "componentNumber": 1, "x": 26, "y": 38, "correctAnswer": "External Tensile Load (P = 40 kN)", "feedback": "Applied axial load." },
-        { "componentNumber": 2, "x": 43, "y": 40, "correctAnswer": "Internal Resisting Force (F_int)", "feedback": "Internal force balancing external load." },
-        { "componentNumber": 3, "x": 48, "y": 44, "correctAnswer": "Net Section Boundary", "feedback": "Section plane passing through hole center." }
+        {
+          "componentNumber": 1,
+          "x": 26,
+          "y": 38,
+          "correctAnswer": "External Tensile Load (P = 40 kN)",
+          "feedback": "Applied axial load."
+        },
+        {
+          "componentNumber": 2,
+          "x": 43,
+          "y": 40,
+          "correctAnswer": "Internal Resisting Force (F_int)",
+          "feedback": "Internal force balancing external load."
+        },
+        {
+          "componentNumber": 3,
+          "x": 48,
+          "y": 44,
+          "correctAnswer": "Net Section Boundary",
+          "feedback": "Section plane passing through hole center."
+        }
       ]
     },
     "engineering-calculations": {
@@ -187,8 +436,14 @@
         "marks": 2,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "given": [
@@ -198,9 +453,21 @@
         "Plate Thickness (t): 10 mm"
       ],
       "fields": [
-        { "id": "netWidth", "label": "Net Width W_net = (W - d) in mm", "placeholder": "100 - 20" },
-        { "id": "netArea", "label": "Net Section Area A_net = (W - d) * t in mm²", "placeholder": "80 * 10" },
-        { "id": "nominalStress", "label": "Nominal Tensile Stress σ_nominal = P / A_net in MPa", "placeholder": "40000 / 800" }
+        {
+          "id": "netWidth",
+          "label": "Net Width W_net = (W - d) in mm",
+          "placeholder": "100 - 20"
+        },
+        {
+          "id": "netArea",
+          "label": "Net Section Area A_net = (W - d) * t in mm²",
+          "placeholder": "80 * 10"
+        },
+        {
+          "id": "nominalStress",
+          "label": "Nominal Tensile Stress σ_nominal = P / A_net in MPa",
+          "placeholder": "40000 / 800"
+        }
       ],
       "expectedProcess": "Calculate Net Width = 80 mm, Net Area = 800 mm², and Nominal Stress = 50 MPa."
     },
@@ -211,8 +478,14 @@
         "marks": 2,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "given": [
@@ -221,8 +494,16 @@
         "Standard Kt Equation for plate with central hole: Kt = 3.00 - 3.13*(d/W) + 3.66*(d/W)² - 1.53*(d/W)³"
       ],
       "fields": [
-        { "id": "dWratio", "label": "d/W Ratio", "placeholder": "20 / 100" },
-        { "id": "ktFactor", "label": "Stress Concentration Factor (Kt)", "placeholder": "e.g. 2.51" }
+        {
+          "id": "dWratio",
+          "label": "d/W Ratio",
+          "placeholder": "20 / 100"
+        },
+        {
+          "id": "ktFactor",
+          "label": "Stress Concentration Factor (Kt)",
+          "placeholder": "e.g. 2.51"
+        }
       ],
       "expectedProcess": "Determine d/W = 0.20 and theoretical stress concentration factor Kt ≈ 2.51."
     },
@@ -233,8 +514,14 @@
         "marks": 1.5,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "given": [
@@ -242,7 +529,11 @@
         "Stress Concentration Factor (Kt): 2.51"
       ],
       "fields": [
-        { "id": "maxStress", "label": "Maximum Stress σ_max = Kt * σ_nominal in MPa", "placeholder": "2.51 * 50" }
+        {
+          "id": "maxStress",
+          "label": "Maximum Stress σ_max = Kt * σ_nominal in MPa",
+          "placeholder": "2.51 * 50"
+        }
       ],
       "expectedProcess": "Calculate Maximum Localized Stress = 125.5 MPa."
     },
@@ -253,16 +544,40 @@
         "marks": 1,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO5", "PO7"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO5",
+          "PO7"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Compare material options for the plate considering yield strength, toughness, and stress concentration sensitivity.",
       "options": [
-        { "id": "mild-steel", "title": "Mild Steel (Plain Carbon Steel)", "note": "Yield Strength Syt = 250 MPa, High Ductility" },
-        { "id": "en8", "title": "EN8 (Medium Carbon Steel)", "note": "Yield Strength Syt = 465 MPa, Medium Carbon" },
-        { "id": "stainless-steel", "title": "Stainless Steel (AISI 304)", "note": "Yield Strength Syt = 290 MPa, High Corrosion Resistance" },
-        { "id": "aluminum-alloy", "title": "Aluminium Alloy 6061-T6", "note": "Yield Strength Syt = 270 MPa, Low Density" }
+        {
+          "id": "mild-steel",
+          "title": "Mild Steel (Plain Carbon Steel)",
+          "note": "Yield Strength Syt = 250 MPa, High Ductility"
+        },
+        {
+          "id": "en8",
+          "title": "EN8 (Medium Carbon Steel)",
+          "note": "Yield Strength Syt = 465 MPa, Medium Carbon"
+        },
+        {
+          "id": "stainless-steel",
+          "title": "Stainless Steel (AISI 304)",
+          "note": "Yield Strength Syt = 290 MPa, High Corrosion Resistance"
+        },
+        {
+          "id": "aluminum-alloy",
+          "title": "Aluminium Alloy 6061-T6",
+          "note": "Yield Strength Syt = 270 MPa, Low Density"
+        }
       ]
     },
     "factor-of-safety": {
@@ -272,8 +587,14 @@
         "marks": 1,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "given": [
@@ -282,9 +603,21 @@
         "Required Industrial FOS: 2.0"
       ],
       "fields": [
-        { "id": "yieldStrength", "label": "Yield Strength Syt (MPa)", "placeholder": "250" },
-        { "id": "factorOfSafety", "label": "Factor of Safety FOS = Syt / σ_max", "placeholder": "250 / 125.5" },
-        { "id": "safetyAssessment", "label": "Design Status (Safe / Unsafe / Marginal)", "placeholder": "FOS = 1.99 vs Required 2.0" }
+        {
+          "id": "yieldStrength",
+          "label": "Yield Strength Syt (MPa)",
+          "placeholder": "250"
+        },
+        {
+          "id": "factorOfSafety",
+          "label": "Factor of Safety FOS = Syt / σ_max",
+          "placeholder": "250 / 125.5"
+        },
+        {
+          "id": "safetyAssessment",
+          "label": "Design Status (Safe / Unsafe / Marginal)",
+          "placeholder": "FOS = 1.99 vs Required 2.0"
+        }
       ],
       "expectedProcess": "Calculate FOS = 1.99. Conclude that current design is marginal under static load and unsafe under dynamic/fatigue loading."
     },
@@ -295,17 +628,51 @@
         "marks": 1,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
-        "po": ["PO2", "PO3", "PO7", "PO8", "PO11"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO2",
+          "PO3",
+          "PO7",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Recommend design improvements to lower stress concentration and increase factor of safety.",
       "options": [
-        { "id": "increase-width", "label": "Increase Plate Width (W)", "title": "Increase Plate Width (W)", "note": "Reduces d/W ratio and nominal stress." },
-        { "id": "reduce-hole", "label": "Reduce Hole Diameter (d)", "title": "Reduce Hole Diameter (d)", "note": "Increases net section area and lowers d/W." },
-        { "id": "increase-thickness", "label": "Increase Plate Thickness (t)", "title": "Increase Plate Thickness (t)", "note": "Directly reduces nominal stress without altering d/W." },
-        { "id": "upgrade-material", "label": "Upgrade Material to EN8 Steel", "title": "Upgrade Material to EN8 Steel", "note": "Increases yield strength Syt to 465 MPa." },
-        { "id": "relief-holes", "label": "Introduce Auxiliary Relief Holes", "title": "Introduce Auxiliary Relief Holes", "note": "Smooths stress flow lines around central hole." }
+        {
+          "id": "increase-width",
+          "label": "Increase Plate Width (W)",
+          "title": "Increase Plate Width (W)",
+          "note": "Reduces d/W ratio and nominal stress."
+        },
+        {
+          "id": "reduce-hole",
+          "label": "Reduce Hole Diameter (d)",
+          "title": "Reduce Hole Diameter (d)",
+          "note": "Increases net section area and lowers d/W."
+        },
+        {
+          "id": "increase-thickness",
+          "label": "Increase Plate Thickness (t)",
+          "title": "Increase Plate Thickness (t)",
+          "note": "Directly reduces nominal stress without altering d/W."
+        },
+        {
+          "id": "upgrade-material",
+          "label": "Upgrade Material to EN8 Steel",
+          "title": "Upgrade Material to EN8 Steel",
+          "note": "Increases yield strength Syt to 465 MPa."
+        },
+        {
+          "id": "relief-holes",
+          "label": "Introduce Auxiliary Relief Holes",
+          "title": "Introduce Auxiliary Relief Holes",
+          "note": "Smooths stress flow lines around central hole."
+        }
       ]
     },
     "engineering-report": {
@@ -315,14 +682,28 @@
         "marks": 1,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
-        "po": ["PO8", "PO9", "PO11"],
-        "pso": ["PSO2"],
+        "po": [
+          "PO8",
+          "PO9",
+          "PO11"
+        ],
+        "pso": [
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Synthesize your complete stress concentration analysis into a formal engineering report.",
       "prompts": [
-        { "id": "summary", "label": "Executive Summary & Stress Analysis", "placeholder": "Summarize Nominal Stress (50 MPa), Kt (2.51), Peak Stress (125.5 MPa), and FOS (1.99)." },
-        { "id": "recommendations", "label": "Design Recommendations", "placeholder": "Detail proposed geometric/material modifications to achieve FOS ≥ 2.5." }
+        {
+          "id": "summary",
+          "label": "Executive Summary & Stress Analysis",
+          "placeholder": "Summarize Nominal Stress (50 MPa), Kt (2.51), Peak Stress (125.5 MPa), and FOS (1.99)."
+        },
+        {
+          "id": "recommendations",
+          "label": "Design Recommendations",
+          "placeholder": "Detail proposed geometric/material modifications to achieve FOS ≥ 2.5."
+        }
       ]
     },
     "submit": {
@@ -331,10 +712,24 @@
     }
   },
   "facultyEvaluation": {
-    "sections": ["Marks", "CO Attainment", "PO Contribution", "PSO Contribution", "Bloom Level Achievement", "Faculty Remarks"]
+    "sections": [
+      "Marks",
+      "CO Attainment",
+      "PO Contribution",
+      "PSO Contribution",
+      "Bloom Level Achievement",
+      "Faculty Remarks"
+    ]
   },
   "studentSummary": {
     "certificateTitle": "Stress Concentration Analysis Report",
-    "sections": ["Investigation Status", "CCE Marks", "CO Achieved", "PO Addressed", "PSO Addressed", "Reflection Summary"]
+    "sections": [
+      "Investigation Status",
+      "CCE Marks",
+      "CO Achieved",
+      "PO Addressed",
+      "PSO Addressed",
+      "Reflection Summary"
+    ]
   }
 }

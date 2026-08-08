@@ -1,0 +1,88 @@
+{
+  "assignmentId": "EC-08",
+  "assignmentTitle": "Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission",
+  "totalMarks": 12,
+  "criteria": [
+    {
+      "id": "component-identification",
+      "activityCode": "EC08-A03",
+      "title": "Component Identification",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate identification of shaft, hub, key, keyways, torque, and tangential force on EA-08."
+    },
+    {
+      "id": "working-principle",
+      "title": "Working Principle & Mechanics",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Understanding torque transmission path and stress ratio (crushing to shear stress)."
+    },
+    {
+      "id": "design-requirements",
+      "title": "Design Requirements & Parameters",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Correct identification of operational power, speed, shaft diameter, and key length."
+    },
+    {
+      "id": "engineering-assumptions",
+      "title": "Engineering Assumptions Log",
+      "marks": 0.5,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Formulation of valid engineering assumptions regarding force distribution, fit, and material limits."
+    },
+    {
+      "id": "key-design-calculation",
+      "title": "Key Design Calculation",
+      "marks": 3.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO5"],
+      "pso": ["PSO1"],
+      "description": "Accurate calculation of transmitted torque T, tangential force Ft, and minimum required key length."
+    },
+    {
+      "id": "failure-analysis-safety",
+      "title": "Failure Analysis & Safety Verification",
+      "marks": 2.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Computation of actual shear stress, crushing stress, and resulting Factor of Safety (FOS)."
+    },
+    {
+      "id": "engineering-decision",
+      "title": "Engineering Decision & Improvements",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Evidence-based SAFE decision with technical justification and design recommendations."
+    },
+    {
+      "id": "design-recommendation",
+      "title": "Engineering Report & Reflection",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO2",
+      "po": ["PO8", "PO9", "PO11"],
+      "pso": ["PSO2"],
+      "description": "Comprehensive synthesis, failure mode reflection, and practical industrial recommendations."
+    }
+  ]
+}

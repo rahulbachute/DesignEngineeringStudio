@@ -8,13 +8,12 @@ window.MEILP = window.MEILP || {};
 window.MEILP.platformConfig = {
   appName: "MEILP",
   fullName: "Mechanical Engineering Interactive Learning Platform",
-  buildLabel: "Sprint 1 Platform Engine",
+  buildLabel: "Design Engineering Studio Platform Engine",
   storageNamespace: "meilp",
   defaultTheme: "light",
   navItems: [
     { label: "Home", href: "#home" },
-    { label: "Assignments", href: "#assignments" },
-    { label: "Resources", href: "#resources" }
+    { label: "Assignments", href: "#assignments" }
   ]
 };
 

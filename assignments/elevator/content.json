@@ -43,31 +43,158 @@
   },
   "attemptMode": {
     "individual": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
-      { "name": "name", "label": "Name", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "rollNumber",
+        "label": "Roll Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ],
     "group": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
-      { "name": "groupName", "label": "Group Name", "required": false },
-      { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
-      { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "groupName",
+        "label": "Group Name",
+        "required": false
+      },
+      {
+        "name": "student1",
+        "label": "Student 1",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ]
   },
   "widgets": [
-    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
-    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
-    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 24 marks distributed across the activities." },
-    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 with PO1, PO2, PO3, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." },
-    { "id": "hint", "title": "Engineering Hint", "icon": "bi-lightbulb", "cardType": "hint", "text": "Treat the challenge as an independent engineering review before procurement." },
-    { "id": "note", "title": "Safety Note", "icon": "bi-exclamation-triangle", "cardType": "warning", "text": "For real elevators, always use certified design data, applicable standards, and qualified inspection." }
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 24 marks distributed across the activities."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO1 with PO1, PO2, PO3, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    },
+    {
+      "id": "hint",
+      "title": "Engineering Hint",
+      "icon": "bi-lightbulb",
+      "cardType": "hint",
+      "text": "Treat the challenge as an independent engineering review before procurement."
+    },
+    {
+      "id": "note",
+      "title": "Safety Note",
+      "icon": "bi-exclamation-triangle",
+      "cardType": "warning",
+      "text": "For real elevators, always use certified design data, applicable standards, and qualified inspection."
+    }
   ],
   "activities": {
     "project-charter": {
@@ -77,18 +204,68 @@
         "marks": 1,
         "bloomLevel": "L1 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO8", "PO11"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "cards": [
-        { "type": "information", "title": "Client", "body": "ABC Commercial Complex Pvt Ltd, Hinjewadi, Pune." },
-        { "type": "theory", "title": "Project Background", "body": "The client is installing a passenger elevator and requires an independent academic engineering review of selected suspension cables before procurement." },
-        { "type": "information", "title": "Engineering Context", "body": "You are a mechanical design engineer evaluating whether the suspension cable choice and load distribution appear technically reasonable against safety standards." },
-        { "type": "student-response", "title": "Objectives", "items": ["Read the project charter.", "Recognize the elevator system context.", "Connect cable safety to Design of Machine Elements.", "Prepare evidence-based responses."] },
-        { "type": "student-response", "title": "Deliverables", "items": ["Component labels", "Working principle explanation", "Free Body Diagram", "Engineering model", "Design requirements", "Engineering assumptions", "Material decision", "Load calculations", "Engineering decision", "Notebook and reflection"] },
-        { "type": "warning", "title": "Safety Standards", "body": "Elevator suspension cables are safety-critical. According to standards like ASME A17.1, passenger elevator suspension ropes must have a minimum Factor of Safety of 10." },
-        { "type": "hint", "title": "Acceptance Criteria", "body": "Continue only after you understand the client problem, safety context, deliverables, and professional responsibility." }
+        {
+          "type": "information",
+          "title": "Client",
+          "body": "ABC Commercial Complex Pvt Ltd, Hinjewadi, Pune."
+        },
+        {
+          "type": "theory",
+          "title": "Project Background",
+          "body": "The client is installing a passenger elevator and requires an independent academic engineering review of selected suspension cables before procurement."
+        },
+        {
+          "type": "information",
+          "title": "Engineering Context",
+          "body": "You are a mechanical design engineer evaluating whether the suspension cable choice and load distribution appear technically reasonable against safety standards."
+        },
+        {
+          "type": "student-response",
+          "title": "Objectives",
+          "items": [
+            "Read the project charter.",
+            "Recognize the elevator system context.",
+            "Connect cable safety to Design of Machine Elements.",
+            "Prepare evidence-based responses."
+          ]
+        },
+        {
+          "type": "student-response",
+          "title": "Deliverables",
+          "items": [
+            "Component labels",
+            "Working principle explanation",
+            "Free Body Diagram",
+            "Engineering model",
+            "Design requirements",
+            "Engineering assumptions",
+            "Material decision",
+            "Load calculations",
+            "Engineering decision",
+            "Notebook and reflection"
+          ]
+        },
+        {
+          "type": "warning",
+          "title": "Safety Standards",
+          "body": "Elevator suspension cables are safety-critical. According to standards like ASME A17.1, passenger elevator suspension ropes must have a minimum Factor of Safety of 10."
+        },
+        {
+          "type": "hint",
+          "title": "Acceptance Criteria",
+          "body": "Continue only after you understand the client problem, safety context, deliverables, and professional responsibility."
+        }
       ],
       "acceptanceText": "I have read and accepted the EC-01 Project Charter."
     },
@@ -102,8 +279,13 @@
         "marks": 2,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "12 minutes"
       },
       "image": "./Engineering Assets Library/EA-01 Traction Elevator System/Student Version/EA-01_Student_v1.0.png",
@@ -132,26 +314,106 @@
         "Direction of Rope Movement"
       ],
       "labels": [
-        { "componentNumber": 1, "correctAnswer": "Electric Motor", "feedback": "The electric motor provides rotational input for the traction drive." },
-        { "componentNumber": 2, "correctAnswer": "Drive Sheave", "feedback": "The drive sheave transmits traction to the suspension ropes." },
-        { "componentNumber": 3, "correctAnswer": "Suspension Wire Ropes", "feedback": "The suspension wire ropes carry the elevator car and counterweight." },
-        { "componentNumber": 4, "correctAnswer": "Elevator Car", "feedback": "The elevator car carries passengers between floor levels." },
-        { "componentNumber": 5, "correctAnswer": "Car Frame", "feedback": "The car frame supports and guides the elevator car assembly." },
-        { "componentNumber": 6, "correctAnswer": "Counterweight", "feedback": "The counterweight balances part of the car load." },
-        { "componentNumber": 7, "correctAnswer": "Guide Rails (Car)", "feedback": "Car guide rails constrain elevator car motion." },
-        { "componentNumber": 8, "correctAnswer": "Guide Rails (Counterweight)", "feedback": "Counterweight guide rails constrain counterweight motion." },
-        { "componentNumber": 9, "correctAnswer": "Deflector Sheave", "feedback": "The deflector sheave guides the rope path." },
-        { "componentNumber": 10, "correctAnswer": "Machine Beam", "feedback": "The machine beam supports machinery loads." },
-        { "componentNumber": 11, "correctAnswer": "Elevator Shaft", "feedback": "The shaft is the vertical space in which the elevator system operates." },
-        { "componentNumber": 12, "correctAnswer": "Pit", "feedback": "The pit is the lower space beneath the lowest landing." },
-        { "componentNumber": 13, "correctAnswer": "Pit Buffer", "feedback": "The pit buffer absorbs impact at the bottom limit of travel." },
-        { "componentNumber": 14, "correctAnswer": "Top Clearance", "feedback": "Top clearance is the space above the car at upper travel." },
-        { "componentNumber": 15, "correctAnswer": "Landing Doors", "feedback": "Landing doors separate each floor from the elevator shaft." },
-        { "componentNumber": 16, "correctAnswer": "Floor Levels", "feedback": "Floor levels indicate the building landings served by the elevator." },
-        { "componentNumber": 17, "correctAnswer": "Passenger", "feedback": "The passenger represents the live load carried by the elevator car." },
-        { "componentNumber": 18, "correctAnswer": "Rope Path", "feedback": "The rope path shows how the suspension ropes are routed." },
-        { "componentNumber": 19, "correctAnswer": "Direction of Elevator Motion", "feedback": "The elevator motion arrow indicates car travel direction." },
-        { "componentNumber": 20, "correctAnswer": "Direction of Rope Movement", "feedback": "The rope movement arrow indicates rope travel over the sheaves." }
+        {
+          "componentNumber": 1,
+          "correctAnswer": "Electric Motor",
+          "feedback": "The electric motor provides rotational input for the traction drive."
+        },
+        {
+          "componentNumber": 2,
+          "correctAnswer": "Drive Sheave",
+          "feedback": "The drive sheave transmits traction to the suspension ropes."
+        },
+        {
+          "componentNumber": 3,
+          "correctAnswer": "Suspension Wire Ropes",
+          "feedback": "The suspension wire ropes carry the elevator car and counterweight."
+        },
+        {
+          "componentNumber": 4,
+          "correctAnswer": "Elevator Car",
+          "feedback": "The elevator car carries passengers between floor levels."
+        },
+        {
+          "componentNumber": 5,
+          "correctAnswer": "Car Frame",
+          "feedback": "The car frame supports and guides the elevator car assembly."
+        },
+        {
+          "componentNumber": 6,
+          "correctAnswer": "Counterweight",
+          "feedback": "The counterweight balances part of the car load."
+        },
+        {
+          "componentNumber": 7,
+          "correctAnswer": "Guide Rails (Car)",
+          "feedback": "Car guide rails constrain elevator car motion."
+        },
+        {
+          "componentNumber": 8,
+          "correctAnswer": "Guide Rails (Counterweight)",
+          "feedback": "Counterweight guide rails constrain counterweight motion."
+        },
+        {
+          "componentNumber": 9,
+          "correctAnswer": "Deflector Sheave",
+          "feedback": "The deflector sheave guides the rope path."
+        },
+        {
+          "componentNumber": 10,
+          "correctAnswer": "Machine Beam",
+          "feedback": "The machine beam supports machinery loads."
+        },
+        {
+          "componentNumber": 11,
+          "correctAnswer": "Elevator Shaft",
+          "feedback": "The shaft is the vertical space in which the elevator system operates."
+        },
+        {
+          "componentNumber": 12,
+          "correctAnswer": "Pit",
+          "feedback": "The pit is the lower space beneath the lowest landing."
+        },
+        {
+          "componentNumber": 13,
+          "correctAnswer": "Pit Buffer",
+          "feedback": "The pit buffer absorbs impact at the bottom limit of travel."
+        },
+        {
+          "componentNumber": 14,
+          "correctAnswer": "Top Clearance",
+          "feedback": "Top clearance is the space above the car at upper travel."
+        },
+        {
+          "componentNumber": 15,
+          "correctAnswer": "Landing Doors",
+          "feedback": "Landing doors separate each floor from the elevator shaft."
+        },
+        {
+          "componentNumber": 16,
+          "correctAnswer": "Floor Levels",
+          "feedback": "Floor levels indicate the building landings served by the elevator."
+        },
+        {
+          "componentNumber": 17,
+          "correctAnswer": "Passenger",
+          "feedback": "The passenger represents the live load carried by the elevator car."
+        },
+        {
+          "componentNumber": 18,
+          "correctAnswer": "Rope Path",
+          "feedback": "The rope path shows how the suspension ropes are routed."
+        },
+        {
+          "componentNumber": 19,
+          "correctAnswer": "Direction of Elevator Motion",
+          "feedback": "The elevator motion arrow indicates car travel direction."
+        },
+        {
+          "componentNumber": 20,
+          "correctAnswer": "Direction of Rope Movement",
+          "feedback": "The rope movement arrow indicates rope travel over the sheaves."
+        }
       ]
     },
     "working-principle": {
@@ -161,14 +423,25 @@
         "marks": 2,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "12 minutes"
       },
       "prompt": "Explain how a traction elevator works. Include the role of the motor, traction sheave, ropes, counterweight, guide rails, elevator car, controller, and safety gear.",
       "mcq": {
         "question": "Which component directly provides traction to move the suspension ropes?",
-        "options": ["Traction Sheave", "Guide Rail", "Controller", "Elevator Car"]
+        "options": [
+          "Traction Sheave",
+          "Guide Rail",
+          "Controller",
+          "Elevator Car"
+        ]
       }
     },
     "free-body-diagram": {
@@ -180,8 +453,13 @@
         "marks": 2,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "12 minutes"
       },
       "image": "./Engineering Assets Library/EA-01 Traction Elevator System/Student Version/EA-01_Student_v1.0.png",
@@ -192,8 +470,16 @@
         "Weight of Elevator Car (Downwards)"
       ],
       "labels": [
-        { "componentNumber": 3, "correctAnswer": "Tensile Force (Upwards)", "feedback": "The suspension ropes exert an upward tensile force to support the car." },
-        { "componentNumber": 4, "correctAnswer": "Weight of Elevator Car (Downwards)", "feedback": "Gravity pulls the elevator car downwards." }
+        {
+          "componentNumber": 3,
+          "correctAnswer": "Tensile Force (Upwards)",
+          "feedback": "The suspension ropes exert an upward tensile force to support the car."
+        },
+        {
+          "componentNumber": 4,
+          "correctAnswer": "Weight of Elevator Car (Downwards)",
+          "feedback": "Gravity pulls the elevator car downwards."
+        }
       ]
     },
     "engineering-model": {
@@ -203,8 +489,13 @@
         "marks": 2,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Explain the load path transferring the passenger load to the suspension system.",
@@ -224,20 +515,43 @@
         "marks": 2,
         "bloomLevel": "L1 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
-      "given": ["Identify the core requirements and standards from the problem statement."],
+      "given": [
+        "Identify the core requirements and standards from the problem statement."
+      ],
       "fields": [
-        { "id": "maxPassengerLoad", "label": "Maximum Passenger Load", "placeholder": "e.g. 10 passengers" },
-        { "id": "cabinWeight", "label": "Cabin Weight", "placeholder": "e.g. 700 kg" },
-        { "id": "numRopes", "label": "Number of Ropes", "placeholder": "e.g. 4" },
-        { "id": "requiredFoS", "label": "Standard Required FoS", "value": 10, "readonly": true }
+        {
+          "id": "maxPassengerLoad",
+          "label": "Maximum Passenger Load",
+          "placeholder": "e.g. 10 passengers"
+        },
+        {
+          "id": "cabinWeight",
+          "label": "Cabin Weight",
+          "placeholder": "e.g. 700 kg"
+        },
+        {
+          "id": "numRopes",
+          "label": "Number of Ropes",
+          "placeholder": "e.g. 4"
+        },
+        {
+          "id": "requiredFoS",
+          "label": "Standard Required FoS",
+          "value": 10,
+          "readonly": true
+        }
       ],
       "expectedProcess": "Students must explicitly state the numerical requirements and the standard Factor of Safety constraint before starting calculations."
     },
-
     "material-selection": {
       "title": "Material Selection",
       "metadata": {
@@ -245,16 +559,40 @@
         "marks": 2,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO5", "PO7"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO5",
+          "PO7"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "12 minutes"
       },
       "prompt": "Compare the given candidate materials and recommend the most suitable suspension cable material for this application.",
       "options": [
-        { "id": "mild-steel", "title": "Mild Steel (Syt = 250 MPa)", "note": "Economical and easy to process but not preferred for high-strength suspension cables." },
-        { "id": "high-carbon-steel", "title": "High Carbon Steel (Syt = 800 MPa)", "note": "High tensile strength and commonly used in steel wire rope applications." },
-        { "id": "stainless-steel", "title": "Stainless Steel (Syt = 500 MPa)", "note": "Corrosion resistant but grade, cost, and strength must be verified." },
-        { "id": "synthetic-rope", "title": "Synthetic Rope (Syt = N/A)", "note": "Lightweight and specialized; requires compatibility, certification, and long-term performance review." }
+        {
+          "id": "mild-steel",
+          "title": "Mild Steel (Syt = 250 MPa)",
+          "note": "Economical and easy to process but not preferred for high-strength suspension cables."
+        },
+        {
+          "id": "high-carbon-steel",
+          "title": "High Carbon Steel (Syt = 800 MPa)",
+          "note": "High tensile strength and commonly used in steel wire rope applications."
+        },
+        {
+          "id": "stainless-steel",
+          "title": "Stainless Steel (Syt = 500 MPa)",
+          "note": "Corrosion resistant but grade, cost, and strength must be verified."
+        },
+        {
+          "id": "synthetic-rope",
+          "title": "Synthetic Rope (Syt = N/A)",
+          "note": "Lightweight and specialized; requires compatibility, certification, and long-term performance review."
+        }
       ]
     },
     "engineering-calculations": {
@@ -264,11 +602,24 @@
         "marks": 9,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "20 minutes"
       },
-      "given": ["10 passengers", "75 kg per passenger", "Car weight: 700 kg", "Number of suspension ropes: 4", "g = 9.81 m/s2", "Factor of Safety (FoS) = 10"],
+      "given": [
+        "10 passengers",
+        "75 kg per passenger",
+        "Car weight: 700 kg",
+        "Number of suspension ropes: 4",
+        "g = 9.81 m/s2",
+        "Factor of Safety (FoS) = 10"
+      ],
       "steps": [
         {
           "id": "passengerMass",
@@ -377,11 +728,23 @@
         "marks": 2,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
-        "po": ["PO2", "PO3", "PO7", "PO8", "PO11"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO2",
+          "PO3",
+          "PO7",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "15 minutes"
       },
-      "options": ["SAFE: Approve Procurement", "UNSAFE: Redesign Required"],
+      "options": [
+        "SAFE: Approve Procurement",
+        "UNSAFE: Redesign Required"
+      ],
       "prompt": "Compare your calculated Required Rope Diameter against the proposed Selected Standard Diameter (12 mm). Decide whether the current suspension cable design should be approved for procurement. Provide engineering justification."
     },
     "submit": {
@@ -390,10 +753,24 @@
     }
   },
   "facultyEvaluation": {
-    "sections": ["Marks", "CO Attainment", "PO Contribution", "PSO Contribution", "Bloom Level Achievement", "Faculty Remarks"]
+    "sections": [
+      "Marks",
+      "CO Attainment",
+      "PO Contribution",
+      "PSO Contribution",
+      "Bloom Level Achievement",
+      "Faculty Remarks"
+    ]
   },
   "studentSummary": {
     "certificateTitle": "Project Completion Certificate (Internal)",
-    "sections": ["Project Status", "CCE Marks", "CO Achieved", "PO Addressed", "PSO Addressed", "Reflection Summary"]
+    "sections": [
+      "Project Status",
+      "CCE Marks",
+      "CO Achieved",
+      "PO Addressed",
+      "PSO Addressed",
+      "Reflection Summary"
+    ]
   }
 }

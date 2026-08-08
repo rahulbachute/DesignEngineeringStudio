@@ -89,7 +89,149 @@ class EvaluationEngine {
     return params.get('submissionId') || params.get('id') || '';
   }
 
+  isCalculationActivity(activity) {
+    if (!activity) return false;
+    if (activity.category === 'Calculation' || activity.isCalculation) return true;
+    const text = `${activity.id || ''} ${activity.name || ''} ${activity.title || ''} ${activity.category || ''} ${activity.response || ''}`.toLowerCase();
+    return text.includes('calc') || text.includes('torque') || text.includes('stress') || text.includes('force') || text.includes('moment') || text.includes('fos') || text.includes('diameter') || text.includes('area') || text.includes('reaction') || text.includes('index') || text.includes('modulus') || text.includes('f_hand') || text.includes('tau_act') || text.includes('sigma');
+  }
+
+  getStepwiseActivitiesForChallenge(challengeName) {
+    const name = String(challengeName || '').toLowerCase();
+    
+    if (name.includes('shaft') || name.includes('ec-07')) {
+      return [
+        { id: 'ec07-act-1', name: 'Task 1: System Specifications & Given Data', response: 'Power P = 15 kW, Speed N = 720 rpm, Radial Load Fr = 3000 N, Span L = 500 mm', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec07-act-2', name: 'Task 2: Transmitted Torque Calculation', response: 'T = (60 * 10^6 * 15) / (2 * pi * 720) = 198,944 N-mm', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec07-act-3', name: 'Task 3: Bearing Reaction Forces (RA & RB)', response: 'RA = 1500 N, RB = 1500 N (Symmetric central load)', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec07-act-4', name: 'Task 4: Peak Bending Moment (SFD/BMD)', response: 'M_max = (3000 * 500) / 4 = 375,000 N-mm', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec07-act-5', name: 'Task 5: Equivalent Combined Torque (Te)', response: 'Te = sqrt(M^2 + T^2) = 424,382 N-mm', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec07-act-6', name: 'Task 6: Required Shaft Diameter Calculation', response: 'Required d = 28.5 mm. Standard size selected d = 30 mm', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' },
+        { id: 'ec07-act-7', name: 'Task 7: Factor of Safety & Rigidity Verification', response: 'Shear FOS = 2.45, Torsional Deflection = 0.12 deg/m (Safe)', maxMarks: 1, systemSuggestedMarks: 1, category: 'Design Decision' }
+      ];
+    }
+
+    if (name.includes('key') || name.includes('ec-08')) {
+      return [
+        { id: 'ec08-act-1', name: 'Task 1: System Parameters & Transmitted Torque', response: 'P = 15 kW, N = 720 rpm, d = 40 mm, T = 145,892 N-mm', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec08-act-2', name: 'Task 2: Tangential Force on Key (Ft)', response: 'Ft = (2 * T) / d = (2 * 145,892) / 40 = 7,295 N', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec08-act-3', name: 'Task 3: Key Shear Stress Calculation (tau_act)', response: 'tau_act = Ft / (w * L) = 7,295 / (12 * 37.5) = 16.21 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec08-act-4', name: 'Task 4: Key Crushing Stress Calculation (sigma_c_act)', response: 'sigma_c_act = (2 * Ft) / (h * L) = (2 * 7,295) / (12 * 37.5) = 32.42 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec08-act-5', name: 'Task 5: Key Shear & Crushing Factor of Safety', response: 'Shear FOS = 11.10, Crushing FOS = 11.10 (Safe under load)', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec08-act-6', name: 'Task 6: Standard Sunk Key Selection & Final Decision', response: 'Standard Parallel Sunk Key selected (12 x 12 x 37.5 mm)', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' }
+      ];
+    }
+
+    if (name.includes('elevator') || name.includes('ec-01')) {
+      return [
+        { id: 'ec01-act-1', name: 'Task 1: Project Charter & System Capacity', response: 'Passenger Load = 680 kg, Elevator Car = 1200 kg, Speed = 1.5 m/s, Accel = 1.2 m/s^2', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec01-act-2', name: 'Task 2: Component Identification', response: '6x19 Steel Wire Ropes, Traction Sheave, Counterweight System', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec01-act-3', name: 'Task 3: Working Principle & Cable Selection', response: 'Traction drive with 6 independent suspension ropes', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec01-act-4', name: 'Task 4: Free Body Diagram & Load Distribution', response: 'Equal load distribution per suspension cable verified', maxMarks: 1, systemSuggestedMarks: 1, category: 'Analysis' },
+        { id: 'ec01-act-5', name: 'Task 5: Acceleration Force & Total Tension', response: 'Total Tension T = m(g + a) = 1880 * (9.81 + 1.2) = 20,698 N', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec01-act-6', name: 'Task 6: Suspension Cable Stress Analysis', response: 'Tensile Stress sigma = T / A_total = 42.5 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec01-act-7', name: 'Task 7: Material Selection & Wire Rope Grade', response: 'Extra Improved Plow Steel (EIPS 1960 N/mm^2 grade)', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' },
+        { id: 'ec01-act-8', name: 'Task 8: Cable Safety Factor & Verification', response: 'Calculated FOS = 12.4 (Exceeds code requirement of 10.0)', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' }
+      ];
+    }
+
+    if (name.includes('motorcycle') || name.includes('ec-02')) {
+      return [
+        { id: 'ec02-act-1', name: 'Task 1: Stand Geometry & Load Identification', response: 'Motorcycle Mass = 185 kg, Ground Angle = 15 deg, Load on Stand = 750 N', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec02-act-2', name: 'Task 2: Ground Contact & Stability Principle', response: 'Tri-point support stability verified with center of gravity', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec02-act-3', name: 'Task 3: Material Selection (Mild Steel vs Structural Alloy)', response: 'Seamless Structural Steel Tube (Fe 410) selected', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' },
+        { id: 'ec02-act-4', name: 'Task 4: Bending Moment & Direct Axial Load', response: 'Max Bending Moment M = 750 * 0.12 = 90 N-m, Axial Load P = 750 N', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec02-act-5', name: 'Task 5: Section Modulus Z Calculation', response: 'Hollow Circular Section (OD = 25 mm, ID = 20 mm), Z = 1402 mm^3', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec02-act-6', name: 'Task 6: Combined Bending & Biaxial Stress Analysis', response: 'sigma_b = M / Z = 64.2 MPa, sigma_a = 5.1 MPa, Total = 69.3 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec02-act-7', name: 'Task 7: Stand Factor of Safety & Verification', response: 'FOS = Syt / sigma = 220 / 69.3 = 3.17 (Safe side stand design)', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' }
+      ];
+    }
+
+    if (name.includes('material') || name.includes('ec-03')) {
+      return [
+        { id: 'ec03-act-1', name: 'Task 1: Component Function & Service Conditions', response: 'Connecting Rod subject to high cyclic tension and compression loads', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec03-act-2', name: 'Task 2: Ashby Material Property Index (M = Syt / rho)', response: 'M1 (Forged Steel) = 75, M2 (Al 7075-T6) = 185, M3 (Ti-6Al-4V) = 190', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec03-act-3', name: 'Task 3: Design Review Station 1 (Chassis Frame)', response: 'Tubular Steel Frame chosen for high stiffness-to-cost ratio', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' },
+        { id: 'ec03-act-4', name: 'Task 4: Design Review Station 2 (Engine Connecting Rod)', response: 'Forged Micro-Alloyed Steel 4340 for fatigue endurance', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' },
+        { id: 'ec03-act-5', name: 'Task 5: Design Review Station 3 (Wheels & Braking System)', response: 'Cast Aluminum Alloy A356 for light weight and heat dissipation', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' },
+        { id: 'ec03-act-6', name: 'Task 6: Design Review Station 4 (Fuel Tank & System)', response: 'Deep Drawing Quality Cold Rolled Steel with internal coating', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' },
+        { id: 'ec03-act-7', name: 'Task 7: Cost-Performance Tradeoff & Final Decision', response: 'Optimal balance achieved across strength, mass, and manufacturing cost', maxMarks: 1, systemSuggestedMarks: 1, category: 'Design Decision' }
+      ];
+    }
+
+    if (name.includes('borewell') || name.includes('ec-04')) {
+      return [
+        { id: 'ec04-act-1', name: 'Task 1: Component Identification', response: 'Lever arm, fulcrum pin, pump rod link, handle grip identified', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec04-act-2', name: 'Task 2: Working Principle & Mechanical Advantage', response: 'Class 1 lever mechanism with Mechanical Advantage = 4.5', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec04-act-3', name: 'Task 3: Design Requirements & Lever Geometry', response: 'Operating lift depth = 40m, Effort arm L1 = 900mm, Load arm L2 = 200mm', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec04-act-4', name: 'Task 4: Engineering Assumptions & User Effort', response: 'Standard human operating effort F_hand = 150 N max', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Analysis' },
+        { id: 'ec04-act-5', name: 'Task 5: Ergonomic Analysis', response: 'Grip diameter 32mm, comfortable height range 900-1100mm', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Analysis' },
+        { id: 'ec04-act-6', name: 'Task 6: Free Body Diagram', response: 'Equilibrium equations sum F_y = 0 and sum M_fulcrum = 0', maxMarks: 1, systemSuggestedMarks: 1, category: 'Analysis' },
+        { id: 'ec04-act-7', name: 'Task 7: Mechanical Advantage & Force Analysis', response: 'Resisting pump force F_pump = 150 * 4.5 = 675 N', maxMarks: 1, systemSuggestedMarks: 1, category: 'Calculation' },
+        { id: 'ec04-act-8', name: 'Task 8: Reaction Forces at Fulcrum Pin', response: 'Pin Reaction R_fulcrum = F_hand + F_pump = 825 N', maxMarks: 1, systemSuggestedMarks: 1, category: 'Calculation' },
+        { id: 'ec04-act-9', name: 'Task 9: Maximum Bending Moment Calculation', response: 'M_max = F_hand * L1 = 150 * 0.9 = 135 N-m at fulcrum', maxMarks: 1, systemSuggestedMarks: 1, category: 'Calculation' },
+        { id: 'ec04-act-10', name: 'Task 10: Lever Cross-Section Properties', response: 'Rectangular section (b = 30 mm, h = 12 mm), Z = (b*h^2)/6 = 720 mm^3', maxMarks: 1, systemSuggestedMarks: 1, category: 'Calculation' },
+        { id: 'ec04-act-11', name: 'Task 11: Bending Stress Analysis', response: 'sigma_bending = M / Z = 135,000 / 720 = 187.5 MPa', maxMarks: 1, systemSuggestedMarks: 1, category: 'Calculation' },
+        { id: 'ec04-act-12', name: 'Task 12: Material Selection & Yield Strength', response: 'Forged Structural Steel C45 (Syt = 360 MPa)', maxMarks: 1, systemSuggestedMarks: 1, category: 'Design Decision' },
+        { id: 'ec04-act-13', name: 'Task 13: Factor of Safety Verification', response: 'FOS = Syt / sigma = 360 / 187.5 = 1.92 (Safe ergonomic lever design)', maxMarks: 1, systemSuggestedMarks: 1, category: 'Design Decision' }
+      ];
+    }
+
+    if (name.includes('failure') || name.includes('ec-05')) {
+      return [
+        { id: 'ec05-act-1', name: 'Task 1: Component Identification & Bolted Joint Layout', response: 'High-strength flange connection bolt M12 x 1.75', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec05-act-2', name: 'Task 2: Fracture Surface Visual Diagnostics', response: 'Beach marks, ratchet lines, and small final fast fracture zone (Fatigue)', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec05-act-3', name: 'Task 3: Free Body Diagram & Preload Force Flow', response: 'Tightening torque T_t = 85 N-m producing bolt preload Fi = 35 kN', maxMarks: 1, systemSuggestedMarks: 1, category: 'Analysis' },
+        { id: 'ec05-act-4', name: 'Task 4: Bolt Tensile Stress Area (At) Calculation', response: 'M12 Bolt Tensile Stress Area At = 84.3 mm^2', maxMarks: 1, systemSuggestedMarks: 1, category: 'Calculation' },
+        { id: 'ec05-act-5', name: 'Task 5: Tensile & Shear Stress Analysis', response: 'Direct Tensile Stress sigma_t = P / At = 280 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec05-act-6', name: 'Task 6: Stress Concentration at Thread Root', response: 'Thread root Kt = 3.2, Peak stress = 896 MPa exceeding yield', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec05-act-7', name: 'Task 7: High-Cycle Fatigue Endurance Limit', response: 'Corrected endurance limit S_e = 0.5 * Sut * ka * kb = 240 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec05-act-8', name: 'Task 8: Material Upgrade & Factor of Safety Decision', response: 'Upgrade bolt grade from Class 8.8 to 10.9 with rolled threads (FOS = 2.15)', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' }
+      ];
+    }
+
+    if (name.includes('stress') || name.includes('concentration') || name.includes('ec-06')) {
+      return [
+        { id: 'ec06-act-1', name: 'Task 1: Component Identification & Plate Geometry', response: 'Flat Plate with central circular hole: W = 100 mm, d = 20 mm, t = 10 mm', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec06-act-2', name: 'Task 2: Boundary Conditions & Uniform Loading', response: 'Uniaxial tensile load P = 50,000 N applied at ends', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
+        { id: 'ec06-act-3', name: 'Task 3: Free Body Diagram', response: 'Net cross section area A_net = (W - d) * t = 800 mm^2', maxMarks: 1, systemSuggestedMarks: 1, category: 'Analysis' },
+        { id: 'ec06-act-4', name: 'Task 4: Nominal Stress Calculation (sigma_nom)', response: 'sigma_nom = P / A_net = 50,000 / 800 = 62.5 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec06-act-5', name: 'Task 5: Stress Concentration Factor (Kt) Determination', response: 'Ratio d/W = 0.20. From Peterson Chart, Kt = 2.51', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec06-act-6', name: 'Task 6: Peak Stress Calculation (sigma_max)', response: 'sigma_max = Kt * sigma_nom = 2.51 * 62.5 = 156.88 MPa', maxMarks: 2, systemSuggestedMarks: 2, category: 'Calculation' },
+        { id: 'ec06-act-7', name: 'Task 7: Material Selection & Yield Strength', response: 'Structural Steel Fe 410 (Syt = 310 MPa)', maxMarks: 1, systemSuggestedMarks: 1, category: 'Design Decision' },
+        { id: 'ec06-act-8', name: 'Task 8: Factor of Safety & Relief Hole Design', response: 'FOS = Syt / sigma_max = 310 / 156.88 = 1.98. Auxiliary relief holes added', maxMarks: 2, systemSuggestedMarks: 2, category: 'Design Decision' }
+      ];
+    }
+
+    return [
+      { id: 'gen-act-1', name: 'Task 1: Given Data & System Identification', response: 'System parameters, loads, and boundary conditions identified', maxMarks: 2, systemSuggestedMarks: 2, category: 'Identification' },
+      { id: 'gen-act-2', name: 'Task 2: Engineering Calculations & Stress Analysis', response: 'Calculations completed according to engineering formulas', maxMarks: 6, systemSuggestedMarks: 6, category: 'Calculation' },
+      { id: 'gen-act-3', name: 'Task 3: Safety Factor Verification & Design Decision', response: 'Factor of safety verified against design standards', maxMarks: 4, systemSuggestedMarks: 4, category: 'Design Decision' }
+    ];
+  }
+
+  getExpectedActivityCount(challengeName) {
+    const name = String(challengeName || '').toLowerCase();
+    if (name.includes('borewell') || name.includes('ec-04')) return 13;
+    if (name.includes('elevator') || name.includes('ec-01')) return 8;
+    if (name.includes('failure') || name.includes('ec-05')) return 8;
+    if (name.includes('stress') || name.includes('ec-06')) return 8;
+    if (name.includes('motorcycle') || name.includes('ec-02')) return 7;
+    if (name.includes('material') || name.includes('ec-03')) return 7;
+    if (name.includes('shaft') || name.includes('ec-07')) return 6;
+    if (name.includes('key') || name.includes('ec-08')) return 6;
+    return 3;
+  }
+
   createEvaluationFromSubmission(submission) {
+    let sourceActivities = submission.activities || [];
+    const isGenericPlaceholder = sourceActivities.length > 0 && sourceActivities.every((a) => a.id === 'act-1' || a.id === 'act-2' || a.name === 'Real-World Component Data' || a.name === 'Engineering Calculation Engine');
+    const expectedCount = this.getExpectedActivityCount(submission.challenge || submission.challengeId);
+
+    if (!sourceActivities.length || sourceActivities.length < expectedCount || isGenericPlaceholder) {
+      sourceActivities = this.getStepwiseActivitiesForChallenge(submission.challenge || submission.challengeId);
+    }
+
     return {
       studentName: submission.studentName,
       prn: submission.prn,
@@ -101,16 +243,19 @@ class EvaluationEngine {
       timeTaken: submission.timeTaken,
       submissionStatus: submission.submissionStatus,
       submissionId: submission.id,
-      activities: (submission.activities || []).map((activity) => ({
-        ...activity,
-        title: activity.name,
-        evaluationType: activity.category || 'Activity',
-        subType: activity.category || 'Response',
-        studentResponse: activity.response,
-        correctAnswer: activity.correctAnswer || 'Unavailable',
-        systemSuggestedMarks: activity.systemSuggestedMarks || 0,
-        category: activity.category || 'Activity'
-      }))
+      activities: sourceActivities.map((activity) => {
+        const isCalc = this.isCalculationActivity(activity);
+        return {
+          ...activity,
+          title: activity.name || activity.title,
+          evaluationType: isCalc ? 'Calculation (Auto-Assessed)' : (activity.category || 'Faculty Evaluation'),
+          subType: isCalc ? 'System Formula Evaluation' : 'Faculty Subjective Review',
+          studentResponse: activity.response,
+          correctAnswer: activity.correctAnswer || (isCalc ? 'Auto-evaluated calculation formula' : 'Faculty evaluation criterion'),
+          systemSuggestedMarks: Number(activity.systemSuggestedMarks) || Number(activity.maxMarks) || 2,
+          category: activity.category || 'Activity'
+        };
+      })
     };
   }
 
@@ -373,7 +518,9 @@ class EvaluationEngine {
 
   renderActivityCardMarkup(activity) {
     const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
-    const facultyMarks = activity.facultyMarks ?? activity.systemSuggestedMarks;
+    const isCalc = this.isCalculationActivity(activity);
+    const facultyMarks = activity.facultyMarks ?? (isCalc ? activity.systemSuggestedMarks : '');
+    const systemDisplay = isCalc ? `${activity.systemSuggestedMarks}/${activity.maxMarks}` : 'N/A (Faculty Review)';
     const modified = activity.isModified;
     const disabledAttr = isGuest ? 'disabled readonly' : '';
     const reasonMarkup = modified ? `
@@ -388,17 +535,23 @@ class EvaluationEngine {
         <div class="card-body p-4">
           <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3 mb-3">
             <div>
-              <div class="d-flex align-items-center gap-2 mb-2">
+              <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                 <h4 class="h5 mb-0">${this.escapeHtml(activity.title)}</h4>
-                <span class="badge bg-primary-subtle text-primary-emphasis">${this.escapeHtml(activity.evaluationType)}</span>
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">${this.escapeHtml(activity.subType)}</span>
-                ${modified ? '<span class="badge bg-warning-subtle text-warning-emphasis">Modified by Faculty</span>' : ''}
+                ${isCalc ? `
+                  <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle rounded-pill px-3 py-1">
+                    <i class="bi bi-cpu me-1"></i>Auto-Assessed (System Engine)
+                  </span>` : `
+                  <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-3 py-1">
+                    <i class="bi bi-person-badge me-1"></i>Faculty Evaluation Required
+                  </span>`}
+                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill px-2 py-1">${this.escapeHtml(activity.subType)}</span>
+                ${modified ? '<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-2 py-1">Modified by Faculty</span>' : ''}
               </div>
               <p class="text-muted mb-0">Maximum Marks: ${activity.maxMarks}</p>
             </div>
             <div class="text-md-end">
-              <p class="small text-muted mb-1">System Suggested Marks</p>
-              <h5 class="mb-0">${activity.systemSuggestedMarks}/${activity.maxMarks}</h5>
+              <p class="small text-muted mb-1">${isCalc ? 'Auto-Assessed Marks' : 'System Suggested Marks'}</p>
+              <h5 class="mb-0 text-primary fw-bold">${systemDisplay}</h5>
             </div>
           </div>
 
@@ -411,7 +564,7 @@ class EvaluationEngine {
             </div>
             <div class="col-lg-6">
               <div class="border rounded-4 p-3 h-100">
-                <p class="text-muted small mb-2">Correct Answer</p>
+                <p class="text-muted small mb-2">Correct Answer / Rubric</p>
                 <p class="mb-0">${this.escapeHtml(activity.correctAnswer)}</p>
               </div>
             </div>
@@ -420,11 +573,12 @@ class EvaluationEngine {
           <div class="row g-4 mt-1">
             <div class="col-md-4">
               <label class="form-label">System Suggested Marks</label>
-              <input class="form-control" type="text" value="${activity.systemSuggestedMarks}" readonly />
+              <input class="form-control" type="text" value="${isCalc ? activity.systemSuggestedMarks : 'N/A (Faculty Review)'}" readonly />
             </div>
             <div class="col-md-4">
               <label class="form-label">Faculty Marks</label>
-              <input class="form-control" type="number" min="0" max="${activity.maxMarks}" value="${facultyMarks}" data-activity-input data-activity-id="${activity.id}" ${disabledAttr} />
+              <input class="form-control" type="number" min="0" max="${activity.maxMarks}" step="0.5" value="${facultyMarks !== null && facultyMarks !== undefined ? facultyMarks : ''}" placeholder="${isCalc ? '' : 'Enter marks'}" data-activity-input data-activity-id="${activity.id}" ${disabledAttr} />
+              ${isCalc ? '<div class="form-text text-success small mt-1"><i class="bi bi-check2-circle me-1"></i>Auto-calculated by system</div>' : '<div class="form-text text-warning-emphasis small mt-1"><i class="bi bi-pencil-square me-1"></i>Faculty grading required</div>'}
             </div>
             <div class="col-md-4">
               <label class="form-label">Faculty Remarks</label>

@@ -41,6 +41,18 @@
         "required": true,
         "readonly": true,
         "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
       }
     ],
     "group": [
@@ -96,6 +108,18 @@
         "required": true,
         "readonly": true,
         "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
       }
     ]
   },
@@ -413,33 +437,33 @@
           "type": "numeric",
           "title": "Step 2: Total Weight",
           "label": "Total Weight (N)",
-          "formula": "Total Mass \u00d7 g"
+          "formula": "Total Mass × g"
         },
         {
           "id": "standLoad",
           "type": "numeric",
           "title": "Step 3: Load on Side Stand (P)",
           "label": "Load (N)",
-          "formula": "Total Weight \u00d7 0.35"
+          "formula": "Total Weight × 0.35"
         },
         {
           "id": "bendingMoment",
           "type": "numeric",
           "title": "Step 4: Maximum Bending Moment (M)",
-          "label": "Bending Moment (N\u00b7mm)",
-          "formula": "Load (P) \u00d7 Length (L)"
+          "label": "Bending Moment (N·mm)",
+          "formula": "Load (P) × Length (L)"
         },
         {
           "id": "sectionModulus",
           "type": "numeric",
           "title": "Step 5: Section Modulus (Z)",
           "label": "Section Modulus (mm3)",
-          "formula": "(\u03c0 / 32) \u00d7 (D^4 - d^4) / D"
+          "formula": "(π / 32) × (D^4 - d^4) / D"
         },
         {
           "id": "bendingStress",
           "type": "numeric",
-          "title": "Step 6: Bending Stress (\u03c3)",
+          "title": "Step 6: Bending Stress (σ)",
           "label": "Bending Stress (MPa)",
           "formula": "Bending Moment (M) / Section Modulus (Z)"
         },
@@ -448,7 +472,7 @@
           "type": "numeric",
           "title": "Step 7: Factor of Safety (FoS)",
           "label": "Factor of Safety",
-          "formula": "Yield Strength (Syt) / Bending Stress (\u03c3)"
+          "formula": "Yield Strength (Syt) / Bending Stress (σ)"
         }
       ]
     },

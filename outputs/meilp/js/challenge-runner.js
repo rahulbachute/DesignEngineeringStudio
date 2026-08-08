@@ -37,6 +37,9 @@ class ChallengeRunner {
       "selection-cards": (host, step, activity) => this.renderSelection(host, step, activity),
       "ranking": (host, step, activity) => this.renderRanking(host, step, activity),
       "calculation-inputs": (host, step, activity) => this.renderCalculation(host, step, activity),
+      "guided-workflow": (host, step, activity) => this.renderGuidedWorkflow(host, step, activity),
+      "engineering-decision-canvas": (host, step, activity) => this.renderEngineeringDecisionCanvas(host, step, activity),
+      "drs-station": (host, step, activity) => this.renderEngineeringDecisionCanvas(host, step, activity),
       "recommendation": (host, step, activity) => this.renderRecommendation(host, step, activity),
       "reflection": (host, step, activity) => this.renderReflection(host, step, activity),
       "submission-summary": (host) => this.renderSubmission(host)
@@ -143,7 +146,7 @@ class ChallengeRunner {
     const fields = Array.isArray(this.content.attemptMode && this.content.attemptMode[mode]) ? this.content.attemptMode[mode] : [];
     const host = this.host();
     const savedStudent = (this.services.stateManager.getState() || {}).student || {};
-    host.innerHTML = `<section class="workbench-card"><h3>${mode === "group" ? "Group Details" : "Student Details"}</h3><form data-student-form novalidate><div class="student-form-grid">${fields.map((field) => this.field(field, savedStudent[field.name])).join("")}</div><div class="component-actions"><button class="btn btn-primary" type="submit"><i class="bi bi-save" aria-hidden="true"></i> Save and Start</button></div></form></section>`;
+    host.innerHTML = `<section class="workbench-card"><h3>${mode === "group" ? "Group Details" : "Student Details"}</h3><form data-student-form novalidate><div class="student-form-grid">${fields.map((field) => this.field(field, savedStudent[field.name])).join("")}</div><div class="component-actions"><button class="btn btn-primary" type="submit"><i class="bi bi-save" aria-hidden="true"></i> Save and Continue</button></div></form></section>`;
     host.querySelector("[data-student-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const result = this.collectFields(host, fields);
@@ -152,7 +155,13 @@ class ChallengeRunner {
       }
       this.services.stateManager.update((state) => ({ student: { ...state.student, ...result.value, attemptMode: mode, saved: true } }));
       this.autosaveAttempt();
-      this.renderDashboard();
+      if (this.returnStepIndex !== undefined && this.returnStepIndex !== null) {
+        const returnIdx = this.returnStepIndex;
+        this.returnStepIndex = null;
+        this.renderStep(returnIdx);
+      } else {
+        this.renderDashboard();
+      }
     });
   }
 
@@ -247,35 +256,100 @@ class ChallengeRunner {
   /**
    * Renders a text response paired with an MCQ.
    */
-  renderTextMcq(host, step, activity) {
-    const saved = this.response(step.id);
-    host.innerHTML = `${this.card("theory", activity.title, activity.prompt)}<section class="workbench-card card-student-response"><h3>Engineering Text Response</h3><textarea class="form-control" rows="6" data-response="text">${this.escape(saved.text || "")}</textarea></section><section class="workbench-card card-information"><h3>${this.escape(activity.mcq.question)}</h3>${activity.mcq.options.map((option) => `<label class="form-check"><input class="form-check-input" type="radio" name="mcq" value="${this.escape(option)}" ${saved.mcq === option ? "checked" : ""}> ${this.escape(option)}</label>`).join("")}</section>`;
+  renderTextMcq(host, step, activity = {}) {
+    const saved = this.response(step.id) || {};
+    const mcqData = activity.mcq || {};
+    const question = mcqData.question || activity.question || activity.prompt || activity.title || "Concept Verification Question";
+    const options = Array.isArray(mcqData.options) ? mcqData.options : (Array.isArray(activity.options) ? activity.options : []);
+
+    let mcqHtml = "";
+    if (options.length) {
+      mcqHtml = `
+        <section class="workbench-card card-information">
+          <h3>${this.escape(question)}</h3>
+          ${options.map((option) => {
+            const optVal = typeof option === "object" ? (option.id || option.value || option.title || "") : option;
+            const optLabel = typeof option === "object" ? (option.title || option.label || option.text || option.value || option.id || "") : option;
+            const isChecked = saved.mcq === optVal || saved.mcq === optLabel;
+            return `<label class="form-check"><input class="form-check-input" type="radio" name="mcq" value="${this.escape(optVal)}" ${isChecked ? "checked" : ""}> ${this.escape(optLabel)}</label>`;
+          }).join("")}
+        </section>
+      `;
+    }
+
+    host.innerHTML = `
+      ${this.card("theory", activity.title || step.title || "", activity.prompt || activity.description || "")}
+      <section class="workbench-card card-student-response">
+        <h3>Engineering Text Response</h3>
+        <textarea class="form-control" rows="6" data-response="text">${this.escape(saved.text || "")}</textarea>
+      </section>
+      ${mcqHtml}
+    `;
     this.bindAutosave(step.id);
   }
 
-  /**
-   * Renders selection cards and justification input.
-   */
-  renderSelection(host, step, activity) {
-    const saved = this.response(step.id);
-    host.innerHTML = `${this.card("theory", activity.title, activity.prompt)}<section class="workbench-card"><div class="row g-3">${activity.options.map((option) => `<div class="col-md-6"><label class="attempt-option"><input class="form-check-input me-2" type="radio" name="selection" value="${this.escape(option.id)}" ${saved.selection === option.id ? "checked" : ""}><strong>${this.escape(option.title)}</strong><span>${this.escape(option.note)}</span></label></div>`).join("")}</div></section><section class="workbench-card card-student-response"><h3>Recommendation Justification</h3><textarea class="form-control" rows="5" data-response="justification">${this.escape(saved.justification || "")}</textarea></section>`;
+  renderSelection(host, step, activity = {}) {
+    const saved = this.response(step.id) || {};
+    const options = Array.isArray(activity.options) ? activity.options : [];
+    host.innerHTML = `
+      ${this.card("theory", activity.title || step.title || "", activity.prompt || activity.description || "")}
+      <section class="workbench-card">
+        <div class="row g-3">
+          ${options.map((option) => {
+            const optId = typeof option === "object" ? (option.id || option.value || option.title) : option;
+            const optTitle = typeof option === "object" ? (option.title || option.label || option.name || option.id) : option;
+            const optNote = typeof option === "object" ? (option.note || option.description || "") : "";
+            const isChecked = saved.selection === optId || saved.selection === optTitle;
+            return `
+              <div class="col-md-6">
+                <label class="attempt-option">
+                  <input class="form-check-input me-2" type="radio" name="selection" value="${this.escape(optId)}" ${isChecked ? "checked" : ""}>
+                  <strong>${this.escape(optTitle)}</strong>
+                  ${optNote ? `<span>${this.escape(optNote)}</span>` : ""}
+                </label>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </section>
+      <section class="workbench-card card-student-response">
+        <h3>Recommendation Justification</h3>
+        <textarea class="form-control" rows="5" data-response="justification">${this.escape(saved.justification || "")}</textarea>
+      </section>
+    `;
     this.bindAutosave(step.id);
   }
 
-  /**
-   * Renders ranking inputs and safety justification.
-   */
-  renderRanking(host, step, activity) {
-    const saved = this.response(step.id);
-    host.innerHTML = `<section class="workbench-card"><h3>${this.escape(activity.title)}</h3><div class="student-form-grid">${activity.rankingItems.map((item) => `<div><label class="form-label">${this.escape(item)}</label><input class="form-control" type="number" min="1" max="${activity.rankingItems.length}" data-rank="${this.escape(item)}" value="${this.escape((saved.ranking || {})[item] || "")}"></div>`).join("")}</div></section><section class="workbench-card card-student-response"><h3>Safety Justification</h3><textarea class="form-control" rows="5" data-response="justification">${this.escape(saved.justification || "")}</textarea></section>`;
+  renderRanking(host, step, activity = {}) {
+    const saved = this.response(step.id) || {};
+    const rankingItems = Array.isArray(activity.rankingItems) ? activity.rankingItems : (Array.isArray(activity.items) ? activity.items : []);
+    host.innerHTML = `
+      <section class="workbench-card">
+        <h3>${this.escape(activity.title || step.title || "")}</h3>
+        <div class="student-form-grid">
+          ${rankingItems.map((item) => {
+            const label = typeof item === "object" ? (item.title || item.label || item.name || item.id) : item;
+            const id = typeof item === "object" ? (item.id || label) : item;
+            const val = (saved.ranking || {})[id] || (saved.ranking || {})[label] || "";
+            return `
+              <div>
+                <label class="form-label">${this.escape(label)}</label>
+                <input class="form-control" type="number" min="1" max="${rankingItems.length}" data-rank="${this.escape(id)}" value="${this.escape(val)}">
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </section>
+      <section class="workbench-card card-student-response">
+        <h3>Safety Justification</h3>
+        <textarea class="form-control" rows="5" data-response="justification">${this.escape(saved.justification || "")}</textarea>
+      </section>
+    `;
     this.bindAutosave(step.id);
   }
 
-  /**
-   * Renders calculation inputs for the activity.
-   */
-  renderCalculation(host, step, activity) {
-    const saved = this.response(step.id);
+  renderCalculation(host, step, activity = {}) {
+    const saved = this.response(step.id) || {};
     let imageHostHtml = "";
     if (activity.image) {
       imageHostHtml = `<div data-calculation-image-viewer class="mb-3"></div>`;
@@ -286,12 +360,36 @@ class ChallengeRunner {
         <div class="mb-3">
           <a href="${this.escape(activity.toolUrl)}" target="_blank" class="btn btn-warning fw-bold text-dark px-3 py-2 shadow-sm d-inline-flex align-items-center gap-2">
             <i class="bi bi-calculator-fill fs-5" aria-hidden="true"></i>
-            ${this.escape(activity.toolButtonText || "Launch Shaft Design Calculator")}
+            ${this.escape(activity.toolButtonText || "Launch Calculator")}
           </a>
         </div>
       `;
     }
-    host.innerHTML = `${imageHostHtml}${this.card("calculation", "Given Data", "", activity.given)}${toolBtnHtml}<section class="workbench-card"><h3>${this.escape(activity.title)}</h3><div class="student-form-grid">${activity.fields.map((field) => `<div><label class="form-label">${this.escape(field.label)}</label><input class="form-control" type="number" step="0.01" data-calc="${this.escape(field.id)}" placeholder="${this.escape(field.placeholder)}" value="${this.escape(saved[field.id] || "")}"></div>`).join("")}</div></section>`;
+    const given = Array.isArray(activity.given) ? activity.given : [];
+    const fields = Array.isArray(activity.fields) ? activity.fields : [];
+    const givenCard = given.length ? this.card("calculation", "Given Data", "", given) : "";
+
+    host.innerHTML = `
+      ${imageHostHtml}
+      ${givenCard}
+      ${toolBtnHtml}
+      <section class="workbench-card">
+        <h3>${this.escape(activity.title || step.title || "")}</h3>
+        <div class="student-form-grid">
+          ${fields.map((field) => {
+            const fieldId = typeof field === "object" ? (field.id || field.name) : field;
+            const fieldLabel = typeof field === "object" ? (field.label || field.title || fieldId) : field;
+            const fieldPlaceholder = typeof field === "object" ? (field.placeholder || "") : "";
+            return `
+              <div>
+                <label class="form-label">${this.escape(fieldLabel)}</label>
+                <input class="form-control" type="number" step="0.01" data-calc="${this.escape(fieldId)}" placeholder="${this.escape(fieldPlaceholder)}" value="${this.escape(saved[fieldId] || "")}">
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </section>
+    `;
 
     if (activity.image) {
       const viewerHost = host.querySelector("[data-calculation-image-viewer]");
@@ -316,21 +414,72 @@ class ChallengeRunner {
     this.bindAutosave(step.id);
   }
 
-  /**
-   * Renders recommendation options and justification input.
-   */
-  renderRecommendation(host, step, activity) {
-    const saved = this.response(step.id);
-    host.innerHTML = `<section class="workbench-card card-information"><h3>${this.escape(activity.title)}</h3>${activity.options.map((option) => `<label class="form-check"><input class="form-check-input" type="radio" name="decision" value="${this.escape(option)}" ${saved.decision === option ? "checked" : ""}> ${this.escape(option)}</label>`).join("")}</section><section class="workbench-card card-student-response"><h3>Engineering Justification</h3><textarea class="form-control" rows="6" data-response="justification">${this.escape(saved.justification || "")}</textarea></section>`;
+  renderGuidedWorkflow(host, step, activity = {}) {
+    const component = this.services.componentRegistry.create("guided-workflow", {
+      config: { id: step.id, title: activity.title, given: activity.given, steps: activity.steps },
+      stateManager: this.services.stateManager,
+      eventBus: this.services.eventBus
+    });
+    this.mount(component, host);
+  }
+
+  renderEngineeringDecisionCanvas(host, step, activity = {}) {
+    const component = this.services.componentRegistry.create("engineering-decision-canvas", {
+      config: {
+        id: step.id,
+        stationCode: activity.stationCode,
+        title: activity.title,
+        components: activity.components,
+        figure: activity.figure,
+        image: activity.image || (this.content.assets ? this.content.assets[activity.asset] : null),
+        imageAlt: activity.imageAlt,
+        options: this.content.options || {}
+      },
+      stateManager: this.services.stateManager,
+      eventBus: this.services.eventBus
+    });
+    this.mount(component, host);
+  }
+
+  renderRecommendation(host, step, activity = {}) {
+    const saved = this.response(step.id) || {};
+    const options = Array.isArray(activity.options) ? activity.options : [];
+    host.innerHTML = `
+      <section class="workbench-card card-information">
+        <h3>${this.escape(activity.title || step.title || "")}</h3>
+        ${options.map((option) => {
+          const optVal = typeof option === "object" ? (option.id || option.value || option.title) : option;
+          const optLabel = typeof option === "object" ? (option.title || option.label || option.name || option.id) : option;
+          const isChecked = saved.decision === optVal || saved.decision === optLabel;
+          return `<label class="form-check"><input class="form-check-input" type="radio" name="decision" value="${this.escape(optVal)}" ${isChecked ? "checked" : ""}> ${this.escape(optLabel)}</label>`;
+        }).join("")}
+      </section>
+      <section class="workbench-card card-student-response">
+        <h3>Engineering Justification</h3>
+        <textarea class="form-control" rows="6" data-response="justification">${this.escape(saved.justification || "")}</textarea>
+      </section>
+    `;
     this.bindAutosave(step.id);
   }
 
-  /**
-   * Renders reflection questions and response fields.
-   */
-  renderReflection(host, step, activity) {
-    const saved = this.response(step.id);
-    host.innerHTML = activity.questions.map((question, index) => `<section class="workbench-card card-student-response"><h3>${this.escape(question)}</h3><textarea class="form-control" rows="4" data-reflection="q${index + 1}">${this.escape(saved[`q${index + 1}`] || "")}</textarea></section>`).join("");
+  renderReflection(host, step, activity = {}) {
+    const saved = this.response(step.id) || {};
+    const questions = Array.isArray(activity.questions)
+      ? activity.questions
+      : (Array.isArray(activity.prompts) ? activity.prompts : (Array.isArray(activity.items) ? activity.items : []));
+    host.innerHTML = questions.map((question, index) => {
+      const qText = typeof question === "object" ? (question.label || question.title || question.text || question.question || question.id || "") : question;
+      const qHelp = typeof question === "object" ? (question.helpText || question.description || question.placeholder || "") : "";
+      const qId = typeof question === "object" ? (question.id || `q${index + 1}`) : `q${index + 1}`;
+      const qPlaceholder = typeof question === "object" ? (question.placeholder || "") : "";
+      return `
+        <section class="workbench-card card-student-response">
+          <h3>${this.escape(qText)}</h3>
+          ${qHelp ? `<p class="text-muted small mb-2">${this.escape(qHelp)}</p>` : ""}
+          <textarea class="form-control" rows="4" data-reflection="${this.escape(qId)}" placeholder="${this.escape(qPlaceholder)}">${this.escape(saved[qId] || "")}</textarea>
+        </section>
+      `;
+    }).join("");
     this.bindAutosave(step.id);
   }
 
@@ -353,13 +502,14 @@ class ChallengeRunner {
         <p><strong>Google Sheets:</strong> ${this.googleSheets.isConfigured() ? "Configured" : "Endpoint not configured"}</p>
         <p><strong>Submission Status:</strong> <span data-submission-status>${this.escape(status.message || (status.submitted ? "Submitted" : "Ready for validation"))}</span></p>
       </section>
-      ${validation.valid ? "" : `<section class="workbench-card card-warning"><h3>Submission Validation</h3><ul>${validation.errors.map((error) => `<li>${this.escape(error)}</li>`).join("")}</ul></section>`}
+      ${validation.valid ? "" : `<section class="workbench-card card-warning"><h3>Submission Validation</h3><ul>${validation.errors.map((error) => `<li>${this.escape(error)}</li>`).join("")}</ul><div class="mt-3"><button class="btn btn-outline-warning btn-sm fw-bold" type="button" data-edit-student-info-btn><i class="bi bi-person-gear me-1" aria-hidden="true"></i> Edit Student / Group Details</button></div></section>`}
       <section class="workbench-card card-student-response">
         <h3>Submission Actions</h3>
         <p data-submission-message>${validation.valid ? "Review and submit the completed challenge package." : "Resolve the validation messages above before final submission."}</p>
         <div class="component-actions">
           <button class="btn btn-primary" type="button" data-submit-challenge ${validation.valid ? "" : "disabled"}><i class="bi bi-send-check" aria-hidden="true"></i> Submit to Google Sheets</button>
           <button class="btn btn-outline-primary" type="button" data-retry-submissions ${queueCount ? "" : "disabled"}><i class="bi bi-arrow-clockwise" aria-hidden="true"></i> Retry Queue (${queueCount})</button>
+          <button class="btn btn-outline-secondary" type="button" data-edit-student-info-btn><i class="bi bi-pencil-square me-1" aria-hidden="true"></i> Edit Student Details</button>
         </div>
       </section>
       <section class="workbench-card card-student-response"><h3>Responses Prepared for Submission</h3><pre class="mb-0">${this.escape(JSON.stringify(payload, null, 2))}</pre></section>`;
@@ -413,8 +563,11 @@ class ChallengeRunner {
     if (Object.keys(value).length === 0 && step.component === "information-card") {
       value.reviewed = true;
     }
+    this.completed.add(stepId);
     this.services.stateManager.update((state) => ({ responses: { ...state.responses, [stepId]: value } }));
+    this.persistProgress();
     this.autosaveAttempt();
+    this.renderTaskNav();
   }
 
   /**
@@ -438,10 +591,10 @@ class ChallengeRunner {
    * Advances to the next workflow step when one exists.
    */
   next() {
-    if (this.currentIndex >= this.workflow.steps.length - 1) {
+    const steps = this.workflow && Array.isArray(this.workflow.steps) ? this.workflow.steps : [];
+    if (this.currentIndex >= steps.length - 1) {
       return;
     }
-    this.saveCurrent();
     this.renderStep(this.currentIndex + 1);
   }
 
@@ -460,11 +613,17 @@ class ChallengeRunner {
    */
   renderTaskNav() {
     const steps = this.workflow && Array.isArray(this.workflow.steps) ? this.workflow.steps : [];
-    const html = steps.map((step, index) => {
+    const setupSaved = (this.services.stateManager.getState() || {}).student?.saved;
+    const setupItem = `<li><button class="task-button" type="button" data-edit-student-setup><span class="task-icon is-${setupSaved ? "completed" : "pending"}"><i class="bi ${setupSaved ? "bi-person-check-fill text-success" : "bi-person"}" aria-hidden="true"></i></span><span>Student Details</span><small>${setupSaved ? "Saved" : "Setup"}</small></button></li>`;
+
+    const stepsHtml = steps.map((step, index) => {
       const status = this.completed.has(step.id) ? "completed" : index === this.currentIndex ? "current" : "pending";
       const icon = status === "completed" ? "bi-check2" : status === "current" ? "bi-arrow-right" : "bi-circle";
       return `<li><button class="task-button ${status === "current" ? "is-current" : ""}" type="button" data-step-index="${index}"><span class="task-icon is-${status}"><i class="bi ${icon}" aria-hidden="true"></i></span><span>${this.escape(step.title)}</span><small>${this.title(status)}</small></button></li>`;
     }).join("");
+
+    const html = setupItem + stepsHtml;
+
     const taskList = document.querySelector("[data-task-list]");
     const mobileTaskList = document.querySelector("[data-mobile-task-list]");
     if (taskList) {
@@ -474,6 +633,12 @@ class ChallengeRunner {
       mobileTaskList.innerHTML = html;
     }
     document.querySelectorAll("[data-step-index]").forEach((button) => button.addEventListener("click", () => this.renderStep(Number(button.dataset.stepIndex))));
+    document.querySelectorAll("[data-edit-student-setup]").forEach((button) => button.addEventListener("click", () => {
+      this.returnStepIndex = this.currentIndex;
+      const state = this.services.stateManager.getState() || {};
+      const mode = state.settings?.attemptMode || "individual";
+      this.renderStudentForm(mode);
+    }));
   }
 
   /**
@@ -641,13 +806,30 @@ class ChallengeRunner {
         this.renderSubmission(host);
       });
     }
+
+    const editInfoButtons = host.querySelectorAll("[data-edit-student-info-btn]");
+    editInfoButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        this.returnStepIndex = this.currentIndex;
+        const state = this.services.stateManager.getState() || {};
+        const mode = state.settings?.attemptMode || "individual";
+        this.renderStudentForm(mode);
+      });
+    });
   }
 
   /**
    * Builds a standard workbench card.
    */
   card(type, title, body, items) {
-    return `<section class="workbench-card card-${type}"><h3>${this.escape(title)}</h3>${body ? `<p>${this.escape(body)}</p>` : ""}${items ? `<ul>${items.map((item) => `<li>${this.escape(item)}</li>`).join("")}</ul>` : ""}</section>`;
+    let itemsHtml = "";
+    if (Array.isArray(items) && items.length) {
+      itemsHtml = `<ul>${items.map((item) => {
+        const text = typeof item === "object" ? (item.label || item.title || item.value || JSON.stringify(item)) : item;
+        return `<li>${this.escape(text)}</li>`;
+      }).join("")}</ul>`;
+    }
+    return `<section class="workbench-card card-${type}"><h3>${this.escape(title)}</h3>${body ? `<p>${this.escape(body)}</p>` : ""}${itemsHtml}</section>`;
   }
 
   /**

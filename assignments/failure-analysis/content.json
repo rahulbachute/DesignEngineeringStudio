@@ -40,30 +40,151 @@
   },
   "attemptMode": {
     "individual": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
-      { "name": "name", "label": "Name", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "rollNumber",
+        "label": "Roll Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ],
     "group": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
-      { "name": "groupName", "label": "Group Name", "required": false },
-      { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
-      { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "groupName",
+        "label": "Group Name",
+        "required": false
+      },
+      {
+        "name": "student1",
+        "label": "Student 1",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ]
   },
   "widgets": [
-    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
-    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
-    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
-    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 with PO1, PO2, PO3, PO5, PO7, PO8, PO11 and PSO1, PSO2." },
-    { "id": "hint", "title": "Engineering Hint", "icon": "bi-lightbulb", "cardType": "hint", "text": "Base your conclusions entirely on the evidence and engineering principles." }
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO1 with PO1, PO2, PO3, PO5, PO7, PO8, PO11 and PSO1, PSO2."
+    },
+    {
+      "id": "hint",
+      "title": "Engineering Hint",
+      "icon": "bi-lightbulb",
+      "cardType": "hint",
+      "text": "Base your conclusions entirely on the evidence and engineering principles."
+    }
   ],
   "activities": {
     "engineering-brief": {
@@ -73,17 +194,57 @@
         "marks": 0,
         "bloomLevel": "L1 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO8", "PO11"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "cards": [
-        { "type": "theory", "title": "Project Background", "body": "A bolted structural joint has failed during service causing unexpected machine downtime." },
-        { "type": "information", "title": "Engineering Context", "body": "You are a Mechanical Design Engineer assigned to investigate the failure, verify materials, check the factor of safety, and recommend modifications." },
-        { "type": "student-response", "title": "Deliverables", "items": ["Component identification", "Failure investigation", "Stress calculations", "Design recommendations", "Engineering report"] },
-        { "type": "theory", "title": "Industrial Application", "body": "Bolted joints are critical in heavy structural applications and load-bearing mechanisms." },
-        { "type": "warning", "title": "Consequences of Failure", "body": "Failure can result in severe machine downtime, safety hazards, and financial losses." },
-        { "type": "information", "title": "Design Requirements", "items": ["Applied Load (Determines size)", "Service Conditions (Affects material)", "Safety (Drives factor of safety)"] }
+        {
+          "type": "theory",
+          "title": "Project Background",
+          "body": "A bolted structural joint has failed during service causing unexpected machine downtime."
+        },
+        {
+          "type": "information",
+          "title": "Engineering Context",
+          "body": "You are a Mechanical Design Engineer assigned to investigate the failure, verify materials, check the factor of safety, and recommend modifications."
+        },
+        {
+          "type": "student-response",
+          "title": "Deliverables",
+          "items": [
+            "Component identification",
+            "Failure investigation",
+            "Stress calculations",
+            "Design recommendations",
+            "Engineering report"
+          ]
+        },
+        {
+          "type": "theory",
+          "title": "Industrial Application",
+          "body": "Bolted joints are critical in heavy structural applications and load-bearing mechanisms."
+        },
+        {
+          "type": "warning",
+          "title": "Consequences of Failure",
+          "body": "Failure can result in severe machine downtime, safety hazards, and financial losses."
+        },
+        {
+          "type": "information",
+          "title": "Design Requirements",
+          "items": [
+            "Applied Load (Determines size)",
+            "Service Conditions (Affects material)",
+            "Safety (Drives factor of safety)"
+          ]
+        }
       ],
       "acceptanceText": "I have read and accepted the Engineering Brief."
     },
@@ -96,8 +257,13 @@
         "marks": 1,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "image": "./Engineering Assets Library/EA-05 Failure Analysis/Student Version/EA-05_Student_v1.0.png",
@@ -115,15 +281,69 @@
         "Lower Plate"
       ],
       "labels": [
-        { "componentNumber": 1, "x": 50, "y": 30, "correctAnswer": "Bolt Head", "feedback": "Provides torque point." },
-        { "componentNumber": 2, "x": 50, "y": 46, "correctAnswer": "Smooth Shank", "feedback": "Carries load within the grip." },
-        { "componentNumber": 3, "x": 65, "y": 42, "correctAnswer": "Upper Plate", "feedback": "Part of the clamped structure." },
-        { "componentNumber": 4, "x": 65, "y": 50, "correctAnswer": "Lower Plate", "feedback": "Part of the clamped structure." },
-        { "componentNumber": 5, "x": 50, "y": 58, "correctAnswer": "Threaded Portion", "feedback": "Mating surface for the nut." },
-        { "componentNumber": 6, "x": 50, "y": 71, "correctAnswer": "Hex Nut", "feedback": "Secures the joint." },
-        { "componentNumber": 7, "x": 50, "y": 66, "correctAnswer": "Spring Washer", "feedback": "Prevents loosening." },
-        { "componentNumber": 8, "x": 50, "y": 63, "correctAnswer": "Flat Washer", "feedback": "Distributes load." },
-        { "componentNumber": 9, "x": 42, "y": 69, "correctAnswer": "Thread Run-out", "feedback": "Transition to smooth shank." }
+        {
+          "componentNumber": 1,
+          "x": 50,
+          "y": 30,
+          "correctAnswer": "Bolt Head",
+          "feedback": "Provides torque point."
+        },
+        {
+          "componentNumber": 2,
+          "x": 50,
+          "y": 46,
+          "correctAnswer": "Smooth Shank",
+          "feedback": "Carries load within the grip."
+        },
+        {
+          "componentNumber": 3,
+          "x": 65,
+          "y": 42,
+          "correctAnswer": "Upper Plate",
+          "feedback": "Part of the clamped structure."
+        },
+        {
+          "componentNumber": 4,
+          "x": 65,
+          "y": 50,
+          "correctAnswer": "Lower Plate",
+          "feedback": "Part of the clamped structure."
+        },
+        {
+          "componentNumber": 5,
+          "x": 50,
+          "y": 58,
+          "correctAnswer": "Threaded Portion",
+          "feedback": "Mating surface for the nut."
+        },
+        {
+          "componentNumber": 6,
+          "x": 50,
+          "y": 71,
+          "correctAnswer": "Hex Nut",
+          "feedback": "Secures the joint."
+        },
+        {
+          "componentNumber": 7,
+          "x": 50,
+          "y": 66,
+          "correctAnswer": "Spring Washer",
+          "feedback": "Prevents loosening."
+        },
+        {
+          "componentNumber": 8,
+          "x": 50,
+          "y": 63,
+          "correctAnswer": "Flat Washer",
+          "feedback": "Distributes load."
+        },
+        {
+          "componentNumber": 9,
+          "x": 42,
+          "y": 69,
+          "correctAnswer": "Thread Run-out",
+          "feedback": "Transition to smooth shank."
+        }
       ]
     },
     "working-principle": {
@@ -133,17 +353,27 @@
         "marks": 1,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Explain the working principle of a Bolted Joint, including Preload, Clamping Force, Tensile Loading, and Load Transfer.",
       "mcq": {
         "question": "Which of the following describes the initial tension applied to a bolt during assembly?",
-        "options": ["Preload", "Yield Strength", "Shear Force", "Ultimate Strength"]
+        "options": [
+          "Preload",
+          "Yield Strength",
+          "Shear Force",
+          "Ultimate Strength"
+        ]
       }
     },
-
     "engineering-assumptions": {
       "title": "Engineering Assumptions",
       "metadata": {
@@ -151,8 +381,13 @@
         "marks": 0.5,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "questions": [
@@ -166,15 +401,32 @@
         "marks": 1,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
-        "po": ["PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Based on the provided engineering asset, identify the characteristics of the failure.",
       "options": [
-        { "id": "location", "title": "Failure Location", "note": "At the thread run-out or threaded portion." },
-        { "id": "surface", "title": "Fracture Surface", "note": "Examine for signs of fatigue or ductile overload." },
-        { "id": "initiation", "title": "Crack Initiation Region", "note": "Stress concentration points." }
+        {
+          "id": "location",
+          "title": "Failure Location",
+          "note": "At the thread run-out or threaded portion."
+        },
+        {
+          "id": "surface",
+          "title": "Fracture Surface",
+          "note": "Examine for signs of fatigue or ductile overload."
+        },
+        {
+          "id": "initiation",
+          "title": "Crack Initiation Region",
+          "note": "Stress concentration points."
+        }
       ]
     },
     "free-body-diagram": {
@@ -186,8 +438,14 @@
         "marks": 1,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "image": "./Engineering Assets Library/EA-05 Failure Analysis/Student Version/EA-05_FBD_Student_v1.0.png",
@@ -199,9 +457,27 @@
         "Internal Tensile Force"
       ],
       "labels": [
-        { "componentNumber": 1, "x": 50, "y": 15, "correctAnswer": "Applied Tensile Force", "feedback": "External load pulling the joint apart." },
-        { "componentNumber": 2, "x": 35, "y": 45, "correctAnswer": "Reaction Forces", "feedback": "From the plates." },
-        { "componentNumber": 3, "x": 50, "y": 60, "correctAnswer": "Internal Tensile Force", "feedback": "Resisting the applied load." }
+        {
+          "componentNumber": 1,
+          "x": 50,
+          "y": 15,
+          "correctAnswer": "Applied Tensile Force",
+          "feedback": "External load pulling the joint apart."
+        },
+        {
+          "componentNumber": 2,
+          "x": 35,
+          "y": 45,
+          "correctAnswer": "Reaction Forces",
+          "feedback": "From the plates."
+        },
+        {
+          "componentNumber": 3,
+          "x": 50,
+          "y": 60,
+          "correctAnswer": "Internal Tensile Force",
+          "feedback": "Resisting the applied load."
+        }
       ]
     },
     "engineering-calculations": {
@@ -211,8 +487,14 @@
         "marks": 6,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "35 minutes"
       },
       "given": [
@@ -222,14 +504,46 @@
         "Use Syt of the selected material"
       ],
       "fields": [
-        { "id": "appliedLoad", "label": "Applied Tensile Load (N)", "placeholder": "e.g. 50000" },
-        { "id": "nominalDia", "label": "Nominal Diameter (mm)", "placeholder": "12" },
-        { "id": "coreDia", "label": "Core Diameter (mm)", "placeholder": "d - 1.226875*p" },
-        { "id": "stressArea", "label": "Tensile Stress Area (mm²)", "placeholder": "Area based on average diameter" },
-        { "id": "tensileStress", "label": "Tensile Stress (MPa)", "placeholder": "Force / Area" },
-        { "id": "allowableStress", "label": "Yield Strength (MPa)", "placeholder": "Enter Syt" },
-        { "id": "factorOfSafety", "label": "Factor of Safety", "placeholder": "Yield Strength / Applied Stress" },
-        { "id": "marginOfSafety", "label": "Percentage Margin of Safety", "placeholder": "(FOS - 1) * 100" }
+        {
+          "id": "appliedLoad",
+          "label": "Applied Tensile Load (N)",
+          "placeholder": "e.g. 50000"
+        },
+        {
+          "id": "nominalDia",
+          "label": "Nominal Diameter (mm)",
+          "placeholder": "12"
+        },
+        {
+          "id": "coreDia",
+          "label": "Core Diameter (mm)",
+          "placeholder": "d - 1.226875*p"
+        },
+        {
+          "id": "stressArea",
+          "label": "Tensile Stress Area (mm²)",
+          "placeholder": "Area based on average diameter"
+        },
+        {
+          "id": "tensileStress",
+          "label": "Tensile Stress (MPa)",
+          "placeholder": "Force / Area"
+        },
+        {
+          "id": "allowableStress",
+          "label": "Yield Strength (MPa)",
+          "placeholder": "Enter Syt"
+        },
+        {
+          "id": "factorOfSafety",
+          "label": "Factor of Safety",
+          "placeholder": "Yield Strength / Applied Stress"
+        },
+        {
+          "id": "marginOfSafety",
+          "label": "Percentage Margin of Safety",
+          "placeholder": "(FOS - 1) * 100"
+        }
       ],
       "expectedProcess": "Perform all core joint failure calculations sequentially to evaluate the safety factor."
     },
@@ -240,16 +554,40 @@
         "marks": 1,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
-        "po": ["PO1", "PO2", "PO5", "PO7"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO5",
+          "PO7"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Compare the given materials and justify the most suitable one.",
       "options": [
-        { "id": "mild-steel", "title": "Mild Steel", "note": "Syt = 250 MPa" },
-        { "id": "en8", "title": "EN8", "note": "Syt = 465 MPa" },
-        { "id": "alloy-steel", "title": "Alloy Steel", "note": "Syt = 680 MPa" },
-        { "id": "stainless-steel", "title": "Stainless Steel", "note": "Syt = 500 MPa" }
+        {
+          "id": "mild-steel",
+          "title": "Mild Steel",
+          "note": "Syt = 250 MPa"
+        },
+        {
+          "id": "en8",
+          "title": "EN8",
+          "note": "Syt = 465 MPa"
+        },
+        {
+          "id": "alloy-steel",
+          "title": "Alloy Steel",
+          "note": "Syt = 680 MPa"
+        },
+        {
+          "id": "stainless-steel",
+          "title": "Stainless Steel",
+          "note": "Syt = 500 MPa"
+        }
       ]
     },
     "stress-concentration": {
@@ -259,17 +597,26 @@
         "marks": 1,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
-        "po": ["PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "prompt": "Explain the role of stress concentration at the Thread Run-out and Thread Root, and its relation to crack initiation.",
       "mcq": {
         "question": "Where is a crack most likely to initiate in a bolted joint under fatigue loading?",
-        "options": ["Thread Root or Run-out", "Smooth Shank", "Bolt Head", "Middle of the Hex Nut"]
+        "options": [
+          "Thread Root or Run-out",
+          "Smooth Shank",
+          "Bolt Head",
+          "Middle of the Hex Nut"
+        ]
       }
     },
-
     "engineering-investigation": {
       "title": "Engineering Investigation",
       "metadata": {
@@ -277,17 +624,45 @@
         "marks": 1,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
-        "po": ["PO2", "PO3", "PO7", "PO8"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO2",
+          "PO3",
+          "PO7",
+          "PO8"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Identify the most probable failure mechanism.",
       "options": [
-        { "id": "tensile-overload", "title": "Tensile Overload", "note": "Ductile failure, necking." },
-        { "id": "fatigue", "title": "Fatigue", "note": "Cyclic loading, beach marks." },
-        { "id": "stress-concentration", "title": "Stress Concentration", "note": "Localized high stress." },
-        { "id": "corrosion", "title": "Corrosion", "note": "Environmental degradation." },
-        { "id": "defect", "title": "Material Defect", "note": "Inclusions or manufacturing flaws." }
+        {
+          "id": "tensile-overload",
+          "title": "Tensile Overload",
+          "note": "Ductile failure, necking."
+        },
+        {
+          "id": "fatigue",
+          "title": "Fatigue",
+          "note": "Cyclic loading, beach marks."
+        },
+        {
+          "id": "stress-concentration",
+          "title": "Stress Concentration",
+          "note": "Localized high stress."
+        },
+        {
+          "id": "corrosion",
+          "title": "Corrosion",
+          "note": "Environmental degradation."
+        },
+        {
+          "id": "defect",
+          "title": "Material Defect",
+          "note": "Inclusions or manufacturing flaws."
+        }
       ]
     },
     "design-improvement": {
@@ -297,17 +672,46 @@
         "marks": 1,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
-        "po": ["PO2", "PO3", "PO7", "PO8", "PO11"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO2",
+          "PO3",
+          "PO7",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "prompt": "Recommend the best design improvements.",
       "options": [
-        { "id": "increase-dia", "title": "Increase Bolt Diameter", "note": "Reduces stress." },
-        { "id": "improve-mat", "title": "Improve Material", "note": "Higher yield strength." },
-        { "id": "increase-fos", "title": "Increase Factor of Safety", "note": "Design precaution." },
-        { "id": "improve-joint", "title": "Improve Joint Design", "note": "Better load distribution." },
-        { "id": "reduce-sc", "title": "Reduce Stress Concentration", "note": "Fillets and smooth transitions." }
+        {
+          "id": "increase-dia",
+          "title": "Increase Bolt Diameter",
+          "note": "Reduces stress."
+        },
+        {
+          "id": "improve-mat",
+          "title": "Improve Material",
+          "note": "Higher yield strength."
+        },
+        {
+          "id": "increase-fos",
+          "title": "Increase Factor of Safety",
+          "note": "Design precaution."
+        },
+        {
+          "id": "improve-joint",
+          "title": "Improve Joint Design",
+          "note": "Better load distribution."
+        },
+        {
+          "id": "reduce-sc",
+          "title": "Reduce Stress Concentration",
+          "note": "Fillets and smooth transitions."
+        }
       ]
     },
     "engineering-decision": {
@@ -317,14 +721,30 @@
         "marks": 1,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
-        "po": ["PO2", "PO3", "PO7", "PO8", "PO11"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO2",
+          "PO3",
+          "PO7",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
-      "options": ["Original Design Safe", "Redesign Required"],
+      "options": [
+        "Original Design Safe",
+        "Redesign Required"
+      ],
       "prompt": "Conclude whether the original design is safe or redesign is required, with engineering justification.",
       "fields": [
-        { "id": "recommendedDia", "label": "Recommended New Bolt Diameter (mm)", "placeholder": "If redesign is required" }
+        {
+          "id": "recommendedDia",
+          "label": "Recommended New Bolt Diameter (mm)",
+          "placeholder": "If redesign is required"
+        }
       ]
     },
     "engineering-report": {
@@ -334,8 +754,14 @@
         "marks": 1,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
-        "po": ["PO8", "PO9", "PO11"],
-        "pso": ["PSO2"],
+        "po": [
+          "PO8",
+          "PO9",
+          "PO11"
+        ],
+        "pso": [
+          "PSO2"
+        ],
         "estimatedTime": "15 minutes"
       },
       "questions": [
@@ -352,10 +778,24 @@
     }
   },
   "facultyEvaluation": {
-    "sections": ["Marks", "CO Attainment", "PO Contribution", "PSO Contribution", "Bloom Level Achievement", "Faculty Remarks"]
+    "sections": [
+      "Marks",
+      "CO Attainment",
+      "PO Contribution",
+      "PSO Contribution",
+      "Bloom Level Achievement",
+      "Faculty Remarks"
+    ]
   },
   "studentSummary": {
     "certificateTitle": "Engineering Investigation Report (Internal)",
-    "sections": ["Investigation Status", "CCE Marks", "CO Achieved", "PO Addressed", "PSO Addressed", "Reflection Summary"]
+    "sections": [
+      "Investigation Status",
+      "CCE Marks",
+      "CO Achieved",
+      "PO Addressed",
+      "PSO Addressed",
+      "Reflection Summary"
+    ]
   }
 }

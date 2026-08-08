@@ -43,29 +43,144 @@
   },
   "attemptMode": {
     "individual": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
-      { "name": "name", "label": "Name", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "rollNumber",
+        "label": "Roll Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ],
     "group": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
-      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
-      { "name": "groupName", "label": "Group Name", "required": false },
-      { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
-      { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "groupName",
+        "label": "Group Name",
+        "required": false
+      },
+      {
+        "name": "student1",
+        "label": "Student 1",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
     ]
   },
   "widgets": [
-    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
-    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
-    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
-    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." },
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    },
     {
       "id": "calculator",
       "title": "Shaft Design Calculator",
@@ -84,14 +199,41 @@
         "marks": 0,
         "bloomLevel": "L1 Understand",
         "co": "CO2",
-        "po": ["PO1", "PO8", "PO11"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "cards": [
-        { "type": "theory", "title": "Real-World Industrial Scenario", "body": "In the heavy machine manufacturing division of Kirloskar Engineering, Pune, an industrial lathe headstock drive shaft transmits 15 kW power at 720 rpm from an electric motor via a central V-belt drive pulley. The shaft is supported by two self-aligning pillow block ball bearings spaced 500 mm apart and delivers output torque to the main gearbox through a flexible coupling. The combined tension from the belt drive applies a downward transverse radial force of 3000 N at the middle of the bearing span. Recent maintenance logs report excessive shaft deflection and elevated bearing temperature under full-load operation. As a Senior Mechanical Design Engineer, you are assigned to evaluate the combined bending and torsional stress state, determine the required shaft diameter per ASME code, and verify whether the current 40 mm shaft diameter provides a safe Factor of Safety." },
-        { "type": "information", "title": "Role & Assignment Scope", "body": "As a Mechanical Design Engineer, you must analyze combined loading, determine required shaft diameter per ASME code, select standard stock diameter, evaluate shear stresses and FOS, and recommend design improvements." },
-        { "type": "student-response", "title": "Expected Deliverables", "items": ["Component Identification", "Working Principle Explanation", "Design Parameters", "Assumptions Log", "FBD & Load Analysis", "Shaft Calculator Calculations", "Material & Safety Decision", "Technical Report"] }
+        {
+          "type": "theory",
+          "title": "Real-World Industrial Scenario",
+          "body": "In the heavy machine manufacturing division of Kirloskar Engineering, Pune, an industrial lathe headstock drive shaft transmits 15 kW power at 720 rpm from an electric motor via a central V-belt drive pulley. The shaft is supported by two self-aligning pillow block ball bearings spaced 500 mm apart and delivers output torque to the main gearbox through a flexible coupling. The combined tension from the belt drive applies a downward transverse radial force of 3000 N at the middle of the bearing span. Recent maintenance logs report excessive shaft deflection and elevated bearing temperature under full-load operation. As a Senior Mechanical Design Engineer, you are assigned to evaluate the combined bending and torsional stress state, determine the required shaft diameter per ASME code, and verify whether the current 40 mm shaft diameter provides a safe Factor of Safety."
+        },
+        {
+          "type": "information",
+          "title": "Role & Assignment Scope",
+          "body": "As a Mechanical Design Engineer, you must analyze combined loading, determine required shaft diameter per ASME code, select standard stock diameter, evaluate shear stresses and FOS, and recommend design improvements."
+        },
+        {
+          "type": "student-response",
+          "title": "Expected Deliverables",
+          "items": [
+            "Component Identification",
+            "Working Principle Explanation",
+            "Design Parameters",
+            "Assumptions Log",
+            "FBD & Load Analysis",
+            "Shaft Calculator Calculations",
+            "Material & Safety Decision",
+            "Technical Report"
+          ]
+        }
       ],
       "acceptanceText": "I have read and accepted the Project Charter."
     },
@@ -102,13 +244,26 @@
         "marks": 0,
         "bloomLevel": "L1 Understand",
         "co": "CO2",
-        "po": ["PO1", "PO8"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO8"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "cards": [
-        { "type": "theory", "title": "Power Transmission Shaft Applications", "body": "Shafts are rotating machine elements used to transmit mechanical power and torque between power sources (motors, engines) and driven components (pulleys, gears, pumps)." },
-        { "type": "warning", "title": "Combined Loading Complexity", "body": "In real machinery, shafts rarely experience pure torsion. Transverse loads from belt drives, gear teeth, or pulleys induce bending moments simultaneously with torsional loads." }
+        {
+          "type": "theory",
+          "title": "Power Transmission Shaft Applications",
+          "body": "Shafts are rotating machine elements used to transmit mechanical power and torque between power sources (motors, engines) and driven components (pulleys, gears, pumps)."
+        },
+        {
+          "type": "warning",
+          "title": "Combined Loading Complexity",
+          "body": "In real machinery, shafts rarely experience pure torsion. Transverse loads from belt drives, gear teeth, or pulleys induce bending moments simultaneously with torsional loads."
+        }
       ],
       "acceptanceText": "I understand the engineering context of shaft design under combined loading."
     },
@@ -121,8 +276,13 @@
         "marks": 1,
         "bloomLevel": "L2 Understand",
         "co": "CO2",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "image": "assignments/shafts/images/EA-07_Student_v1.0.png.png",
@@ -139,14 +299,62 @@
         "Torque Input (T)"
       ],
       "labels": [
-        { "componentNumber": 1, "x": 60, "y": 48, "correctAnswer": "Transmission Shaft", "feedback": "Main solid rotating shaft member." },
-        { "componentNumber": 2, "x": 23, "y": 52, "correctAnswer": "Bearing Support A", "feedback": "Left bearing reaction support." },
-        { "componentNumber": 3, "x": 69, "y": 52, "correctAnswer": "Bearing Support B", "feedback": "Right bearing reaction support." },
-        { "componentNumber": 4, "x": 46, "y": 36, "correctAnswer": "Transmitting Pulley", "feedback": "Pulley applying transverse radial load." },
-        { "componentNumber": 5, "x": 46, "y": 46, "correctAnswer": "Drive Key", "feedback": "Sunk key connecting pulley to shaft." },
-        { "componentNumber": 6, "x": 84, "y": 52, "correctAnswer": "Flexible Coupling", "feedback": "Rigid/Flexible coupling for torque output." },
-        { "componentNumber": 7, "x": 46, "y": 24, "correctAnswer": "Radial Load Location (FR)", "feedback": "Point of transverse radial belt force application." },
-        { "componentNumber": 8, "x": 54, "y": 44, "correctAnswer": "Torque Input (T)", "feedback": "Transmitted torsional moment." }
+        {
+          "componentNumber": 1,
+          "x": 60,
+          "y": 48,
+          "correctAnswer": "Transmission Shaft",
+          "feedback": "Main solid rotating shaft member."
+        },
+        {
+          "componentNumber": 2,
+          "x": 23,
+          "y": 52,
+          "correctAnswer": "Bearing Support A",
+          "feedback": "Left bearing reaction support."
+        },
+        {
+          "componentNumber": 3,
+          "x": 69,
+          "y": 52,
+          "correctAnswer": "Bearing Support B",
+          "feedback": "Right bearing reaction support."
+        },
+        {
+          "componentNumber": 4,
+          "x": 46,
+          "y": 36,
+          "correctAnswer": "Transmitting Pulley",
+          "feedback": "Pulley applying transverse radial load."
+        },
+        {
+          "componentNumber": 5,
+          "x": 46,
+          "y": 46,
+          "correctAnswer": "Drive Key",
+          "feedback": "Sunk key connecting pulley to shaft."
+        },
+        {
+          "componentNumber": 6,
+          "x": 84,
+          "y": 52,
+          "correctAnswer": "Flexible Coupling",
+          "feedback": "Rigid/Flexible coupling for torque output."
+        },
+        {
+          "componentNumber": 7,
+          "x": 46,
+          "y": 24,
+          "correctAnswer": "Radial Load Location (FR)",
+          "feedback": "Point of transverse radial belt force application."
+        },
+        {
+          "componentNumber": 8,
+          "x": 54,
+          "y": 44,
+          "correctAnswer": "Torque Input (T)",
+          "feedback": "Transmitted torsional moment."
+        }
       ]
     },
     "working-principle": {
@@ -156,8 +364,13 @@
         "marks": 1,
         "bloomLevel": "L2 Understand",
         "co": "CO2",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "prompt": "Explain the mechanical behavior of a shaft subjected to combined bending and torsion, and answer the concept verification question.",
@@ -179,8 +392,13 @@
         "marks": 1,
         "bloomLevel": "L3 Apply",
         "co": "CO2",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "given": [
@@ -194,10 +412,26 @@
         "Target Factor of Safety: FOS >= 2.0"
       ],
       "fields": [
-        { "id": "reqPower", "label": "Power (kW)", "placeholder": "15" },
-        { "id": "reqSpeed", "label": "Speed (rpm)", "placeholder": "720" },
-        { "id": "reqLoad", "label": "Radial Load (N)", "placeholder": "3000" },
-        { "id": "reqSpan", "label": "Bearing Span (mm)", "placeholder": "500" }
+        {
+          "id": "reqPower",
+          "label": "Power (kW)",
+          "placeholder": "15"
+        },
+        {
+          "id": "reqSpeed",
+          "label": "Speed (rpm)",
+          "placeholder": "720"
+        },
+        {
+          "id": "reqLoad",
+          "label": "Radial Load (N)",
+          "placeholder": "3000"
+        },
+        {
+          "id": "reqSpan",
+          "label": "Bearing Span (mm)",
+          "placeholder": "500"
+        }
       ]
     },
     "engineering-assumptions": {
@@ -207,8 +441,13 @@
         "marks": 0.5,
         "bloomLevel": "L2 Understand",
         "co": "CO2",
-        "po": ["PO1", "PO2"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "5 minutes"
       },
       "prompt": "Record essential engineering assumptions for static shaft design under combined bending and torsion.",
@@ -225,8 +464,14 @@
         "marks": 2,
         "bloomLevel": "L3 Apply",
         "co": "CO2",
-        "po": ["PO1", "PO2", "PO3"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "10 minutes"
       },
       "image": "assignments/shafts/images/EA-07_Faculty_v1.0.png.png",
@@ -239,9 +484,21 @@
         "Formulas: Max Bending Moment M = (F_R * L) / 4 N-mm"
       ],
       "fields": [
-        { "id": "bearingReaction", "label": "Bearing Reactions R_A = R_B (N)", "placeholder": "3000 / 2 = 1500" },
-        { "id": "maxBendingMoment", "label": "Maximum Bending Moment M (N-mm)", "placeholder": "(3000 * 500) / 4 = 375000" },
-        { "id": "transmittedTorque", "label": "Transmitted Torque T (N-mm)", "placeholder": "(60*10^6*15)/(2*pi*720) = 198944" }
+        {
+          "id": "bearingReaction",
+          "label": "Bearing Reactions R_A = R_B (N)",
+          "placeholder": "3000 / 2 = 1500"
+        },
+        {
+          "id": "maxBendingMoment",
+          "label": "Maximum Bending Moment M (N-mm)",
+          "placeholder": "(3000 * 500) / 4 = 375000"
+        },
+        {
+          "id": "transmittedTorque",
+          "label": "Transmitted Torque T (N-mm)",
+          "placeholder": "(60*10^6*15)/(2*pi*720) = 198944"
+        }
       ],
       "expectedProcess": "Reactions R_A = R_B = 1500 N. Max Bending Moment M = 375,000 N-mm. Transmitted Torque T = 198,944 N-mm."
     },
@@ -254,8 +511,15 @@
         "marks": 3,
         "bloomLevel": "L3 Apply",
         "co": "CO2",
-        "po": ["PO1", "PO2", "PO3", "PO5"],
-        "pso": ["PSO1"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3",
+          "PO5"
+        ],
+        "pso": [
+          "PSO1"
+        ],
         "estimatedTime": "15 minutes"
       },
       "given": [
@@ -266,10 +530,26 @@
         "Formula d_req = ((16 * Te) / (pi * tau_allowable))^(1/3)"
       ],
       "fields": [
-        { "id": "equivalentTwistingMoment", "label": "Equivalent Twisting Moment Te (N-mm)", "placeholder": "sqrt((1.5*375000)^2 + (1.0*198944)^2) = 596447" },
-        { "id": "allowableShearStress", "label": "Allowable Shear Stress tau_allow (MPa)", "placeholder": "78.3" },
-        { "id": "calculatedDiameter", "label": "Calculated Min Shaft Diameter d_req (mm)", "placeholder": "33.86" },
-        { "id": "selectedDiameter", "label": "Selected Standard Shaft Diameter d_std (mm)", "placeholder": "40" }
+        {
+          "id": "equivalentTwistingMoment",
+          "label": "Equivalent Twisting Moment Te (N-mm)",
+          "placeholder": "sqrt((1.5*375000)^2 + (1.0*198944)^2) = 596447"
+        },
+        {
+          "id": "allowableShearStress",
+          "label": "Allowable Shear Stress tau_allow (MPa)",
+          "placeholder": "78.3"
+        },
+        {
+          "id": "calculatedDiameter",
+          "label": "Calculated Min Shaft Diameter d_req (mm)",
+          "placeholder": "33.86"
+        },
+        {
+          "id": "selectedDiameter",
+          "label": "Selected Standard Shaft Diameter d_std (mm)",
+          "placeholder": "40"
+        }
       ],
       "expectedProcess": "Te = 596,447 N-mm. tau_allow = 78.3 MPa. d_req = 33.86 mm. Standard shaft d_std = 40 mm."
     },
@@ -280,8 +560,17 @@
         "marks": 2,
         "bloomLevel": "L5 Evaluate",
         "co": "CO2",
-        "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
-        "pso": ["PSO1", "PSO2"],
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3",
+          "PO7",
+          "PO8"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "options": [
@@ -297,8 +586,14 @@
         "marks": 1.5,
         "bloomLevel": "L5 Evaluate",
         "co": "CO2",
-        "po": ["PO8", "PO9", "PO11"],
-        "pso": ["PSO2"],
+        "po": [
+          "PO8",
+          "PO9",
+          "PO11"
+        ],
+        "pso": [
+          "PSO2"
+        ],
         "estimatedTime": "10 minutes"
       },
       "questions": [

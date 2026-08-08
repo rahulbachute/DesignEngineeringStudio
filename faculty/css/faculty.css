@@ -116,3 +116,28 @@ body {
     min-height: auto;
   }
 }
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .faculty-sidebar, .topbar, .faculty-footer, #generateReportBtn, #exportPdfBtn, #exportExcelBtn, #printReportBtn, #downloadJsonBtn, #downloadCsvBtn, #reportCatalog, #reportSearch, #reportCategoryFilter, .navbar, .btn {
+    display: none !important;
+  }
+  .col-lg-7, .col-xl-8, .col-xl-4, .col-lg-5, .col-12, .col-lg-4, .col-md-6 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+  #printableReportContent {
+    border: none !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+}
+

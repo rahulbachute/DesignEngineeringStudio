@@ -42,6 +42,18 @@
         "required": true,
         "readonly": true,
         "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
       }
     ],
     "group": [
@@ -97,6 +109,18 @@
         "required": true,
         "readonly": true,
         "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
       }
     ]
   },
@@ -179,7 +203,7 @@
         },
         {
           "title": "Task Instructions",
-          "body": "For every component, complete the Decision Canvas. Be thorough in your 'Engineering Justification' \u2013 clearly explain *why* your selected material is superior to alternatives for the specific loading conditions.",
+          "body": "For every component, complete the Decision Canvas. Be thorough in your 'Engineering Justification' – clearly explain *why* your selected material is superior to alternatives for the specific loading conditions.",
           "icon": "bi-list-check"
         }
       ]
