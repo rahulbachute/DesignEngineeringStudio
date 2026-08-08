@@ -14,7 +14,8 @@
     "individual": [
       {
         "name": "collegeName",
-        "label": "College Name",
+        "label": "College / Institution",
+        "type": "select",
         "required": true
       },
       {
@@ -45,7 +46,8 @@
     "group": [
       {
         "name": "collegeName",
-        "label": "College Name",
+        "label": "College / Institution",
+        "type": "select",
         "required": true
       },
       {

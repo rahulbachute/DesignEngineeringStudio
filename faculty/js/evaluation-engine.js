@@ -20,11 +20,26 @@ class EvaluationEngine {
   async init() {
     this.bindEvents();
     this.renderLoadingState();
+    const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
+    if (isGuest) {
+      if (this.elements.saveButton) this.elements.saveButton.disabled = true;
+      if (this.elements.submitButton) this.elements.submitButton.disabled = true;
+      if (this.elements.acceptAllButton) this.elements.acceptAllButton.disabled = true;
+      if (this.elements.resetButton) this.elements.resetButton.disabled = true;
+    }
     try {
       const submissionId = this.getSubmissionIdFromUrl();
       if (!submissionId) {
         if (this.elements.activities) {
           this.elements.activities.innerHTML = `
+            ${isGuest ? `
+            <div class="alert alert-warning border-0 shadow-sm rounded-4 mb-4 d-flex align-items-center gap-3">
+              <i class="bi bi-shield-exclamation fs-3 text-warning"></i>
+              <div>
+                <strong>Guest Mode (Read-Only Evaluation)</strong>
+                <p class="mb-0 small text-muted">You are logged in as a Guest. You can explore student responses, system suggested marks, and evaluation rubrics, but saving or submitting evaluations is disabled.</p>
+              </div>
+            </div>` : ''}
             <div class="alert alert-info text-center my-5 p-5 border-0 shadow-sm rounded-4">
               <i class="bi bi-person-lines-fill fs-1 d-block mb-3 text-primary"></i>
               <h4>No Student Selected</h4>
@@ -217,6 +232,10 @@ class EvaluationEngine {
   }
 
   async persistEvaluation(status) {
+    if (window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest") {
+      throw new Error('Guest users cannot perform evaluation.');
+    }
+
     if (!this.currentEvaluation.submissionId) {
       throw new Error('No submission is selected for evaluation.');
     }
@@ -334,20 +353,33 @@ class EvaluationEngine {
   }
 
   renderActivities() {
+    const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
+    const guestBanner = isGuest ? `
+      <div class="alert alert-warning border-0 shadow-sm rounded-4 mb-4 d-flex align-items-center gap-3">
+        <i class="bi bi-shield-exclamation fs-3 text-warning"></i>
+        <div>
+          <strong>Guest Mode (Read-Only Evaluation)</strong>
+          <p class="mb-0 small text-muted">You are logged in as a Guest. You can explore student responses, system suggested marks, and evaluation rubrics, but saving or submitting evaluations is disabled.</p>
+        </div>
+      </div>
+    ` : '';
+
     if (!this.activityState.length) {
-      this.elements.activities.innerHTML = '<div class="text-muted">No activity responses are available for evaluation.</div>';
+      this.elements.activities.innerHTML = guestBanner + '<div class="text-muted">No activity responses are available for evaluation.</div>';
       return;
     }
-    this.elements.activities.innerHTML = this.activityState.map((activity) => this.renderActivityCardMarkup(activity)).join('');
+    this.elements.activities.innerHTML = guestBanner + this.activityState.map((activity) => this.renderActivityCardMarkup(activity)).join('');
   }
 
   renderActivityCardMarkup(activity) {
+    const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
     const facultyMarks = activity.facultyMarks ?? activity.systemSuggestedMarks;
     const modified = activity.isModified;
+    const disabledAttr = isGuest ? 'disabled readonly' : '';
     const reasonMarkup = modified ? `
       <div class="mt-3">
         <label class="form-label">Modification Reason</label>
-        <textarea class="form-control" rows="2" data-reason-input data-activity-id="${activity.id}" placeholder="Reason is required when marks are changed">${this.escapeHtml(activity.reason || '')}</textarea>
+        <textarea class="form-control" rows="2" data-reason-input data-activity-id="${activity.id}" placeholder="Reason is required when marks are changed" ${disabledAttr}>${this.escapeHtml(activity.reason || '')}</textarea>
       </div>
     ` : '';
 
@@ -392,11 +424,11 @@ class EvaluationEngine {
             </div>
             <div class="col-md-4">
               <label class="form-label">Faculty Marks</label>
-              <input class="form-control" type="number" min="0" max="${activity.maxMarks}" value="${facultyMarks}" data-activity-input data-activity-id="${activity.id}" />
+              <input class="form-control" type="number" min="0" max="${activity.maxMarks}" value="${facultyMarks}" data-activity-input data-activity-id="${activity.id}" ${disabledAttr} />
             </div>
             <div class="col-md-4">
               <label class="form-label">Faculty Remarks</label>
-              <textarea class="form-control" rows="2" placeholder="Optional remarks"></textarea>
+              <textarea class="form-control" rows="2" placeholder="${isGuest ? 'Disabled in Guest mode' : 'Optional remarks'}" ${disabledAttr}></textarea>
             </div>
           </div>
 

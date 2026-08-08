@@ -157,7 +157,8 @@ class ChallengeRunner {
     this.setBreadcrumb("Student Information");
     const fields = Array.isArray(this.content.attemptMode && this.content.attemptMode[mode]) ? this.content.attemptMode[mode] : [];
     const host = this.host();
-    host.innerHTML = `<section class="workbench-card"><h3>${mode === "group" ? "Group Details" : "Student Details"}</h3><form data-student-form novalidate><div class="student-form-grid">${fields.map((field) => this.field(field)).join("")}</div><div class="component-actions"><button class="btn btn-primary" type="submit"><i class="bi bi-save" aria-hidden="true"></i> Save and Start</button></div></form></section>`;
+    const savedStudent = (this.services.stateManager.getState() || {}).student || {};
+    host.innerHTML = `<section class="workbench-card"><h3>${mode === "group" ? "Group Details" : "Student Details"}</h3><form data-student-form novalidate><div class="student-form-grid">${fields.map((field) => this.field(field, savedStudent[field.name])).join("")}</div><div class="component-actions"><button class="btn btn-primary" type="submit"><i class="bi bi-save" aria-hidden="true"></i> Save and Start</button></div></form></section>`;
     host.querySelector("[data-student-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const result = this.collectFields(host, fields);
@@ -746,15 +747,22 @@ class ChallengeRunner {
     }).join("")}</ul>` : ""}</section>`;
   }
 
-  field(field) {
-    let value = "";
-    if (field.auto === "academicYear") {
+  field(field, savedValue) {
+    let value = savedValue || "";
+    if (!value && field.auto === "academicYear") {
       const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth(); // 0 is Jan, 5 is June
       value = month >= 5 ? `${year}-${(year + 1).toString().slice(-2)}` : `${year - 1}-${year.toString().slice(-2)}`;
     }
     const readonlyAttr = field.readonly ? "readonly tabindex='-1'" : "";
+
+    if (field.name === "collegeName" || field.type === "select") {
+      const options = field.options || window.MEILP.colleges || [];
+      const placeholder = field.placeholder || "Select your College / Institution";
+      return `<div><label class="form-label">${this.escape(field.label)}</label><select class="form-select" name="${this.escape(field.name)}" ${field.required ? "required" : ""}><option value="" disabled ${!value ? "selected" : ""}>${this.escape(placeholder)}</option>${options.map((opt) => `<option value="${this.escape(opt)}" ${opt === value ? "selected" : ""}>${this.escape(opt)}</option>`).join("")}</select><div class="invalid-feedback" data-error-for="${this.escape(field.name)}"></div></div>`;
+    }
+
     return `<div><label class="form-label">${this.escape(field.label)}</label><input class="form-control" name="${this.escape(field.name)}" type="text" value="${this.escape(value)}" ${field.required ? "required" : ""} ${readonlyAttr}><div class="invalid-feedback" data-error-for="${this.escape(field.name)}"></div></div>`;
   }
 

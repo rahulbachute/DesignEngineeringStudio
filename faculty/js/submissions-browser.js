@@ -102,6 +102,11 @@ class SubmissionsBrowser {
     });
 
     this.elements.saveEvaluationButton.addEventListener('click', async () => {
+      if (window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest") {
+        this.showPlaceholderNotice('Guest users cannot perform evaluation. Saving is disabled.');
+        return;
+      }
+
       if (!this.currentDetailsRecord) {
         this.showPlaceholderNotice('Select a submission before saving evaluation.');
         return;
@@ -356,14 +361,28 @@ class SubmissionsBrowser {
     const modal = new bootstrap.Modal(this.elements.evaluationModal);
     modal.show();
 
+    const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
+    if (this.elements.saveEvaluationButton) {
+      this.elements.saveEvaluationButton.disabled = isGuest;
+    }
+
     const detailRecord = await this.loadSubmissionDetail(record);
     this.currentDetailsRecord = detailRecord;
     const activities = this.evaluationActivities(detailRecord);
     const maxMarks = this.totalMaxMarks(activities);
     const suggestedMarks = this.totalSuggestedMarks(activities);
     const initialTotal = this.hasFacultyMarks(activities) ? this.totalFacultyMarks(activities) : suggestedMarks;
+    const disabledAttr = isGuest ? 'disabled readonly' : '';
+
     this.elements.evaluationContent.innerHTML = `
       <div class="row g-4" data-evaluation-form>
+        ${isGuest ? `
+        <div class="col-12">
+          <div class="alert alert-warning border-0 shadow-sm mb-2 d-flex align-items-center gap-2">
+            <i class="bi bi-shield-exclamation text-warning fs-5"></i>
+            <span><strong>Guest Mode:</strong> You are exploring evaluation in read-only mode. Saving evaluations is disabled.</span>
+          </div>
+        </div>` : ''}
         <div class="col-lg-6">
           <label class="form-label">Student Name</label>
           <input class="form-control" type="text" value="${this.escapeHtml(detailRecord.studentName)}" readonly />
@@ -389,7 +408,7 @@ class SubmissionsBrowser {
                     </div>
                     <div class="col-sm-4 col-lg-3">
                       <label class="form-label small text-muted">Faculty Marks</label>
-                      <input class="form-control form-control-sm" type="number" min="0" max="${Number(activity.maxMarks) || 0}" step="0.5" value="${this.initialFacultyMarks(activity)}" data-eval-marks data-activity-id="${this.escapeHtml(activity.id)}" />
+                      <input class="form-control form-control-sm" type="number" min="0" max="${Number(activity.maxMarks) || 0}" step="0.5" value="${this.initialFacultyMarks(activity)}" data-eval-marks data-activity-id="${this.escapeHtml(activity.id)}" ${disabledAttr} />
                     </div>
                   </div>
                 </li>
@@ -411,7 +430,7 @@ class SubmissionsBrowser {
         </div>
         <div class="col-12">
           <label class="form-label">Remarks</label>
-          <textarea class="form-control" rows="3" placeholder="Add remarks for the evaluation workflow." data-eval-remarks></textarea>
+          <textarea class="form-control" rows="3" placeholder="${isGuest ? 'Disabled in Guest mode' : 'Add remarks for the evaluation workflow.'}" data-eval-remarks ${disabledAttr}></textarea>
         </div>
       </div>
     `;

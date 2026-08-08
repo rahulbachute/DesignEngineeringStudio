@@ -367,6 +367,10 @@ class SubmissionEngine {
    * Validates student identity fields for individual and group modes.
    */
   validateStudentInformation(student, attemptMode, errors) {
+    if (!student.collegeName) {
+      errors.push("College / Institution is required.");
+    }
+
     if (attemptMode === "group") {
       if (!student.groupNumber) {
         errors.push("Group Number is required.");

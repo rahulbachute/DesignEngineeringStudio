@@ -9,6 +9,7 @@ class StudentInformationComponent extends window.MEILP.BaseComponent {
   constructor(options = {}) {
     super(options);
     this.fields = [
+      { name: "collegeName", label: "College / Institution", type: "select", options: window.MEILP.colleges, validator: "required" },
       { name: "groupNumber", label: "Group Number", type: "number", validator: "numeric" },
       { name: "division", label: "Division", type: "text", validator: "required" },
       { name: "batch", label: "Batch", type: "text", validator: "required" },
@@ -65,6 +66,25 @@ class StudentInformationComponent extends window.MEILP.BaseComponent {
 
   renderField(field) {
     const columnClass = field.name.startsWith("student") ? "col-md-6" : "col-md-4";
+    if (field.type === "select" || field.name === "collegeName") {
+      const options = field.options || window.MEILP.colleges || [];
+      return `
+        <div class="${columnClass}">
+          <label class="form-label" for="${this.getFieldId(field.name)}">${field.label}</label>
+          <select
+            class="form-select"
+            id="${this.getFieldId(field.name)}"
+            name="${field.name}"
+            required
+            data-student-info-input
+          >
+            <option value="" disabled selected>Select your College / Institution</option>
+            ${options.map((opt) => `<option value="${this.escape(opt)}">${this.escape(opt)}</option>`).join("")}
+          </select>
+          <div class="invalid-feedback" data-error-for="${field.name}"></div>
+        </div>
+      `;
+    }
     return `
       <div class="${columnClass}">
         <label class="form-label" for="${this.getFieldId(field.name)}">${field.label}</label>

@@ -158,6 +158,7 @@ class WorkbenchDemo {
 
   getAttemptFields(mode) {
     const shared = [
+      { name: "collegeName", label: "College / Institution", required: true, type: "select", options: window.MEILP.colleges },
       { name: "division", label: "Division", required: true },
       { name: "className", label: "Class", required: true },
       { name: "academicYear", label: "Academic Year", required: true }
@@ -181,6 +182,19 @@ class WorkbenchDemo {
   }
 
   renderFormField(field) {
+    if (field.type === "select" || field.name === "collegeName") {
+      const options = field.options || window.MEILP.colleges || [];
+      return `
+        <div>
+          <label class="form-label" for="attempt-${field.name}">${field.label}</label>
+          <select class="form-select" id="attempt-${field.name}" name="${field.name}" ${field.required ? "required" : ""}>
+            <option value="" disabled selected>Select your College / Institution</option>
+            ${options.map((opt) => `<option value="${this.escape(opt)}">${this.escape(opt)}</option>`).join("")}
+          </select>
+          <div class="invalid-feedback" data-error-for="${field.name}"></div>
+        </div>
+      `;
+    }
     return `
       <div>
         <label class="form-label" for="attempt-${field.name}">${field.label}</label>

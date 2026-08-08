@@ -72,12 +72,18 @@
     }
 
     async saveEvaluation(payload) {
+      if (global.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest") {
+        return { ok: false, success: false, error: 'Guest users cannot perform evaluation.', message: 'Guest users cannot perform evaluation.' };
+      }
       const response = await this.request('saveEvaluation', payload, 'POST');
       this.cache?.clear?.();
       return response;
     }
 
     async updateEvaluation(payload) {
+      if (global.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest") {
+        return { ok: false, success: false, error: 'Guest users cannot perform evaluation.', message: 'Guest users cannot perform evaluation.' };
+      }
       return this.request('updateEvaluation', payload, 'POST');
     }
 

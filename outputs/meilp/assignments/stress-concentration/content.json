@@ -41,14 +41,14 @@
   },
   "attemptMode": {
     "individual": [
-      { "name": "collegeName", "label": "College Name", "required": true },
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
       { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
       { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
       { "name": "name", "label": "Name", "required": true, "nameOnly": true },
       { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
     ],
     "group": [
-      { "name": "collegeName", "label": "College Name", "required": true },
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
       { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
       { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
       { "name": "groupName", "label": "Group Name", "required": false },

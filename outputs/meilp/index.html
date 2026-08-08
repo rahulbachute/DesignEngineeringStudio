@@ -29,8 +29,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="primaryNav">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0" data-nav-list></ul>
-          <button class="btn btn-icon ms-lg-3" type="button" data-theme-toggle aria-label="Toggle theme">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center" data-nav-list></ul>
+          <a href="#" class="btn btn-warning fw-bold text-dark px-3 py-1 me-lg-2 ms-lg-3 shadow-sm d-inline-flex align-items-center gap-1 border-0 rounded-pill" id="facultyAccessBtn" style="font-size: 0.875rem;">
+            <i class="bi bi-shield-lock-fill text-dark" aria-hidden="true"></i> Faculty Login
+          </a>
+          <button class="btn btn-icon ms-lg-1" type="button" data-theme-toggle aria-label="Toggle theme">
             <i class="bi bi-moon-stars" aria-hidden="true"></i>
           </button>
         </div>
@@ -154,48 +157,18 @@
       </div>
     </section>
 
-    <!-- Announcements & Quick Links -->
+    <!-- Quick Links & Resources -->
     <section class="content-band muted-band" id="resources">
       <div class="container">
         <div class="row g-4">
-          <!-- Announcements -->
-          <div class="col-md-7">
-            <div class="system-panel h-100">
-              <div class="panel-header mb-4">
-                <span>Announcements</span>
-                <i class="bi bi-bell" aria-hidden="true"></i>
-              </div>
-              <div class="list-group list-group-flush">
-                <div class="list-group-item bg-transparent px-0 py-3">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h6 class="mb-1">Submission Deadline Update</h6>
-                    <small class="text-muted">3 days ago</small>
-                  </div>
-                  <p class="mb-1 text-muted small">The deadline for EC-02: Motorcycle Side Stand Analysis has been extended to Friday, 5 PM.</p>
-                </div>
-                <div class="list-group-item bg-transparent px-0 py-3">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h6 class="mb-1">New Reference Material Uploaded</h6>
-                    <small class="text-muted">1 week ago</small>
-                  </div>
-                  <p class="mb-1 text-muted small">Added Bhandari's text chapter on Wire Ropes in the reference section.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Quick Links -->
-          <div class="col-md-5">
+          <div class="col-md-6">
             <div class="system-panel h-100">
               <div class="panel-header mb-4">
                 <span>Quick Links</span>
                 <i class="bi bi-link-45deg" aria-hidden="true"></i>
               </div>
               <div class="doc-link-grid">
-                <a href="#"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Syllabus (PCC303)</a>
-                <a href="#"><i class="bi bi-journal-bookmark" aria-hidden="true"></i> Design Data Book</a>
-                <a href="#"><i class="bi bi-camera-video" aria-hidden="true"></i> Lecture Recordings</a>
-                <a href="#" id="facultyAccessBtn"><i class="bi bi-shield-lock" aria-hidden="true"></i> Faculty Portal</a>
+                <a href="https://sites.google.com/view/drrahulbachute/design-of-machine-elements-2024-pattern/syllabi-2024" target="_blank" rel="noopener noreferrer"><i class="bi bi-file-earmark-pdf text-danger" aria-hidden="true"></i> Syllabus (PCC303)</a>
               </div>
             </div>
           </div>
@@ -245,6 +218,9 @@
               <label for="facultyPassword" class="form-label">Password</label>
               <input type="password" class="form-control" id="facultyPassword" required style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
             </div>
+            <div class="alert alert-info py-2 px-3 mb-3 small opacity-75" style="background-color: rgba(13, 202, 240, 0.1); border-color: rgba(13, 202, 240, 0.2); color: var(--meilp-text);">
+              <i class="bi bi-info-circle me-1"></i> Guest Login: Username <code>Guest</code> | Password <code>Guest@123</code>
+            </div>
             <div id="loginError" class="text-danger small d-none mb-3">Incorrect username or password.</div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
           </form>
@@ -280,7 +256,8 @@
         const authorizedFaculties = {
           "rahul.bachute@dypic.in": "dypic123",
           "niranjan.shegokar@dypic.in": "dypic123",
-          "atul.gowardipe@dypic.in": "dypic123"
+          "atul.gowardipe@dypic.in": "dypic123",
+          "guest": "Guest@123"
         };
 
         loginForm.addEventListener("submit", (e) => {
@@ -290,7 +267,8 @@
           
           if (authorizedFaculties[user] && authorizedFaculties[user] === pass) {
             // Save login state
-            localStorage.setItem("loggedInFaculty", user);
+            const storedUser = user === "guest" ? "Guest" : user;
+            localStorage.setItem("loggedInFaculty", storedUser);
             window.location.href = "../../faculty/index.html"; 
           } else {
             loginError.classList.remove("d-none");
