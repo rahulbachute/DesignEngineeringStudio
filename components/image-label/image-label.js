@@ -109,30 +109,91 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
   }
 
   /**
+   * Synchronizes the marker layer dimensions and transform with the image viewer.
+   */
+  syncMarkerLayer() {
+    const stage = this.viewer ? this.viewer.getStageElement() : null;
+    const image = this.viewer ? this.viewer.getImageElement() : null;
+    if (!stage || !image) return;
+
+    const markerLayer = stage.querySelector(".label-marker-layer");
+    if (!markerLayer) return;
+
+    const stageRect = stage.getBoundingClientRect();
+    const naturalW = image.naturalWidth || stageRect.width;
+    const naturalH = image.naturalHeight || stageRect.height;
+
+    if (!naturalW || !naturalH || !stageRect.width || !stageRect.height) return;
+
+    const aspectImage = naturalW / naturalH;
+    const aspectStage = stageRect.width / stageRect.height;
+
+    let imgW, imgH, imgL, imgT;
+    if (aspectImage > aspectStage) {
+      imgW = stageRect.width;
+      imgH = stageRect.width / aspectImage;
+      imgL = 0;
+      imgT = (stageRect.height - imgH) / 2;
+    } else {
+      imgH = stageRect.height;
+      imgW = stageRect.height * aspectImage;
+      imgT = 0;
+      imgL = (stageRect.width - imgW) / 2;
+    }
+
+    markerLayer.style.left = `${imgL}px`;
+    markerLayer.style.top = `${imgT}px`;
+    markerLayer.style.width = `${imgW}px`;
+    markerLayer.style.height = `${imgH}px`;
+    markerLayer.style.transform = image.style.transform;
+    markerLayer.style.transformOrigin = "center";
+  }
+
+  /**
    * Adds passive numeric markers over the image viewer.
    */
   addMarkers() {
-    const stage = this.viewer.getStageElement();
+    const stage = this.viewer ? this.viewer.getStageElement() : null;
     if (!stage) {
       return;
     }
-    const markerLayer = document.createElement("div");
+    let markerLayer = stage.querySelector(".label-marker-layer");
+    if (markerLayer) {
+      markerLayer.remove();
+    }
+    markerLayer = document.createElement("div");
     markerLayer.className = "label-marker-layer";
     markerLayer.setAttribute("aria-hidden", "true");
 
     this.labels.forEach((label, index) => {
-      if (label.x === undefined || label.y === undefined) {
+      let x = label.x !== undefined ? label.x : (label.left !== undefined ? parseFloat(label.left) : undefined);
+      let y = label.y !== undefined ? label.y : (label.top !== undefined ? parseFloat(label.top) : undefined);
+      if (x === undefined || y === undefined || isNaN(x) || isNaN(y)) {
         return;
       }
       const marker = document.createElement("span");
       marker.className = "label-marker";
       marker.textContent = String(this.getComponentNumber(label, index));
-      marker.style.left = `${Number(label.x || 0)}%`;
-      marker.style.top = `${Number(label.y || 0)}%`;
+      marker.style.left = `${Number(x)}%`;
+      marker.style.top = `${Number(y)}%`;
       markerLayer.append(marker);
     });
 
     stage.append(markerLayer);
+
+    const image = this.viewer.getImageElement();
+    if (image) {
+      if (image.complete) {
+        this.syncMarkerLayer();
+      } else {
+        image.addEventListener("load", () => this.syncMarkerLayer());
+      }
+    }
+
+    if (this.eventBus) {
+      this.eventBus.listen("zoom-changed", () => this.syncMarkerLayer());
+    }
+    window.addEventListener("resize", () => this.syncMarkerLayer());
   }
 
   /**

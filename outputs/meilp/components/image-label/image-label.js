@@ -109,23 +109,65 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
   }
 
   /**
+   * Synchronizes the marker layer dimensions and transform with the image viewer.
+   */
+  syncMarkerLayer() {
+    const stage = this.viewer ? this.viewer.getStageElement() : null;
+    const image = this.viewer ? this.viewer.getImageElement() : null;
+    if (!stage || !image) return;
+
+    const markerLayer = stage.querySelector(".label-marker-layer");
+    if (!markerLayer) return;
+
+    const stageRect = stage.getBoundingClientRect();
+    const naturalW = image.naturalWidth || stageRect.width;
+    const naturalH = image.naturalHeight || stageRect.height;
+
+    if (!naturalW || !naturalH || !stageRect.width || !stageRect.height) return;
+
+    const aspectImage = naturalW / naturalH;
+    const aspectStage = stageRect.width / stageRect.height;
+
+    let imgW, imgH, imgL, imgT;
+    if (aspectImage > aspectStage) {
+      imgW = stageRect.width;
+      imgH = stageRect.width / aspectImage;
+      imgL = 0;
+      imgT = (stageRect.height - imgH) / 2;
+    } else {
+      imgH = stageRect.height;
+      imgW = stageRect.height * aspectImage;
+      imgT = 0;
+      imgL = (stageRect.width - imgW) / 2;
+    }
+
+    markerLayer.style.left = `${imgL}px`;
+    markerLayer.style.top = `${imgT}px`;
+    markerLayer.style.width = `${imgW}px`;
+    markerLayer.style.height = `${imgH}px`;
+    markerLayer.style.transform = image.style.transform;
+    markerLayer.style.transformOrigin = "center";
+  }
+
+  /**
    * Adds passive numeric markers over the image viewer.
    */
   addMarkers() {
-    const stage = this.viewer.getStageElement();
+    const stage = this.viewer ? this.viewer.getStageElement() : null;
     if (!stage) {
       return;
     }
-    const markerLayer = document.createElement("div");
+    let markerLayer = stage.querySelector(".label-marker-layer");
+    if (markerLayer) {
+      markerLayer.remove();
+    }
+    markerLayer = document.createElement("div");
     markerLayer.className = "label-marker-layer";
     markerLayer.setAttribute("aria-hidden", "true");
 
     this.labels.forEach((label, index) => {
-      let x = label.x;
-      let y = label.y;
-      if (x === undefined && label.left !== undefined) x = parseFloat(label.left);
-      if (y === undefined && label.top !== undefined) y = parseFloat(label.top);
-
+      let x = label.x !== undefined ? label.x : (label.left !== undefined ? parseFloat(label.left) : undefined);
+      let y = label.y !== undefined ? label.y : (label.top !== undefined ? parseFloat(label.top) : undefined);
       if (x === undefined || y === undefined || isNaN(x) || isNaN(y)) {
         return;
       }
@@ -138,6 +180,20 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
     });
 
     stage.append(markerLayer);
+
+    const image = this.viewer.getImageElement();
+    if (image) {
+      if (image.complete) {
+        this.syncMarkerLayer();
+      } else {
+        image.addEventListener("load", () => this.syncMarkerLayer());
+      }
+    }
+
+    if (this.eventBus) {
+      this.eventBus.listen("zoom-changed", () => this.syncMarkerLayer());
+    }
+    window.addEventListener("resize", () => this.syncMarkerLayer());
   }
 
   /**
@@ -374,20 +430,13 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
       componentId: this.config.id,
       value,
       validation: this.validate(),
-      labels: this.labels.map((label, index) => {
-        let x = label.x;
-        let y = label.y;
-        if (x === undefined && label.left !== undefined) x = parseFloat(label.left);
-        if (y === undefined && label.top !== undefined) y = parseFloat(label.top);
-        
-        return {
-          id: this.getLabelId(label, index),
-          componentNumber: this.getComponentNumber(label, index),
-          x: x,
-          y: y,
-          correctAnswer: label.correctAnswer || ""
-        };
-      })
+      labels: this.labels.map((label, index) => ({
+        id: this.getLabelId(label, index),
+        componentNumber: this.getComponentNumber(label, index),
+        x: label.x,
+        y: label.y,
+        correctAnswer: label.correctAnswer || ""
+      }))
     };
   }
 

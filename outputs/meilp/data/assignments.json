@@ -65,6 +65,17 @@
       "icon": "bi-symmetry-horizontal",
       "configPath": "assignments/stress-concentration/config.json",
       "launchPath": "assignment-workbench.html?assignment=stress-concentration"
+    },
+    {
+      "id": "EC-07",
+      "title": "Design of Shaft for a Real-World Engineering Application",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to determine loading, bearing reactions, bending moment, torque, combined loading, required shaft diameter, and factor of safety for a power transmission shaft.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-gear-wide-connected",
+      "configPath": "assignments/shafts/config.json",
+      "launchPath": "assignment-workbench.html?assignment=shafts"
     }
   ]
 }

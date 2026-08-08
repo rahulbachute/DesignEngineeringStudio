@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shaft & Key Design Calculator (ASME Code) + Material Comparison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-navy: #0f2b48;
+      --accent-blue: #1e5bb8;
+      --bg-slate: #f4f7fa;
+      --border-color: #cbd5e1;
+      --card-border: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --green-bg: #e6f4ea;
+      --green-border: #22c55e;
+      --green-text: #15803d;
+      --purple-bg: #f3e8ff;
+      --purple-border: #a855f7;
+      --purple-text: #7e22ce;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-slate);
+      color: var(--text-main);
+      padding-bottom: 3rem;
+    }
+    .top-header {
+      background: linear-gradient(135deg, #091a2f 0%, #0f2b48 100%);
+      color: #ffffff;
+      padding: 1.25rem 2rem;
+      border-bottom: 3px solid #f59e0b;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .top-header h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+    .top-header p {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin: 0.2rem 0 0 0;
+    }
+    .badge-pill-skd {
+      background-color: #f59e0b;
+      color: #0f2b48;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+    }
+
+    .card-panel {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      margin-bottom: 1.25rem;
+      padding: 1.25rem;
+    }
+    .card-panel h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 0.25rem;
+    }
+    .form-control, .form-select {
+      font-size: 0.85rem;
+      border-color: var(--border-color);
+      border-radius: 6px;
+      padding: 0.4rem 0.65rem;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(30, 91, 184, 0.15);
+    }
+    .result-box-green {
+      background-color: var(--green-bg);
+      border: 2px solid var(--green-border);
+      border-radius: 8px;
+      padding: 1rem;
+      color: var(--green-text);
+      margin-bottom: 1.25rem;
+    }
+    .result-box-purple {
+      background-color: var(--purple-bg);
+      border: 2px solid var(--purple-border);
+      border-radius: 8px;
+      padding: 1rem;
+      color: var(--purple-text);
+      margin-bottom: 1.25rem;
+    }
+    .formula-display {
+      font-family: monospace;
+      font-size: 0.82rem;
+      background: rgba(255,255,255,0.7);
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      margin-top: 0.4rem;
+      word-break: break-all;
+    }
+    .diagram-card {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .diagram-card h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #1e293b;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    canvas {
+      width: 100%;
+      height: 160px;
+      display: block;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+    }
+    .info-box {
+      font-size: 0.78rem;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 0.6rem 0.75rem;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER BANNER -->
+  <header class="top-header">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <h1>Shaft & Key Design Calculator (ASME Code)</h1>
+        <p>Resultant BMD • Bending + Torsion • Key Shear & Crushing Analysis • PSG Materials Database • Dynamic SFD & BMD</p>
+      </div>
+      <span class="badge-pill-skd">DES Tool</span>
+    </div>
+  </header>
+
+  <div class="container-fluid px-4 mt-3">
+
+    <div class="row g-3">
+      <!-- LEFT COLUMN: INPUTS -->
+      <div class="col-lg-5">
+
+        <!-- GEOMETRY & SPAN -->
+        <div class="card-panel">
+          <h2><i class="bi bi-rulers me-2"></i>1. Geometry & Span Length</h2>
+          <div class="row g-2">
+            <div class="col-12">
+              <label class="form-label">Span Length L (mm)</label>
+              <input type="number" class="form-control" id="spanL" value="500" step="10">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Bearing A at x (mm)</label>
+              <input type="number" class="form-control" id="bearingA" value="0" step="10">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Bearing B at x (mm)</label>
+              <input type="number" class="form-control" id="bearingB" value="500" step="10">
+            </div>
+          </div>
+        </div>
+
+        <!-- LOADS & TORQUE -->
+        <div class="card-panel">
+          <h2><i class="bi bi-lightning-charge me-2"></i>2. Point Loads & Torque</h2>
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="form-label">Load 1 - Vertical (N)</label>
+              <input type="number" class="form-control" id="load1V" value="3000" step="100">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Load 1 - Horizontal (N)</label>
+              <input type="number" class="form-control" id="load1H" value="0" step="100">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Load 1 Position x1 (mm)</label>
+              <input type="number" class="form-control" id="load1Pos" value="250" step="10">
+            </div>
+            
+            <div class="col-6 mt-2">
+              <label class="form-label">Load 2 - Vertical (N)</label>
+              <input type="number" class="form-control" id="load2V" value="0" step="100">
+            </div>
+            <div class="col-6 mt-2">
+              <label class="form-label">Load 2 - Horizontal (N)</label>
+              <input type="number" class="form-control" id="load2H" value="0" step="100">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Load 2 Position x2 (mm)</label>
+              <input type="number" class="form-control" id="load2Pos" value="400" step="10">
+            </div>
+
+            <div class="col-12 mt-2">
+              <label class="form-label fw-bold text-primary">Torque T (N-mm)</label>
+              <input type="number" class="form-control fw-bold" id="torqueT" value="198944" step="1000">
+              <small class="text-muted">Calculated for 15 kW at 720 rpm</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- MATERIAL (PSG DATABASE) -->
+        <div class="card-panel">
+          <h2><i class="bi bi-box-seam me-2"></i>3. Material (PSG Design Data)</h2>
+          <div class="mb-2">
+            <label class="form-label">Material Grade</label>
+            <select class="form-select" id="materialSelect">
+              <option value="40C8" data-sut="580" data-syt="380" selected>40C8 (Sut=580, Syt=380 MPa)</option>
+              <option value="EN9" data-sut="600" data-syt="380">EN9 (070M55 - Sut=600, Syt=380 MPa)</option>
+              <option value="C45" data-sut="620" data-syt="350">C45 (080M40 - Sut=620, Syt=350 MPa)</option>
+              <option value="20Ni55" data-sut="850" data-syt="600">20Ni55Cr50 (Sut=850, Syt=600 MPa)</option>
+              <option value="custom" data-sut="580" data-syt="380">Custom Material Grade</option>
+            </select>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-6">
+              <label class="form-label">SUT (MPa)</label>
+              <input type="number" class="form-control" id="inputSut" value="580">
+            </div>
+            <div class="col-6">
+              <label class="form-label">SYT (MPa)</label>
+              <input type="number" class="form-control" id="inputSyt" value="380">
+            </div>
+          </div>
+          <div class="info-box border-warning bg-light">
+            <strong class="text-dark">ASME Keyed Shaft Stress Constraint:</strong><br>
+            <code>&tau;_allowable = min(0.30 S_yt, 0.18 S_ut) &times; 0.75</code><br>
+            <span id="asmeBoxText" class="fw-bold text-primary">Calculated &tau;_allow = 78.30 MPa</span>
+          </div>
+        </div>
+
+        <!-- DESIGN FACTORS & KEY DESIGN -->
+        <div class="card-panel">
+          <h2><i class="bi bi-sliders me-2"></i>4. Design Factors & Key Parameters</h2>
+          <div class="row g-2 mb-2">
+            <div class="col-6">
+              <label class="form-label">Fatigue / Shock KB (1.0 - 3.0)</label>
+              <input type="number" class="form-control" id="factorKb" value="1.5" step="0.1" min="1.0" max="3.0">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Fatigue / Shock KT (1.0 - 1.5)</label>
+              <input type="number" class="form-control" id="factorKt" value="1.0" step="0.1" min="1.0" max="1.5">
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Key Type</label>
+            <select class="form-select" id="keyType">
+              <option value="square" selected>Square Key (b = h = d / 4)</option>
+              <option value="flat">Flat Key (b = d/4, h = 2b/3)</option>
+            </select>
+          </div>
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="form-label">Hub / Key Grade</label>
+              <select class="form-select" id="keyMaterial">
+                <option value="40C8" data-syt="380">40C8 (Syt=380 MPa)</option>
+                <option value="C30" data-syt="300">C30 (Syt=300 MPa)</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="form-label">Key FOS</label>
+              <input type="number" class="form-control" id="keyFos" value="3.0" step="0.5">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: OUTPUTS & INTERACTIVE SFD / BMD DIAGRAMS -->
+      <div class="col-lg-7">
+
+        <!-- BEARING REACTIONS & MAX MOMENTS -->
+        <div class="card-panel">
+          <h2><i class="bi bi-calculator me-2"></i>Bearing Reactions & Critical Moments</h2>
+          <div class="row g-2 font-monospace fs-6">
+            <div class="col-md-6">
+              <div class="border rounded p-2 bg-light">
+                <strong>Vertical Plane:</strong><br>
+                R_Ay = <span id="outRay">1500.00</span> N | R_By = <span id="outRby">1500.00</span> N
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="border rounded p-2 bg-light">
+                <strong>Horizontal Plane:</strong><br>
+                R_Az = <span id="outRaz">0.00</span> N | R_Bz = <span id="outRbz">0.00</span> N
+              </div>
+            </div>
+            <div class="col-12 mt-2">
+              <div class="border rounded p-2 bg-light text-navy">
+                <strong>Critical Location:</strong> x = <span id="outXcrit">250</span> mm<br>
+                M_y = <span id="outMy">375,000.00</span> N-mm | M_z = <span id="outMz">0.00</span> N-mm | <strong>M_max = <span id="outMmax">375,000.00</span> N-mm</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHAFT DESIGN RESULT -->
+        <div class="result-box-green">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="h6 fw-bold mb-0 text-uppercase"><i class="bi bi-gear-fill me-2"></i>Shaft Design Result (Solid Shaft)</h3>
+            <span class="badge bg-success fs-6">d = <span id="outDreq">33.86</span> mm</span>
+          </div>
+          <div class="formula-display">
+            M_max = sqrt(M_y^2 + M_z^2) = <span id="formulaMmax">375000</span> N-mm @ x = <span id="formulaXcrit">250</span> mm<br>
+            T = <span id="formulaT">198944</span> N-mm | T_e = sqrt((K_b &times; M)^2 + (K_t &times; T)^2) = <span id="formulaTe">596645</span> N-mm<br>
+            &tau;_allow = min(0.3&times;<span id="formulaSyt">380</span>, 0.18&times;<span id="formulaSut">580</span>) &times; 0.75 = <span id="formulaTauAllow">78.30</span> MPa<br>
+            <strong>d_req = [(16 &times; T_e) / (&pi; &times; &tau;_allow)]^(1/3) = <span id="formulaDreq">33.86</span> mm</strong>
+          </div>
+        </div>
+
+        <!-- KEY DESIGN RESULT -->
+        <div class="result-box-purple">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="h6 fw-bold mb-0 text-uppercase"><i class="bi bi-key-fill me-2"></i>Key Design (Square Key)</h3>
+            <span class="badge bg-purple text-white fs-6"><span id="outKeyDim">8.5 &times; 8.5 &times; 20</span> mm</span>
+          </div>
+          <div class="formula-display">
+            Eq (a) Shear: l &ge; 2T / (&tau;_key &times; d &times; b) = <span id="formulaLshear">12.5</span> mm<br>
+            Eq (b) Crushing: l &ge; 4T / (&sigma;_ckey &times; d &times; h) = <span id="formulaLcrush">18.2</span> mm<br>
+            <strong>Governing Key Dimension: b = h = <span id="outKeyW">8.5</span> mm, Length l = <span id="outKeyL">20</span> mm</strong>
+          </div>
+        </div>
+
+        <!-- DYNAMIC 2D LOAD & DIAGRAM CANVAS -->
+        <div class="diagram-card">
+          <h3><i class="bi bi-diagram-2 me-2"></i>1. 2D Shaft Loading Diagram - Vertical Plane (X-Y)</h3>
+          <canvas id="canvasLoadV" height="160"></canvas>
+        </div>
+
+        <div class="diagram-card">
+          <h3><i class="bi bi-bar-chart-steps me-2"></i>2. Vertical Plane - Shear Force Diagram (V_y)</h3>
+          <canvas id="canvasSfdV" height="160"></canvas>
+        </div>
+
+        <div class="diagram-card">
+          <h3><i class="bi bi-graph-up-arrow me-2"></i>3. Vertical Plane - Bending Moment Diagram (M_y)</h3>
+          <canvas id="canvasBmdV" height="160"></canvas>
+        </div>
+
+        <div class="diagram-card">
+          <h3><i class="bi bi-bar-chart-steps me-2"></i>4. Horizontal Plane - Shear Force Diagram (V_z)</h3>
+          <canvas id="canvasSfdH" height="160"></canvas>
+        </div>
+
+        <div class="diagram-card">
+          <h3><i class="bi bi-graph-up-arrow me-2"></i>5. Horizontal Plane - Bending Moment Diagram (M_z)</h3>
+          <canvas id="canvasBmdH" height="160"></canvas>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ELEMENT REFERENCES
+    const inputs = {
+      spanL: document.getElementById('spanL'),
+      bearingA: document.getElementById('bearingA'),
+      bearingB: document.getElementById('bearingB'),
+      load1V: document.getElementById('load1V'),
+      load1H: document.getElementById('load1H'),
+      load1Pos: document.getElementById('load1Pos'),
+      load2V: document.getElementById('load2V'),
+      load2H: document.getElementById('load2H'),
+      load2Pos: document.getElementById('load2Pos'),
+      torqueT: document.getElementById('torqueT'),
+      materialSelect: document.getElementById('materialSelect'),
+      inputSut: document.getElementById('inputSut'),
+      inputSyt: document.getElementById('inputSyt'),
+      factorKb: document.getElementById('factorKb'),
+      factorKt: document.getElementById('factorKt'),
+      keyType: document.getElementById('keyType'),
+      keyMaterial: document.getElementById('keyMaterial'),
+      keyFos: document.getElementById('keyFos')
+    };
+
+    // MATERIAL SELECTION LISTENER
+    inputs.materialSelect.addEventListener('change', () => {
+      const selected = inputs.materialSelect.options[inputs.materialSelect.selectedIndex];
+      if (selected.value !== 'custom') {
+        inputs.inputSut.value = selected.dataset.sut;
+        inputs.inputSyt.value = selected.dataset.syt;
+      }
+      calculateAll();
+    });
+
+    // BIND EVENT LISTENERS TO ALL INPUTS
+    Object.values(inputs).forEach(input => {
+      if (input) {
+        input.addEventListener('input', calculateAll);
+        input.addEventListener('change', calculateAll);
+      }
+    });
+
+    // CANVAS DRAWING HELPER FOR SFD / BMD
+    function drawDiagram(canvasId, points, xMax, labelText, isStep = false, lineColor = '#1e5bb8', fillColor = 'rgba(30, 91, 184, 0.15)') {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      
+      const parentW = canvas.parentElement ? canvas.parentElement.clientWidth - 30 : 600;
+      const width = Math.max(parentW, 300);
+      const height = 160;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const margin = { left: 65, right: 35, top: 30, bottom: 30 };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Find Y min and max
+      let yVals = points.map(p => p.y);
+      let yMin = Math.min(0, ...yVals);
+      let yMax = Math.max(0, ...yVals);
+      if (yMin === 0 && yMax === 0) { yMin = -10; yMax = 10; }
+      const ySpan = (yMax - yMin) * 1.3 || 1;
+
+      const mapX = (x) => margin.left + (x / xMax) * plotW;
+      const mapY = (y) => margin.top + plotH - ((y - yMin) / ySpan) * plotH;
+      const zeroY = mapY(0);
+
+      // Background grid box
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(margin.left, margin.top, plotW, plotH);
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(margin.left, margin.top, plotW, plotH);
+
+      // Draw zero axis line
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(margin.left, zeroY);
+      ctx.lineTo(margin.left + plotW, zeroY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw Shaded Area Polygon
+      ctx.beginPath();
+      ctx.moveTo(mapX(points[0].x), zeroY);
+
+      if (isStep) {
+        for (let i = 0; i < points.length; i++) {
+          const pt = points[i];
+          const px = mapX(pt.x);
+          const py = mapY(pt.y);
+          if (i > 0) {
+            ctx.lineTo(px, mapY(points[i-1].y));
+          }
+          ctx.lineTo(px, py);
+        }
+      } else {
+        points.forEach(pt => {
+          ctx.lineTo(mapX(pt.x), mapY(pt.y));
+        });
+      }
+
+      ctx.lineTo(mapX(points[points.length - 1].x), zeroY);
+      ctx.closePath();
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+
+      // Draw Diagram Stroke Line
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      if (isStep) {
+        ctx.moveTo(mapX(points[0].x), mapY(points[0].y));
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(mapX(points[i].x), mapY(points[i-1].y));
+          ctx.lineTo(mapX(points[i].x), mapY(points[i].y));
+        }
+      } else {
+        points.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(mapX(pt.x), mapY(pt.y));
+          else ctx.lineTo(mapX(pt.x), mapY(pt.y));
+        });
+      }
+      ctx.stroke();
+
+      // Axis labels
+      ctx.fillStyle = '#475569';
+      ctx.font = '10px Inter, sans-serif';
+      ctx.fillText('0', margin.left - 12, zeroY + 3);
+      ctx.fillText(`${xMax} mm`, margin.left + plotW - 20, zeroY + 18);
+      ctx.fillText(labelText, 10, margin.top + 15);
+
+      // Value Annotations at key points
+      points.forEach(pt => {
+        if (Math.abs(pt.y) > 0.01) {
+          const px = mapX(pt.x);
+          const py = mapY(pt.y);
+          ctx.fillStyle = '#0f172a';
+          ctx.font = 'bold 11px Inter, sans-serif';
+          const txt = `${Math.round(pt.y)}`;
+          const offset = py < zeroY ? -8 : 16;
+          ctx.fillText(txt, px - 12, py + offset);
+
+          // Dot marker
+          ctx.fillStyle = lineColor;
+          ctx.beginPath();
+          ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+    }
+
+    // DRAW 2D LOADING SCHEMATIC
+    function drawLoadingDiagram(canvasId, L, xA, xB, x1, F1, x2, F2) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+
+      const parentW = canvas.parentElement ? canvas.parentElement.clientWidth - 30 : 600;
+      const width = Math.max(parentW, 300);
+      const height = 160;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const margin = { left: 65, right: 35 };
+      const plotW = width - margin.left - margin.right;
+      const mapX = (x) => margin.left + (x / L) * plotW;
+      const yMid = height / 2;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Shaft Body
+      ctx.fillStyle = '#cbd5e1';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2.5;
+      ctx.fillRect(margin.left, yMid - 10, plotW, 20);
+      ctx.strokeRect(margin.left, yMid - 10, plotW, 20);
+
+      // Bearings
+      [xA, xB].forEach((xBias, idx) => {
+        const px = mapX(xBias);
+        ctx.fillStyle = '#0f2b48';
+        ctx.beginPath();
+        ctx.moveTo(px, yMid + 10);
+        ctx.lineTo(px - 12, yMid + 28);
+        ctx.lineTo(px + 12, yMid + 28);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#1e293b';
+        ctx.font = 'bold 11px Inter, sans-serif';
+        ctx.fillText(`Bearing ${idx === 0 ? 'A' : 'B'}`, px - 25, yMid + 42);
+      });
+
+      // Force Arrows
+      [{ x: x1, F: F1 }, { x: x2, F: F2 }].forEach((item, idx) => {
+        if (item.F > 0) {
+          const px = mapX(item.x);
+          ctx.strokeStyle = '#dc2626';
+          ctx.fillStyle = '#dc2626';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(px, yMid - 45);
+          ctx.lineTo(px, yMid - 12);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(px, yMid - 10);
+          ctx.lineTo(px - 6, yMid - 20);
+          ctx.lineTo(px + 6, yMid - 20);
+          ctx.closePath();
+          ctx.fill();
+          ctx.font = 'bold 11px Inter, sans-serif';
+          ctx.fillText(`F${idx+1} = ${item.F} N`, px - 25, yMid - 52);
+        }
+      });
+    }
+
+    // MAIN CALCULATION ENGINE
+    function calculateAll() {
+      const L = parseFloat(inputs.spanL.value) || 500;
+      const xA = parseFloat(inputs.bearingA.value) || 0;
+      const xB = parseFloat(inputs.bearingB.value) || L;
+
+      const F1v = parseFloat(inputs.load1V.value) || 0;
+      const F1h = parseFloat(inputs.load1H.value) || 0;
+      const x1 = parseFloat(inputs.load1Pos.value) || 0;
+
+      const F2v = parseFloat(inputs.load2V.value) || 0;
+      const F2h = parseFloat(inputs.load2H.value) || 0;
+      const x2 = parseFloat(inputs.load2Pos.value) || 0;
+
+      const T = parseFloat(inputs.torqueT.value) || 0;
+
+      const Sut = parseFloat(inputs.inputSut.value) || 580;
+      const Syt = parseFloat(inputs.inputSyt.value) || 380;
+      const Kb = parseFloat(inputs.factorKb.value) || 1.5;
+      const Kt = parseFloat(inputs.factorKt.value) || 1.0;
+
+      const spanDist = (xB - xA) || 1;
+
+      // Reactions Vertical Plane
+      const Rby = (F1v * (x1 - xA) + F2v * (x2 - xA)) / spanDist;
+      const Ray = (F1v + F2v) - Rby;
+
+      // Reactions Horizontal Plane
+      const Rbz = (F1h * (x1 - xA) + F2h * (x2 - xA)) / spanDist;
+      const Raz = (F1h + F2h) - Rbz;
+
+      // Moments at Key Locations (xA, x1, x2, xB)
+      const M1y = Ray * (x1 - xA);
+      const M2y = Ray * (x2 - xA) - F1v * (x2 - x1);
+      const M1z = Raz * (x1 - xA);
+      const M2z = Raz * (x2 - xA) - F1h * (x2 - x1);
+
+      const M1max = Math.sqrt(M1y * M1y + M1z * M1z);
+      const M2max = Math.sqrt(M2y * M2y + M2z * M2z);
+
+      let Mmax = Math.max(M1max, M2max);
+      let xCrit = M1max >= M2max ? x1 : x2;
+      let MyCrit = M1max >= M2max ? M1y : M2y;
+      let MzCrit = M1max >= M2max ? M1z : M2z;
+
+      // ASME Code Allowable Stress
+      const tauAllowable = Math.min(0.30 * Syt, 0.18 * Sut) * 0.75;
+      const Te = Math.sqrt(Math.pow(Kb * Mmax, 2) + Math.pow(Kt * T, 2));
+      const dReq = Math.pow((16 * Te) / (Math.PI * tauAllowable), 1/3);
+
+      // Key Calculations
+      const keyFos = parseFloat(inputs.keyFos.value) || 3.0;
+      const SytKey = 380;
+      const tauKey = (0.5 * SytKey) / keyFos;
+      const sigmaCKey = SytKey / keyFos;
+
+      const bKey = dReq / 4;
+      const hKey = dReq / 4;
+      const lShear = (2 * T) / (tauKey * dReq * bKey);
+      const lCrush = (4 * T) / (sigmaCKey * dReq * hKey);
+      const lReq = Math.max(lShear, lCrush, 20);
+
+      // UPDATE DOM TEXT
+      document.getElementById('asmeBoxText').textContent = `Calculated \u03C4_allow = ${tauAllowable.toFixed(2)} MPa`;
+      document.getElementById('outRay').textContent = Ray.toFixed(2);
+      document.getElementById('outRby').textContent = Rby.toFixed(2);
+      document.getElementById('outRaz').textContent = Raz.toFixed(2);
+      document.getElementById('outRbz').textContent = Rbz.toFixed(2);
+      document.getElementById('outXcrit').textContent = xCrit;
+      document.getElementById('outMy').textContent = MyCrit.toLocaleString('en-US', {maximumFractionDigits: 2});
+      document.getElementById('outMz').textContent = MzCrit.toLocaleString('en-US', {maximumFractionDigits: 2});
+      document.getElementById('outMmax').textContent = Mmax.toLocaleString('en-US', {maximumFractionDigits: 2});
+
+      document.getElementById('outDreq').textContent = dReq.toFixed(2);
+      document.getElementById('formulaMmax').textContent = Math.round(Mmax);
+      document.getElementById('formulaXcrit').textContent = xCrit;
+      document.getElementById('formulaT').textContent = Math.round(T);
+      document.getElementById('formulaTe').textContent = Math.round(Te);
+      document.getElementById('formulaSyt').textContent = Syt;
+      document.getElementById('formulaSut').textContent = Sut;
+      document.getElementById('formulaTauAllow').textContent = tauAllowable.toFixed(2);
+      document.getElementById('formulaDreq').textContent = dReq.toFixed(2);
+
+      document.getElementById('outKeyDim').textContent = `${bKey.toFixed(1)} \u00D7 ${hKey.toFixed(1)} \u00D7 ${Math.ceil(lReq)}`;
+      document.getElementById('formulaLshear').textContent = lShear.toFixed(1);
+      document.getElementById('formulaLcrush').textContent = lCrush.toFixed(1);
+      document.getElementById('outKeyW').textContent = bKey.toFixed(1);
+      document.getElementById('outKeyL').textContent = Math.ceil(lReq);
+
+      // SFD & BMD POINTS
+      const ptsSfdV = [
+        { x: 0, y: 0 },
+        { x: xA, y: Ray },
+        { x: x1, y: Ray - F1v },
+        { x: x2, y: Ray - F1v - F2v },
+        { x: xB, y: 0 },
+        { x: L, y: 0 }
+      ];
+      const ptsBmdV = [
+        { x: 0, y: 0 },
+        { x: xA, y: 0 },
+        { x: x1, y: M1y },
+        { x: x2, y: M2y },
+        { x: xB, y: 0 },
+        { x: L, y: 0 }
+      ];
+
+      const ptsSfdH = [
+        { x: 0, y: 0 },
+        { x: xA, y: Raz },
+        { x: x1, y: Raz - F1h },
+        { x: x2, y: Raz - F1h - F2h },
+        { x: xB, y: 0 },
+        { x: L, y: 0 }
+      ];
+      const ptsBmdH = [
+        { x: 0, y: 0 },
+        { x: xA, y: 0 },
+        { x: x1, y: M1z },
+        { x: x2, y: M2z },
+        { x: xB, y: 0 },
+        { x: L, y: 0 }
+      ];
+
+      // DRAW CANVASES
+      drawLoadingDiagram('canvasLoadV', L, xA, xB, x1, F1v, x2, F2v);
+      drawDiagram('canvasSfdV', ptsSfdV, L, 'Vy (N)', true, '#1e5bb8', 'rgba(30, 91, 184, 0.18)');
+      drawDiagram('canvasBmdV', ptsBmdV, L, 'My (N-mm)', false, '#16a34a', 'rgba(22, 163, 74, 0.18)');
+      drawDiagram('canvasSfdH', ptsSfdH, L, 'Vz (N)', true, '#0284c7', 'rgba(2, 132, 199, 0.18)');
+      drawDiagram('canvasBmdH', ptsBmdH, L, 'Mz (N-mm)', false, '#9333ea', 'rgba(147, 51, 234, 0.18)');
+    }
+
+    // INITIAL RENDER ON LOAD & RESIZE
+    window.addEventListener('DOMContentLoaded', calculateAll);
+    window.addEventListener('load', () => {
+      calculateAll();
+      setTimeout(calculateAll, 100);
+      setTimeout(calculateAll, 300);
+    });
+    window.addEventListener('resize', calculateAll);
+  </script>
+</body>
+</html>

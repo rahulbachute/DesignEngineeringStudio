@@ -15,7 +15,6 @@ class ChallengeRunner {
     this.workflow = null;
     this.content = null;
     this.rubric = null;
-    this.assetManifest = null;
     this.currentIndex = 0;
     this.completed = new Set();
     this.activeComponent = null;
@@ -39,8 +38,6 @@ class ChallengeRunner {
       "ranking": (host, step, activity) => this.renderRanking(host, step, activity),
       "calculation-inputs": (host, step, activity) => this.renderCalculation(host, step, activity),
       "recommendation": (host, step, activity) => this.renderRecommendation(host, step, activity),
-      "engineering-decision-canvas": (host, step, activity) => this.renderEngineeringDecisionCanvas(host, step, activity),
-      "guided-workflow": (host, step, activity) => this.renderGuidedWorkflow(host, step, activity),
       "reflection": (host, step, activity) => this.renderReflection(host, step, activity),
       "submission-summary": (host) => this.renderSubmission(host)
     };
@@ -56,16 +53,14 @@ class ChallengeRunner {
       config: `${base}/config.json`,
       workflow: `${base}/workflow.json`,
       content: `${base}/content.json`,
-      rubric: `${base}/rubric.json`,
-      assetManifest: `${base}/asset-manifest.json`
+      rubric: `${base}/rubric.json`
     };
-    this.assignmentJsonFiles = [files.config, files.workflow, files.content, files.rubric];
-    const [config, workflow, content, rubric, assetManifest] = await Promise.all([
+    this.assignmentJsonFiles = Object.values(files);
+    const [config, workflow, content, rubric] = await Promise.all([
       window.MEILP.fetchJson(files.config, null),
       window.MEILP.fetchJson(files.workflow, null),
       window.MEILP.fetchJson(files.content, null),
-      window.MEILP.fetchJson(files.rubric, null),
-      window.MEILP.fetchJson(files.assetManifest, null)
+      window.MEILP.fetchJson(files.rubric, null)
     ]);
     const loadedFiles = { config, workflow, content, rubric };
     this.missingJsonFiles = Object.keys(loadedFiles)
@@ -79,7 +74,6 @@ class ChallengeRunner {
     this.workflow = workflow;
     this.content = content;
     this.rubric = rubric;
-    this.assetManifest = assetManifest;
     this.services.progressManager.startAssignment({ id: config.id, title: config.title, tasks: workflow.steps });
     this.restoreAttempt();
     this.bindEvents();
@@ -101,20 +95,11 @@ class ChallengeRunner {
   bindEvents() {
     const themeToggle = document.querySelector("[data-workbench-theme-toggle]");
     const helpButton = document.querySelector("[data-workbench-help]");
-    const resetButton = document.querySelector("[data-workbench-reset]");
     if (themeToggle) {
       themeToggle.addEventListener("click", () => this.toggleTheme());
     }
     if (helpButton) {
       helpButton.addEventListener("click", () => this.prependCard("hint", "Help", "Use the task navigator and Save Draft button to move through the challenge."));
-    }
-    if (resetButton) {
-      resetButton.addEventListener("click", () => {
-        if (confirm("Are you sure you want to reset this assignment? This will permanently delete your progress.")) {
-          this.storage.clearNamespace();
-          window.location.reload();
-        }
-      });
     }
     this.unsubscribe.push(this.services.eventBus.listen("navigate-next", () => this.next()));
     this.unsubscribe.push(this.services.eventBus.listen("navigate-previous", () => this.previous()));
@@ -213,13 +198,12 @@ class ChallengeRunner {
 
     const renderer = this.renderers[step.component];
     const activity = this.content.activities[step.id];
-    this.services.progressManager.setCurrentTask(step.id);
     this.setActivity(this.title(step.component), step.title);
     this.setBreadcrumb(step.title);
     this.renderTaskNav();
 
     if (!renderer) {
-      this.renderMissingComponent(host, step.component, activity);
+      host.innerHTML = this.card("error", "Unknown Component", `No renderer is registered for component "${step.component || "undefined"}".`);
     } else if (step.component !== "submission-summary" && !activity) {
       host.innerHTML = this.card("error", "Missing Activity", `No activity content was found for workflow step "${step.id}".`);
     } else {
@@ -231,20 +215,6 @@ class ChallengeRunner {
     }
     this.renderWidgets();
     this.updateProgress();
-  }
-
-  renderMissingComponent(host, componentName, activity) {
-    let html = `<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> Interactive component <code>${this.escape(componentName)}</code> is under development.</div>`;
-    if (activity && activity.cards) {
-      html += activity.cards.map((card) => this.card(card.type, card.title, card.body, card.items)).join("");
-    }
-    if (activity && activity.question) {
-      html += `<section class="workbench-card"><h4>${this.escape(activity.question)}</h4></section>`;
-    }
-    if (activity && activity.options) {
-      html += `<section class="workbench-card"><ul>${activity.options.map(opt => `<li>${this.escape(opt)}</li>`).join("")}</ul></section>`;
-    }
-    host.innerHTML = html;
   }
 
   /**
@@ -267,15 +237,7 @@ class ChallengeRunner {
    */
   renderImageLabel(host, step, activity) {
     const component = this.services.componentRegistry.create("image-label", {
-      config: {
-        id: step.id,
-        title: activity.title,
-        image: this.resolveActivityImage(activity),
-        figure: activity.figure,
-        description: activity.description,
-        options: activity.options,
-        labels: activity.labels || activity.callouts
-      },
+      config: { id: step.id, title: activity.title, image: activity.image, figure: activity.figure, description: activity.description, labels: activity.labels, options: activity.options },
       stateManager: this.services.stateManager,
       eventBus: this.services.eventBus
     });
@@ -287,13 +249,7 @@ class ChallengeRunner {
    */
   renderTextMcq(host, step, activity) {
     const saved = this.response(step.id);
-    const bodyText = activity.prompt || activity.question || activity.description;
-    host.innerHTML = `${this.card("theory", activity.title, bodyText)}<section class="workbench-card card-student-response"><h3>Engineering Text Response</h3><textarea class="form-control" rows="6" data-response="text" placeholder="${this.escape(activity.placeholder || "")}">${this.escape(saved.text || "")}</textarea></section><section class="workbench-card card-information"><h3>${this.escape(activity.mcq.question)}</h3>${activity.mcq.options.map((option) => {
-      const isObj = typeof option === "object" && option !== null;
-      const val = isObj ? (option.id || option.text) : option;
-      const label = isObj ? (option.label || option.text) : option;
-      return `<label class="form-check"><input class="form-check-input" type="radio" name="mcq" value="${this.escape(val)}" ${saved.mcq === val ? "checked" : ""}> ${this.escape(label)}</label>`;
-    }).join("")}</section>`;
+    host.innerHTML = `${this.card("theory", activity.title, activity.prompt)}<section class="workbench-card card-student-response"><h3>Engineering Text Response</h3><textarea class="form-control" rows="6" data-response="text">${this.escape(saved.text || "")}</textarea></section><section class="workbench-card card-information"><h3>${this.escape(activity.mcq.question)}</h3>${activity.mcq.options.map((option) => `<label class="form-check"><input class="form-check-input" type="radio" name="mcq" value="${this.escape(option)}" ${saved.mcq === option ? "checked" : ""}> ${this.escape(option)}</label>`).join("")}</section>`;
     this.bindAutosave(step.id);
   }
 
@@ -302,11 +258,7 @@ class ChallengeRunner {
    */
   renderSelection(host, step, activity) {
     const saved = this.response(step.id);
-    const bodyText = activity.prompt || activity.description || "";
-    host.innerHTML = `${this.card("theory", activity.title, bodyText)}<section class="workbench-card"><div class="row g-3">${activity.options.map((option) => {
-      const noteHtml = option.note ? `<span>${this.escape(option.note)}</span>` : (option.properties ? `<ul class="small mb-0 mt-1 ps-3">${option.properties.map(p => `<li>${this.escape(p)}</li>`).join("")}</ul>` : "");
-      return `<div class="col-md-6"><label class="attempt-option"><input class="form-check-input me-2" type="radio" name="selection" value="${this.escape(option.id)}" ${saved.selection === option.id ? "checked" : ""}><div><strong>${this.escape(option.title)}</strong>${noteHtml}</div></label></div>`;
-    }).join("")}</div></section><section class="workbench-card card-student-response"><h3>Recommendation Justification</h3><textarea class="form-control" rows="5" data-response="justification">${this.escape(saved.justification || "")}</textarea></section>`;
+    host.innerHTML = `${this.card("theory", activity.title, activity.prompt)}<section class="workbench-card"><div class="row g-3">${activity.options.map((option) => `<div class="col-md-6"><label class="attempt-option"><input class="form-check-input me-2" type="radio" name="selection" value="${this.escape(option.id)}" ${saved.selection === option.id ? "checked" : ""}><strong>${this.escape(option.title)}</strong><span>${this.escape(option.note)}</span></label></div>`).join("")}</div></section><section class="workbench-card card-student-response"><h3>Recommendation Justification</h3><textarea class="form-control" rows="5" data-response="justification">${this.escape(saved.justification || "")}</textarea></section>`;
     this.bindAutosave(step.id);
   }
 
@@ -324,8 +276,43 @@ class ChallengeRunner {
    */
   renderCalculation(host, step, activity) {
     const saved = this.response(step.id);
-    const givenHTML = (activity.given && activity.given.length > 0) ? this.card("calculation", "Given Data", "", activity.given) : "";
-    host.innerHTML = `${givenHTML}<section class="workbench-card"><h3>${this.escape(activity.title)}</h3><div class="student-form-grid">${activity.fields.map((field) => `<div><label class="form-label">${this.escape(field.label)}</label><input class="form-control" type="number" step="0.01" data-calc="${this.escape(field.id)}" placeholder="${this.escape(field.placeholder || "")}" value="${this.escape(saved[field.id] !== undefined ? saved[field.id] : (field.value !== undefined ? field.value : ""))}" ${field.readonly ? "readonly" : ""}></div>`).join("")}</div></section>`;
+    let imageHostHtml = "";
+    if (activity.image) {
+      imageHostHtml = `<div data-calculation-image-viewer class="mb-3"></div>`;
+    }
+    let toolBtnHtml = "";
+    if (activity.toolUrl) {
+      toolBtnHtml = `
+        <div class="mb-3">
+          <a href="${this.escape(activity.toolUrl)}" target="_blank" class="btn btn-warning fw-bold text-dark px-3 py-2 shadow-sm d-inline-flex align-items-center gap-2">
+            <i class="bi bi-calculator-fill fs-5" aria-hidden="true"></i>
+            ${this.escape(activity.toolButtonText || "Launch Shaft Design Calculator")}
+          </a>
+        </div>
+      `;
+    }
+    host.innerHTML = `${imageHostHtml}${this.card("calculation", "Given Data", "", activity.given)}${toolBtnHtml}<section class="workbench-card"><h3>${this.escape(activity.title)}</h3><div class="student-form-grid">${activity.fields.map((field) => `<div><label class="form-label">${this.escape(field.label)}</label><input class="form-control" type="number" step="0.01" data-calc="${this.escape(field.id)}" placeholder="${this.escape(field.placeholder)}" value="${this.escape(saved[field.id] || "")}"></div>`).join("")}</div></section>`;
+
+    if (activity.image) {
+      const viewerHost = host.querySelector("[data-calculation-image-viewer]");
+      if (viewerHost) {
+        const viewer = this.services.componentRegistry.create("image-viewer", {
+          config: {
+            id: `${step.id}Viewer`,
+            title: activity.figure || activity.title || "Free Body Diagram",
+            figure: activity.figure || "Free Body Diagram",
+            description: activity.description || "",
+            image: activity.image,
+            zoom: true,
+            fullscreen: true
+          },
+          stateManager: this.services.stateManager,
+          eventBus: this.services.eventBus
+        });
+        viewerHost.append(viewer.render());
+      }
+    }
+
     this.bindAutosave(step.id);
   }
 
@@ -334,51 +321,8 @@ class ChallengeRunner {
    */
   renderRecommendation(host, step, activity) {
     const saved = this.response(step.id);
-    host.innerHTML = `<section class="workbench-card card-information"><h3>${this.escape(activity.title)}</h3>${activity.options.map((option) => {
-      const isObj = typeof option === "object" && option !== null;
-      const val = isObj ? option.id : option;
-      const label = isObj ? option.label : option;
-      return `<label class="form-check"><input class="form-check-input" type="radio" name="decision" value="${this.escape(val)}" ${saved.decision === val ? "checked" : ""}> ${this.escape(label)}</label>`;
-    }).join("")}</section><section class="workbench-card card-student-response"><h3>Engineering Justification</h3><textarea class="form-control" rows="6" data-response="justification">${this.escape(saved.justification || "")}</textarea></section>`;
+    host.innerHTML = `<section class="workbench-card card-information"><h3>${this.escape(activity.title)}</h3>${activity.options.map((option) => `<label class="form-check"><input class="form-check-input" type="radio" name="decision" value="${this.escape(option)}" ${saved.decision === option ? "checked" : ""}> ${this.escape(option)}</label>`).join("")}</section><section class="workbench-card card-student-response"><h3>Engineering Justification</h3><textarea class="form-control" rows="6" data-response="justification">${this.escape(saved.justification || "")}</textarea></section>`;
     this.bindAutosave(step.id);
-  }
-
-  /**
-   * Renders reusable engineering decision canvases for component review stations.
-   */
-  renderEngineeringDecisionCanvas(host, step, activity) {
-    const component = this.services.componentRegistry.create("engineering-decision-canvas", {
-      config: {
-        id: step.id,
-        title: activity.title,
-        stationCode: activity.stationCode,
-        figure: activity.figure,
-        image: this.resolveActivityImage(activity),
-        imageAlt: activity.imageAlt,
-        components: activity.components,
-        options: activity.options || (this.content && this.content.options) || {}
-      },
-      stateManager: this.services.stateManager,
-      eventBus: this.services.eventBus
-    });
-    this.mount(component, host);
-  }
-
-  /**
-   * Renders the guided workflow component.
-   */
-  renderGuidedWorkflow(host, step, activity) {
-    const component = this.services.componentRegistry.create("guided-workflow", {
-      config: {
-        id: step.id,
-        title: activity.title,
-        steps: activity.steps,
-        given: activity.given
-      },
-      stateManager: this.services.stateManager,
-      eventBus: this.services.eventBus
-    });
-    this.mount(component, host);
   }
 
   /**
@@ -386,52 +330,7 @@ class ChallengeRunner {
    */
   renderReflection(host, step, activity) {
     const saved = this.response(step.id);
-    const questions = activity.questions || activity.prompts || [];
-    host.innerHTML = questions.map((question, index) => {
-      const isObj = typeof question === "object" && question !== null;
-      const label = isObj ? question.label : question;
-      const helpText = isObj && question.helpText ? `<p class="text-muted small mb-2">${this.escape(question.helpText)}</p>` : "";
-      const qId = isObj && question.id ? question.id : `q${index + 1}`;
-      
-      return `<section class="workbench-card card-student-response mb-4">
-        <h3 class="mb-1">${this.escape(label)}</h3>
-        ${helpText}
-        <textarea class="form-control" rows="4" data-reflection="${this.escape(qId)}">${this.escape(saved[qId] || "")}</textarea>
-      </section>`;
-    }).join("");
-    this.bindAutosave(step.id);
-  }
-
-  /**
-   * Renders selection cards component.
-   */
-  renderSelection(host, step, activity) {
-    const saved = this.response(step.id);
-    const cards = activity.cards || activity.options || [];
-    host.innerHTML = `<section class="workbench-card card-information">
-      <h3>${this.escape(activity.title)}</h3>
-      <p>${this.escape(activity.description || "")}</p>
-      <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-        ${cards.map((card) => `
-          <div class="col">
-            <div class="card h-100 ${saved.selection === card.id ? "border-primary shadow-sm" : ""}">
-              <div class="card-body">
-                <h5 class="card-title">${this.escape(card.title)}</h5>
-                <ul class="list-unstyled">
-                  ${card.properties ? card.properties.map(p => `<li>${this.escape(p)}</li>`).join("") : Object.keys(card).filter(k => k !== "id" && k !== "title" && k !== "selectable").map(k => `<li><strong>${this.escape(k)}:</strong> ${this.escape(card[k])}</li>`).join("")}
-                </ul>
-              </div>
-              <div class="card-footer bg-transparent">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="selection" value="${this.escape(card.id)}" ${saved.selection === card.id ? "checked" : ""}>
-                  <label class="form-check-label">Select</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    </section>`;
+    host.innerHTML = activity.questions.map((question, index) => `<section class="workbench-card card-student-response"><h3>${this.escape(question)}</h3><textarea class="form-control" rows="4" data-reflection="q${index + 1}">${this.escape(saved[`q${index + 1}`] || "")}</textarea></section>`).join("");
     this.bindAutosave(step.id);
   }
 
@@ -508,11 +407,8 @@ class ChallengeRunner {
     host.querySelectorAll("[data-calc]").forEach((input) => { value[input.dataset.calc] = input.type === "text" ? input.value.trim() : input.value; });
     host.querySelectorAll("[data-reflection]").forEach((input) => { value[input.dataset.reflection] = input.value.trim(); });
     host.querySelectorAll("[data-accept-project]").forEach((input) => { value.accepted = input.checked; });
-    if (Object.keys(value).length === 0 && this.activeComponent && this.activeComponent.config && this.activeComponent.config.id === stepId) {
-      const componentValue = typeof this.activeComponent.collect === "function"
-        ? this.activeComponent.collect()
-        : this.response(stepId);
-      Object.assign(value, componentValue);
+    if (Object.keys(value).length === 0 && step.component === "image-label") {
+      Object.assign(value, this.response(stepId));
     }
     if (Object.keys(value).length === 0 && step.component === "information-card") {
       value.reviewed = true;
@@ -603,6 +499,18 @@ class ChallengeRunner {
     }
     if (widget.id === "responses") {
       return `<p>${Object.keys(state.responses || {}).length} response records saved.</p>`;
+    }
+    if (widget.id === "calculator" || widget.cardType === "calculator" || widget.url) {
+      const toolUrl = widget.url || "tools/Shaft Design Calculator.html";
+      const toolText = widget.buttonText || "Launch Shaft Design Calculator";
+      const cleanText = (widget.text || "").replace(/<[^>]*>/g, '');
+      return `
+        <p class="mb-2 text-muted small">${this.escape(cleanText)}</p>
+        <a href="${this.escape(toolUrl)}" target="_blank" class="btn btn-warning btn-sm w-100 fw-bold text-dark d-inline-flex align-items-center justify-content-center gap-2 shadow-sm py-2">
+          <i class="bi bi-calculator-fill fs-6" aria-hidden="true"></i>
+          ${this.escape(toolText)}
+        </a>
+      `;
     }
     return `<p>${this.escape(widget.text || "")}</p>`;
   }
@@ -739,14 +647,12 @@ class ChallengeRunner {
    * Builds a standard workbench card.
    */
   card(type, title, body, items) {
-    return `<section class="workbench-card card-${type}"><h3>${this.escape(title)}</h3>${body ? `<p>${this.escape(body)}</p>` : ""}${items ? `<ul class="list-group list-group-flush mb-0">${items.map((item) => {
-      if (typeof item === 'object' && item !== null) {
-        return `<li class="list-group-item bg-transparent px-0 border-0"><strong>${this.escape(item.label)}:</strong> <code>${this.escape(item.value)}</code></li>`;
-      }
-      return `<li class="list-group-item bg-transparent px-0 border-0">${this.escape(item)}</li>`;
-    }).join("")}</ul>` : ""}</section>`;
+    return `<section class="workbench-card card-${type}"><h3>${this.escape(title)}</h3>${body ? `<p>${this.escape(body)}</p>` : ""}${items ? `<ul>${items.map((item) => `<li>${this.escape(item)}</li>`).join("")}</ul>` : ""}</section>`;
   }
 
+  /**
+   * Builds a student information form field.
+   */
   field(field, savedValue) {
     let value = savedValue || "";
     if (!value && field.auto === "academicYear") {
@@ -806,19 +712,6 @@ class ChallengeRunner {
    */
   response(id) {
     return this.services.stateManager.getState().responses[id] || {};
-  }
-
-  /**
-   * Resolves activity image references through an optional assignment asset manifest.
-   */
-  resolveActivityImage(activity = {}) {
-    if (activity.asset && this.assetManifest && this.assetManifest.assets) {
-      const asset = this.assetManifest.assets[activity.asset];
-      if (asset && asset.path) {
-        return asset.path;
-      }
-    }
-    return activity.image || "";
   }
 
   /**

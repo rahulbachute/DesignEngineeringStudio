@@ -237,7 +237,7 @@ class ChallengeRunner {
    */
   renderImageLabel(host, step, activity) {
     const component = this.services.componentRegistry.create("image-label", {
-      config: { id: step.id, title: activity.title, image: activity.image, figure: activity.figure, description: activity.description, labels: activity.labels },
+      config: { id: step.id, title: activity.title, image: activity.image, figure: activity.figure, description: activity.description, labels: activity.labels, options: activity.options },
       stateManager: this.services.stateManager,
       eventBus: this.services.eventBus
     });
@@ -276,7 +276,43 @@ class ChallengeRunner {
    */
   renderCalculation(host, step, activity) {
     const saved = this.response(step.id);
-    host.innerHTML = `${this.card("calculation", "Given Data", "", activity.given)}<section class="workbench-card"><h3>${this.escape(activity.title)}</h3><div class="student-form-grid">${activity.fields.map((field) => `<div><label class="form-label">${this.escape(field.label)}</label><input class="form-control" type="number" step="0.01" data-calc="${this.escape(field.id)}" placeholder="${this.escape(field.placeholder)}" value="${this.escape(saved[field.id] || "")}"></div>`).join("")}</div></section>`;
+    let imageHostHtml = "";
+    if (activity.image) {
+      imageHostHtml = `<div data-calculation-image-viewer class="mb-3"></div>`;
+    }
+    let toolBtnHtml = "";
+    if (activity.toolUrl) {
+      toolBtnHtml = `
+        <div class="mb-3">
+          <a href="${this.escape(activity.toolUrl)}" target="_blank" class="btn btn-warning fw-bold text-dark px-3 py-2 shadow-sm d-inline-flex align-items-center gap-2">
+            <i class="bi bi-calculator-fill fs-5" aria-hidden="true"></i>
+            ${this.escape(activity.toolButtonText || "Launch Shaft Design Calculator")}
+          </a>
+        </div>
+      `;
+    }
+    host.innerHTML = `${imageHostHtml}${this.card("calculation", "Given Data", "", activity.given)}${toolBtnHtml}<section class="workbench-card"><h3>${this.escape(activity.title)}</h3><div class="student-form-grid">${activity.fields.map((field) => `<div><label class="form-label">${this.escape(field.label)}</label><input class="form-control" type="number" step="0.01" data-calc="${this.escape(field.id)}" placeholder="${this.escape(field.placeholder)}" value="${this.escape(saved[field.id] || "")}"></div>`).join("")}</div></section>`;
+
+    if (activity.image) {
+      const viewerHost = host.querySelector("[data-calculation-image-viewer]");
+      if (viewerHost) {
+        const viewer = this.services.componentRegistry.create("image-viewer", {
+          config: {
+            id: `${step.id}Viewer`,
+            title: activity.figure || activity.title || "Free Body Diagram",
+            figure: activity.figure || "Free Body Diagram",
+            description: activity.description || "",
+            image: activity.image,
+            zoom: true,
+            fullscreen: true
+          },
+          stateManager: this.services.stateManager,
+          eventBus: this.services.eventBus
+        });
+        viewerHost.append(viewer.render());
+      }
+    }
+
     this.bindAutosave(step.id);
   }
 
@@ -463,6 +499,18 @@ class ChallengeRunner {
     }
     if (widget.id === "responses") {
       return `<p>${Object.keys(state.responses || {}).length} response records saved.</p>`;
+    }
+    if (widget.id === "calculator" || widget.cardType === "calculator" || widget.url) {
+      const toolUrl = widget.url || "tools/Shaft Design Calculator.html";
+      const toolText = widget.buttonText || "Launch Shaft Design Calculator";
+      const cleanText = (widget.text || "").replace(/<[^>]*>/g, '');
+      return `
+        <p class="mb-2 text-muted small">${this.escape(cleanText)}</p>
+        <a href="${this.escape(toolUrl)}" target="_blank" class="btn btn-warning btn-sm w-100 fw-bold text-dark d-inline-flex align-items-center justify-content-center gap-2 shadow-sm py-2">
+          <i class="bi bi-calculator-fill fs-6" aria-hidden="true"></i>
+          ${this.escape(toolText)}
+        </a>
+      `;
     }
     return `<p>${this.escape(widget.text || "")}</p>`;
   }
