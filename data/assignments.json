@@ -13,7 +13,7 @@
     },
     {
       "id": "EC-02",
-      "title": "Motorcycle Side Stand Stability Analysis",
+      "title": "Determine factor of safety of motorcycle stand and verify whether design is safe",
       "discipline": "Design of Machine Elements",
       "summary": "Template-authored engineering challenge for side stand stability and load reasoning.",
       "status": "Ready",
@@ -21,6 +21,50 @@
       "icon": "bi-bicycle",
       "configPath": "assignments/motorcycle/config.json",
       "launchPath": "assignment-workbench.html?assignment=motorcycle"
+    },
+    {
+      "id": "EC-03",
+      "title": "Engineering Materials Selection in Two-Wheeler Components",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge scaffold for material selection decisions across two-wheeler components.",
+      "status": "Draft",
+      "tasks": 11,
+      "icon": "bi-tools",
+      "configPath": "assignments/materials-selection/config.json",
+      "launchPath": "assignment-workbench.html?assignment=materials-selection"
+    },
+    {
+      "id": "EC-04",
+      "title": "Ergonomic Design and Safety Verification of a Borewell Pump Hand Lever",
+      "discipline": "Design of Machine Elements",
+      "summary": "Configuration-driven engineering challenge for borewell pump hand lever safety and ergonomics.",
+      "status": "Ready",
+      "tasks": 19,
+      "icon": "bi-tools",
+      "configPath": "assignments/borewell-pump/config.json",
+      "launchPath": "assignment-workbench.html?assignment=borewell-pump"
+    },
+    {
+      "id": "EC-05",
+      "title": "Failure Analysis and Material Selection of a Failed Mechanical Component",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to investigate the failure mechanism, material, and factor of safety of a bolted joint.",
+      "status": "Ready",
+      "tasks": 13,
+      "icon": "bi-wrench",
+      "configPath": "assignments/failure-analysis/config.json",
+      "launchPath": "assignment-workbench.html?assignment=failure-analysis"
+    },
+    {
+      "id": "EC-06",
+      "title": "Stress Concentration Analysis of a Plate with a Central Hole",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze stress concentration, nominal vs peak stress, material selection, and safety factor of a plate with a hole.",
+      "status": "Ready",
+      "tasks": 12,
+      "icon": "bi-symmetry-horizontal",
+      "configPath": "assignments/stress-concentration/config.json",
+      "launchPath": "assignment-workbench.html?assignment=stress-concentration"
     }
   ]
 }

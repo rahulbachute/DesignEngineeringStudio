@@ -1,96 +1,68 @@
 {
-  "totalMarks": 12,
-  "cceType": "Engineering Challenge",
-  "courseOutcome": "CO1",
+  "totalMarks": 24,
   "criteria": [
     {
-      "activityId": "project-charter",
-      "activityNumber": 1,
-      "title": "Understand the Project Charter",
+      "id": "project-charter",
+      "title": "Project Charter Verification",
       "marks": 1,
-      "coMapping": "CO1",
-      "poMapping": ["PO1", "PO8", "PO11"],
-      "psoMapping": ["PSO1"],
-      "bloomLevel": "L1 Understand",
-      "facultyRemarks": "",
-      "autoEvaluation": { "enabled": false, "futureRule": "Project acceptance and charter comprehension evidence" }
+      "type": "completion",
+      "description": "Student read and accepted the project charter."
     },
     {
-      "activityId": "identify-components",
-      "activityNumber": 2,
-      "title": "Identify Elevator Components",
+      "id": "design-requirements",
+      "title": "Design Requirements Identification",
       "marks": 2,
-      "coMapping": "CO1",
-      "poMapping": ["PO1", "PO2"],
-      "psoMapping": ["PSO1"],
-      "bloomLevel": "L2 Understand",
-      "facultyRemarks": "",
-      "autoEvaluation": { "enabled": false, "futureRule": "Match labels with expected elevator components" }
+      "type": "scoring",
+      "description": "Accurately extracts the maximum load, cabin weight, and number of ropes from the charter."
     },
     {
-      "activityId": "working-principle",
-      "activityNumber": 3,
-      "title": "Working Principle of Traction Elevator",
+      "id": "identify-components",
+      "title": "Component Identification (Image Labeling)",
       "marks": 2,
-      "coMapping": "CO1",
-      "poMapping": ["PO1", "PO2", "PO3"],
-      "psoMapping": ["PSO1"],
-      "bloomLevel": "L2 Understand",
-      "facultyRemarks": "",
-      "autoEvaluation": { "enabled": false, "futureRule": "Check explanation coverage and concept response" }
+      "type": "auto-grading",
+      "description": "Correctly matches the 20 numbered callouts to the corresponding elevator component names."
     },
     {
-      "activityId": "material-selection",
-      "activityNumber": 4,
-      "title": "Material Selection",
+      "id": "free-body-diagram",
+      "title": "Free Body Diagram Analysis",
       "marks": 2,
-      "coMapping": "CO1",
-      "poMapping": ["PO1", "PO2", "PO5", "PO7"],
-      "psoMapping": ["PSO1", "PSO2"],
-      "bloomLevel": "L3 Apply",
-      "facultyRemarks": "",
-      "autoEvaluation": { "enabled": false, "futureRule": "Evaluate material choice and justification" }
+      "type": "auto-grading",
+      "description": "Accurately maps the upwards tensile force and downwards gravity vectors on the system."
     },
     {
-      "activityId": "engineering-calculations",
-      "activityNumber": 5,
-      "title": "Engineering Calculations",
+      "id": "working-principle",
+      "title": "Working Principle Explanation",
       "marks": 2,
-      "coMapping": "CO1",
-      "poMapping": ["PO1", "PO2", "PO3"],
-      "psoMapping": ["PSO1"],
-      "bloomLevel": "L3 Apply",
-      "facultyRemarks": "",
-      "autoEvaluation": { "enabled": false, "futureRule": "Check passenger load, total load, and load per rope" }
+      "type": "scoring",
+      "description": "Clear explanation of how the traction elevator works, identifying the sheave as the traction source."
     },
     {
-      "activityId": "engineering-decision",
-      "activityNumber": 6,
-      "title": "Engineering Decision",
+      "id": "engineering-model",
+      "title": "Engineering Model Identification",
       "marks": 2,
-      "coMapping": "CO1",
-      "poMapping": ["PO2", "PO3", "PO7", "PO8", "PO11"],
-      "psoMapping": ["PSO1", "PSO2"],
-      "bloomLevel": "L4 Analyse",
-      "facultyRemarks": "",
-      "autoEvaluation": { "enabled": false, "futureRule": "Assess approve, reject, or redesign justification" }
+      "type": "scoring",
+      "description": "Correctly explains the load path transferring weight to the suspension system."
     },
     {
-      "activityId": "reflection",
-      "activityNumber": 7,
-      "title": "Report / Engineering Notebook and Reflection",
-      "marks": 1,
-      "coMapping": "CO1",
-      "poMapping": ["PO8", "PO9", "PO11"],
-      "psoMapping": ["PSO2"],
-      "bloomLevel": "L5 Evaluate",
-      "facultyRemarks": "",
-      "autoEvaluation": { "enabled": false, "futureRule": "Evaluate notebook completeness and reflective clarity" }
+      "id": "material-selection",
+      "title": "Material Selection Justification",
+      "marks": 2,
+      "type": "scoring",
+      "description": "Selects a high-strength material (e.g., High Carbon Steel) and justifies the choice based on yield strength."
+    },
+    {
+      "id": "engineering-calculations",
+      "title": "Load, Stress, and Factor of Safety Calculations",
+      "marks": 9,
+      "type": "auto-grading",
+      "description": "Accurate calculation of total passenger load, load per rope, tensile stress, and Factor of Safety. Diameter should be 12mm within +- 1mm tolerance."
+    },
+    {
+      "id": "engineering-decision",
+      "title": "Engineering Decision & Justification",
+      "marks": 2,
+      "type": "scoring",
+      "description": "Correctly decides SAFE or UNSAFE based on FoS and provides sound engineering justification."
     }
-  ],
-  "levels": [
-    { "level": "Excellent", "description": "Accurate engineering reasoning, complete OBE-aligned response, and professional documentation." },
-    { "level": "Satisfactory", "description": "Mostly correct response with minor technical or documentation gaps." },
-    { "level": "Needs Improvement", "description": "Incomplete response, weak justification, or missing engineering evidence." }
   ]
 }

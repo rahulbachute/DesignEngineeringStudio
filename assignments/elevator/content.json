@@ -8,7 +8,7 @@
     "difficultyLevel": "Intermediate",
     "estimatedDuration": "90 minutes",
     "attemptMode": "Individual or Group",
-    "cceMarks": "12",
+    "cceMarks": "24",
     "courseOutcome": "CO1: Design levers and components subjected to eccentric loading by selecting appropriate materials.",
     "programOutcomes": "PO1, PO2, PO3, PO5, PO7, PO8, PO9, PO11",
     "programSpecificOutcomes": "PSO1, PSO2",
@@ -23,40 +23,48 @@
       "Understand the elevator suspension cable safety problem.",
       "Identify traction elevator components.",
       "Apply machine element design reasoning to load distribution and material selection.",
-      "Prepare an engineering decision with professional justification."
+      "Prepare an engineering decision with professional justification based on standard safety codes."
     ],
     "deliverables": [
       "Component identification",
       "Working principle explanation",
+      "Free Body Diagram",
+      "Engineering model",
+      "Design requirements (including Safety Standards)",
+      "Engineering assumptions",
       "Material selection recommendation",
-      "Engineering calculations",
+      "Engineering calculations (Stress and FoS)",
       "Decision and justification",
       "Engineering notebook and reflection"
     ],
     "professionalResponsibility": "Students must prioritize safety, reliability, and accountable engineering documentation.",
-    "safetyConsiderations": "Elevator suspension systems are safety-critical and require certified design, inspection, and code compliance in real practice.",
-    "acceptanceCriteria": "The project is complete when all activities are attempted, calculations are documented, and the final decision is justified."
+    "safetyConsiderations": "Elevator suspension systems are safety-critical. According to ASME A17.1 / EN 81, suspension ropes must have a minimum Factor of Safety of 10 for passenger elevators.",
+    "acceptanceCriteria": "The project is complete when all activities are attempted, calculations are documented, and the final decision is justified against the required standard."
   },
   "attemptMode": {
     "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
       { "name": "rollNumber", "label": "Roll Number", "required": true, "numeric": true },
       { "name": "name", "label": "Name", "required": true, "nameOnly": true },
-      { "name": "division", "label": "Division", "required": true }
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
     ],
     "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "classYear", "label": "Class and Year (e.g., TE-A)", "required": true },
       { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
       { "name": "groupName", "label": "Group Name", "required": false },
       { "name": "student1", "label": "Student 1", "required": true, "nameOnly": true },
       { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
       { "name": "student3", "label": "Student 3", "required": true, "nameOnly": true },
       { "name": "student4", "label": "Student 4", "required": true, "nameOnly": true },
-      { "name": "division", "label": "Division", "required": true }
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
     ]
   },
   "widgets": [
     { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
     { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
-    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks distributed across seven activities." },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 24 marks distributed across the activities." },
     { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 with PO1, PO2, PO3, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." },
     { "id": "hint", "title": "Engineering Hint", "icon": "bi-lightbulb", "cardType": "hint", "text": "Treat the challenge as an independent engineering review before procurement." },
     { "id": "note", "title": "Safety Note", "icon": "bi-exclamation-triangle", "cardType": "warning", "text": "For real elevators, always use certified design data, applicable standards, and qualified inspection." }
@@ -76,10 +84,10 @@
       "cards": [
         { "type": "information", "title": "Client", "body": "ABC Commercial Complex Pvt Ltd, Hinjewadi, Pune." },
         { "type": "theory", "title": "Project Background", "body": "The client is installing a passenger elevator and requires an independent academic engineering review of selected suspension cables before procurement." },
-        { "type": "information", "title": "Engineering Context", "body": "You are a mechanical design engineer evaluating whether the suspension cable choice and load distribution appear technically reasonable." },
+        { "type": "information", "title": "Engineering Context", "body": "You are a mechanical design engineer evaluating whether the suspension cable choice and load distribution appear technically reasonable against safety standards." },
         { "type": "student-response", "title": "Objectives", "items": ["Read the project charter.", "Recognize the elevator system context.", "Connect cable safety to Design of Machine Elements.", "Prepare evidence-based responses."] },
-        { "type": "student-response", "title": "Deliverables", "items": ["Component labels", "Working principle explanation", "Material decision", "Load calculations", "Engineering decision", "Notebook and reflection"] },
-        { "type": "warning", "title": "Safety Considerations", "body": "Elevator suspension cables are safety-critical. Real procurement must comply with applicable codes, certified factor-of-safety requirements, manufacturer data, and professional inspection." },
+        { "type": "student-response", "title": "Deliverables", "items": ["Component labels", "Working principle explanation", "Free Body Diagram", "Engineering model", "Design requirements", "Engineering assumptions", "Material decision", "Load calculations", "Engineering decision", "Notebook and reflection"] },
+        { "type": "warning", "title": "Safety Standards", "body": "Elevator suspension cables are safety-critical. According to standards like ASME A17.1, passenger elevator suspension ropes must have a minimum Factor of Safety of 10." },
         { "type": "hint", "title": "Acceptance Criteria", "body": "Continue only after you understand the client problem, safety context, deliverables, and professional responsibility." }
       ],
       "acceptanceText": "I have read and accepted the EC-01 Project Charter."
@@ -98,7 +106,7 @@
         "pso": ["PSO1"],
         "estimatedTime": "12 minutes"
       },
-      "image": "/DesignEngineeringStudio/Engineering Assets Library/EA-01 Traction Elevator System/Student Version/EA-01_Student_v1.0.png",
+      "image": "./Engineering Assets Library/EA-01 Traction Elevator System/Student Version/EA-01_Student_v1.0.png",
       "figure": "Engineering Asset EA-01",
       "description": "Student version of the traction elevator system engineering asset with numbered callouts 1-20.",
       "options": [
@@ -163,10 +171,77 @@
         "options": ["Traction Sheave", "Guide Rail", "Controller", "Elevator Car"]
       }
     },
+    "free-body-diagram": {
+      "activityCode": "EC01-A02",
+      "activityType": "image-label",
+      "title": "Free Body Diagram Analysis",
+      "metadata": {
+        "activityNumber": 4,
+        "marks": 2,
+        "bloomLevel": "L3 Apply",
+        "co": "CO1",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "12 minutes"
+      },
+      "image": "./Engineering Assets Library/EA-01 Traction Elevator System/Student Version/EA-01_Student_v1.0.png",
+      "figure": "Engineering Asset EA-01",
+      "description": "Identify the key force vectors on the elevator system using the callout numbers.",
+      "options": [
+        "Tensile Force (Upwards)",
+        "Weight of Elevator Car (Downwards)"
+      ],
+      "labels": [
+        { "componentNumber": 3, "correctAnswer": "Tensile Force (Upwards)", "feedback": "The suspension ropes exert an upward tensile force to support the car." },
+        { "componentNumber": 4, "correctAnswer": "Weight of Elevator Car (Downwards)", "feedback": "Gravity pulls the elevator car downwards." }
+      ]
+    },
+    "engineering-model": {
+      "title": "Engineering Model",
+      "metadata": {
+        "activityNumber": 5,
+        "marks": 2,
+        "bloomLevel": "L3 Apply",
+        "co": "CO1",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Explain the load path transferring the passenger load to the suspension system.",
+      "mcq": {
+        "question": "Which sequence correctly represents the static load path for the elevator car?",
+        "options": [
+          "Weight -> Load Distribution -> Tension in Rope",
+          "Tension in Rope -> Load Distribution -> Weight",
+          "Load Distribution -> Weight -> Tension in Rope"
+        ]
+      }
+    },
+    "design-requirements": {
+      "title": "Design Requirements & Safety Standards",
+      "metadata": {
+        "activityNumber": 6,
+        "marks": 2,
+        "bloomLevel": "L1 Understand",
+        "co": "CO1",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "10 minutes"
+      },
+      "given": ["Identify the core requirements and standards from the problem statement."],
+      "fields": [
+        { "id": "maxPassengerLoad", "label": "Maximum Passenger Load", "placeholder": "e.g. 10 passengers" },
+        { "id": "cabinWeight", "label": "Cabin Weight", "placeholder": "e.g. 700 kg" },
+        { "id": "numRopes", "label": "Number of Ropes", "placeholder": "e.g. 4" },
+        { "id": "requiredFoS", "label": "Standard Required FoS", "value": 10, "readonly": true }
+      ],
+      "expectedProcess": "Students must explicitly state the numerical requirements and the standard Factor of Safety constraint before starting calculations."
+    },
+
     "material-selection": {
       "title": "Material Selection",
       "metadata": {
-        "activityNumber": 4,
+        "activityNumber": 7,
         "marks": 2,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
@@ -176,35 +251,129 @@
       },
       "prompt": "Compare the given candidate materials and recommend the most suitable suspension cable material for this application.",
       "options": [
-        { "id": "mild-steel", "title": "Mild Steel", "note": "Economical and easy to process but not preferred for high-strength suspension cables." },
-        { "id": "high-carbon-steel", "title": "High Carbon Steel", "note": "High tensile strength and commonly used in steel wire rope applications." },
-        { "id": "stainless-steel", "title": "Stainless Steel", "note": "Corrosion resistant but grade, cost, and strength must be verified." },
-        { "id": "synthetic-rope", "title": "Synthetic Rope", "note": "Lightweight and specialized; requires compatibility, certification, and long-term performance review." }
+        { "id": "mild-steel", "title": "Mild Steel (Syt = 250 MPa)", "note": "Economical and easy to process but not preferred for high-strength suspension cables." },
+        { "id": "high-carbon-steel", "title": "High Carbon Steel (Syt = 800 MPa)", "note": "High tensile strength and commonly used in steel wire rope applications." },
+        { "id": "stainless-steel", "title": "Stainless Steel (Syt = 500 MPa)", "note": "Corrosion resistant but grade, cost, and strength must be verified." },
+        { "id": "synthetic-rope", "title": "Synthetic Rope (Syt = N/A)", "note": "Lightweight and specialized; requires compatibility, certification, and long-term performance review." }
       ]
     },
     "engineering-calculations": {
       "title": "Engineering Calculations",
       "metadata": {
-        "activityNumber": 5,
-        "marks": 2,
+        "activityNumber": 8,
+        "marks": 9,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
         "po": ["PO1", "PO2", "PO3"],
         "pso": ["PSO1"],
-        "estimatedTime": "14 minutes"
+        "estimatedTime": "20 minutes"
       },
-      "given": ["10 passengers", "75 kg per passenger", "Car weight: 700 kg", "Number of suspension ropes: 4"],
-      "fields": [
-        { "id": "passengerLoad", "label": "Passenger Load (kg)", "placeholder": "10 x 75" },
-        { "id": "totalLoad", "label": "Total Load (kg)", "placeholder": "Passenger load + car weight" },
-        { "id": "loadPerRope", "label": "Load per Rope (kg)", "placeholder": "Total load / 4" }
-      ],
-      "expectedProcess": "Passenger load = 750 kg; total static load = 1450 kg; static load per rope = 362.5 kg before applying factor of safety and dynamic effects."
+      "given": ["10 passengers", "75 kg per passenger", "Car weight: 700 kg", "Number of suspension ropes: 4", "g = 9.81 m/s2", "Factor of Safety (FoS) = 10"],
+      "steps": [
+        {
+          "id": "passengerMass",
+          "type": "numeric",
+          "title": "Step 1: Passenger Mass",
+          "label": "Passenger Mass (kg)",
+          "formula": "Number of passengers × Weight per passenger",
+          "expected": 750,
+          "tolerance": 0.1,
+          "feedback": "Correct. 10 × 75 = 750 kg."
+        },
+        {
+          "id": "totalMass",
+          "type": "numeric",
+          "title": "Step 2: Total Elevator Mass",
+          "label": "Total Elevator Mass (kg)",
+          "formula": "Passenger Mass + Car weight",
+          "expected": 1450,
+          "tolerance": 0.1,
+          "feedback": "Correct. 750 kg + 700 kg = 1450 kg."
+        },
+        {
+          "id": "totalLoad",
+          "type": "numeric",
+          "title": "Step 3: Total Load",
+          "label": "Total Load (N)",
+          "formula": "Total Elevator Mass × g",
+          "expected": 14224.5,
+          "tolerance": 5,
+          "feedback": "Correct. 1450 kg × 9.81 m/s² = 14224.5 N."
+        },
+        {
+          "id": "loadPerRope",
+          "type": "numeric",
+          "title": "Step 4: Load on One Rope",
+          "label": "Load on One Rope (N)",
+          "formula": "Total Load ÷ Number of suspension ropes",
+          "expected": 3556.1,
+          "tolerance": 2,
+          "feedback": "Correct. 14224.5 N ÷ 4 = 3556.125 N."
+        },
+        {
+          "id": "breakingLoad",
+          "type": "numeric",
+          "title": "Step 5: Required Breaking Load",
+          "label": "Required Breaking Load (N)",
+          "formula": "Load on One Rope × Factor of Safety",
+          "expected": 35561.25,
+          "tolerance": 20,
+          "feedback": "Correct. 3556.125 N × 10 = 35561.25 N."
+        },
+        {
+          "id": "ropeDiameter",
+          "type": "numeric",
+          "title": "Step 6: Required Rope Diameter",
+          "label": "Required Rope Diameter (mm)",
+          "formula": "Pb = 500 d² (d = √(Pb/500))",
+          "expected": 8.43,
+          "tolerance": 0.1,
+          "feedback": "Correct. √(35561.25 / 500) ≈ 8.43 mm."
+        },
+        {
+          "id": "standardDiameter",
+          "type": "numeric",
+          "title": "Step 7: Standard Rope Diameter",
+          "label": "Selection of the nearest higher standard rope diameter (mm)",
+          "formula": "Nearest standard size (e.g. 10, 12)",
+          "expected": 12,
+          "tolerance": 2.5,
+          "feedback": "Correct. Using a standard 10mm or 12mm rope provides a safe margin."
+        },
+        {
+          "id": "actualStress",
+          "type": "numeric",
+          "title": "Step 8: Actual Tensile Stress",
+          "label": "Actual Stress (MPa)",
+          "formula": "Load on One Rope / (0.38 × d²). Note: 0.38 d² is the effective metallic cross-sectional area for a standard wire rope as per Bhandari.",
+          "expected": 64.98,
+          "tolerance": 30,
+          "feedback": "Correct. Using Load on One Rope / (0.38 × d²)."
+        },
+        {
+          "id": "actualFoS",
+          "type": "numeric",
+          "title": "Step 9: Actual Factor of Safety",
+          "label": "Actual Factor of Safety",
+          "formula": "Syt / Actual Stress",
+          "expected": 12.31,
+          "tolerance": 4,
+          "feedback": "Correct. Syt (800 MPa for high carbon steel) / Actual Stress."
+        },
+        {
+          "id": "engineeringReflection",
+          "type": "text",
+          "title": "Step 10: Engineering Reflection",
+          "label": "Why do actual elevators often use a larger standard rope?",
+          "formula": "Discuss: Dynamic loading, Bending over sheaves, Wear, Shock loading, Unequal load distribution",
+          "feedback": "Excellent reasoning. Safety factors cover these complex dynamic scenarios."
+        }
+      ]
     },
     "engineering-decision": {
       "title": "Engineering Decision",
       "metadata": {
-        "activityNumber": 6,
+        "activityNumber": 9,
         "marks": 2,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
@@ -212,31 +381,8 @@
         "pso": ["PSO1", "PSO2"],
         "estimatedTime": "15 minutes"
       },
-      "options": ["Approve", "Reject", "Redesign"],
-      "prompt": "Decide whether the procurement proposal should be approved, rejected, or redesigned. Provide engineering justification based on safety, material suitability, load distribution, and documentation requirements."
-    },
-    "reflection": {
-      "title": "Report / Engineering Notebook and Reflection",
-      "metadata": {
-        "activityNumber": 7,
-        "marks": 1,
-        "bloomLevel": "L5 Evaluate",
-        "co": "CO1",
-        "po": ["PO8", "PO9", "PO11"],
-        "pso": ["PSO2"],
-        "estimatedTime": "15 minutes"
-      },
-      "questions": [
-        "Observations",
-        "Assumptions",
-        "Calculations",
-        "Engineering Notes",
-        "Conclusion",
-        "What did you learn from this project?",
-        "Which engineering concept became clearer?",
-        "How did this activity help you achieve the Course Outcome?",
-        "If you were the design engineer, what improvement would you suggest?"
-      ]
+      "options": ["SAFE: Approve Procurement", "UNSAFE: Redesign Required"],
+      "prompt": "Compare your calculated Required Rope Diameter against the proposed Selected Standard Diameter (12 mm). Decide whether the current suspension cable design should be approved for procurement. Provide engineering justification."
     },
     "submit": {
       "title": "Submission",
