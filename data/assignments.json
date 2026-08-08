@@ -27,7 +27,7 @@
       "title": "Engineering Materials Selection in Two-Wheeler Components",
       "discipline": "Design of Machine Elements",
       "summary": "Engineering challenge scaffold for material selection decisions across two-wheeler components.",
-      "status": "Draft",
+      "status": "Ready",
       "tasks": 11,
       "icon": "bi-tools",
       "configPath": "assignments/materials-selection/config.json",
