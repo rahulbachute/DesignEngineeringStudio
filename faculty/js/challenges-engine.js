@@ -147,6 +147,20 @@ class ChallengesEngine {
         slug: "Keys",
         co: "CO2",
         weightage: "12 Marks"
+      },
+      {
+        id: "EC-09",
+        title: "Identification and Selection of Couplings Used in Mechanical Power Transmission",
+        discipline: "Design of Machine Elements",
+        summary: "Engineering challenge to analyze shaft connections, torque transmission, misalignment accommodation, working principles, coupling classification, application selection, and engineering justification for a motor-pump system.",
+        status: "Ready",
+        tasks: 13,
+        icon: "bi-link-45deg",
+        configPath: "assignments/coupling/config.json",
+        launchPath: "../assignment-workbench.html?assignment=coupling",
+        slug: "coupling",
+        co: "CO2",
+        weightage: "12 Marks"
       }
     ];
   }

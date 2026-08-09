@@ -70,7 +70,8 @@ class AnalyticsEngine {
         'EC-05 Bolted Joint Failure',
         'EC-06 Stress Concentration',
         'EC-07 Transmission Shaft Design',
-        'EC-08 Shaft Drive Keys'
+        'EC-08 Shaft Drive Keys',
+        'EC-09 Coupling Selection'
       ]
     };
 
@@ -97,7 +98,7 @@ class AnalyticsEngine {
 
     return {
       totalStudents: summary.totalStudents ?? 45,
-      totalChallenges: summary.totalChallenges ?? 8,
+      totalChallenges: summary.totalChallenges ?? 10,
       completedEvaluations: summary.completedEvaluations ?? 11,
       pendingEvaluations: summary.pendingEvaluations ?? 4,
       averageMarks: summary.averageMarks ?? 78.5,
@@ -125,7 +126,7 @@ class AnalyticsEngine {
       },
       challengeAnalytics: {
         mostAttempted: challenge.mostAttempted ?? "EC-01 Elevator Cable (45)",
-        leastAttempted: challenge.leastAttempted ?? "EC-08 Shaft Drive Keys (15)",
+        leastAttempted: challenge.leastAttempted ?? "EC-09 Coupling Selection (12)",
         highestAverageScore: challenge.highestAverageScore ?? "EC-01 Elevator Cable (84.2%)",
         lowestAverageScore: challenge.lowestAverageScore ?? "EC-06 Stress Concentration (71.5%)",
         mostDifficult: challenge.mostDifficult ?? "EC-06 Stress Concentration Plate",
@@ -136,7 +137,7 @@ class AnalyticsEngine {
         pendingReviews: faculty.pendingReviews ?? summary.pendingEvaluations ?? 4,
         averageEvaluationTime: faculty.averageEvaluationTime ?? "12.5 mins per submission",
         marksDistribution: faculty.marksDistribution || { reviewed: 11, pending: 4 },
-        activityTimeline: faculty.activityTimeline || ["Prof. Rahul Bachute evaluated EC-07 Shaft submission", "Prof. Rahul Bachute evaluated EC-08 Key Design submission"]
+        activityTimeline: faculty.activityTimeline || ["Prof. Rahul Bachute evaluated EC-07 Shaft submission", "Prof. Rahul Bachute evaluated EC-08 Key Design submission", "Prof. Rahul Bachute evaluated EC-09 Coupling submission"]
       },
       outcomeAnalytics: {
         coTrend: outcome.coTrend || ["CO1: 82%", "CO2: 76%", "CO3: 78%", "CO4: 80%"],
@@ -155,7 +156,8 @@ class AnalyticsEngine {
           { label: 'EC-05', value: 84.5 },
           { label: 'EC-06', value: 71.5 },
           { label: 'EC-07', value: 80.2 },
-          { label: 'EC-08', value: 83.0 }
+          { label: 'EC-08', value: 83.0 },
+          { label: 'EC-09', value: 81.5 }
         ],
         challengeCompletion: (data.charts && Array.isArray(data.charts.challengeCompletion) && data.charts.challengeCompletion.length) ? data.charts.challengeCompletion : [
           { label: 'EC-01', value: 95 },
@@ -165,7 +167,8 @@ class AnalyticsEngine {
           { label: 'EC-05', value: 82 },
           { label: 'EC-06', value: 80 },
           { label: 'EC-07', value: 78 },
-          { label: 'EC-08', value: 75 }
+          { label: 'EC-08', value: 75 },
+          { label: 'EC-09', value: 72 }
         ],
         facultyActivity: (data.charts && Array.isArray(data.charts.facultyActivity) && data.charts.facultyActivity.length) ? data.charts.facultyActivity : [
           { label: 'Mon', value: 4 },

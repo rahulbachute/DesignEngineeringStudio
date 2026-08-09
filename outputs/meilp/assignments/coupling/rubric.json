@@ -1,0 +1,98 @@
+{
+  "assignmentId": "EC-09",
+  "assignmentTitle": "Identification and Selection of Couplings Used in Mechanical Power Transmission",
+  "totalMarks": 12,
+  "criteria": [
+    {
+      "id": "component-identification",
+      "activityCode": "EC09-A03",
+      "title": "Component Identification",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate identification of motor, driving shaft, coupling hubs, flexible element, keys, bearings, driven shaft, and pump on EA-09."
+    },
+    {
+      "id": "working-principle",
+      "title": "Working Principle & Mechanics",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Understanding torque transmission path and elastomeric flexible element shock/vibration damping mechanics."
+    },
+    {
+      "id": "coupling-classification",
+      "title": "Classification of Couplings",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Correct classification of Rigid (Sleeve, Clamp, Flange) vs Flexible (Bushed-pin, Oldham, Gear, Elastomeric) coupling types."
+    },
+    {
+      "id": "application-analysis",
+      "title": "Application Analysis",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3"],
+      "pso": ["PSO1"],
+      "description": "Identification of critical power transmission requirements for Motor-Pump, Compressor, Conveyor, and Machine Tool drives."
+    },
+    {
+      "id": "coupling-comparison",
+      "title": "Coupling Comparison",
+      "marks": 2.0,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Comparative analysis across rigidity, misalignment accommodation, shock damping, maintenance ease, and cost."
+    },
+    {
+      "id": "engineering-requirements",
+      "title": "Engineering Requirements & Calculation",
+      "marks": 2.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO5"],
+      "pso": ["PSO1"],
+      "description": "Accurate computation of transmitted nominal torque T = 145,892 N-mm and design torque Td = 218,838 N-mm."
+    },
+    {
+      "id": "coupling-selection",
+      "title": "Coupling Selection",
+      "marks": 1.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO5"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Correct engineering selection of Bushed-Pin Flexible Coupling for the 22 kW motor-pump system."
+    },
+    {
+      "id": "engineering-justification",
+      "title": "Engineering Justification",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Multi-faceted technical justification covering torque, misalignment, shock absorption, maintenance, and practicality."
+    },
+    {
+      "id": "engineering-decision",
+      "title": "Engineering Decision & Alternative Analysis",
+      "marks": 1.0,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Structured decision matrix and technical evaluation of alternative couplings (e.g. Rigid Flange rejection)."
+    }
+  ]
+}

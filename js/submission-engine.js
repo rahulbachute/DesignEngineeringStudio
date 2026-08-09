@@ -330,12 +330,13 @@ class SubmissionEngine {
    * Builds analytics summaries from the same activity rows sent to Sheets.
    */
   buildAnalytics(config, student, attemptMode, completionPercent, activityResponses) {
-    const studentName = student.name || student.student1 || student.groupName || "";
+    const studentName = student.name || student.fullName || student.student1 || student.groupName || "";
+    const rollNumber = student.rollNumber || student.rollNo || student.groupNumber || "";
     return {
       studentDashboard: {
         challengeId: config.id || config.projectCode || "",
         studentName,
-        rollNumber: student.rollNumber || "",
+        rollNumber,
         attemptMode,
         completionPercent,
         submissionStatus: "submitted"
@@ -353,9 +354,18 @@ class SubmissionEngine {
    * Normalizes group member fields while preserving all original student keys.
    */
   normalizeStudentInformation(student) {
-    const normalized = { ...student };
+    const raw = student && typeof student === "object" ? student : {};
+    const normalized = { ...raw };
+    const resolvedName = raw.name || raw.fullName || raw.studentName || raw.student1 || "";
+    const resolvedRoll = raw.rollNumber || raw.rollNo || raw.groupNumber || "";
+
+    normalized.name = resolvedName;
+    normalized.fullName = resolvedName;
+    normalized.rollNumber = resolvedRoll;
+    normalized.rollNo = resolvedRoll;
+
     const groupMembers = ["student1", "student2", "student3", "student4"]
-      .map((key) => student[key])
+      .map((key) => raw[key])
       .filter((name) => String(name || "").trim());
     if (groupMembers.length) {
       normalized.groupMembers = groupMembers;
@@ -367,32 +377,36 @@ class SubmissionEngine {
    * Validates student identity fields for individual and group modes.
    */
   validateStudentInformation(student, attemptMode, errors) {
-    if (!student.collegeName) {
+    const safeStudent = student && typeof student === "object" ? student : {};
+    if (!safeStudent.collegeName) {
       errors.push("College / Institution is required.");
     }
 
     if (attemptMode === "group") {
-      if (!student.groupNumber) {
+      const groupNum = safeStudent.groupNumber || safeStudent.groupNo;
+      if (!groupNum) {
         errors.push("Group Number is required.");
       }
       ["student1", "student2", "student3", "student4"].forEach((field) => {
-        if (!student[field]) {
+        if (!safeStudent[field] && (field === "student1" || field === "student2")) {
           errors.push(`${this.title(field)} is required.`);
         }
       });
     } else {
-      if (!student.rollNumber) {
+      const rollNumber = safeStudent.rollNumber || safeStudent.rollNo || safeStudent.rollNumberStudentId || safeStudent.roll;
+      const name = safeStudent.name || safeStudent.fullName || safeStudent.studentName;
+      if (!rollNumber || !String(rollNumber).trim()) {
         errors.push("Roll Number is required.");
       }
-      if (!student.name) {
+      if (!name || !String(name).trim()) {
         errors.push("Name is required.");
       }
     }
 
-    if (!student.division) {
-      const classYear = String(student.classYear || student.class || "");
+    if (!safeStudent.division) {
+      const classYear = String(safeStudent.classYear || safeStudent.class || "");
       const match = classYear.match(/(?:div|division|\b)[-\s]*([A-D])\b/i) || classYear.match(/-(A|B|C|D)\b/i);
-      student.division = (match && match[1]) ? match[1].toUpperCase() : "A";
+      safeStudent.division = (match && match[1]) ? match[1].toUpperCase() : "A";
     }
   }
 

@@ -1,0 +1,52 @@
+{
+  "assignmentId": "EC-09",
+  "totalMarks": 12,
+  "maxMarks": 12,
+  "sections": [
+    {
+      "id": "component-identification",
+      "title": "Component Identification (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "working-principle",
+      "title": "Working Principle & Mechanics (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "coupling-classification",
+      "title": "Classification of Couplings (Activity 5)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "application-analysis",
+      "title": "Application Analysis (Activity 6)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "coupling-comparison",
+      "title": "Coupling Comparison (Activity 7)",
+      "maxMarks": 2.0
+    },
+    {
+      "id": "engineering-requirements",
+      "title": "Engineering Requirements & Calculation (Activity 8)",
+      "maxMarks": 2.0
+    },
+    {
+      "id": "coupling-selection",
+      "title": "Coupling Selection (Activity 9)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "engineering-justification",
+      "title": "Engineering Justification (Activity 10)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "engineering-decision",
+      "title": "Engineering Decision & Alternative Analysis (Activity 11)",
+      "maxMarks": 1.0
+    }
+  ]
+}

@@ -104,7 +104,9 @@ class OutcomeEngine {
         'EC-05 Bolted Joint Failure',
         'EC-06 Stress Concentration',
         'EC-07 Transmission Shaft Design',
-        'EC-08 Shaft Drive Keys'
+        'EC-08 Shaft Drive Keys',
+        'EC-09 Coupling Selection',
+        'EC-10 Bicycle Cotter Joint'
       ],
       batch: ['Batch A', 'Batch B', 'Batch C'],
       division: ['Division A', 'Division B'],
@@ -133,7 +135,7 @@ class OutcomeEngine {
     if (!coMetrics.length) {
       coMetrics = [
         { outcome: 'CO1 - Elevator Cable Safety', averageMarks: 79, target: 70, attainment: 78, status: 'High Attainment' },
-        { outcome: 'CO2 - Shaft & Key Design (EC-07 & EC-08)', averageMarks: 73, target: 70, attainment: 71, status: 'Moderate' },
+        { outcome: 'CO2 - Shaft, Key & Coupling Design (EC-07, EC-08 & EC-09)', averageMarks: 74, target: 70, attainment: 73, status: 'High Attainment' },
         { outcome: 'CO3 - Materials Selection & Manufacturing', averageMarks: 77, target: 70, attainment: 76, status: 'High Attainment' },
         { outcome: 'CO4 - Stress Concentration & Fracture', averageMarks: 68, target: 70, attainment: 65, status: 'Needs Improvement' },
         { outcome: 'CO5 - Joint & Fastener Failure Analysis', averageMarks: 81, target: 70, attainment: 83, status: 'High Attainment' }
@@ -363,11 +365,11 @@ class OutcomeEngine {
     // 2. CO Trend Line Chart
     const trendCanvas = document.getElementById('trendChart');
     if (trendCanvas) {
-      const trendData = [72, 75, 78, 70, 83, 68, 76, 81];
+      const trendData = [72, 75, 78, 70, 83, 68, 76, 81, 79];
       this.state.chartInstances.trend = new Chart(trendCanvas, {
         type: 'line',
         data: {
-          labels: ['EC-01', 'EC-02', 'EC-03', 'EC-04', 'EC-05', 'EC-06', 'EC-07', 'EC-08'],
+          labels: ['EC-01', 'EC-02', 'EC-03', 'EC-04', 'EC-05', 'EC-06', 'EC-07', 'EC-08', 'EC-09'],
           datasets: [{
             label: 'Attainment %',
             data: trendData,

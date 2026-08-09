@@ -62,7 +62,8 @@ class SubmissionsBrowser {
       { id: 'EC-05', title: 'Failure Analysis and Material Selection of a Failed Mechanical Component', student: 'Siddharth Patil', prn: '2026005', branch: 'B.E. Mechanical', div: 'B', score: 10, status: 'Evaluated' },
       { id: 'EC-06', title: 'Stress Concentration Analysis of a Plate with a Central Hole', student: 'Neha Deshmukh', prn: '2026006', branch: 'B.E. Mechanical', div: 'A', score: null, status: 'Submitted' },
       { id: 'EC-07', title: 'Design of Shaft for a Real-World Engineering Application', student: 'Rahul Bachute', prn: '2026007', branch: 'B.E. Mechanical', div: 'A', score: 11, status: 'Evaluated' },
-      { id: 'EC-08', title: 'Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission', student: 'Vikram Shinde', prn: '2026008', branch: 'B.E. Mechanical', div: 'B', score: null, status: 'Submitted' }
+      { id: 'EC-08', title: 'Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission', student: 'Vikram Shinde', prn: '2026008', branch: 'B.E. Mechanical', div: 'B', score: null, status: 'Submitted' },
+      { id: 'EC-09', title: 'Identification and Selection of Couplings Used in Mechanical Power Transmission', student: 'Aniket More', prn: '2026009', branch: 'B.E. Mechanical', div: 'A', score: null, status: 'Submitted' }
     ];
 
     const result = [...items];
@@ -209,7 +210,9 @@ class SubmissionsBrowser {
       'Failure Analysis and Material Selection of a Failed Mechanical Component',
       'Stress Concentration Analysis of a Plate with a Central Hole',
       'Design of Shaft for a Real-World Engineering Application',
-      'Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission'
+      'Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission',
+      'Identification and Selection of Couplings Used in Mechanical Power Transmission',
+      'Design of a Cotter Joint for a Bicycle'
     ];
     const loadedChallenges = this.data.map((item) => item.challenge).filter(Boolean);
     const combined = Array.from(new Set([...knownChallenges, ...loadedChallenges])).sort();

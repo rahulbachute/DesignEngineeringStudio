@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/cotter-joint/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-10",
+      "title": "Bicycle Cotter Joint Mechanical Assembly Illustration (Student Edition)",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/cotter-joint/images/EA-10_Student_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-10",
+      "title": "Bicycle Cotter Joint Mechanical Assembly Illustration (Faculty Master Solution)",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/cotter-joint/images/EA-10_Faculty_v1.0.png",
+      "required": true
+    }
+  }
+}

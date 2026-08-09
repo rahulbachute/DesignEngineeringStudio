@@ -1,0 +1,284 @@
+{
+  "assignment": {
+    "id": "EC-10",
+    "slug": "cotter-joint",
+    "title": "Design of a Cotter Joint for a Bicycle"
+  },
+  "dashboard": {
+    "projectCode": "EC-10",
+    "projectTitle": "Design of a Cotter Joint for a Bicycle",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit I",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO1: Design levers, components, and joints subjected to direct and combined loading by applying strength, rigidity, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-10",
+      "title": "Bicycle Cotter Joint Mechanical Assembly Illustration (Student Edition)",
+      "path": "assignments/cotter-joint/images/EA-10_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-10",
+      "title": "Bicycle Cotter Joint Mechanical Assembly Illustration (Faculty Master Solution)",
+      "path": "assignments/cotter-joint/images/EA-10_Faculty_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete cotter joint design challenge independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on bicycle power transmission cotter joint design" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Project Charter & Real-World Observation",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Objective",
+          "body": "Atlas Cycles Engineering Department has assigned you to analyze and design the cotter joint connecting the pedal crank arm to the bottom-bracket spindle/axle in a standard utility bicycle."
+        },
+        {
+          "type": "theory",
+          "title": "Real-World Mechanical Observation",
+          "body": "In a bicycle crank assembly, human downward force on the pedal creates a driving torque on the crank arm. This torque must be transmitted into the spindle without relative rotation or joint loosening during pedaling cycles."
+        },
+        {
+          "type": "student-response",
+          "title": "Deliverables & Scope",
+          "items": [
+            "Identify the power transmission path from pedal to axle.",
+            "Label cotter joint components on Engineering Asset EA-10.",
+            "Analyze wedge action, torque capacity, shear stress, and crushing stress.",
+            "Determine the Factor of Safety (FoS) and render an engineering decision."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EC-10 Project Charter for Bicycle Cotter Joint Design."
+    },
+    "power-transmission-path": {
+      "title": "Power Transmission Path Identification",
+      "prompt": "Analyze the mechanical sequence through which human muscular force applied at the bicycle pedal is converted into rotational torque delivered to the drive chainring.",
+      "mcq": {
+        "question": "Which sequence correctly describes the flow of power and torque in a bicycle crank mechanism?",
+        "options": [
+          { "id": "opt1", "label": "Pedal Force → Crank Arm → Cotter Joint → Spindle/Axle → Chainring", "value": "correct" },
+          { "id": "opt2", "label": "Pedal Force → Spindle/Axle → Cotter Joint → Crank Arm → Chainring", "value": "incorrect1" },
+          { "id": "opt3", "label": "Chainring → Cotter Joint → Crank Arm → Pedal Force → Spindle", "value": "incorrect2" },
+          { "id": "opt4", "label": "Pedal Force → Chainring → Cotter Joint → Spindle → Crank Arm", "value": "incorrect3" }
+        ]
+      }
+    },
+    "component-identification": {
+      "title": "Cotter Joint Component Identification",
+      "image": "assignments/cotter-joint/images/EA-10_Student_v1.0.png",
+      "figure": "Engineering Asset EA-10",
+      "description": "Student engineering asset showing the bicycle pedal-crank-spindle assembly and cotter joint construction.",
+      "options": [
+        "Crank Arm",
+        "Crank Eye / Hub",
+        "Spindle / Axle Shaft",
+        "Tapered Cotter Pin",
+        "Cotter Retaining Nut",
+        "Chainring / Sprocket",
+        "Pedal Spindle Attachment"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 50, "y": 60, "correctAnswer": "Crank Arm", "feedback": "Pedal crank arm transmitting foot force into torque." },
+        { "componentNumber": 2, "x": 62, "y": 42, "correctAnswer": "Crank Eye / Hub", "feedback": "Hub of crank arm with transverse hole for cotter pin." },
+        { "componentNumber": 3, "x": 60, "y": 45, "correctAnswer": "Spindle / Axle Shaft", "feedback": "Bottom bracket axle shaft with flat cotter seat." },
+        { "componentNumber": 4, "x": 62, "y": 46, "correctAnswer": "Tapered Cotter Pin", "feedback": "Wedge-shaped tapered steel pin driven into joint." },
+        { "componentNumber": 5, "x": 55, "y": 78, "correctAnswer": "Cotter Retaining Nut", "feedback": "Nut securing the threaded end of the cotter pin." },
+        { "componentNumber": 6, "x": 55, "y": 38, "correctAnswer": "Chainring / Sprocket", "feedback": "Drive sprocket delivering power to bicycle rear chain." },
+        { "componentNumber": 7, "x": 52, "y": 72, "correctAnswer": "Pedal Spindle Attachment", "feedback": "Threaded pedal spindle mounted at crank outer end." }
+      ]
+    },
+    "working-principle": {
+      "title": "Working Principle & Joint Function",
+      "prompt": "A cotter joint uses a wedge-shaped, tapered pin driven through a transverse hole formed partly in the crank eye and partly in a flat seat cut into the spindle.",
+      "mcq": {
+        "question": "What is the primary mechanical function of the tapered cotter pin in a bicycle crank joint?",
+        "options": [
+          { "id": "wp1", "label": "To lock the crank and spindle together by wedge action, preventing relative rotation and transmitting torque.", "value": "correct" },
+          { "id": "wp2", "label": "To act as a flexible spring that absorbs shock loads during braking.", "value": "incorrect1" },
+          { "id": "wp3", "label": "To permanently weld the crank to the spindle without disassembling capability.", "value": "incorrect2" },
+          { "id": "wp4", "label": "To allow the crank arm to rotate freely around the spindle during pedaling.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "torque-calculation": {
+      "title": "Applied Pedal Force & Torque Analysis",
+      "given": [
+        "Design Rider Downward Pedal Force (F) = 600 N",
+        "Effective Crank Arm Length (L) = 175 mm",
+        "Spindle Outer Diameter (d) = 16 mm"
+      ],
+      "formulas": [
+        { "name": "Maximum Transmitted Torque (T)", "formula": "T = F \\times L" },
+        { "name": "Tangential Force at Spindle Surface (Pt)", "formula": "P_t = \\frac{2T}{d}" }
+      ],
+      "fields": [
+        { "id": "torque", "label": "Transmitted Torque (T)", "unit": "N-mm", "placeholder": "Enter torque in N-mm", "hint": "T = 600 N * 175 mm" },
+        { "id": "tangentialForce", "label": "Tangential Shear Force at Spindle (Pt)", "unit": "N", "placeholder": "Enter force in N", "hint": "Pt = (2 * T) / 16 mm" }
+      ]
+    },
+    "design-assumptions": {
+      "title": "Design Requirements & Engineering Assumptions",
+      "questions": [
+        {
+          "id": "q1",
+          "label": "1. Material Selection & Yield Strengths",
+          "placeholder": "State the selected material (e.g. Plain Carbon Steel C30/C45) and yield tensile strength (Syt) assumed for the cotter pin and crank."
+        },
+        {
+          "id": "q2",
+          "label": "2. Allowable Shear and Bearing Stresses",
+          "placeholder": "State allowable shear stress (tau_all = 0.5 * Syt / FoS) and allowable crushing/bearing stress (sigma_b_all = 1.2 * Syt / FoS)."
+        },
+        {
+          "id": "q3",
+          "label": "3. Factor of Safety & Taper Assumptions",
+          "placeholder": "Specify chosen Factor of Safety (Ns = 2.0 to 2.5) and standard cotter taper ratio (e.g., 1 in 24 or 1 in 30)."
+        }
+      ]
+    },
+    "cotter-design-calculation": {
+      "title": "Cotter Joint Design & Stress Calculations",
+      "given": [
+        "Tangential Load at Spindle (Pt) = 13,125 N",
+        "Cotter Width (b) = 12 mm",
+        "Cotter Thickness (t) = 8 mm",
+        "Spindle Diameter at Cotter Seat (d) = 16 mm"
+      ],
+      "formulas": [
+        { "name": "Double Shear Stress in Cotter (tau)", "formula": "\\tau = \\frac{P_t}{2 \\times b \\times t}" },
+        { "name": "Crushing / Bearing Stress in Cotter (sigma_b)", "formula": "\\sigma_b = \\frac{P_t}{b \\times t}" }
+      ],
+      "fields": [
+        { "id": "shearStress", "label": "Calculated Shear Stress in Cotter (tau)", "unit": "N/mm²", "placeholder": "Enter shear stress in N/mm²", "hint": "tau = Pt / (2 * b * t)" },
+        { "id": "bearingStress", "label": "Calculated Crushing Stress in Cotter (sigma_b)", "unit": "N/mm²", "placeholder": "Enter crushing stress in N/mm²", "hint": "sigma_b = Pt / (b * t)" }
+      ]
+    },
+    "strength-safety-check": {
+      "title": "Strength & Factor of Safety Check",
+      "given": [
+        "Cotter Material Allowable Shear Strength (tau_all) = 75.0 N/mm²",
+        "Cotter Material Allowable Crushing Strength (sigma_b_all) = 150.0 N/mm²",
+        "Calculated Shear Stress (tau) = 68.36 N/mm²",
+        "Calculated Crushing Stress (sigma_b) = 136.72 N/mm²"
+      ],
+      "formulas": [
+        { "name": "Shear Factor of Safety (FoS_shear)", "formula": "FoS_{shear} = \\frac{\\tau_{allowable}}{\\tau_{actual}}" },
+        { "name": "Crushing Factor of Safety (FoS_crush)", "formula": "FoS_{crush} = \\frac{\\sigma_{b,allowable}}{\\sigma_{b,actual}}" }
+      ],
+      "fields": [
+        { "id": "actualFosShear", "label": "Actual Factor of Safety (Shear)", "unit": "FoS", "placeholder": "Enter FoS value", "hint": "FoS = 75.0 / 68.36" },
+        { "id": "actualFosCrush", "label": "Actual Factor of Safety (Crushing)", "unit": "FoS", "placeholder": "Enter FoS value", "hint": "FoS = 150.0 / 136.72" }
+      ]
+    },
+    "engineering-decision": {
+      "title": "Engineering Judgement & Design Recommendation",
+      "stationCode": "DRS-COTTER",
+      "image": "assignments/cotter-joint/images/EA-10_Student_v1.0.png",
+      "figure": "Engineering Asset EA-10",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Cotter Pin Material & Dimensions",
+          "label": "Cotter Pin Evaluation"
+        },
+        {
+          "id": "C02",
+          "name": "Retaining Nut & Locking Mechanism",
+          "label": "Locking Mechanism Evaluation"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-safe",
+          "title": "ACCEPT DESIGN AS SAFE",
+          "suitability": "Passes Strength Criteria",
+          "description": "Calculated shear stress (68.36 N/mm²) and crushing stress (136.72 N/mm²) remain strictly below allowable material limits, yielding a Factor of Safety > 1.0 under maximum pedaling torque."
+        },
+        {
+          "id": "opt-unsafe",
+          "title": "REJECT DESIGN / INCREASE COTTER THICKNESS",
+          "suitability": "Inadequate Margin for Shock Loading",
+          "description": "If peak standing-pedal shock loads exceed 900 N, shearing or localized bearing deformation occurs. Recommend increasing cotter thickness to 10 mm and using hardened steel."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Final Engineering Summary Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Executive Summary & Design Decision",
+          "placeholder": "State whether the cotter joint design is safe or unsafe, reporting the calculated FoS against allowable limits."
+        },
+        {
+          "id": "r2",
+          "label": "2. Critical Failure Mode Analysis",
+          "placeholder": "Explain which failure mode (cotter shear, cotter crushing, or spindle notch shearing) is critical for this bicycle joint."
+        },
+        {
+          "id": "r3",
+          "label": "3. Manufacturing & Maintenance Recommendations",
+          "placeholder": "Provide practical recommendations regarding cotter taper fitting, nut tightening torque, and wear prevention during service."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Bicycle Cotter Joint Design Challenge (EC-10) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

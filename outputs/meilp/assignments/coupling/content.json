@@ -1,0 +1,430 @@
+{
+  "assignment": {
+    "id": "EC-09",
+    "slug": "coupling",
+    "title": "Identification and Selection of Couplings Used in Mechanical Power Transmission"
+  },
+  "dashboard": {
+    "projectCode": "EC-09",
+    "projectTitle": "Identification and Selection of Couplings Used in Mechanical Power Transmission",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit I",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO2: Design power transmission shafts, keys, and couplings subjected to combined loading.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete coupling selection challenge independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on power transmission coupling evaluation" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Project Charter",
+      "metadata": {
+        "activityNumber": 1,
+        "marks": 0,
+        "bloomLevel": "L1 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO8", "PO11"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "cards": [
+        { "type": "theory", "title": "Real-World Industrial Scenario", "body": "At Kirloskar Pump Systems, Pune, an industrial centrifugal water pumping system is driven by a 22 kW three-phase electric motor operating at 1440 rpm. Power is delivered from the motor output shaft (diameter d = 40 mm) to the centrifugal pump input shaft via an inline mechanical coupling connection. Pumping operations involve continuous fluid delivery under fluctuating pressure heads, exposing the drive train to light shock loads, minor alignment shifts, and cyclic torque fluctuations. As a Senior Mechanical Design Engineer, your task is to evaluate the power transmission requirements, analyze component identification on Engineering Asset EA-09, classify coupling types, calculate transmitted torque, select the optimal coupling, and provide rigorous engineering justification." },
+        { "type": "information", "title": "Role & Assignment Scope", "body": "As a Mechanical Design Engineer, you must investigate shaft connection mechanics, shaft alignment tolerances, torque transmission, shock/vibration damping, space constraints, and serviceability. You will determine transmitted torque T and design torque Td, evaluate rigid vs flexible coupling characteristics, select the most appropriate coupling, and formulate an evidence-based technical decision." },
+        { "type": "student-response", "title": "Expected Deliverables", "items": ["Project Charter Acceptance", "Engineering Context Analysis", "Component Identification (EA-09)", "Working Principle & Mechanics", "Coupling Classification Breakdown", "Application Matching Analysis", "Coupling Performance Comparison", "Engineering Calculations (T & Td)", "Coupling Type Selection", "Engineering Justification Report", "Final Engineering Decision Matrix"] }
+      ],
+      "acceptanceText": "I have read and accepted the Project Charter."
+    },
+    "engineering-context": {
+      "title": "Engineering Context",
+      "metadata": {
+        "activityNumber": 2,
+        "marks": 0,
+        "bloomLevel": "L1 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO8"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "cards": [
+        { "type": "theory", "title": "Shaft Connection & Alignment Mechanics", "body": "In power transmission systems, connecting driving and driven machines using a single continuous rigid shaft is impractical due to manufacturing limitations, installation tolerances, thermal expansion, foundation settling, and maintenance requirements. Mechanical couplings serve as essential machine elements that connect two coaxial shafts end-to-end to transmit torque while accommodating allowable shaft misalignments (radial/parallel, angular, and axial) and damping torsional shock and vibration." },
+        { "type": "information", "title": "Engineering Asset EA-09", "body": "Mechanical Power Transmission System: 3D rendering of Electric Motor → Driving Shaft → Flexible Coupling → Driven Shaft → Centrifugal Pump assembly." }
+      ],
+      "image": "assignments/coupling/images/EA-09_Student_v1.0.png.png",
+      "figure": "Engineering Asset EA-09",
+      "description": "Interactive layout of motor-pump power transmission system featuring driving shaft, flexible coupling assembly, driven shaft, and supporting bearings."
+    },
+    "component-identification": {
+      "activityCode": "EC09-A03",
+      "activityType": "image-label",
+      "title": "Component Identification",
+      "metadata": {
+        "activityNumber": 3,
+        "marks": 1,
+        "bloomLevel": "L2 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "image": "assignments/coupling/images/EA-09_Student_v1.0.png.png",
+      "figure": "Engineering Asset EA-09",
+      "description": "Interactive identification of power transmission components on EA-09.",
+      "options": [
+        "Electric Motor (Driving Machine)",
+        "Driving Shaft",
+        "Driving Shaft Key & Keyway",
+        "Driving Shaft Bearing",
+        "Flexible Coupling Assembly",
+        "Flexible Element (Rubber Bush / Spider)",
+        "Coupling Hubs",
+        "Driven Shaft",
+        "Driven Shaft Bearing",
+        "Centrifugal Pump (Driven Machine)"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 18, "y": 35, "correctAnswer": "Electric Motor (Driving Machine)", "feedback": "Prime mover delivering rotary mechanical power (22 kW, 1440 rpm)." },
+        { "componentNumber": 2, "x": 34, "y": 40, "correctAnswer": "Driving Shaft", "feedback": "Motor output shaft transferring torque to the driving coupling hub." },
+        { "componentNumber": 3, "x": 38, "y": 33, "correctAnswer": "Driving Shaft Key & Keyway", "feedback": "Torque-transmitting key connection between driving shaft and coupling hub." },
+        { "componentNumber": 4, "x": 35, "y": 48, "correctAnswer": "Driving Shaft Bearing", "feedback": "Plummer block bearing supporting the motor driving shaft." },
+        { "componentNumber": 5, "x": 50, "y": 45, "correctAnswer": "Flexible Coupling Assembly", "feedback": "Central coupling connecting driving shaft to driven shaft." },
+        { "componentNumber": 6, "x": 52, "y": 38, "correctAnswer": "Flexible Element (Rubber Bush / Spider)", "feedback": "Elastomeric element accommodating misalignment and damping vibration." },
+        { "componentNumber": 7, "x": 47, "y": 55, "correctAnswer": "Coupling Hubs", "feedback": "Flanged metal hubs keyed to driving and driven shafts." },
+        { "componentNumber": 8, "x": 63, "y": 48, "correctAnswer": "Driven Shaft", "feedback": "Input shaft driving the centrifugal pump impeller." },
+        { "componentNumber": 9, "x": 67, "y": 56, "correctAnswer": "Driven Shaft Bearing", "feedback": "Plummer block bearing supporting the pump driven shaft." },
+        { "componentNumber": 10, "x": 88, "y": 55, "correctAnswer": "Centrifugal Pump (Driven Machine)", "feedback": "Driven machine consuming mechanical power to deliver fluid head." }
+      ]
+    },
+    "working-principle": {
+      "title": "Working Principle",
+      "metadata": {
+        "activityNumber": 4,
+        "marks": 1,
+        "bloomLevel": "L2 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "prompt": "Explain the mechanical torque transmission path from the electric motor to the pump impeller and describe how flexible coupling elements accommodate shaft misalignment.",
+      "mcq": {
+        "question": "What is the primary mechanical function of the elastomeric flexible element (bushes or spider) in a flexible coupling?",
+        "options": [
+          "To permanently lock the two shafts rigidly together without any relative motion",
+          "To transmit torque while absorbing torsional shock loads and accommodating slight shaft misalignments",
+          "To increase the rotational speed of the driven pump shaft relative to the motor shaft",
+          "To eliminate the need for keys and keyways on driving and driven shafts"
+        ],
+        "answer": "To transmit torque while absorbing torsional shock loads and accommodating slight shaft misalignments"
+      }
+    },
+    "coupling-classification": {
+      "title": "Classification of Couplings",
+      "metadata": {
+        "activityNumber": 5,
+        "marks": 1,
+        "bloomLevel": "L2 Understand",
+        "co": "CO2",
+        "po": ["PO1", "PO2"],
+        "pso": ["PSO1"],
+        "estimatedTime": "5 minutes"
+      },
+      "prompt": "Classify couplings into Rigid and Flexible categories according to standard machine design principles.",
+      "options": [
+        {
+          "id": "rigid-flange",
+          "title": "Rigid Flange Coupling",
+          "category": "Rigid Coupling",
+          "description": "Consists of two heavy cast iron flanged hubs keyed to shafts and bolted tightly together. Requires perfect coaxial alignment; cannot accommodate any axial, radial, or angular misalignment."
+        },
+        {
+          "id": "bushed-pin",
+          "title": "Bushed-Pin Flexible Coupling",
+          "category": "Flexible Coupling",
+          "description": "Modification of rigid flange coupling using steel pins covered with flexible rubber bushes fitted into hub sockets. Transmits torque, accommodates slight misalignment, and absorbs shock."
+        },
+        {
+          "id": "oldham",
+          "title": "Oldham Coupling",
+          "category": "Flexible Coupling",
+          "description": "Features two outer hubs with radial slots and a central floating disc with perpendicular tongues. Specifically designed to connect shafts having lateral (parallel) offset misalignment."
+        },
+        {
+          "id": "gear-coupling",
+          "title": "Gear Coupling",
+          "category": "Flexible Coupling",
+          "description": "Consists of external crowned gear teeth on hubs mating with internal spur gear teeth in a sleeve. High torque capacity, accommodates angular and axial misalignment, requires grease lubrication."
+        },
+        {
+          "id": "elastomeric-jaw",
+          "title": "Elastomeric Jaw / Spider Coupling",
+          "category": "Flexible Coupling",
+          "description": "Uses two interlocking metallic jaw hubs separated by an elastomeric spider element. Failsafe design, easy inspection, dampens high-frequency vibration, suitable for small to medium power."
+        }
+      ]
+    },
+    "application-analysis": {
+      "title": "Application Analysis",
+      "metadata": {
+        "activityNumber": 6,
+        "marks": 1,
+        "bloomLevel": "L3 Apply",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3"],
+        "pso": ["PSO1"],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Analyze real-world industrial drive applications and determine the governing coupling requirements for each scenario.",
+      "options": [
+        {
+          "id": "app-motor-pump",
+          "title": "Electric Motor to Centrifugal Water Pump (22 kW, 1440 rpm)",
+          "requirements": "Medium torque, continuous duty, slight thermal expansion & mounting misalignment, low-to-medium shock loading, ease of maintenance without disturbing motor/pump setup."
+        },
+        {
+          "id": "app-compressor",
+          "title": "Heavy Duty Reciprocating Air Compressor Drive",
+          "requirements": "High cyclic torque peaks, severe pulsating shock loads, significant torsional vibration, requiring heavy shock damping and high torsional flexibility."
+        },
+        {
+          "id": "app-conveyor",
+          "title": "Mining Belt Conveyor Reducer Drive",
+          "requirements": "Very high starting torque, heavy overloads, severe dust and moisture environment, requiring overload protection and rugged metallic flexibility."
+        },
+        {
+          "id": "app-lathe",
+          "title": "Precision CNC Machine Tool Lead Screw Drive",
+          "requirements": "Zero backlash, high positional accuracy, low torque, exact angular synchronization, requiring torsionally rigid yet flexible bellows or Oldham coupling."
+        }
+      ]
+    },
+    "coupling-comparison": {
+      "title": "Coupling Comparison",
+      "metadata": {
+        "activityNumber": 7,
+        "marks": 2,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO4"],
+        "pso": ["PSO1", "PSO2"],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Compare Rigid Flange, Bushed-Pin Flexible, Oldham, Gear, and Elastomeric Spider couplings across critical engineering performance parameters.",
+      "options": [
+        {
+          "id": "comp-rigidity",
+          "title": "Rigidity & Alignment Requirement",
+          "comparison": "Rigid Flange requires zero shaft misalignment (<0.02 mm). Flexible couplings (Bushed-Pin, Gear, Spider) tolerate 0.5° angular and 0.5-1.5 mm axial/parallel misalignments without excessive bearing loads."
+        },
+        {
+          "id": "comp-shock",
+          "title": "Shock Absorption & Vibration Damping",
+          "comparison": "Rigid Flange provides 0% shock absorption. Bushed-Pin and Elastomeric Spider couplings provide excellent shock damping (20-35% reduction in peak torque transfers) due to resilient rubber inserts."
+        },
+        {
+          "id": "comp-maint",
+          "title": "Maintenance & Replacement Convenience",
+          "comparison": "Bushed-Pin and Elastomeric Spider couplings allow replacement of worn rubber bushes/spider elements without axially shifting or disturbing the motor or pump heavy castings."
+        },
+        {
+          "id": "comp-cost",
+          "title": "Economic Practicality & Availability",
+          "comparison": "Bushed-Pin flexible couplings offer the optimal balance of low initial cost, standard availability across Indian industrial suppliers (SPPU/Kirloskar standards), and minimal maintenance."
+        }
+      ]
+    },
+    "engineering-requirements": {
+      "title": "Engineering Requirements & Calculation",
+      "metadata": {
+        "activityNumber": 8,
+        "marks": 2,
+        "bloomLevel": "L3 Apply",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO5"],
+        "pso": ["PSO1"],
+        "estimatedTime": "10 minutes"
+      },
+      "given": [
+        { "parameter": "Transmitted Power (P)", "value": "22 kW (22,000 W)" },
+        { "parameter": "Rotational Speed (N)", "value": "1440 rpm" },
+        { "parameter": "Shaft Diameter (d)", "value": "40 mm" },
+        { "parameter": "Service Factor (Kl)", "value": "1.5 (Industrial Centrifugal Pump continuous duty)" }
+      ],
+      "formulas": [
+        { "name": "Transmitted Nominal Torque (T)", "formula": "T = (60 * 10^6 * P) / (2 * pi * N)  [N-mm]" },
+        { "name": "Design Torque (Td)", "formula": "Td = Kl * T  [N-mm]" }
+      ],
+      "fields": [
+        {
+          "id": "T_nominal",
+          "label": "Transmitted Nominal Torque T",
+          "unit": "N-mm",
+          "placeholder": "e.g. 145892",
+          "expected": 145892,
+          "tolerance": 1.0,
+          "hint": "T = (60 * 10^6 * 22) / (2 * pi * 1440) = 145892 N-mm (145.89 N-m)"
+        },
+        {
+          "id": "T_design",
+          "label": "Design Torque Td (with Service Factor Kl = 1.5)",
+          "unit": "N-mm",
+          "placeholder": "e.g. 218838",
+          "expected": 218838,
+          "tolerance": 1.0,
+          "hint": "Td = 1.5 * 145892.2 = 218838 N-mm (218.84 N-m)"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "T_nominal",
+          "label": "Transmitted Nominal Torque T (N-mm)",
+          "unit": "N-mm",
+          "placeholder": "e.g. 145892",
+          "expected": 145892,
+          "tolerance": 1.0,
+          "hint": "T = (60 * 10^6 * 22) / (2 * pi * 1440) = 145892 N-mm (145.89 N-m)"
+        },
+        {
+          "id": "T_design",
+          "label": "Design Torque Td (N-mm) with Service Factor Kl = 1.5",
+          "unit": "N-mm",
+          "placeholder": "e.g. 218838",
+          "expected": 218838,
+          "tolerance": 1.0,
+          "hint": "Td = 1.5 * 145892.2 = 218838 N-mm (218.84 N-m)"
+        }
+      ]
+    },
+    "coupling-selection": {
+      "title": "Coupling Selection",
+      "metadata": {
+        "activityNumber": 9,
+        "marks": 1.5,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO5"],
+        "pso": ["PSO1", "PSO2"],
+        "estimatedTime": "5 minutes"
+      },
+      "prompt": "Select the most suitable coupling type for connecting the 22 kW, 1440 rpm electric motor shaft (d = 40 mm) to the centrifugal pump input shaft.",
+      "options": [
+        {
+          "id": "sel-flange",
+          "title": "Rigid Flange Coupling",
+          "suitability": "Unsuitable",
+          "reason": "Cannot accommodate even minor operational shaft misalignments or thermal expansion; risks severe bending stresses and early bearing failure."
+        },
+        {
+          "id": "sel-bushed-pin",
+          "title": "Bushed-Pin Flexible Coupling (RECOMMENDED)",
+          "suitability": "Optimal / Ideal Selection",
+          "reason": "Excellently transmits Td = 218.83 N-m, accommodates minor parallel and angular misalignments, absorbs pump shock loads, allows easy bush replacement without unbolting motor/pump."
+        },
+        {
+          "id": "sel-oldham",
+          "title": "Oldham Coupling",
+          "suitability": "Sub-optimal",
+          "reason": "Designed specifically for large parallel offset misalignments at low speeds; excessive sliding friction and wear under continuous 1440 rpm pump operation."
+        },
+        {
+          "id": "sel-gear",
+          "title": "Gear Coupling",
+          "suitability": "Over-engineered",
+          "reason": "Suitable for heavy industrial steel mills requiring extreme torque; unnecessarily complex, expensive, and requires periodic grease lubrication for a standard 22 kW pump."
+        }
+      ]
+    },
+    "engineering-justification": {
+      "title": "Engineering Justification",
+      "metadata": {
+        "activityNumber": 10,
+        "marks": 1.5,
+        "bloomLevel": "L5 Evaluate",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+        "pso": ["PSO1", "PSO2"],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Provide technical engineering justification supporting your selection of the Bushed-Pin Flexible Coupling for the motor-pump power transmission system.",
+      "options": [
+        "Torque Capacity — Safely transmits design torque Td = 218,838 N-mm with Kl = 1.5 service factor",
+        "Misalignment Accommodation — Rubber bushes absorb axial (0.5-1.5 mm), parallel (0.5 mm), and angular (0.5 deg) shaft misalignments",
+        "Shock & Vibration Damping — Elastomeric inserts isolate high-frequency pump vibrations and protect motor/pump bearings",
+        "Maintenance & Serviceability — Worn rubber bushes are easily replaced without moving heavy motor or pump castings",
+        "Economic Practicality — Standard Indian industrial availability (SPPU/Kirloskar standards) with low initial and maintenance costs"
+      ]
+    },
+    "engineering-decision": {
+      "title": "Engineering Decision & Alternative Analysis",
+      "metadata": {
+        "activityNumber": 11,
+        "marks": 1,
+        "bloomLevel": "L5 Evaluate",
+        "co": "CO2",
+        "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+        "pso": ["PSO1", "PSO2"],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Summarize your final engineering decision, specifying the chosen coupling, application parameters, technical justification, alternative coupling evaluated, and why the alternative was rejected.",
+      "options": [
+        "RECOMMENDED: Bushed-Pin Flexible Coupling (Optimal selection for 22 kW motor to centrifugal pump drive)",
+        "REJECTED ALTERNATIVE: Rigid Flange Coupling (Cannot accommodate shaft misalignment; risks early bearing failure)",
+        "REJECTED ALTERNATIVE: Oldham Coupling (Excessive sliding wear and friction at 1440 rpm continuous speed)",
+        "REJECTED ALTERNATIVE: Gear Coupling (Over-engineered, expensive, and requires continuous grease lubrication)"
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Coupling Selection Challenge response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

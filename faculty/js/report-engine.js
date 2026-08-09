@@ -270,7 +270,7 @@ class ReportEngine {
                   <td><span class="badge bg-success">Exceeded</span></td>
                 </tr>
                 <tr>
-                  <td>CO2 - Shaft & Key Design (EC-07 & EC-08)</td>
+                  <td>CO2 - Shaft, Key & Coupling Design (EC-07, EC-08 & EC-09)</td>
                   <td>80%</td>
                   <td>76%</td>
                   <td><span class="badge bg-warning text-dark">Near Target</span></td>
@@ -375,7 +375,7 @@ class ReportEngine {
 
     csvContent += `Academic Performance Metric,Target Level,Actual Attained,Status\n`;
     csvContent += `CO1 - Cable Safety Verification,80%,82%,Exceeded\n`;
-    csvContent += `CO2 - Shaft & Key Design (EC-07 & EC-08),80%,76%,Near Target\n`;
+    csvContent += `CO2 - Shaft, Key & Coupling Design (EC-07, EC-08 & EC-09),80%,78%,Near Target\n`;
     csvContent += `Challenge Submissions & Completion Rate,90%,91%,On Track\n`;
     csvContent += `Faculty Evaluation & Rubric Marking,90%,100%,Completed\n`;
 
@@ -409,7 +409,7 @@ class ReportEngine {
       },
       metrics: [
         { metric: "CO1 - Cable Safety Verification", target: "80%", actual: "82%", status: "Exceeded" },
-        { metric: "CO2 - Shaft & Key Design (EC-07 & EC-08)", target: "80%", actual: "76%", status: "Near Target" },
+        { metric: "CO2 - Shaft, Key & Coupling Design (EC-07, EC-08 & EC-09)", target: "80%", actual: "78%", status: "Near Target" },
         { metric: "Challenge Submissions & Completion Rate", target: "90%", actual: "91%", status: "On Track" },
         { metric: "Faculty Evaluation & Rubric Marking", target: "90%", actual: "100%", status: "Completed" }
       ]

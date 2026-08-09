@@ -87,6 +87,28 @@
       "icon": "bi-key-fill",
       "configPath": "assignments/Keys/config.json",
       "launchPath": "assignment-workbench.html?assignment=Keys"
+    },
+    {
+      "id": "EC-09",
+      "title": "Identification and Selection of Couplings Used in Mechanical Power Transmission",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze shaft connections, torque transmission, misalignment accommodation, working principles, coupling classification, application selection, and engineering justification for a motor-pump system.",
+      "status": "Ready",
+      "tasks": 13,
+      "icon": "bi-link-45deg",
+      "configPath": "assignments/coupling/config.json",
+      "launchPath": "assignment-workbench.html?assignment=coupling"
+    },
+    {
+      "id": "EC-10",
+      "title": "Design of a Cotter Joint for a Bicycle",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze bicycle pedal-to-axle power transmission, identify cotter joint components, establish design requirements, calculate cotter shear and crushing stresses, verify Factor of Safety, and render engineering design recommendations.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-gear-fill",
+      "configPath": "assignments/cotter-joint/config.json",
+      "launchPath": "assignment-workbench.html?assignment=cotter-joint"
     }
   ]
 }

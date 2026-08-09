@@ -11,6 +11,18 @@
     "courseOutcome": "CO1",
     "submissionMode": "Individual or Group"
   },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-03A",
+      "title": "Two-Wheeler Components Engineering Asset",
+      "path": "assignments/materials-selection/images/EA-03A_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-03A",
+      "title": "Two-Wheeler Components Engineering Asset",
+      "path": "assignments/materials-selection/images/EA-03A_Faculty_v1.0.png"
+    }
+  },
   "attemptMode": {
     "individual": [
       {
