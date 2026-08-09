@@ -214,7 +214,11 @@ class SubmissionsBrowser {
       'Identification and Selection of Couplings Used in Mechanical Power Transmission',
       'Design of a Cotter Joint for a Bicycle',
       'Design and Analysis of a Knuckle Joint for a Tractor–Trailer',
-      'Design of a Helical Compression Spring for Motorcycle Suspension'
+      'Design of a Helical Compression Spring for Motorcycle Suspension',
+      'Construction and Design Verification of a Leaf Spring',
+      'Comparative Study and Selection of Springs for Engineering Applications',
+      'Analysis of an Automobile Suspension System',
+      'Fatigue Design of an Automotive Propeller Shaft'
     ];
     const loadedChallenges = this.data.map((item) => item.challenge).filter(Boolean);
     const combined = Array.from(new Set([...knownChallenges, ...loadedChallenges])).sort();

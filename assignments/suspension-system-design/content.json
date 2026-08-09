@@ -1,0 +1,294 @@
+{
+  "assignment": {
+    "id": "EA-15",
+    "slug": "suspension-system-design",
+    "title": "Analysis of an Automobile Suspension System"
+  },
+  "dashboard": {
+    "projectCode": "EA-15",
+    "projectTitle": "Analysis of an Automobile Suspension System",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO3: Design mechanical springs, fasteners, and energy storing elements subjected to static and fluctuating loads by applying strength, deflection, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-15",
+      "title": "Motorcycle Automobile Rear Suspension System Illustration (Student Edition)",
+      "path": "assignments/suspension-system-design/images/EA-15_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-15",
+      "title": "Motorcycle Automobile Rear Suspension System Illustration (Faculty Reference Solution)",
+      "path": "assignments/suspension-system-design/images/EA-15_Faculty_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete motorcycle rear suspension system analysis independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on system-level automobile suspension analysis" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Observe the Suspension System",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Study Scope",
+          "body": "TVS Motor & Hero MotoCorp Suspension Testing Division requires you to perform a system-level engineering analysis of an automobile motorcycle rear suspension system."
+        },
+        {
+          "type": "theory",
+          "title": "System-Level Mechanical Interaction",
+          "body": "An automobile suspension is a complete mechanical system consisting of the motorcycle frame, swingarm, helical spring, hydraulic damper, mounting bushings, rear axle, wheel, and tyre working together to absorb road bumps, maintain tyre grip, and provide ride stability."
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives",
+          "items": [
+            "Observe the complete motorcycle rear suspension system on Engineering Asset EA-15.",
+            "Identify all major structural, elastic, damping, and pivoting components.",
+            "Trace the load transmission path from road impact to motorcycle frame.",
+            "Analyze suspension compression and rebound dynamics.",
+            "Diagnose practical suspension fault conditions and render system-level tuning decisions."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-15 Project Charter for Automobile Suspension System Analysis."
+    },
+    "component-identification": {
+      "title": "Identify Suspension Components",
+      "image": "assignments/suspension-system-design/images/EA-15_Student_v1.0.png",
+      "figure": "Engineering Asset EA-15",
+      "description": "Student engineering asset illustrating motorcycle rear suspension assembly and structural components.",
+      "options": [
+        "Motorcycle Frame / Chassis",
+        "Upper Suspension Mount",
+        "Shock Absorber / Damper",
+        "Helical Compression Spring",
+        "Lower Suspension Mount",
+        "Swingarm Pivot",
+        "Swingarm",
+        "Suspension Linkage",
+        "Rear Axle",
+        "Rear Wheel",
+        "Rear Tyre"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 40, "y": 12, "correctAnswer": "Motorcycle Frame / Chassis", "feedback": "Main structural frame carrying engine, rider load, and suspension mounts." },
+        { "componentNumber": 2, "x": 48, "y": 20, "correctAnswer": "Upper Suspension Mount", "feedback": "Upper frame eyelet anchoring top of spring-damper unit." },
+        { "componentNumber": 3, "x": 49, "y": 45, "correctAnswer": "Shock Absorber / Damper", "feedback": "Internal hydraulic damper controlling oscillation velocity." },
+        { "componentNumber": 4, "x": 48, "y": 35, "correctAnswer": "Helical Compression Spring", "feedback": "Coiled elastic spring supporting vehicle weight and storing impact energy." },
+        { "componentNumber": 5, "x": 48, "y": 62, "correctAnswer": "Lower Suspension Mount", "feedback": "Bottom eyelet connecting suspension unit to swingarm assembly." },
+        { "componentNumber": 6, "x": 25, "y": 65, "correctAnswer": "Swingarm Pivot", "feedback": "Pivoting shaft allowing swingarm arc motion relative to main frame." },
+        { "componentNumber": 7, "x": 45, "y": 72, "correctAnswer": "Swingarm", "feedback": "Trailing arm guiding rear wheel up-and-down motion." },
+        { "componentNumber": 8, "x": 62, "y": 72, "correctAnswer": "Suspension Linkage", "feedback": "Progressive rate linkage connecting swingarm to shock unit." },
+        { "componentNumber": 9, "x": 72, "y": 72, "correctAnswer": "Rear Axle", "feedback": "Transverse axle locating rear wheel hub on swingarm dropouts." },
+        { "componentNumber": 10, "x": 75, "y": 82, "correctAnswer": "Rear Wheel", "feedback": "Rotational wheel rim transmitting torque and supporting tyre." },
+        { "componentNumber": 11, "x": 75, "y": 92, "correctAnswer": "Rear Tyre", "feedback": "Pneumatic tyre providing friction grip and initial high-frequency bump compliance." }
+      ]
+    },
+    "load-transmission-path": {
+      "title": "Understand the Load Transmission Path",
+      "prompt": "Trace how road impact forces travel through the suspension components to the motorcycle frame.",
+      "mcq": {
+        "question": "Which sequence correctly describes the load transmission path from road irregularity to rider chassis?",
+        "options": [
+          { "id": "opt1", "label": "Road Irregularity → Tyre → Wheel Rim → Rear Axle → Swingarm → Spring & Damper Unit → Upper Mount → Frame Chassis", "value": "correct" },
+          { "id": "opt2", "label": "Frame Chassis → Helical Spring → Tyre → Road Irregularity → Swingarm → Rear Axle", "value": "incorrect1" },
+          { "id": "opt3", "label": "Road Irregularity → Damper → Frame Chassis → Tyre → Wheel Rim → Rear Axle", "value": "incorrect2" },
+          { "id": "opt4", "label": "Swingarm → Rear Axle → Tyre → Wheel Rim → Helical Spring → Frame Chassis", "value": "incorrect3" }
+        ]
+      }
+    },
+    "component-functions": {
+      "title": "Identify Component Functions",
+      "prompt": "Evaluate the specific mechanical function performed by each component in the rear suspension assembly.",
+      "mcq": {
+        "question": "Which statement correctly describes the primary mechanical function of the swingarm and swingarm pivot?",
+        "options": [
+          { "id": "opt1", "label": "The swingarm guides the rear wheel in a controlled arc relative to the frame while transferring driving traction force from tyre to chassis.", "value": "correct" },
+          { "id": "opt2", "label": "The swingarm dissipates high frequency fluid heat generated by the brake disc.", "value": "incorrect1" },
+          { "id": "opt3", "label": "The swingarm stores elastic strain energy to replace the helical spring.", "value": "incorrect2" },
+          { "id": "opt4", "label": "The swingarm locks the rear wheel rigidly to prevent any vertical or angular motion.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "spring-and-damper": {
+      "title": "Spring and Damper",
+      "prompt": "Distinguish between the elastic energy storage role of the spring and the kinetic dissipation role of the damper.",
+      "mcq": {
+        "question": "Why is a vehicle suspension incapable of functioning satisfactorily with ONLY a helical compression spring and no shock absorber?",
+        "options": [
+          { "id": "opt1", "label": "Without a damper, the spring stores bump energy and continues oscillating uncontrollably at its natural frequency, causing severe vehicle instability and rider bouncing.", "value": "correct" },
+          { "id": "opt2", "label": "Without a damper, the spring immediately snaps into two pieces upon first bump impact.", "value": "incorrect1" },
+          { "id": "opt3", "label": "Without a damper, the motorcycle engine cannot transmit rotational torque to the rear wheel.", "value": "incorrect2" },
+          { "id": "opt4", "label": "Without a damper, the tyre pressure drops to zero instantly.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "suspension-movement": {
+      "title": "Suspension Movement",
+      "prompt": "Analyze the mechanical behavior of the suspension during bump compression and subsequent rebound.",
+      "mcq": {
+        "question": "What occurs during the rebound phase after the rear wheel passes over the crest of a road bump?",
+        "options": [
+          { "id": "opt1", "label": "The compressed spring extends to push the wheel back down, while the hydraulic damper metering valves resist rapid extension to prevent harsh wheel rebound.", "value": "correct" },
+          { "id": "opt2", "label": "The spring compresses further while the damper locks solid to prevent wheel extension.", "value": "incorrect1" },
+          { "id": "opt3", "label": "The swingarm detaches from the pivot pin until the next bump.", "value": "incorrect2" },
+          { "id": "opt4", "label": "The damper fluid boils and reverses flow into the fuel tank.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "suspension-performance": {
+      "title": "Suspension Performance",
+      "prompt": "Evaluate the engineering trade-off between ride comfort and vehicle road holding / cornering stability.",
+      "mcq": {
+        "question": "How does increasing spring stiffness and damping coefficient affect motorcycle ride characteristics?",
+        "options": [
+          { "id": "opt1", "label": "It improves high-speed cornering stability and reduces chassis roll/pitch, but increases harshness felt by the rider over small road ripples.", "value": "correct" },
+          { "id": "opt2", "label": "It makes the suspension feel completely soft like a luxury saloon while increasing body sway.", "value": "incorrect1" },
+          { "id": "opt3", "label": "It eliminates all vertical forces acting on the rear axle housing.", "value": "incorrect2" },
+          { "id": "opt4", "label": "It increases maximum suspension travel by 500%.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "fault-condition-analysis": {
+      "title": "Practical Suspension Condition Analysis",
+      "stationCode": "DRS-SUSP-FAULT",
+      "image": "assignments/suspension-system-design/images/EA-15_Student_v1.0.png",
+      "figure": "Engineering Asset EA-15",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Vehicle Bounces Repeatedly After Bump",
+          "label": "Continuous Oscillation Diagnosis"
+        },
+        {
+          "id": "C02",
+          "name": "Suspension Bottoms Out Hard Under Passenger Payload",
+          "label": "Bottoming Out Impact Diagnosis"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-fault-1",
+          "title": "WORN DAMPER SEALS (BOUNCING) & INSUFFICIENT SPRING PRELOAD / STIFFNESS (BOTTOMING)",
+          "suitability": "Correct Fault Diagnosis",
+          "description": "Repeated bouncing indicates loss of damping fluid / worn shock valving; metallic bottoming out indicates inadequate spring preload or spring rate for heavy passenger payload."
+        },
+        {
+          "id": "opt-fault-2",
+          "title": "BENT REAR AXLE (BOUNCING) & OVER-INFLATED TYRE (BOTTOMING)",
+          "suitability": "Incorrect Diagnosis",
+          "description": "Rear axle bending causes wheel misalignment rather than oscillation; over-inflated tyre increases ride harshness rather than causing suspension bottoming."
+        }
+      ]
+    },
+    "engineering-decision-making": {
+      "title": "Engineering Decision Making",
+      "stationCode": "DRS-SUSP-DECISION",
+      "image": "assignments/suspension-system-design/images/EA-15_Student_v1.0.png",
+      "figure": "Engineering Asset EA-15",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Long-Distance Dual-Rider Touring Modification",
+          "label": "Heavy Payload Suspension Tuning"
+        },
+        {
+          "id": "C02",
+          "name": "Off-Road Dirt Road Endurance Riding",
+          "label": "Rough Terrain Suspension Tuning"
+        }
+      ],
+      "options": [
+        {
+          "id": "dec-tune",
+          "title": "INCREASE PRELOAD & REBOUND DAMPING FOR DUAL-RIDER; INCREASE TRAVEL & COMPRESSION DAMPING FOR OFF-ROAD",
+          "suitability": "Optimal System-Level Tuning",
+          "description": "Dual-rider payload requires increased spring preload and rebound control to prevent sagging; off-road riding requires longer suspension travel and tuned compression damping to absorb high-velocity impacts."
+        },
+        {
+          "id": "dec-stock",
+          "title": "RETAIN STOCK SOFT CITY COMMUTER SETTINGS FOR ALL CONDITIONS",
+          "suitability": "Unsafe Tuning Choice",
+          "description": "Stock soft commuter settings will bottom out severely under heavy touring payload and cause loss of tyre grip on rough off-road terrain."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "System-Level Engineering Analysis",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. System Interaction & Load Path Summary",
+          "placeholder": "Explain how tyre, wheel, axle, swingarm, spring, damper, and frame work together as an integrated system during bump impact."
+        },
+        {
+          "id": "r2",
+          "label": "2. Spring vs Damper Functional Distinction",
+          "placeholder": "Summarize the elastic energy storage role of the spring versus the kinetic energy dissipation role of the hydraulic damper."
+        },
+        {
+          "id": "r3",
+          "label": "3. Practical Fault Diagnosis & Maintenance Guidelines",
+          "placeholder": "Provide diagnostic guidelines for identifying oil leaks, worn bushings, spring sagging, and preload adjustment for variable passenger loads."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Automobile Suspension System Analysis Challenge (EA-15) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

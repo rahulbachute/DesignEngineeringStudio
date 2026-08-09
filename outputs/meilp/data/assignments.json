@@ -131,6 +131,50 @@
       "icon": "bi-activity",
       "configPath": "assignments/helical-spring-design/config.json",
       "launchPath": "assignment-workbench.html?assignment=helical-spring-design"
+    },
+    {
+      "id": "EA-13",
+      "title": "Construction and Design Verification of a Leaf Spring",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze commercial vehicle multi-leaf spring suspension construction, identify master and graduated leaves, convert vehicle payload into cantilever beam model, calculate bending stress and deflection, verify Factor of Safety, and render engineering recommendations.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-layers",
+      "configPath": "assignments/leaf-spring-design/config.json",
+      "launchPath": "assignment-workbench.html?assignment=leaf-spring-design"
+    },
+    {
+      "id": "EA-14",
+      "title": "Comparative Study and Selection of Springs for Engineering Applications",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to compare four fundamental spring configurations (helical compression, helical tension, concentric compression, and multi-leaf springs), evaluate loading modes and construction, compare performance trade-offs, and justify optimal spring selection.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-diagram-3",
+      "configPath": "assignments/spring-selection/config.json",
+      "launchPath": "assignment-workbench.html?assignment=spring-selection"
+    },
+    {
+      "id": "EA-15",
+      "title": "Analysis of an Automobile Suspension System",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze a motorcycle rear suspension system as an integrated mechanical assembly, identify structural, elastic, and damping components, trace load transmission paths, evaluate compression and rebound dynamics, diagnose fault conditions, and render system-level tuning recommendations.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-gear-wide-connected",
+      "configPath": "assignments/suspension-system-design/config.json",
+      "launchPath": "assignment-workbench.html?assignment=suspension-system-design"
+    },
+    {
+      "id": "EA-16",
+      "title": "Fatigue Design of an Automotive Propeller Shaft",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze automotive rear-wheel drive torque transmission, identify critical splined and weld neck stress concentrations, calculate mean and alternating torsional stresses, apply modified Soderberg fatigue criteria, verify hollow tubular shaft diameter, and diagnose 45-degree torsional fatigue failure.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-shield-check",
+      "configPath": "assignments/shaft-fatigue-design/config.json",
+      "launchPath": "assignment-workbench.html?assignment=shaft-fatigue-design"
     }
   ]
 }

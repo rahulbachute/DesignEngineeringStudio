@@ -1,0 +1,57 @@
+{
+  "assignmentId": "EA-14",
+  "totalMarks": 12.0,
+  "maxMarks": 12.0,
+  "sections": [
+    {
+      "id": "project-charter",
+      "title": "Observe Real Applications (Activity 1)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "component-identification",
+      "title": "Identify Spring Configurations (Activity 2)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "application-function-match",
+      "title": "Identify Application & Function (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "loading-conditions-compare",
+      "title": "Compare Loading Conditions (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "construction-geometry-compare",
+      "title": "Compare Construction & Geometry (Activity 5)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "design-requirements-compare",
+      "title": "Compare Design Requirements (Activity 6)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "performance-advantages-compare",
+      "title": "Compare Performance & Advantages (Activity 7)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "engineering-tradeoff",
+      "title": "Engineering Trade-Off (Activity 8)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "spring-selection-decision",
+      "title": "Select Appropriate Spring (Activity 9)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "final-report",
+      "title": "Comparative Recommendation Report (Activity 10)",
+      "maxMarks": 1.5
+    }
+  ]
+}

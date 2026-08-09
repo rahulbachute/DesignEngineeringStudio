@@ -1,0 +1,57 @@
+{
+  "assignmentId": "EA-13",
+  "totalMarks": 12.0,
+  "maxMarks": 12.0,
+  "sections": [
+    {
+      "id": "project-charter",
+      "title": "Observe Leaf Spring Suspension (Activity 1)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "component-identification",
+      "title": "Identify Leaf Spring Components (Activity 2)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "leaf-construction",
+      "title": "Understand Leaf Spring Construction (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "load-path",
+      "title": "Understand Load Path (Activity 4)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "engineering-model",
+      "title": "Establish Engineering Model (Activity 5)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "design-requirements",
+      "title": "Establish Design Requirements (Activity 6)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "bending-stress-verification",
+      "title": "Verify Bending Stress (Activity 7)",
+      "maxMarks": 2.5
+    },
+    {
+      "id": "deflection-safety-check",
+      "title": "Verify Deflection & FoS (Activity 8)",
+      "maxMarks": 2.0
+    },
+    {
+      "id": "engineering-judgement",
+      "title": "Engineering Judgement (Activity 9)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "final-report",
+      "title": "Engineering Verification Report (Activity 10)",
+      "maxMarks": 1.0
+    }
+  ]
+}

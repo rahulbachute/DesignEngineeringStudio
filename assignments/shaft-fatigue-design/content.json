@@ -1,0 +1,290 @@
+{
+  "assignment": {
+    "id": "EA-16",
+    "slug": "shaft-fatigue-design",
+    "title": "Fatigue Design of an Automotive Propeller Shaft"
+  },
+  "dashboard": {
+    "projectCode": "EA-16",
+    "projectTitle": "Fatigue Design of an Automotive Propeller Shaft",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit IV",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO3: Design shafts, keys, couplings, and energy transmission components subjected to static, fluctuating, and fatigue loads by applying strength, rigidity, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-16",
+      "title": "Automotive Propeller Shaft Fatigue Design Illustration (Student Edition)",
+      "path": "assignments/shaft-fatigue-design/images/EA-16_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-16",
+      "title": "Automotive Propeller Shaft Fatigue Design Illustration (Faculty Reference Solution)",
+      "path": "assignments/shaft-fatigue-design/images/EA-16_Faculty_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete automotive propeller shaft fatigue design independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on drivetrain torsional fatigue analysis and shaft design" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Observe the Automotive Drivetrain",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Design Scope",
+          "body": "Mahindra & Mahindra Automotive Drivetrain R&D Division requires you to perform a fatigue design and strength verification of an automotive propeller shaft subjected to fluctuating torque loads during acceleration, gear changes, and road travel."
+        },
+        {
+          "type": "theory",
+          "title": "Automotive Power Transmission Chain",
+          "body": "Engine → Gearbox → Propeller Shaft → Universal Joints / Splines → Differential → Rear Axle → Rear Wheels.\n\nThe propeller shaft experiences repeated cyclic torsional fluctuations throughout vehicle service life. It cannot be sized purely for static peak torque; it must be designed against torsional fatigue failure."
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives",
+          "items": [
+            "Identify the propeller shaft components on Engineering Asset EA-16.",
+            "Trace the torque transmission path from transmission gearbox to differential.",
+            "Identify critical stress concentration sections (splined joint, weld fillets).",
+            "Calculate mean and alternating torque components under fluctuating operation.",
+            "Apply modified Soderberg torsional fatigue criteria to size/verify shaft diameter."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-16 Project Charter for Automotive Propeller Shaft Fatigue Design."
+    },
+    "component-identification": {
+      "title": "Identify Drivetrain Components",
+      "image": "assignments/shaft-fatigue-design/images/EA-16_Student_v1.0.png",
+      "figure": "Engineering Asset EA-16",
+      "description": "Student engineering asset illustrating automotive propeller shaft assembly and rear axle drive connection.",
+      "options": [
+        "Gearbox Output Flange",
+        "Front Universal Joint",
+        "Propeller Shaft Tube",
+        "Rear Universal Joint",
+        "Slip Joint / Splined Coupling",
+        "Differential Input Pinion",
+        "Rear Axle Housing",
+        "Rear Road Wheel",
+        "Engine Crankshaft",
+        "Chassis Support Bearing"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 65, "y": 22, "correctAnswer": "Gearbox Output Flange", "feedback": "Flanged coupling connecting transmission gearbox output shaft to propeller shaft." },
+        { "componentNumber": 2, "x": 64, "y": 31, "correctAnswer": "Front Universal Joint", "feedback": "Cardan universal joint accommodating angular misalignment at gearbox exit." },
+        { "componentNumber": 3, "x": 55, "y": 40, "correctAnswer": "Slip Joint / Splined Coupling", "feedback": "Axially sliding splined joint accommodating changes in distance as suspension moves." },
+        { "componentNumber": 4, "x": 48, "y": 45, "correctAnswer": "Propeller Shaft Tube", "feedback": "Main hollow steel tubular shaft transmitting drive torque over wheelbase length." },
+        { "componentNumber": 5, "x": 43, "y": 51, "correctAnswer": "Rear Universal Joint", "feedback": "Rear Hooke's joint transmitting torque to differential input pinion." },
+        { "componentNumber": 6, "x": 36, "y": 56, "correctAnswer": "Differential Input Pinion", "feedback": "Bevel pinion shaft driving rear axle differential crown wheel." },
+        { "componentNumber": 7, "x": 50, "y": 58, "correctAnswer": "Rear Axle Housing", "feedback": "Rigid axle casing supporting differential gears and live axle shafts." },
+        { "componentNumber": 8, "x": 18, "y": 52, "correctAnswer": "Rear Road Wheel", "feedback": "Drive wheel transferring traction force to road surface." }
+      ]
+    },
+    "torque-transmission-path": {
+      "title": "Understand Torque Transmission & Load Path",
+      "prompt": "Analyze how engine torque is multiplied by the transmission and transmitted via the propeller shaft.",
+      "mcq": {
+        "question": "Which option correctly states the sequence of torque flow and load transmission in a rear-wheel drive vehicle?",
+        "options": [
+          { "id": "opt1", "label": "Engine → Transmission Gearbox → Front Universal Joint → Splined Slip Joint → Tubular Shaft → Rear Universal Joint → Differential → Rear Wheels", "value": "correct" },
+          { "id": "opt2", "label": "Rear Wheels → Tubular Shaft → Engine → Differential → Transmission Gearbox → Slip Joint", "value": "incorrect1" },
+          { "id": "opt3", "label": "Transmission Gearbox → Differential → Front Universal Joint → Rear Wheels → Engine", "value": "incorrect2" },
+          { "id": "opt4", "label": "Differential → Rear Axle → Engine → Tubular Shaft → Transmission Gearbox", "value": "incorrect3" }
+        ]
+      }
+    },
+    "critical-sections-stress-concentration": {
+      "title": "Identify Critical Shaft Sections & Stress Concentration",
+      "prompt": "Identify the critical sections of the propeller shaft assembly where fatigue cracks are most likely to initiate.",
+      "mcq": {
+        "question": "Where are the primary stress concentration zones ($K_t$) located on the propeller shaft assembly?",
+        "options": [
+          { "id": "opt1", "label": "At the root of the splined slip joint teeth and the circumferential weld neck joining the tube to the universal joint yokes.", "value": "correct" },
+          { "id": "opt2", "label": "At the exact midpoint of the smooth, un-welded hollow tube section.", "value": "incorrect1" },
+          { "id": "opt3", "label": "Inside the rubber tyre tread compound on the rear wheels.", "value": "incorrect2" },
+          { "id": "opt4", "label": "On the smooth outer cylindrical surface of the transmission gearbox housing.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "fluctuating-torsional-loading": {
+      "title": "Analyze Fluctuating Torsional Loading",
+      "prompt": "During vehicle operation, torque fluctuates between maximum acceleration ($T_{max} = 1500\\text{ N}\\cdot\\text{m}$) and steady cruising ($T_{min} = 300\\text{ N}\\cdot\\text{m}$).",
+      "mcq": {
+        "question": "What are the mean torque ($T_m$) and alternating torque ($T_a$) acting on the propeller shaft?",
+        "options": [
+          { "id": "opt1", "label": "Mean Torque Tm = 900 N.m, Alternating Torque Ta = 600 N.m", "value": "correct" },
+          { "id": "opt2", "label": "Mean Torque Tm = 1500 N.m, Alternating Torque Ta = 300 N.m", "value": "incorrect1" },
+          { "id": "opt3", "label": "Mean Torque Tm = 1800 N.m, Alternating Torque Ta = 1200 N.m", "value": "incorrect2" },
+          { "id": "opt4", "label": "Mean Torque Tm = 600 N.m, Alternating Torque Ta = 900 N.m", "value": "incorrect3" }
+        ]
+      }
+    },
+    "fatigue-strength-factors": {
+      "title": "Determine Fatigue Strength Factors",
+      "prompt": "Evaluate the endurance limit modification factors ($k_a, k_b, k_c$) for a machined steel propeller shaft under torsional fatigue.",
+      "mcq": {
+        "question": "How is the modified endurance limit in shear ($S_{se}$) calculated from the ultimate tensile strength ($S_{ut}$)?",
+        "options": [
+          { "id": "opt1", "label": "S_se = k_a * k_b * k_c * 0.577 * (0.5 * S_ut), applying surface, size, reliability factors and distortion energy shear conversion.", "value": "correct" },
+          { "id": "opt2", "label": "S_se = S_ut * 2.5 without any size or surface corrections.", "value": "incorrect1" },
+          { "id": "opt3", "label": "S_se = S_yt / 0.577 with zero fatigue modification.", "value": "incorrect2" },
+          { "id": "opt4", "label": "S_se = k_a * S_ut * 10.0.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "fatigue-design-criterion": {
+      "title": "Apply Torsional Fatigue Design Criterion",
+      "prompt": "Apply the modified Soderberg fatigue criterion for fluctuating torsional shear stress.",
+      "mcq": {
+        "question": "Which equation represents the Soderberg relationship for fluctuating torsional shear stress?",
+        "options": [
+          { "id": "opt1", "label": "(tau_m / S_sy) + (tau_a / S_se) = 1 / FoS", "value": "correct" },
+          { "id": "opt2", "label": "(tau_m + tau_a) * S_ut = FoS", "value": "incorrect1" },
+          { "id": "opt3", "label": "tau_m / tau_a = S_se / S_sy", "value": "incorrect2" },
+          { "id": "opt4", "label": "(tau_m / S_ut)^2 - (tau_a / S_se)^2 = FoS", "value": "incorrect3" }
+        ]
+      }
+    },
+    "shaft-diameter-verification": {
+      "title": "Propeller Shaft Diameter Verification",
+      "stationCode": "DRS-SHAFT-SIZE",
+      "image": "assignments/shaft-fatigue-design/images/EA-16_Student_v1.0.png",
+      "figure": "Engineering Asset EA-16",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Thin-Walled Hollow Tubular Propeller Shaft (do = 60 mm, di = 50 mm)",
+          "label": "Hollow Shaft Construction"
+        },
+        {
+          "id": "C02",
+          "name": "Solid Steel Bar Propeller Shaft (d = 45 mm)",
+          "label": "Solid Shaft Construction"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-hollow",
+          "title": "SELECT HOLLOW TUBULAR SHAFT (HIGH STIFFNESS-TO-WEIGHT RATIO & HIGH CRITICAL SPEED)",
+          "suitability": "Optimal Engineering Selection",
+          "description": "Hollow shaft places material at outer radius maximizing polar section modulus (Zp) and polar moment of inertia (J), providing superior torsional fatigue resistance and higher critical whirling speed at much lower weight."
+        },
+        {
+          "id": "opt-solid",
+          "title": "SELECT SOLID STEEL BAR SHAFT",
+          "suitability": "Heavy & Prone to Whirling",
+          "description": "Solid shaft is unnecessarily heavy, has low mass-specific polar moment of inertia, and suffers from lower natural whirling frequency under long automotive wheelbases."
+        }
+      ]
+    },
+    "fatigue-failure-analysis": {
+      "title": "Practical Fatigue Failure & Overload Analysis",
+      "stationCode": "DRS-FATIGUE-FAIL",
+      "image": "assignments/shaft-fatigue-design/images/EA-16_Student_v1.0.png",
+      "figure": "Engineering Asset EA-16",
+      "components": [
+        {
+          "id": "C01",
+          "name": "45-Degree Spiral Fracture Along Shaft Tube",
+          "label": "Torsional Fatigue Failure Mode"
+        },
+        {
+          "id": "C02",
+          "name": "Fretting Wear & Tooth Deformation at Splined Slip Joint",
+          "label": "Spline Contact Fatigue Failure Mode"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-analysis-correct",
+          "title": "MAXIMUM SHEAR & DIAGONAL TENSION FATIGUE (45° CRACK) & SPLINE FRETTING CORROSION",
+          "suitability": "Correct Metallurgical & Mechanical Failure Diagnosis",
+          "description": "45-degree spiral crack is characteristic of principal tensile stress failure under cyclic torsion in ductile/semi-ductile material; spline tooth fretting results from cyclic axial sliding under heavy torque transfer."
+        },
+        {
+          "id": "opt-analysis-incorrect",
+          "title": "PURE BENDING OVERLOAD & BUCKED TUBE AXIAL CRUSHING",
+          "suitability": "Incorrect Diagnosis",
+          "description": "Pure axial crushing causes local compression buckling rather than 45° spiral fatigue cracking across the tube body."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Propeller Shaft Fatigue Design Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Drivetrain Load Path & Critical Section Identification",
+          "placeholder": "Summarize the power transmission path from engine to differential and identify stress concentration zones at splines and weld necks."
+        },
+        {
+          "id": "r2",
+          "label": "2. Fluctuating Torsional Stress & Soderberg Fatigue Analysis",
+          "placeholder": "Present calculations for mean torque (Tm), alternating torque (Ta), modified endurance limit (Sse), and factor of safety (FoS)."
+        },
+        {
+          "id": "r3",
+          "label": "3. Shaft Construction & Failure Mode Insights",
+          "placeholder": "Justify selecting a hollow tubular shaft over a solid bar, and explain 45-degree spiral torsional fatigue cracking and spline maintenance."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Automotive Propeller Shaft Fatigue Design Challenge (EA-16) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

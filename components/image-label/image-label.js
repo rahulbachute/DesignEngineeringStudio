@@ -119,27 +119,18 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
     const markerLayer = stage.querySelector(".label-marker-layer");
     if (!markerLayer) return;
 
-    const stageRect = stage.getBoundingClientRect();
-    const naturalW = image.naturalWidth || stageRect.width;
-    const naturalH = image.naturalHeight || stageRect.height;
+    const naturalW = image.naturalWidth;
+    const naturalH = image.naturalHeight;
+    const imgBoxW = image.clientWidth;
+    const imgBoxH = image.clientHeight;
 
-    if (!naturalW || !naturalH || !stageRect.width || !stageRect.height) return;
+    if (!naturalW || !naturalH || !imgBoxW || !imgBoxH) return;
 
-    const aspectImage = naturalW / naturalH;
-    const aspectStage = stageRect.width / stageRect.height;
-
-    let imgW, imgH, imgL, imgT;
-    if (aspectImage > aspectStage) {
-      imgW = stageRect.width;
-      imgH = stageRect.width / aspectImage;
-      imgL = 0;
-      imgT = (stageRect.height - imgH) / 2;
-    } else {
-      imgH = stageRect.height;
-      imgW = stageRect.height * aspectImage;
-      imgT = 0;
-      imgL = (stageRect.width - imgW) / 2;
-    }
+    const scaleFactor = Math.min(imgBoxW / naturalW, imgBoxH / naturalH);
+    const imgW = naturalW * scaleFactor;
+    const imgH = naturalH * scaleFactor;
+    const imgL = image.offsetLeft + (imgBoxW - imgW) / 2;
+    const imgT = image.offsetTop + (imgBoxH - imgH) / 2;
 
     markerLayer.style.left = `${imgL}px`;
     markerLayer.style.top = `${imgT}px`;
@@ -192,6 +183,7 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
 
     if (this.eventBus) {
       this.eventBus.listen("zoom-changed", () => this.syncMarkerLayer());
+      this.eventBus.listen("transform-changed", () => this.syncMarkerLayer());
     }
     window.addEventListener("resize", () => this.syncMarkerLayer());
   }

@@ -108,7 +108,11 @@ class OutcomeEngine {
         'EC-09 Coupling Selection',
         'EC-10 Bicycle Cotter Joint',
         'EA-11 Tractor-Trailer Knuckle Joint',
-        'EA-12 Motorcycle Helical Spring'
+        'EA-12 Motorcycle Helical Spring',
+        'EA-13 Leaf Spring Design Verification',
+        'EA-14 Spring Selection Comparative Study',
+        'EA-15 Automobile Suspension System Analysis',
+        'EA-16 Automotive Propeller Shaft Fatigue Design'
       ],
       batch: ['Batch A', 'Batch B', 'Batch C'],
       division: ['Division A', 'Division B'],

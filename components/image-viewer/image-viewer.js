@@ -242,6 +242,7 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
     image.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.zoomLevel})`;
     this.element.querySelector("[data-image-zoom-out]").disabled = this.zoomLevel <= this.minZoom;
     this.element.querySelector("[data-image-zoom-in]").disabled = this.zoomLevel >= this.maxZoom;
+    this.emit("transform-changed", this.serialize());
   }
 
   toggleFullscreen() {

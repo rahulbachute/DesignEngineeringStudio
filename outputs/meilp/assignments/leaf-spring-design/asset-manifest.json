@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/leaf-spring-design/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-13",
+      "title": "Commercial Vehicle Multi-Leaf Spring Assembly Mechanical Illustration (Student Edition)",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/leaf-spring-design/images/EA-13_Student_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-13",
+      "title": "Commercial Vehicle Multi-Leaf Spring Assembly Mechanical Illustration (Faculty Reference Solution)",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/leaf-spring-design/images/EA-13_Faculty_v1.0.png",
+      "required": true
+    }
+  }
+}

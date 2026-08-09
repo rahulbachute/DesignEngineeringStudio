@@ -1,0 +1,288 @@
+{
+  "assignment": {
+    "id": "EA-14",
+    "slug": "spring-selection",
+    "title": "Comparative Study and Selection of Springs for Engineering Applications"
+  },
+  "dashboard": {
+    "projectCode": "EA-14",
+    "projectTitle": "Comparative Study and Selection of Springs for Engineering Applications",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO3: Design mechanical springs, fasteners, and energy storing elements subjected to static and fluctuating loads by applying strength, deflection, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-14",
+      "title": "Spring Applications Comparative Engineering Study Illustration (Student Edition)",
+      "path": "assignments/spring-selection/images/EA-14_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-14",
+      "title": "Spring Applications Comparative Engineering Study Illustration (Faculty Reference Solution)",
+      "path": "assignments/spring-selection/images/EA-14_Faculty_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete spring comparative study and engineering selection independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on mechanical spring selection and comparative analysis" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Observe Springs in Real Applications",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Study Scope",
+          "body": "Tata Motors & Bajaj Auto Central R&D Division requires you to perform a comparative engineering evaluation of four fundamental spring arrangements used in mechanical systems: Helical Compression, Helical Tension, Concentric Helical Compression, and Multi-Leaf Springs."
+        },
+        {
+          "type": "theory",
+          "title": "Four Mechanical Applications Under Study",
+          "body": "1. Motorcycle Rear Suspension (Helical Compression Spring)\n2. Mechanical Return Mechanism (Helical Tension / Extension Spring)\n3. Engine Valve Mechanism (Concentric Helical Compression Springs)\n4. Commercial Vehicle Rear Axle (Multi-Leaf Spring)"
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives",
+          "items": [
+            "Identify the four spring configurations on Engineering Asset EA-14.",
+            "Match spring types with primary loading modes and operational functions.",
+            "Compare constructional geometry, space constraints, and performance trade-offs.",
+            "Evaluate engineering scenarios to select the optimal spring configuration.",
+            "Formulate a comparative engineering recommendation report."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-14 Project Charter for Spring Comparative Study & Selection."
+    },
+    "component-identification": {
+      "title": "Identify the Four Spring Configurations",
+      "image": "assignments/spring-selection/images/EA-14_Student_v1.0.png",
+      "figure": "Engineering Asset EA-14",
+      "description": "Student engineering asset illustrating four real-world spring applications and configurations.",
+      "options": [
+        "Helical Compression Spring",
+        "Helical Tension / Extension Spring",
+        "Concentric Helical Compression Springs",
+        "Multi-Leaf Spring Assembly",
+        "Motorcycle Shock Absorber Mount",
+        "Return Spring Hook Anchor",
+        "Engine Valve Stem & Double Retainer",
+        "Commercial Vehicle Axle U-Bolt Assembly"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 22, "y": 30, "correctAnswer": "Helical Compression Spring", "feedback": "Single coiled spring operating under axial push/compression." },
+        { "componentNumber": 2, "x": 48, "y": 30, "correctAnswer": "Helical Tension / Extension Spring", "feedback": "Close-wound spring with end hooks operating under pull/tension." },
+        { "componentNumber": 3, "x": 75, "y": 30, "correctAnswer": "Concentric Helical Compression Springs", "feedback": "Dual co-axial compression springs nested inside each other." },
+        { "componentNumber": 4, "x": 48, "y": 72, "correctAnswer": "Multi-Leaf Spring Assembly", "feedback": "Laminated steel leaves clamped together operating under bending." },
+        { "componentNumber": 5, "x": 22, "y": 15, "correctAnswer": "Motorcycle Shock Absorber Mount", "feedback": "Upper frame eyelet supporting motorcycle rear shock unit." },
+        { "componentNumber": 6, "x": 48, "y": 15, "correctAnswer": "Return Spring Hook Anchor", "feedback": "Fixed pin anchoring extension spring loop." },
+        { "componentNumber": 7, "x": 75, "y": 15, "correctAnswer": "Engine Valve Stem & Double Retainer", "feedback": "High-speed valve stem with split collets holding dual spring seats." },
+        { "componentNumber": 8, "x": 48, "y": 88, "correctAnswer": "Commercial Vehicle Axle U-Bolt Assembly", "feedback": "Heavy-duty U-bolts clamping leaf spring stack to rear axle housing." }
+      ]
+    },
+    "application-function-match": {
+      "title": "Identify Application and Function",
+      "prompt": "Analyze the functional role of each spring type in its respective engineering application.",
+      "mcq": {
+        "question": "Which option correctly pairs the spring type with its primary functional purpose?",
+        "options": [
+          { "id": "opt1", "label": "Concentric Springs → Engine Valve → High spring force in compact space & valve bounce prevention", "value": "correct" },
+          { "id": "opt2", "label": "Extension Spring → Commercial Vehicle Axle → Heavy vertical load carrying", "value": "incorrect1" },
+          { "id": "opt3", "label": "Leaf Spring → Actuating Mechanism → High speed pull return force", "value": "incorrect2" },
+          { "id": "opt4", "label": "Helical Compression Spring → Engine Valve → Pure tension pulling", "value": "incorrect3" }
+        ]
+      }
+    },
+    "loading-conditions-compare": {
+      "title": "Compare Loading Conditions",
+      "prompt": "Evaluate the primary mechanical stress and load state acting on the spring material.",
+      "mcq": {
+        "question": "Which statement accurately describes the primary internal stress state induced in the wire/leaf material?",
+        "options": [
+          { "id": "opt1", "label": "Helical compression & extension springs experience torsional shear stress in the wire; leaf springs experience transverse bending stress across the leaves.", "value": "correct" },
+          { "id": "opt2", "label": "Helical compression springs experience pure tensile stress while leaf springs experience pure shear stress.", "value": "incorrect1" },
+          { "id": "opt3", "label": "All four spring types experience identical direct compressive stress without any torsion or bending.", "value": "incorrect2" },
+          { "id": "opt4", "label": "Extension springs experience radial crushing stress while concentric springs experience hydrostatic pressure.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "construction-geometry-compare": {
+      "title": "Compare Construction and Geometry",
+      "prompt": "Examine the geometric arrangement and construction features of concentric compression springs vs single compression springs.",
+      "mcq": {
+        "question": "Why are concentric springs wound with opposite helix hand directions (one right-hand, one left-hand)?",
+        "options": [
+          { "id": "opt1", "label": "To prevent the coils of the inner and outer springs from interlocking or binding during axial deflection.", "value": "correct" },
+          { "id": "opt2", "label": "To make the inner spring rotate in the opposite direction of engine crankshaft.", "value": "incorrect1" },
+          { "id": "opt3", "label": "To balance the magnetic field generated by high-speed spring motion.", "value": "incorrect2" },
+          { "id": "opt4", "label": "To reduce the cost of spring steel material by 50%.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "design-requirements-compare": {
+      "title": "Compare Design Requirements",
+      "prompt": "Compare the operating environment and packaging constraints across the four applications.",
+      "mcq": {
+        "question": "Which application imposes the strictest constraint regarding high cyclic operating frequency and resonance (surge) avoidance?",
+        "options": [
+          { "id": "opt1", "label": "Engine valve springs operating at up to 6000 RPM requiring high natural frequency to prevent surge and valve float.", "value": "correct" },
+          { "id": "opt2", "label": "Commercial vehicle leaf springs operating at 1 cycle per hour.", "value": "incorrect1" },
+          { "id": "opt3", "label": "Motorcycle sidestand return spring operating twice per trip.", "value": "incorrect2" },
+          { "id": "opt4", "label": "Parking brake extension spring operating once per parking event.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "performance-advantages-compare": {
+      "title": "Compare Performance, Advantages and Limitations",
+      "prompt": "Evaluate the engineering trade-offs regarding energy storage, load capacity, and fail-safe reliability.",
+      "mcq": {
+        "question": "What is a major advantage of using concentric helical compression springs in IC engine valve trains?",
+        "options": [
+          { "id": "opt1", "label": "Fail-safe redundancy: if one spring breaks, the remaining spring prevents the valve from dropping into the cylinder cavity.", "value": "correct" },
+          { "id": "opt2", "label": "Zero manufacturing cost and elimination of heat treatment requirements.", "value": "incorrect1" },
+          { "id": "opt3", "label": "Ability to operate without any lubrication or spring seats.", "value": "incorrect2" },
+          { "id": "opt4", "label": "Elimination of all torsional shear stresses in both springs.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "engineering-tradeoff": {
+      "title": "Engineering Trade-Off",
+      "stationCode": "DRS-SPRING-COMPARE",
+      "image": "assignments/spring-selection/images/EA-14_Student_v1.0.png",
+      "figure": "Engineering Asset EA-14",
+      "components": [
+        {
+          "id": "C01",
+          "name": "High-RPM Racing Engine Valve Train",
+          "label": "Valve Train Space & Capacity Trade-Off"
+        },
+        {
+          "id": "C02",
+          "name": "Heavy Mining Dump Truck Rear Axle",
+          "label": "Suspension Payload & Damping Trade-Off"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-concentric",
+          "title": "SELECT CONCENTRIC SPRINGS FOR VALVE TRAIN & LEAF SPRINGS FOR TRUCK",
+          "suitability": "Optimal Engineering Match",
+          "description": "Concentric springs provide high force density and fail-safe safety in tight engine head envelopes; leaf springs provide high load capacity and structural axle location for heavy trucks."
+        },
+        {
+          "id": "opt-single",
+          "title": "SELECT SINGLE HELICAL COMPRESSION SPRING FOR BOTH APPLICATIONS",
+          "suitability": "Sub-optimal / Unsafe Design",
+          "description": "Single compression spring would coil bind or surge in engine head, and lack lateral load guidance and heavy capacity required for truck rear axle."
+        }
+      ]
+    },
+    "spring-selection-decision": {
+      "title": "Select the Appropriate Spring",
+      "stationCode": "DRS-SPRING-SELECT",
+      "image": "assignments/spring-selection/images/EA-14_Student_v1.0.png",
+      "figure": "Engineering Asset EA-14",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Automotive Throttle Pedal Return Mechanism",
+          "label": "Pedal Return Selection"
+        },
+        {
+          "id": "C02",
+          "name": "Commuter Motorcycle Twin Shock Rear Suspension",
+          "label": "Motorcycle Rear Suspension Selection"
+        }
+      ],
+      "options": [
+        {
+          "id": "sel-correct",
+          "title": "TENSION SPRING FOR THROTTLE RETURN & COMPRESSION SPRING FOR MOTORCYCLE",
+          "suitability": "Correct Functional Selection",
+          "description": "Helical tension spring pulls throttle linkage back to idle position safely; helical compression spring provides smooth ride comfort and progressive energy absorption under passenger load."
+        },
+        {
+          "id": "sel-incorrect",
+          "title": "LEAF SPRING FOR THROTTLE RETURN & CONCENTRIC SPRINGS FOR MOTORCYCLE",
+          "suitability": "Over-engineered & Impractical",
+          "description": "Leaf spring is excessively heavy and rigid for throttle pedal; concentric springs add unnecessary cost and complexity to commuter motorcycle rear shocks."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Comparative Engineering Recommendation",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Spring Classification & Functional Summary",
+          "placeholder": "Summarize the 4 spring configurations, their primary loading modes (compression, tension, bending), and key applications."
+        },
+        {
+          "id": "r2",
+          "label": "2. Comparative Selection Matrix & Justification",
+          "placeholder": "Explain how space constraints, load capacity, dynamic frequency, and fail-safe requirements dictate the engineering spring selection."
+        },
+        {
+          "id": "r3",
+          "label": "3. Maintenance & Failure Mode Considerations",
+          "placeholder": "Provide comparative maintenance insights for end hook stress concentration (tension springs), surge (valve springs), and inter-leaf fretting (leaf springs)."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Spring Comparative Study and Selection Challenge (EA-14) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

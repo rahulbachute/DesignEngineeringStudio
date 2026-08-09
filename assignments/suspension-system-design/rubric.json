@@ -1,0 +1,108 @@
+{
+  "assignmentId": "EA-15",
+  "assignmentTitle": "Analysis of an Automobile Suspension System",
+  "totalMarks": 12.0,
+  "criteria": [
+    {
+      "id": "project-charter",
+      "title": "Observe the Suspension System",
+      "marks": 0.5,
+      "bloomLevel": "L1 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO8", "PO11"],
+      "pso": ["PSO1"],
+      "description": "Understanding client brief, automobile motorcycle rear suspension system, and project scope."
+    },
+    {
+      "id": "component-identification",
+      "activityCode": "EA15-A02",
+      "title": "Identify Suspension Components",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate labeling of frame, swingarm, pivot, spring, damper, mounts, linkage, axle, wheel, and tyre on EA-15."
+    },
+    {
+      "id": "load-transmission-path",
+      "title": "Understand the Load Transmission Path",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Tracing load flow from road impact through tyre, wheel, axle, swingarm, spring-damper unit, and upper mount to frame chassis."
+    },
+    {
+      "id": "component-functions",
+      "title": "Identify Component Functions",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Explaining individual mechanical functions of swingarm, mounts, spring, damper, axle, and frame."
+    },
+    {
+      "id": "spring-and-damper",
+      "title": "Spring and Damper",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Contrasting elastic energy storage (spring) vs kinetic vibration dissipation (damper)."
+    },
+    {
+      "id": "suspension-movement",
+      "title": "Suspension Movement",
+      "marks": 1.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Analyzing mechanical bump compression and rebound expansion dynamics."
+    },
+    {
+      "id": "suspension-performance",
+      "title": "Suspension Performance",
+      "marks": 1.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Evaluating trade-offs between ride comfort, spring stiffness, damping rate, and high-speed stability."
+    },
+    {
+      "id": "fault-condition-analysis",
+      "title": "Practical Suspension Condition Analysis",
+      "marks": 1.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Diagnosing suspension faults (uncontrolled bouncing, bottoming out, harshness) and identifying root causes."
+    },
+    {
+      "id": "engineering-decision-making",
+      "title": "Engineering Decision Making",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Rendering system-level suspension tuning recommendations for dual-rider touring vs off-road riding."
+    },
+    {
+      "id": "final-report",
+      "title": "System-Level Engineering Analysis",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO8", "PO9", "PO11"],
+      "pso": ["PSO2"],
+      "description": "Synthesizing comprehensive system-level analysis report covering load path, spring-damper roles, fault diagnosis, and maintenance."
+    }
+  ]
+}

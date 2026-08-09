@@ -98,7 +98,7 @@ class AnalyticsEngine {
 
     return {
       totalStudents: summary.totalStudents ?? 45,
-      totalChallenges: summary.totalChallenges ?? 12,
+      totalChallenges: summary.totalChallenges ?? 16,
       completedEvaluations: summary.completedEvaluations ?? 11,
       pendingEvaluations: summary.pendingEvaluations ?? 4,
       averageMarks: summary.averageMarks ?? 78.5,

@@ -1,0 +1,288 @@
+{
+  "assignment": {
+    "id": "EA-13",
+    "slug": "leaf-spring-design",
+    "title": "Construction and Design Verification of a Leaf Spring"
+  },
+  "dashboard": {
+    "projectCode": "EA-13",
+    "projectTitle": "Construction and Design Verification of a Leaf Spring",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO3: Design mechanical springs, fasteners, and energy storing elements subjected to static and fluctuating loads by applying strength, deflection, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-13",
+      "title": "Commercial Vehicle Multi-Leaf Spring Assembly Mechanical Illustration (Student Edition)",
+      "path": "assignments/leaf-spring-design/images/EA-13_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-13",
+      "title": "Commercial Vehicle Multi-Leaf Spring Assembly Mechanical Illustration (Faculty Reference Solution)",
+      "path": "assignments/leaf-spring-design/images/EA-13_Faculty_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete leaf spring construction and design verification independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on commercial vehicle leaf spring design verification" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Observe the Leaf Spring Suspension",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Application Context",
+          "body": "Tata Motors Commercial Vehicle Chassis Division has assigned you to analyze the construction and verify the basic design of a rear semi-elliptic multi-leaf spring assembly for a medium commercial vehicle."
+        },
+        {
+          "type": "theory",
+          "title": "Real-World Operating Parameters",
+          "body": "The rear axle carries a total payload force of 40 kN, supported symmetrically by two identical multi-leaf spring assemblies (20 kN central load per spring). Students must verify bending stress, deflection, and Factor of Safety under maximum static axle load."
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives & Scope",
+          "items": [
+            "Observe commercial vehicle leaf spring construction and trace the load path.",
+            "Label leaf spring assembly components on Engineering Asset EA-13.",
+            "Establish the simplified cantilever beam engineering model for multi-leaf springs.",
+            "Determine maximum bending stress, spring deflection, and actual Factor of Safety.",
+            "Render an engineering judgement and design modification recommendation."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-13 Project Charter for Leaf Spring Design Verification."
+    },
+    "component-identification": {
+      "title": "Identify Leaf Spring Components",
+      "image": "assignments/leaf-spring-design/images/EA-13_Student_v1.0.png",
+      "figure": "Engineering Asset EA-13",
+      "description": "Student engineering asset showing commercial vehicle multi-leaf spring assembly and mounting hardware.",
+      "options": [
+        "Master Leaf",
+        "Graduated Leaves",
+        "Front Spring Eye",
+        "Rear Spring Eye & Shackle",
+        "Centre Bolt",
+        "U-Bolts (Rebound Clips)",
+        "Axle Seat / Axle Pad",
+        "Rear Axle Assembly"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 48, "y": 28, "correctAnswer": "Master Leaf", "feedback": "Longest top leaf with formed spring eyes carrying eye pin bushings." },
+        { "componentNumber": 2, "x": 48, "y": 42, "correctAnswer": "Graduated Leaves", "feedback": "Stack of progressively shorter spring leaves providing uniform bending strength." },
+        { "componentNumber": 3, "x": 15, "y": 25, "correctAnswer": "Front Spring Eye", "feedback": "Front eyelet connected directly to chassis front hanger bracket." },
+        { "componentNumber": 4, "x": 82, "y": 25, "correctAnswer": "Rear Spring Eye & Shackle", "feedback": "Rear eye connected to pivoting shackle accommodating spring length change during deflection." },
+        { "componentNumber": 5, "x": 48, "y": 55, "correctAnswer": "Centre Bolt", "feedback": "Central clamping pin holding leaves in alignment and locating spring on axle seat." },
+        { "componentNumber": 6, "x": 44, "y": 62, "correctAnswer": "U-Bolts (Rebound Clips)", "feedback": "U-shaped threaded rods clamping the spring assembly securely to the axle." },
+        { "componentNumber": 7, "x": 48, "y": 70, "correctAnswer": "Axle Seat / Axle Pad", "feedback": "Machined mounting pad on axle housing supporting the spring centre." },
+        { "componentNumber": 8, "x": 48, "y": 82, "correctAnswer": "Rear Axle Assembly", "feedback": "Commercial vehicle rear axle housing transmitting load to road wheels." }
+      ]
+    },
+    "leaf-construction": {
+      "title": "Understand Leaf Spring Construction",
+      "prompt": "Multi-leaf springs consist of one master leaf and several graduated leaves of decreasing length clamped together.",
+      "mcq": {
+        "question": "Why are multi-leaf springs constructed with leaves of progressively decreasing lengths from top to bottom?",
+        "options": [
+          { "id": "opt1", "label": "To approximate a beam of uniform strength, maintaining uniform bending stress along the entire spring length while saving material weight.", "value": "correct" },
+          { "id": "opt2", "label": "To allow the top leaf to snap easily during heavy impacts.", "value": "incorrect1" },
+          { "id": "opt3", "label": "To create space for internal hydraulic oil flow between leaves.", "value": "incorrect2" },
+          { "id": "opt4", "label": "To ensure shorter leaves carry 100% of the load while the master leaf carries zero load.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "load-path": {
+      "title": "Understand the Load Path",
+      "prompt": "Analyze the load path through the commercial vehicle rear suspension system.",
+      "mcq": {
+        "question": "Which sequence correctly describes the primary load transmission path from vehicle chassis to road wheels?",
+        "options": [
+          { "id": "lp1", "label": "Chassis Frame → Spring Eyes & Hanger/Shackle → Multi-Leaf Spring → Axle Seat & U-Bolts → Axle → Wheels", "value": "correct" },
+          { "id": "lp2", "label": "Wheels → Master Leaf → Chassis Frame → Graduated Leaves → U-Bolts → Axle Seat", "value": "incorrect1" },
+          { "id": "lp3", "label": "Axle → Centre Bolt → Front Eye → Chassis Frame → Wheels → Shackle", "value": "incorrect2" },
+          { "id": "lp4", "label": "Graduated Leaves → Centre Bolt → Chassis Frame → Spring Eyes → Axle Seat → Wheels", "value": "incorrect3" }
+        ]
+      }
+    },
+    "engineering-model": {
+      "title": "Establish the Engineering Model",
+      "given": [
+        "Total Rear Axle Payload (W_axle) = 40.0 kN (40,000 N)",
+        "Number of Leaf Springs per Axle = 2",
+        "Central Load per Leaf Spring (2P) = 40.0 / 2 = 20.0 kN (20,000 N)",
+        "End Reaction Force at each Eye Pin (P) = 20.0 / 2 = 10.0 kN (10,000 N)",
+        "Total Effective Spring Span (2L) = 1,000 mm",
+        "Semi-span Length (L) = 1,000 / 2 = 500 mm"
+      ],
+      "fields": [
+        { "id": "centralLoad", "label": "Central Load per Leaf Spring (2P)", "unit": "kN", "placeholder": "20.0", "hint": "2P = 40 / 2 = 20.0 kN" },
+        { "id": "endReaction", "label": "End Reaction Force at Eye (P)", "unit": "kN", "placeholder": "10.0", "hint": "P = 20 / 2 = 10.0 kN" },
+        { "id": "semiSpan", "label": "Semi-span Length (L)", "unit": "mm", "placeholder": "500", "hint": "L = 1000 / 2 = 500 mm" }
+      ]
+    },
+    "design-requirements": {
+      "title": "Establish Design Requirements",
+      "given": [
+        "End Load per Eye (P) = 10,000 N",
+        "Semi-span Length (L) = 500 mm",
+        "Total Number of Leaves (n) = 10 (nf = 2 full length, ng = 8 graduated)",
+        "Leaf Width (b) = 60 mm",
+        "Leaf Thickness (t) = 8 mm",
+        "Modulus of Elasticity for Steel (E) = 207,000 N/mm²",
+        "Material Yield Strength (Syt) = 900 N/mm²"
+      ],
+      "fields": [
+        { "id": "totalLeaves", "label": "Total Number of Leaves (n)", "unit": "count", "placeholder": "10", "hint": "n = 10" },
+        { "id": "leafWidth", "label": "Leaf Width (b)", "unit": "mm", "placeholder": "60", "hint": "b = 60 mm" },
+        { "id": "leafThickness", "label": "Leaf Thickness (t)", "unit": "mm", "placeholder": "8", "hint": "t = 8 mm" }
+      ]
+    },
+    "bending-stress-verification": {
+      "title": "Verify Bending Stress",
+      "given": [
+        "End Load (P) = 10,000 N",
+        "Semi-span (L) = 500 mm",
+        "Number of Leaves (n) = 10",
+        "Leaf Width (b) = 60 mm",
+        "Leaf Thickness (t) = 8 mm"
+      ],
+      "formulas": [
+        { "name": "Maximum Bending Moment at Centre (M_max)", "formula": "M_{max} = P \\times L = 10,000 \\times 500 = 5,000,000 \\text{ N}\\cdot\\text{mm}" },
+        { "name": "Total Section Modulus (Z)", "formula": "Z = \\frac{n \\times b \\times t^2}{6} = \\frac{10 \\times 60 \\times 8^2}{6} = 6,400 \\text{ mm}^3" },
+        { "name": "Maximum Bending Stress (sigma_b)", "formula": "\\sigma_b = \\frac{M_{max}}{Z} = \\frac{6 P L}{n b t^2} = \\frac{5,000,000}{6,400} = 781.25 \\text{ N/mm}^2" }
+      ],
+      "fields": [
+        { "id": "maxBendingMoment", "label": "Maximum Bending Moment (M_max)", "unit": "kN.mm", "placeholder": "5000", "hint": "M_max = 10 kN * 500 mm = 5000 kN.mm" },
+        { "id": "sectionModulus", "label": "Total Section Modulus (Z)", "unit": "mm³", "placeholder": "6400", "hint": "Z = (10 * 60 * 8^2) / 6 = 6400 mm³" },
+        { "id": "calculatedBendingStress", "label": "Calculated Bending Stress (sigma_b)", "unit": "N/mm²", "placeholder": "781.25", "hint": "sigma_b = (6 * 10000 * 500) / (10 * 60 * 8^2) = 781.25 N/mm²" }
+      ]
+    },
+    "deflection-safety-check": {
+      "title": "Verify Deflection and Factor of Safety",
+      "given": [
+        "Calculated Bending Stress (sigma_b) = 781.25 N/mm²",
+        "Material Yield Strength (Syt) = 900.0 N/mm²",
+        "End Load (P) = 10,000 N",
+        "Semi-span (L) = 500 mm",
+        "E = 207,000 N/mm², n = 10, b = 60 mm, t = 8 mm"
+      ],
+      "formulas": [
+        { "name": "Spring Deflection (delta)", "formula": "\\delta = \\frac{6 P L^3}{E n b t^3} = \\frac{6 \\times 10000 \\times 500^3}{207000 \\times 10 \\times 60 \\times 8^3} = 117.94 \\text{ mm}" },
+        { "name": "Factor of Safety (FoS)", "formula": "FoS = \\frac{S_{yt}}{\\sigma_b} = \\frac{900.0}{781.25} = 1.15" }
+      ],
+      "fields": [
+        { "id": "calculatedDeflection", "label": "Calculated Spring Deflection (delta)", "unit": "mm", "placeholder": "117.94", "hint": "delta = (6 * 10000 * 500^3) / (207000 * 10 * 60 * 8^3) = 117.94 mm" },
+        { "id": "actualFos", "label": "Calculated Factor of Safety (FoS)", "unit": "FoS", "placeholder": "1.15", "hint": "FoS = 900.0 / 781.25 = 1.15" }
+      ]
+    },
+    "engineering-judgement": {
+      "title": "Engineering Judgement",
+      "stationCode": "DRS-LEAF",
+      "image": "assignments/leaf-spring-design/images/EA-13_Student_v1.0.png",
+      "figure": "Engineering Asset EA-13",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Bending Stress & Material Yield Strength",
+          "label": "Bending Strength Evaluation"
+        },
+        {
+          "id": "C02",
+          "name": "Spring Deflection & Ground Clearance",
+          "label": "Deflection & Ride Height Evaluation"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-safe",
+          "title": "ACCEPT DESIGN AS ADEQUATE FOR REGULAR PAYLOAD",
+          "suitability": "Passes Yield Strength Limit",
+          "description": "Calculated bending stress (781.25 N/mm²) remains below material yield strength (900 N/mm²), providing FoS = 1.15 under peak static load."
+        },
+        {
+          "id": "opt-unsafe",
+          "title": "REJECT / INCREASE NUMBER OF LEAVES TO 12 OR THICKNESS TO 9 MM",
+          "suitability": "Required for Dynamic Shock Overload",
+          "description": "Under severe off-road dynamic shock loads (1.5x static bump), FoS = 1.15 is insufficient. Increasing number of leaves n to 12 or leaf thickness t to 9 mm reduces bending stress to 650 N/mm² and raises FoS to 1.38."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Engineering Verification Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Executive Summary & Design Verification",
+          "placeholder": "Summarize the design verification results for the commercial vehicle leaf spring, citing calculated bending stress, deflection, and FoS."
+        },
+        {
+          "id": "r2",
+          "label": "2. Section Properties & Load Distribution Analysis",
+          "placeholder": "Summarize spring section parameters: n = 10, b = 60 mm, t = 8 mm, M_max = 5,000 kN.mm, Z = 6,400 mm³."
+        },
+        {
+          "id": "r3",
+          "label": "3. Maintenance & Inter-Leaf Lubrication Recommendations",
+          "placeholder": "Provide engineering recommendations for inter-leaf graphite grease lubrication, U-bolt retightening, and eye bushing inspection."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Commercial Vehicle Leaf Spring Construction and Design Verification (EA-13) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

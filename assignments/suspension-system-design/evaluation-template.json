@@ -1,0 +1,57 @@
+{
+  "assignmentId": "EA-15",
+  "totalMarks": 12.0,
+  "maxMarks": 12.0,
+  "sections": [
+    {
+      "id": "project-charter",
+      "title": "Observe Suspension System (Activity 1)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "component-identification",
+      "title": "Identify Components (Activity 2)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "load-transmission-path",
+      "title": "Understand Load Path (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "component-functions",
+      "title": "Identify Component Functions (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "spring-and-damper",
+      "title": "Spring and Damper (Activity 5)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "suspension-movement",
+      "title": "Suspension Movement (Activity 6)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "suspension-performance",
+      "title": "Suspension Performance (Activity 7)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "fault-condition-analysis",
+      "title": "Practical Fault Analysis (Activity 8)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "engineering-decision-making",
+      "title": "Engineering Decision Making (Activity 9)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "final-report",
+      "title": "System-Level Analysis Report (Activity 10)",
+      "maxMarks": 1.5
+    }
+  ]
+}
