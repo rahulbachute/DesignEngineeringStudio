@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/kunckle joint/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-11",
+      "title": "Tractor–Trailer Knuckle Joint Assembly Mechanical Illustration (Student Edition)",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/kunckle joint/images/EA-11_Student_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-11",
+      "title": "Tractor–Trailer Knuckle Joint Assembly Mechanical Illustration (Faculty Reference Solution)",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/kunckle joint/images/EA-11_Faculty_v1.0.png",
+      "required": true
+    }
+  }
+}

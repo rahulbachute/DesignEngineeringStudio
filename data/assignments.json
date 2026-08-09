@@ -109,6 +109,28 @@
       "icon": "bi-gear-fill",
       "configPath": "assignments/cotter-joint/config.json",
       "launchPath": "assignment-workbench.html?assignment=cotter-joint"
+    },
+    {
+      "id": "EA-11",
+      "title": "Design and Analysis of a Knuckle Joint for a Tractor–Trailer",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze tractor-trailer power transmission load path, identify single-eye and fork lug components, evaluate 30-degree turning load, calculate pin shear, eye tensile/bearing stresses, and verify Factor of Safety.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-truck",
+      "configPath": "assignments/kunckle joint/config.json",
+      "launchPath": "assignment-workbench.html?assignment=kunckle%20joint"
+    },
+    {
+      "id": "EA-12",
+      "title": "Design of a Helical Compression Spring for Motorcycle Suspension",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze motorcycle rear twin-shock suspension, identify spring and damper components, establish load and deflection requirements, design spring geometry, calculate Wahl factor and torsional shear stress, verify Factor of Safety, and render engineering recommendations.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-activity",
+      "configPath": "assignments/helical-spring-design/config.json",
+      "launchPath": "assignment-workbench.html?assignment=helical-spring-design"
     }
   ]
 }

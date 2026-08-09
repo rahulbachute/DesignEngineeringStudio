@@ -106,7 +106,9 @@ class OutcomeEngine {
         'EC-07 Transmission Shaft Design',
         'EC-08 Shaft Drive Keys',
         'EC-09 Coupling Selection',
-        'EC-10 Bicycle Cotter Joint'
+        'EC-10 Bicycle Cotter Joint',
+        'EA-11 Tractor-Trailer Knuckle Joint',
+        'EA-12 Motorcycle Helical Spring'
       ],
       batch: ['Batch A', 'Batch B', 'Batch C'],
       division: ['Division A', 'Division B'],

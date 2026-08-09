@@ -212,7 +212,9 @@ class SubmissionsBrowser {
       'Design of Shaft for a Real-World Engineering Application',
       'Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission',
       'Identification and Selection of Couplings Used in Mechanical Power Transmission',
-      'Design of a Cotter Joint for a Bicycle'
+      'Design of a Cotter Joint for a Bicycle',
+      'Design and Analysis of a Knuckle Joint for a Tractor–Trailer',
+      'Design of a Helical Compression Spring for Motorcycle Suspension'
     ];
     const loadedChallenges = this.data.map((item) => item.challenge).filter(Boolean);
     const combined = Array.from(new Set([...knownChallenges, ...loadedChallenges])).sort();

@@ -1,0 +1,293 @@
+{
+  "assignment": {
+    "id": "EA-11",
+    "slug": "kunckle joint",
+    "title": "Design and Analysis of a Knuckle Joint for a Tractor–Trailer"
+  },
+  "dashboard": {
+    "projectCode": "EA-11",
+    "projectTitle": "Design and Analysis of a Knuckle Joint for a Tractor–Trailer",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit I",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO1: Design joints, levers, and machine elements subjected to direct, bending, and combined shear loading by applying strength, rigidity, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-11",
+      "title": "Tractor–Trailer Knuckle Joint Assembly Mechanical Illustration (Student Edition)",
+      "path": "assignments/kunckle joint/images/EA-11_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-11",
+      "title": "Tractor–Trailer Knuckle Joint Assembly Mechanical Illustration (Faculty Reference Solution)",
+      "path": "assignments/kunckle joint/images/EA-11_Faculty_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete tractor–trailer knuckle joint design challenge independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on tractor–trailer articulation knuckle joint design" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Engineering Context & Real-World Observation",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Application Context",
+          "body": "Mahindra & Mahindra Heavy Machinery Division has assigned you to analyze and design the knuckle joint connecting a tractor to a 3-ton agricultural utility trailer."
+        },
+        {
+          "type": "theory",
+          "title": "Real-World Operating Parameters",
+          "body": "The trailer has an empty weight of 0.5 ton and carries a payload of 2.5 ton (Total = 3.0 ton). During operation, the tractor turns through a 30° horizontal plan-view angle relative to the trailer axis."
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives & Scope",
+          "items": [
+            "Trace the load transmission path from tractor drawbar to trailer.",
+            "Label knuckle joint components on Engineering Asset EA-11.",
+            "Analyze the 30° horizontal turning load increase on the joint.",
+            "Determine shear stress in the knuckle pin and tensile/bearing stresses in the single eye and fork lugs.",
+            "Verify the Factor of Safety (FoS) and render a design recommendation."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-11 Project Charter for Tractor–Trailer Knuckle Joint Design."
+    },
+    "power-transmission-path": {
+      "title": "Tractor–Trailer Load Path Identification",
+      "prompt": "Analyze the load path through which pulling force from the tractor engine is transmitted to pull the 3-ton agricultural trailer.",
+      "mcq": {
+        "question": "Which sequence correctly describes the primary towing force load path?",
+        "options": [
+          { "id": "opt1", "label": "Tractor Engine → Tractor Drawbar → Knuckle Joint (Fork & Single Eye) → Trailer Drawbar → Trailer Frame", "value": "correct" },
+          { "id": "opt2", "label": "Trailer Frame → Knuckle Pin → Tractor Drawbar → Trailer Drawbar → Tractor Engine", "value": "incorrect1" },
+          { "id": "opt3", "label": "Tractor Drawbar → Trailer Frame → Knuckle Joint → Single Eye → Tractor Engine", "value": "incorrect2" },
+          { "id": "opt4", "label": "Trailer Drawbar → Knuckle Joint → Tractor Engine → Tractor Drawbar → Trailer Frame", "value": "incorrect3" }
+        ]
+      }
+    },
+    "component-identification": {
+      "title": "Knuckle Joint Component Identification",
+      "image": "assignments/kunckle joint/images/EA-11_Student_v1.0.png",
+      "figure": "Engineering Asset EA-11",
+      "description": "Student engineering asset showing the tractor–trailer coupling assembly and knuckle joint construction.",
+      "options": [
+        "Tractor Unit",
+        "Trailer Unit",
+        "Tractor Drawbar",
+        "Trailer Drawbar",
+        "Single Eye End",
+        "Fork / Two Eye Lugs",
+        "Vertical Knuckle Pin",
+        "Retaining Pin / Collar Assembly"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 20, "y": 45, "correctAnswer": "Tractor Unit", "feedback": "Primary towing tractor vehicle providing pulling force." },
+        { "componentNumber": 2, "x": 80, "y": 45, "correctAnswer": "Trailer Unit", "feedback": "Towed 3-ton capacity utility trailer carrying load." },
+        { "componentNumber": 3, "x": 35, "y": 50, "correctAnswer": "Tractor Drawbar", "feedback": "Rigid structural bar extending from tractor rear." },
+        { "componentNumber": 4, "x": 46, "y": 48, "correctAnswer": "Single Eye End", "feedback": "Central eye fitting positioned inside the fork lugs." },
+        { "componentNumber": 5, "x": 52, "y": 44, "correctAnswer": "Fork / Two Eye Lugs", "feedback": "Double-forked clevis end embracing the single eye." },
+        { "componentNumber": 6, "x": 49, "y": 35, "correctAnswer": "Vertical Knuckle Pin", "feedback": "Vertical pin passing coaxially through fork lugs and single eye." },
+        { "componentNumber": 7, "x": 62, "y": 50, "correctAnswer": "Trailer Drawbar", "feedback": "Structural tongue extending from trailer front." },
+        { "componentNumber": 8, "x": 49, "y": 62, "correctAnswer": "Retaining Pin / Collar Assembly", "feedback": "Locking collar securing the vertical pin against axial detachment." }
+      ]
+    },
+    "working-principle": {
+      "title": "Working Principle & Joint Articulation",
+      "prompt": "A knuckle joint consists of a single eye end inserted into a double-eye fork (clevis), held together by a vertical knuckle pin passing coaxially through all three holes.",
+      "mcq": {
+        "question": "How does the vertical orientation of the knuckle pin enable horizontal turning articulation between the tractor and trailer?",
+        "options": [
+          { "id": "wp1", "label": "The vertical pin axis allows angular rotation in the horizontal plane while constraining vertical misalignment and transferring heavy axial pulling tension.", "value": "correct" },
+          { "id": "wp2", "label": "The vertical pin allows vertical pitching motion only while locking horizontal steering completely.", "value": "incorrect1" },
+          { "id": "wp3", "label": "The pin rotates in 3D spherical space like a ball-and-socket joint to absorb engine vibrations.", "value": "incorrect2" },
+          { "id": "wp4", "label": "The pin acts as a shear key that snaps whenever the tractor turns more than 10 degrees.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "load-turning-analysis": {
+      "title": "30° Turning Condition & Resultant Load Analysis",
+      "given": [
+        "Empty Trailer Mass = 0.5 ton (500 kg)",
+        "Trailer Payload Mass = 2.5 ton (2500 kg)",
+        "Total Trailer Mass (m) = 3.0 ton (3000 kg)",
+        "Straight Line Pulling Force (P) = m * g = 3000 kg * 9.81 m/s² = 29.43 kN",
+        "Horizontal Turning Angle (theta) = 30°"
+      ],
+      "formulas": [
+        { "name": "Straight Pulling Force (P)", "formula": "P = 3000 \\times 9.81 = 29,430 \\text{ N} = 29.43 \\text{ kN}" },
+        { "name": "Resultant Towing Force during 30° Turn (Pr)", "formula": "P_r = \\frac{P}{\\cos(30^\\circ)} = \\frac{29.43}{0.866} = 33.98 \\text{ kN} \\approx 34.0 \\text{ kN}" }
+      ],
+      "fields": [
+        { "id": "straightPull", "label": "Straight Line Pulling Force (P)", "unit": "kN", "placeholder": "29.43", "hint": "P = 3000 kg * 9.81 / 1000 = 29.43 kN" },
+        { "id": "resultantPull", "label": "Resultant Towing Force during 30° Turn (Pr)", "unit": "kN", "placeholder": "33.98", "hint": "Pr = 29.43 / cos(30 deg) = 33.98 kN" }
+      ]
+    },
+    "design-assumptions": {
+      "title": "Design Requirements & Engineering Assumptions",
+      "questions": [
+        {
+          "id": "q1",
+          "label": "1. Material Selection & Yield Strengths",
+          "placeholder": "Specify material (e.g. Plain Carbon Steel C30/C45) and yield tensile strength (Syt = 360 MPa) assumed for the knuckle pin, single eye, and fork ends."
+        },
+        {
+          "id": "q2",
+          "label": "2. Allowable Stresses in Tension, Shear, and Bearing",
+          "placeholder": "Specify allowable tensile stress (sigma_t_all = 90 MPa), allowable shear stress (tau_all = 75 MPa), and allowable crushing stress (sigma_b_all = 135 MPa)."
+        },
+        {
+          "id": "q3",
+          "label": "3. Factor of Safety & Geometric Proportions",
+          "placeholder": "Specify target Factor of Safety (Ns = 2.5 to 3.5) and standard empirical proportions for eye thickness (t = 1.2 d) and fork thickness (t1 = 0.75 d)."
+        }
+      ]
+    },
+    "knuckle-design-calculation": {
+      "title": "Knuckle Joint Component Stress Calculations",
+      "given": [
+        "Design Resultant Towing Force (Pr) = 34,000 N",
+        "Knuckle Pin Outer Diameter (d) = 25 mm",
+        "Single Eye Thickness (t) = 30 mm",
+        "Fork Lug Thickness (t1) = 18 mm",
+        "Single Eye Outer Diameter (D) = 50 mm"
+      ],
+      "formulas": [
+        { "name": "Double Shear Stress in Knuckle Pin (tau_pin)", "formula": "\\tau_{pin} = \\frac{P_r}{2 \\times \\frac{\\pi}{4} d^2}" },
+        { "name": "Tensile Stress across Single Eye Hole (sigma_t_eye)", "formula": "\\sigma_{t,eye} = \\frac{P_r}{(D - d) \\times t}" },
+        { "name": "Crushing / Bearing Stress in Single Eye (sigma_b_eye)", "formula": "\\sigma_{b,eye} = \\frac{P_r}{d \\times t}" }
+      ],
+      "fields": [
+        { "id": "pinShearStress", "label": "Calculated Pin Double Shear Stress (tau_pin)", "unit": "N/mm²", "placeholder": "Enter shear stress in N/mm²", "hint": "tau_pin = 34000 / (2 * (pi/4) * 25^2) = 34.63 N/mm²" },
+        { "id": "eyeTensileStress", "label": "Calculated Single Eye Tensile Stress (sigma_t_eye)", "unit": "N/mm²", "placeholder": "Enter tensile stress in N/mm²", "hint": "sigma_t = 34000 / ((50 - 25) * 30) = 45.33 N/mm²" },
+        { "id": "eyeBearingStress", "label": "Calculated Single Eye Bearing Stress (sigma_b_eye)", "unit": "N/mm²", "placeholder": "Enter crushing stress in N/mm²", "hint": "sigma_b = 34000 / (25 * 30) = 45.33 N/mm²" }
+      ]
+    },
+    "failure-safety-check": {
+      "title": "Failure Analysis & Factor of Safety Verification",
+      "given": [
+        "Allowable Pin Shear Strength (tau_allow) = 75.0 N/mm²",
+        "Allowable Eye Tensile Strength (sigma_t_allow) = 90.0 N/mm²",
+        "Allowable Eye Crushing Strength (sigma_b_allow) = 135.0 N/mm²",
+        "Calculated Pin Shear Stress = 34.63 N/mm²",
+        "Calculated Eye Tensile Stress = 45.33 N/mm²"
+      ],
+      "formulas": [
+        { "name": "Pin Shear Factor of Safety (FoS_pin)", "formula": "FoS_{pin} = \\frac{\\tau_{allowable}}{\\tau_{actual}}" },
+        { "name": "Single Eye Tensile Factor of Safety (FoS_eye)", "formula": "FoS_{eye} = \\frac{\\sigma_{t,allowable}}{\\sigma_{t,actual}}" }
+      ],
+      "fields": [
+        { "id": "actualFosPin", "label": "Actual Factor of Safety (Pin Double Shear)", "unit": "FoS", "placeholder": "2.17", "hint": "FoS_pin = 75.0 / 34.63 = 2.17" },
+        { "id": "actualFosEye", "label": "Actual Factor of Safety (Eye Tension)", "unit": "FoS", "placeholder": "1.99", "hint": "FoS_eye = 90.0 / 45.33 = 1.99" }
+      ]
+    },
+    "engineering-decision": {
+      "title": "Engineering Judgement & Design Recommendation",
+      "stationCode": "DRS-KNUCKLE",
+      "image": "assignments/kunckle joint/images/EA-11_Student_v1.0.png",
+      "figure": "Engineering Asset EA-11",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Knuckle Pin Diameter & Material",
+          "label": "Knuckle Pin Evaluation"
+        },
+        {
+          "id": "C02",
+          "name": "Single Eye & Fork Eye Dimensions",
+          "label": "Drawbar Clevis Ends Evaluation"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-safe",
+          "title": "ACCEPT KNUCKLE JOINT DESIGN AS SAFE",
+          "suitability": "Passes All Strength & Turning Requirements",
+          "description": "Calculated pin shear stress (34.63 N/mm²) and eye tensile stress (45.33 N/mm²) remain comfortably below allowable strength limits under 30° turning conditions, maintaining FoS > 2.0."
+        },
+        {
+          "id": "opt-unsafe",
+          "title": "REJECT DESIGN / INCREASE PIN DIAMETER & FORK THICKNESS",
+          "suitability": "Required for High Shock Loading",
+          "description": "If severe off-road agricultural terrain imposes shock loads exceeding 2.0x static pull, shear failure of the pin or fatigue cracking at the single eye hole may occur. Recommend increasing pin diameter to 30 mm."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Final Engineering Summary Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Executive Summary & Design Recommendation",
+          "placeholder": "Summarize the design decision for the tractor–trailer knuckle joint, reporting the actual FoS under 30° turning conditions."
+        },
+        {
+          "id": "r2",
+          "label": "2. Critical Failure Mode Analysis",
+          "placeholder": "Explain which component and failure mode (pin double shear, eye tensile tearout, or bearing crushing) represents the critical design bottleneck."
+        },
+        {
+          "id": "r3",
+          "label": "3. Maintenance & Field Assembly Considerations",
+          "placeholder": "Provide engineering recommendations for lubrication, retaining collar inspection, and wear monitoring of the vertical pin during agricultural operation."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Tractor–Trailer Knuckle Joint Design Challenge (EA-11) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

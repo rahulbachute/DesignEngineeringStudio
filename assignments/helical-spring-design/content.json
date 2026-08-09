@@ -1,0 +1,307 @@
+{
+  "assignment": {
+    "id": "EA-12",
+    "slug": "helical-spring-design",
+    "title": "Design of a Helical Compression Spring for Motorcycle Suspension"
+  },
+  "dashboard": {
+    "projectCode": "EA-12",
+    "projectTitle": "Design of a Helical Compression Spring for Motorcycle Suspension",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO3: Design mechanical springs, fasteners, and energy storing elements subjected to static and fluctuating loads by applying strength, deflection, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-12",
+      "title": "Motorcycle Helical Compression Spring Suspension Illustration (Student Edition)",
+      "path": "assignments/helical-spring-design/images/EA-12_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-12",
+      "title": "Motorcycle Helical Compression Spring Suspension Illustration (Faculty Reference Solution)",
+      "path": "assignments/helical-spring-design/images/EA-12_Faculty_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete motorcycle suspension spring design challenge independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on motorcycle helical compression spring design" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Observe the Motorcycle Suspension",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Application Context",
+          "body": "Bajaj Auto Suspension Development Division has assigned you to design and analyze the rear twin-shock helical compression spring for a 150cc commuter motorcycle."
+        },
+        {
+          "type": "theory",
+          "title": "Real-World Operating Parameters",
+          "body": "The rear suspension uses twin spring-damper units to support rider payload and absorb road shocks. Each spring must carry a maximum working load of 1,250 N without exceeding allowable torsional shear limits or experiencing solid coil binding."
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives & Scope",
+          "items": [
+            "Observe motorcycle suspension construction and trace the load path.",
+            "Label suspension components on Engineering Asset EA-12.",
+            "Determine spring geometry (wire diameter d, coil diameter D, free length Lf).",
+            "Calculate Wahl factor K, maximum torsional shear stress, spring rate k, and solid height Ls.",
+            "Verify Factor of Safety (FoS) and recommend design modifications."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-12 Project Charter for Motorcycle Suspension Spring Design."
+    },
+    "component-identification": {
+      "title": "Identify the Suspension Components",
+      "image": "assignments/helical-spring-design/images/EA-12_Student_v1.0.png",
+      "figure": "Engineering Asset EA-12",
+      "description": "Student engineering asset showing motorcycle rear shock absorber and helical compression spring assembly.",
+      "options": [
+        "Helical Compression Spring",
+        "Shock Absorber / Hydraulic Damper",
+        "Upper Spring Seat",
+        "Lower Spring Seat",
+        "Swingarm Mounting Eye",
+        "Frame Mounting Eye",
+        "Central Piston Rod",
+        "Spring Preload Adjuster Collar"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 48, "y": 42, "correctAnswer": "Helical Compression Spring", "feedback": "Coiled mechanical spring storing strain energy and absorbing road shocks." },
+        { "componentNumber": 2, "x": 49, "y": 55, "correctAnswer": "Shock Absorber / Hydraulic Damper", "feedback": "Hydraulic damper controlling spring rebound oscillations." },
+        { "componentNumber": 3, "x": 48, "y": 25, "correctAnswer": "Upper Spring Seat", "feedback": "Top spring locator transmitting load to frame mounting eye." },
+        { "componentNumber": 4, "x": 48, "y": 72, "correctAnswer": "Lower Spring Seat", "feedback": "Bottom spring seat supported by preload adjustment collar." },
+        { "componentNumber": 5, "x": 49, "y": 82, "correctAnswer": "Swingarm Mounting Eye", "feedback": "Lower bushing connecting suspension unit to rear swingarm." },
+        { "componentNumber": 6, "x": 49, "y": 15, "correctAnswer": "Frame Mounting Eye", "feedback": "Upper eyelet connecting suspension unit to motorcycle frame." },
+        { "componentNumber": 7, "x": 49, "y": 35, "correctAnswer": "Central Piston Rod", "feedback": "Internal damper shaft guiding axial spring compression along spring axis." },
+        { "componentNumber": 8, "x": 49, "y": 76, "correctAnswer": "Spring Preload Adjuster Collar", "feedback": "Stepped collar adjusting initial spring compression for variable passenger load." }
+      ]
+    },
+    "load-path": {
+      "title": "Understand the Load Path",
+      "prompt": "Analyze the load path and energy transformation during rear wheel impact over a road bump.",
+      "mcq": {
+        "question": "Which statement correctly distinguishes the mechanical roles of the helical spring and the hydraulic damper?",
+        "options": [
+          { "id": "opt1", "label": "The helical spring compresses under load to store strain energy and provide restoring force; the damper dissipates kinetic energy to damp oscillations.", "value": "correct" },
+          { "id": "opt2", "label": "The damper supports the entire weight of the motorcycle while the spring prevents fluid leakage.", "value": "incorrect1" },
+          { "id": "opt3", "label": "The spring converts road bumps into hydraulic pressure while the damper acts as a rigid lock.", "value": "incorrect2" },
+          { "id": "opt4", "label": "The spring and damper operate independently with zero load interaction during riding.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "design-requirements": {
+      "title": "Establish Design Requirements",
+      "given": [
+        "Maximum Working Load per Spring (P) = 1,250 N",
+        "Maximum Suspension Deflection (delta) = 45 mm",
+        "Modulus of Rigidity for Spring Steel (G) = 78,500 N/mm²",
+        "Allowable Torsional Shear Stress (tau_allow) = 450 N/mm²",
+        "Target Spring Index (C = D/d) = 6.0"
+      ],
+      "fields": [
+        { "id": "maxLoad", "label": "Maximum Working Load (P)", "unit": "N", "placeholder": "1250", "hint": "P = 1,250 N" },
+        { "id": "maxDeflection", "label": "Maximum Deflection (delta)", "unit": "mm", "placeholder": "45", "hint": "delta = 45 mm" },
+        { "id": "shearModulus", "label": "Shear Modulus of Material (G)", "unit": "N/mm²", "placeholder": "78500", "hint": "G = 78,500 N/mm²" }
+      ]
+    },
+    "spring-geometry": {
+      "title": "Determine Spring Geometry",
+      "given": [
+        "Selected Wire Diameter (d) = 8.0 mm",
+        "Spring Index (C) = 6.0",
+        "End Style: Squared and Ground Ends (Total Coils Nt = N + 2)"
+      ],
+      "formulas": [
+        { "name": "Mean Coil Diameter (D)", "formula": "D = C \\times d = 6.0 \\times 8.0 = 48.0 \\text{ mm}" },
+        { "name": "Outer Diameter (Do)", "formula": "D_o = D + d = 48.0 + 8.0 = 56.0 \\text{ mm}" },
+        { "name": "Inner Diameter (Di)", "formula": "D_i = D - d = 48.0 - 8.0 = 40.0 \\text{ mm}" }
+      ],
+      "fields": [
+        { "id": "meanDiameter", "label": "Mean Coil Diameter (D)", "unit": "mm", "placeholder": "48", "hint": "D = 6 * 8 = 48 mm" },
+        { "id": "outerDiameter", "label": "Spring Outer Diameter (Do)", "unit": "mm", "placeholder": "56", "hint": "Do = 48 + 8 = 56 mm" },
+        { "id": "innerDiameter", "label": "Spring Inner Diameter (Di)", "unit": "mm", "placeholder": "40", "hint": "Di = 48 - 8 = 40 mm" }
+      ]
+    },
+    "spring-design-calculation": {
+      "title": "Design the Helical Compression Spring",
+      "given": [
+        "Load (P) = 1,250 N",
+        "Mean Coil Diameter (D) = 48 mm",
+        "Wire Diameter (d) = 8 mm",
+        "Spring Index (C) = 6.0",
+        "Deflection (delta) = 45 mm",
+        "G = 78,500 N/mm²"
+      ],
+      "formulas": [
+        { "name": "Wahl Stress Correction Factor (K)", "formula": "K = \\frac{4C-1}{4C-4} + \\frac{0.615}{C} = 1.2525" },
+        { "name": "Maximum Shear Stress (tau)", "formula": "\\tau = K \\times \\frac{8 P D}{\\pi d^3}" },
+        { "name": "Active Coils (N)", "formula": "N = \\frac{G d^4 \\delta}{8 P D^3}" }
+      ],
+      "fields": [
+        { "id": "wahlFactor", "label": "Wahl Correction Factor (K)", "unit": "ratio", "placeholder": "1.25", "hint": "K = (4*6-1)/(4*6-4) + 0.615/6 = 1.2525" },
+        { "id": "shearStress", "label": "Max Torsional Shear Stress (tau)", "unit": "N/mm²", "placeholder": "373.8", "hint": "tau = 1.2525 * (8 * 1250 * 48) / (pi * 8^3) = 373.76 N/mm²" },
+        { "id": "activeCoils", "label": "Number of Active Coils (N)", "unit": "coils", "placeholder": "13", "hint": "N = (78500 * 8^4 * 45) / (8 * 1250 * 48^3) = 13 coils" }
+      ]
+    },
+    "strength-deflection-check": {
+      "title": "Verify Strength and Deflection",
+      "given": [
+        "Calculated Max Shear Stress (tau) = 373.76 N/mm²",
+        "Allowable Shear Stress (tau_allow) = 450.0 N/mm²",
+        "Working Load (P) = 1,250 N",
+        "Maximum Deflection (delta) = 45.0 mm"
+      ],
+      "formulas": [
+        { "name": "Factor of Safety (FoS)", "formula": "FoS = \\frac{\\tau_{allowable}}{\\tau_{actual}}" },
+        { "name": "Spring Rate / Stiffness (k)", "formula": "k = \\frac{P}{\\delta}" }
+      ],
+      "fields": [
+        { "id": "actualFos", "label": "Calculated Factor of Safety (FoS)", "unit": "FoS", "placeholder": "1.20", "hint": "FoS = 450.0 / 373.76 = 1.20" },
+        { "id": "springStiffness", "label": "Spring Stiffness / Rate (k)", "unit": "N/mm", "placeholder": "27.78", "hint": "k = 1250 / 45 = 27.78 N/mm" }
+      ]
+    },
+    "application-evaluation": {
+      "title": "Evaluate the Motorcycle Application",
+      "stationCode": "DRS-SPRING",
+      "image": "assignments/helical-spring-design/images/EA-12_Student_v1.0.png",
+      "figure": "Engineering Asset EA-12",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Spring Wire Diameter & Torsional Shear Strength",
+          "label": "Torsional Shear Evaluation"
+        },
+        {
+          "id": "C02",
+          "name": "Active Coil Count & Free Length Clearance",
+          "label": "Deflection & Solid Binding Evaluation"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-safe",
+          "title": "ACCEPT SPRING DESIGN AS SUITABLE",
+          "suitability": "Passes Strength & Deflection Criteria",
+          "description": "Calculated torsional shear stress (373.76 N/mm²) is below allowable material limits (450 N/mm²), providing FoS = 1.20 under maximum bump load."
+        },
+        {
+          "id": "opt-unsafe",
+          "title": "REJECT DESIGN / INCREASE WIRE DIAMETER TO 8.5 MM",
+          "suitability": "Required for Pillion Passenger Overload",
+          "description": "For harsh road impacts with two heavy riders, FoS = 1.20 provides narrow fatigue margin. Increasing wire diameter d to 8.5 mm reduces shear stress to 310 N/mm² and boosts FoS to 1.45."
+        }
+      ]
+    },
+    "engineering-recommendation": {
+      "title": "Engineering Recommendation",
+      "stationCode": "DRS-SPRING-REC",
+      "image": "assignments/helical-spring-design/images/EA-12_Student_v1.0.png",
+      "figure": "Engineering Asset EA-12",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Spring Material & Heat Treatment",
+          "label": "Material Grade Recommendation"
+        },
+        {
+          "id": "C02",
+          "name": "Coil End Finishing & Shot Peening",
+          "label": "Surface & Fatigue Life Recommendation"
+        }
+      ],
+      "options": [
+        {
+          "id": "rec-shotpeen",
+          "title": "SPECIFY SHOT PEENING & SQUARED-GROUND ENDS",
+          "suitability": "Enhances Fatigue Strength",
+          "description": "Specify shot peening to induce compressive surface residual stress, increasing fatigue strength under cyclic suspension compression, with squared and ground coil ends for flat seating."
+        },
+        {
+          "id": "rec-material",
+          "title": "UPGRADE TO CHROME VANADIUM STEEL (50CrV4)",
+          "suitability": "High Performance Upgrade",
+          "description": "Upgrade spring material to Chrome Vanadium steel to increase allowable shear stress to 550 N/mm² for heavy-duty or off-road motorcycle variants."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Engineering Design Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Executive Summary & Design Suitability",
+          "placeholder": "State whether the helical spring design satisfies motorcycle rear suspension requirements, citing calculated shear stress and FoS."
+        },
+        {
+          "id": "r2",
+          "label": "2. Spring Geometry & Stiffness Summary",
+          "placeholder": "Summarize final spring parameters: Wire diameter d = 8 mm, Mean coil diameter D = 48 mm, Active coils N = 13, Stiffness k = 27.78 N/mm."
+        },
+        {
+          "id": "r3",
+          "label": "3. Manufacturing & Surface Finishing Recommendations",
+          "placeholder": "Provide recommendations regarding shot peening, powder coating for corrosion protection, and end coil grinding specifications."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Motorcycle Helical Compression Spring Design Challenge (EA-12) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}
