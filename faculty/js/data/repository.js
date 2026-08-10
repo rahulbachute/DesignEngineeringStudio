@@ -15,9 +15,21 @@
         if (!this.hasListPayload(response, 'submissions')) {
           throw new Error('The configured Apps Script endpoint did not return a submissions list. Deploy a faculty read API or update DESConfig.apiBaseUrl.');
         }
-        return this.extractList(response, 'submissions')
+        let submissions = this.extractList(response, 'submissions')
           .map((row) => this.normalizeSubmission(row))
           .filter((submission) => !this.isBlankSubmission(submission));
+
+        const loggedInFaculty = localStorage.getItem("loggedInFaculty");
+        if (loggedInFaculty === "saidkhandu@gmail.com") {
+          submissions = submissions.filter((submission) => {
+            const row = submission.rawRow || {};
+            const payload = submission.rawPayload || {};
+            const student = payload.studentInformation || {};
+            const college = row['College Name'] || row.collegeName || student.collegeName || '';
+            return String(college).toLowerCase().includes('jaihind');
+          });
+        }
+        return submissions;
       });
     }
 
