@@ -47,6 +47,7 @@ window.MEILP.colleges = [
   "Government College of Engineering & Research, Avasari Khurd",
   "Indira College of Engineering & Management, Pune",
   "ISBM College of Engineering, Nande",
+  "Jaihind College of Engineering",
   "JSPM Narhe Technical Campus, Narhe",
   "JSPM's Bhivarabai Sawant Institute of Technology & Research, Wagholi",
   "JSPM's Jaywantrao Sawant College of Engineering, Hadapsar",
