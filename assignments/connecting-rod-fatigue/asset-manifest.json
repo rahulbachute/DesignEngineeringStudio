@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/connecting-rod-fatigue/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-17",
+      "title": "Fatigue Analysis of a Connecting Rod Illustration",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/connecting-rod-fatigue/images/EA-17_Connecting_Rod_Fatigue_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-17",
+      "title": "Fatigue Analysis of a Connecting Rod Reference Diagram",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/connecting-rod-fatigue/images/EA-17_Connecting_Rod_Fatigue_v1.0.png",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "assignment": {
+    "id": "EA-17",
+    "slug": "connecting-rod-fatigue",
+    "title": "Fatigue Analysis of a Connecting Rod"
+  },
+  "dashboard": {
+    "projectCode": "EA-17",
+    "projectTitle": "Fatigue Analysis of a Connecting Rod",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit IV",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO3: Design shafts, keys, couplings, connecting rods, springs, and energy transmission components subjected to static, fluctuating, and fatigue loads by applying strength, rigidity, and safety criteria.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-17",
+      "title": "Fatigue Analysis of a Connecting Rod Illustration",
+      "path": "assignments/connecting-rod-fatigue/images/EA-17_Connecting_Rod_Fatigue_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-17",
+      "title": "Fatigue Analysis of a Connecting Rod Reference Diagram",
+      "path": "assignments/connecting-rod-fatigue/images/EA-17_Connecting_Rod_Fatigue_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "email", "label": "Email Address", "type": "email", "required": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ],
+    "group": [
+      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
+      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
+      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      { "id": "individual", "label": "Individual Mode", "description": "Complete internal combustion engine connecting rod fatigue design independently" },
+      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on reciprocating load path analysis, stress concentrations, and Soderberg fatigue design" }
+    ],
+    "fields": [
+      { "name": "fullName", "label": "Full Name", "required": true },
+      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
+      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
+      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
+      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
+      { "name": "division", "label": "Division / Section", "required": true },
+      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
+      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+    ]
+  },
+  "widgets": [
+    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
+    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
+    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
+    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Observe the Engine Connecting Rod Mechanism",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Brief & Engineering Scope",
+          "body": "Tata Motors Powertrain Division & Internal Combustion Engine R&D Center requires you to analyze the fatigue behavior and structural safety of a high-speed internal combustion engine connecting rod subjected to fluctuating gas pressure and inertia forces."
+        },
+        {
+          "type": "theory",
+          "title": "Reciprocating Engine Kinematics & Load Cycles",
+          "body": "The connecting rod is the crucial link converting reciprocating piston motion into rotational crankshaft motion:\nPiston → Piston Pin (Gudgeon Pin) → Connecting Rod Small End → Shank → Big End → Crank Pin → Crank Web → Crankshaft.\n\nDuring engine operation, the connecting rod experiences severe cyclic fluctuating loading:\n1. Gas Force (Fg): Tensile or compressive force generated by high-pressure combustion gases acting on the piston crown during power stroke.\n2. Inertia Force (Fi): Tensile force generated by reciprocating acceleration of piston and small end assembly at high crankshaft speeds.\n\nBecause stresses alternate repeatedly between maximum compression and maximum tension millions of times per minute, static yield criteria are insufficient; the component must be verified using fatigue endurance criteria."
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives",
+          "items": [
+            "Identify connecting rod components and transition fillet regions on Engineering Asset EA-17.",
+            "Trace force transmission flow from piston crown to crankshaft pin.",
+            "Differentiate gas pressure forces and reciprocating inertia forces during 4-stroke cycles.",
+            "Identify critical stress concentration zones at small-end and big-end transition fillets.",
+            "Determine modified endurance limit (Se) using Marin endurance factors.",
+            "Apply modified Soderberg fatigue criterion to calculate Factor of Safety (FoS) and verify I-section geometry."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-17 Project Charter for Connecting Rod Fatigue Analysis."
+    },
+    "component-identification": {
+      "title": "Identify Connecting Rod & Engine Components",
+      "image": "assignments/connecting-rod-fatigue/images/EA-17_Connecting_Rod_Fatigue_v1.0.png",
+      "figure": "Engineering Asset EA-17",
+      "description": "Student engineering asset illustrating reciprocating engine connecting rod assembly, piston pin, shank, big end, and crankshaft.",
+      "options": [
+        "Piston Crown Assembly",
+        "Piston Pin / Gudgeon Pin",
+        "Connecting-Rod Small-End Bush",
+        "Connecting-Rod Shank (I-Cross Section)",
+        "Connecting-Rod Big-End Cap & Bearing",
+        "Crankshaft Main Journal",
+        "Crankshaft Drive Gear",
+        "Crankshaft Front Output Shaft",
+        "Crank Web Counterweight",
+        "Reciprocating Engine Cyclic Loading Mechanism"
+      ],
+      "labels": [
+        { "componentNumber": 1, "x": 58.5, "y": 29.5, "correctAnswer": "Piston Crown Assembly", "feedback": "Piston crown assembly transferring high-pressure gas combustion forces." },
+        { "componentNumber": 2, "x": 58.5, "y": 36.5, "correctAnswer": "Piston Pin / Gudgeon Pin", "feedback": "Gudgeon pin forming oscillating joint between piston and connecting-rod small end." },
+        { "componentNumber": 3, "x": 58.5, "y": 42.5, "correctAnswer": "Connecting-Rod Small-End Bush", "feedback": "Small-end eye fitted with bronze bushing surrounding the piston pin." },
+        { "componentNumber": 4, "x": 59.5, "y": 49.5, "correctAnswer": "Connecting-Rod Shank (I-Cross Section)", "feedback": "Main column shank forged into I-section for optimal bending stiffness and low mass." },
+        { "componentNumber": 5, "x": 63.5, "y": 59.5, "correctAnswer": "Connecting-Rod Big-End Cap & Bearing", "feedback": "Split big-end housing holding thin-walled bearing shell around the crank pin." },
+        { "componentNumber": 6, "x": 71.0, "y": 66.5, "correctAnswer": "Crankshaft Main Journal", "feedback": "Cylindrical crankshaft main journal supported in engine block bearings." },
+        { "componentNumber": 7, "x": 47.5, "y": 72.5, "correctAnswer": "Crankshaft Drive Gear", "feedback": "Helical drive gear wheel mounted on crankshaft transmitting timing torque." },
+        { "componentNumber": 8, "x": 42.0, "y": 75.5, "correctAnswer": "Crankshaft Front Output Shaft", "feedback": "Front output stub shaft extending from crankshaft assembly." },
+        { "componentNumber": 9, "x": 56.0, "y": 73.5, "correctAnswer": "Crank Web Counterweight", "feedback": "Precision crank-web counterweight mass balancing reciprocating forces." },
+        { "componentNumber": 10, "x": 62.5, "y": 92.8, "correctAnswer": "Reciprocating Engine Cyclic Loading Mechanism", "feedback": "Reciprocating engine cyclic loading mechanism linking piston and crankshaft." }
+      ]
+    },
+    "load-transmission-path": {
+      "title": "Understand Engine Load Transmission & Force Flow",
+      "prompt": "Analyze how peak combustion pressure and inertia forces flow through the connecting rod mechanism.",
+      "mcq": {
+        "question": "Which sequence correctly states the direct mechanical load transmission path from combustion gas pressure to engine output torque?",
+        "options": [
+          { "id": "opt1", "label": "Piston Crown → Piston Pin (Gudgeon Pin) → Small End Eye → Connecting Rod Shank → Big End Bearing → Crank Pin → Crank Web → Crankshaft", "value": "correct" },
+          { "id": "opt2", "label": "Crankshaft → Crank Web → Big End → Piston Crown → Small End Eye → Piston Pin", "value": "incorrect1" },
+          { "id": "opt3", "label": "Piston Pin → Crank Web → Connecting Rod Shank → Piston Crown → Big End Bearing → Crank Pin", "value": "incorrect2" },
+          { "id": "opt4", "label": "Crank Pin → Piston Pin → Small End Eye → Crankshaft → Crank Web → Piston Crown", "value": "incorrect3" }
+        ]
+      }
+    },
+    "cyclic-loading-analysis": {
+      "title": "Analyze Gas Force, Inertia Force & Fluctuating Cyclic Loading",
+      "prompt": "During engine operation at N = 3000 rpm, peak combustion gas force on piston is Fg = 25 kN (compressive), while reciprocating inertia force at Top Dead Center (TDC) is Fi = 7 kN (tensile).",
+      "mcq": {
+        "question": "What are the net maximum compressive force (Fc) during expansion stroke and net maximum tensile force (Ft) during exhaust/suction stroke acting on the connecting rod shank?",
+        "options": [
+          { "id": "opt1", "label": "Max Compressive Force Fc = 18 kN (25 kN gas - 7 kN inertia), Max Tensile Force Ft = 7 kN (inertia force at TDC suction stroke)", "value": "correct" },
+          { "id": "opt2", "label": "Max Compressive Force Fc = 32 kN, Max Tensile Force Ft = 25 kN", "value": "incorrect1" },
+          { "id": "opt3", "label": "Max Compressive Force Fc = 25 kN, Max Tensile Force Ft = 0 kN", "value": "incorrect2" },
+          { "id": "opt4", "label": "Max Compressive Force Fc = 7 kN, Max Tensile Force Ft = 18 kN", "value": "incorrect3" }
+        ]
+      }
+    },
+    "fatigue-critical-regions": {
+      "title": "Identify Fatigue Stress Concentrations & Critical Transition Fillets",
+      "prompt": "Identify the critical cross-sections of the connecting rod where fatigue crack initiation is most prevalent.",
+      "mcq": {
+        "question": "Where are the primary stress concentration zones (Kt) located on a forged steel connecting rod under cyclic axial loading?",
+        "options": [
+          { "id": "opt1", "label": "At the small-end eye to shank transition fillet and the shank to big-end cap flare fillet radius.", "value": "correct" },
+          { "id": "opt2", "label": "At the exact geometric midpoint of the smooth uniform I-section shank.", "value": "incorrect1" },
+          { "id": "opt3", "label": "Inside the soft bronze bushing bore of the small end.", "value": "incorrect2" },
+          { "id": "opt4", "label": "On the flat outer face of the engine flywheel.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "fatigue-strength-factors": {
+      "title": "Determine Endurance Limit & Fatigue Strength Factors",
+      "prompt": "Evaluate endurance limit modification factors (ka, kb, kc, kd) for a drop-forged medium carbon steel connecting rod (Sut = 600 MPa, Syt = 380 MPa).",
+      "mcq": {
+        "question": "How is the modified endurance limit (S_e) calculated for a forged connecting rod subjected to fluctuating axial stresses?",
+        "options": [
+          { "id": "opt1", "label": "S_e = k_a · k_b · k_c · k_d · (0.5 · S_{ut}), applying forged surface factor (k_a), size factor (k_b), axial load reliability factor (k_c), and temperature factor (k_d).", "value": "correct" },
+          { "id": "opt2", "label": "S_e = S_{ut} · 1.5 without applying any surface or size corrections.", "value": "incorrect1" },
+          { "id": "opt3", "label": "S_e = S_{yt} / 0.577 assuming pure static torsion.", "value": "incorrect2" },
+          { "id": "opt4", "label": "S_e = k_a · S_{yt} · 5.0.", "value": "incorrect3" }
+        ]
+      }
+    },
+    "soderberg-fatigue-criterion": {
+      "title": "Apply Soderberg Fatigue Criterion for Connecting Rod Sizing",
+      "prompt": "Apply the modified Soderberg fatigue criterion for fluctuating axial stress cycles where mean stress is sigma_m and alternating stress is sigma_a.",
+      "mcq": {
+        "question": "Which equation represents the Soderberg design relationship for a connecting rod under fluctuating axial tensile-compressive fatigue loading?",
+        "options": [
+          { "id": "opt1", "label": "(σ_m / S_yt) + (σ_a / S_e) = 1 / FoS", "value": "correct" },
+          { "id": "opt2", "label": "(σ_m + σ_a) · S_ut = FoS", "value": "incorrect1" },
+          { "id": "opt3", "label": "σ_m / σ_a = S_e / S_yt", "value": "incorrect2" },
+          { "id": "opt4", "label": "(σ_m / S_ut)² + (σ_a / S_e)² = 1 / FoS", "value": "incorrect3" }
+        ]
+      }
+    },
+    "connecting-rod-cross-section": {
+      "title": "Connecting Rod I-Section Geometry & Buckling / Fatigue Verification",
+      "stationCode": "DRS-CONN-ROD",
+      "image": "assignments/connecting-rod-fatigue/images/EA-17_Connecting_Rod_Fatigue_v1.0.png",
+      "figure": "Engineering Asset EA-17",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Forged Alloy Steel I-Section Shank (Ixx ≈ 4 Iyy)",
+          "label": "I-Section Construction"
+        },
+        {
+          "id": "C02",
+          "name": "Solid Rectangular Bar Shank (b x h)",
+          "label": "Solid Rectangular Construction"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-isection",
+          "title": "SELECT FORGED STEEL I-SECTION (EQUAL BUCKLING STRENGTH IN BOTH PLANES & HIGH FATIGUE ENDURANCE)",
+          "suitability": "Optimal Engineering Selection",
+          "description": "I-section places material farthest from neutral axes, achieving high second moment of area (Ixx ≈ 4 Iyy) which balances Rankine-Gordon buckling resistance in the plane of rotation (pinned ends) and perpendicular plane (fixed ends) while minimizing reciprocating mass."
+        },
+        {
+          "id": "opt-solid",
+          "title": "SELECT SOLID RECTANGULAR BAR SECTION",
+          "suitability": "Excessive Reciprocating Mass & Unequal Buckling Strength",
+          "description": "Solid rectangular bar has poor material utilization, adds unnecessary reciprocating inertia force, and suffers from unequal buckling safety factors across perpendicular planes."
+        }
+      ]
+    },
+    "fatigue-failure-diagnosis": {
+      "title": "Practical Fatigue Failure & Overload Analysis",
+      "stationCode": "DRS-FATIGUE-DIAG",
+      "image": "assignments/connecting-rod-fatigue/images/EA-17_Connecting_Rod_Fatigue_v1.0.png",
+      "figure": "Engineering Asset EA-17",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Transverse Fatigue Crack at Small-End Fillet Radius",
+          "label": "High-Cycle Fatigue Failure Mode"
+        },
+        {
+          "id": "C02",
+          "name": "S-Curve Plastic Bending Deflection Along Shank",
+          "label": "Hydraulic Lock Overload Failure Mode"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-analysis-correct",
+          "title": "HIGH-CYCLE AXIAL FATIGUE (TRANSVERSE BEACH-MARK CRACK) & HYDRAULIC LOCK OVERLOAD BENDING",
+          "suitability": "Correct Metallurgical & Mechanical Failure Diagnosis",
+          "description": "Transverse crack with beach marks initiating at transition fillet indicates high-cycle axial fatigue from cyclic inertia/gas loading; severe S-curve shank bending is caused by incompressibility during liquid water/fuel intake (hydraulic lock)."
+        },
+        {
+          "id": "opt-analysis-incorrect",
+          "title": "PURE TORSIONAL SHEAR FRACTURE & THERMAL MELT-DOWN",
+          "suitability": "Incorrect Diagnosis",
+          "description": "Pure torsional shear occurs in rotating shafts, whereas connecting rod shanks experience primary axial tension-compression and in-plane column bending."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Connecting Rod Fatigue Analysis & Design Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Reciprocating Mechanism Force Transmission & Critical Fillet Identification",
+          "placeholder": "Summarize the force transmission path from piston crown to crankshaft and identify stress concentration zones at small-end and big-end transition fillets."
+        },
+        {
+          "id": "r2",
+          "label": "2. Gas vs Inertia Cyclic Loading & Soderberg Fatigue Analysis",
+          "placeholder": "Present calculations for net compressive gas force (Fc), peak inertia tensile force (Ft), mean stress (sig_m), alternating stress (sig_a), and Factor of Safety using Soderberg criteria."
+        },
+        {
+          "id": "r3",
+          "label": "3. Shank Cross-Section Selection & Failure Diagnostics",
+          "placeholder": "Justify selecting a forged I-section over a solid rectangular bar (Ixx ≈ 4 Iyy) and explain transverse fatigue beach-mark cracking vs hydraulic lock bending failure."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Connecting Rod Fatigue Analysis Challenge (EA-17) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

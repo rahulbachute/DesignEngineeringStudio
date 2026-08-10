@@ -175,6 +175,17 @@
       "icon": "bi-shield-check",
       "configPath": "assignments/shaft-fatigue-design/config.json",
       "launchPath": "assignment-workbench.html?assignment=shaft-fatigue-design"
+    },
+    {
+      "id": "EA-17",
+      "title": "Fatigue Analysis of a Connecting Rod",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyze high-speed internal combustion engine reciprocating kinematics, trace gas and inertia force transmission, identify transition fillet stress concentrations, apply modified Soderberg fatigue criteria, verify I-section shank geometry, and diagnose high-cycle fatigue cracking.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-cpu",
+      "configPath": "assignments/connecting-rod-fatigue/config.json",
+      "launchPath": "assignment-workbench.html?assignment=connecting-rod-fatigue"
     }
   ]
 }

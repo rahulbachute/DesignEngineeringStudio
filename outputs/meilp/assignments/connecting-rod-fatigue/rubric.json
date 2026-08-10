@@ -1,0 +1,108 @@
+{
+  "assignmentId": "EA-17",
+  "assignmentTitle": "Fatigue Analysis of a Connecting Rod",
+  "totalMarks": 12.0,
+  "criteria": [
+    {
+      "id": "project-charter",
+      "title": "Observe the Engine Connecting Rod Mechanism",
+      "marks": 0.5,
+      "bloomLevel": "L1 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO8", "PO11"],
+      "pso": ["PSO1"],
+      "description": "Understanding client brief, internal combustion engine reciprocating mechanism, connecting rod function, and fatigue design scope."
+    },
+    {
+      "id": "component-identification",
+      "activityCode": "EA17-A02",
+      "title": "Identify Connecting Rod & Engine Components",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate labeling of piston, piston pin, small end, small-end transition fillet, shank, big-end transition fillet, big end cap, crank pin, crank web, and crankshaft on EA-17."
+    },
+    {
+      "id": "load-transmission-path",
+      "title": "Understand Engine Load Transmission & Force Flow",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Tracing force flow from gas pressure on piston through wrist pin, connecting rod shank, crank pin, web, and crankshaft."
+    },
+    {
+      "id": "cyclic-loading-analysis",
+      "title": "Analyze Gas Force, Inertia Force & Fluctuating Cyclic Loading",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Differentiating peak gas force, reciprocating mass inertia force, maximum compressive force (expansion stroke), and maximum tensile force (exhaust/suction stroke)."
+    },
+    {
+      "id": "fatigue-critical-regions",
+      "title": "Identify Fatigue Stress Concentrations & Critical Transition Fillets",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Locating stress concentration zones (Kt) at small-end to shank transition fillet and shank-to-big-end cap transition shoulder."
+    },
+    {
+      "id": "fatigue-strength-factors",
+      "title": "Determine Endurance Limit & Fatigue Strength Factors",
+      "marks": 1.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Determining surface factor (ka), size factor (kb), reliability factor (kc), temperature factor (kd), and modified endurance limit (Se) for forged steel connecting rod."
+    },
+    {
+      "id": "soderberg-fatigue-criterion",
+      "title": "Apply Soderberg Fatigue Criterion for Connecting Rod Sizing",
+      "marks": 1.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Applying modified Soderberg fatigue criteria for fluctuating axial tension-compression stress cycles to calculate required section area and FoS."
+    },
+    {
+      "id": "connecting-rod-cross-section",
+      "title": "Connecting Rod I-Section Geometry & Buckling / Fatigue Verification",
+      "marks": 1.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Evaluating forged steel I-section geometry (Ixx = 4 Iyy) for optimum strength-to-weight ratio and equal buckling resistance in oscillation vs swing planes."
+    },
+    {
+      "id": "fatigue-failure-diagnosis",
+      "title": "Practical Fatigue Failure & Overload Analysis",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Diagnosing high-cycle axial/bending fatigue cracking at shank transition fillets, hydraulic lock bending overload, and cap bolt fretting."
+    },
+    {
+      "id": "final-report",
+      "title": "Connecting Rod Fatigue Analysis & Design Report",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO8", "PO9", "PO11"],
+      "pso": ["PSO2"],
+      "description": "Synthesizing comprehensive connecting rod fatigue design report covering gas/inertia force analysis, Soderberg criteria, and material recommendations."
+    }
+  ]
+}

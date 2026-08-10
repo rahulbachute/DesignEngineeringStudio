@@ -112,7 +112,8 @@ class OutcomeEngine {
         'EA-13 Leaf Spring Design Verification',
         'EA-14 Spring Selection Comparative Study',
         'EA-15 Automobile Suspension System Analysis',
-        'EA-16 Automotive Propeller Shaft Fatigue Design'
+        'EA-16 Automotive Propeller Shaft Fatigue Design',
+        'EA-17 Fatigue Analysis of a Connecting Rod'
       ],
       batch: ['Batch A', 'Batch B', 'Batch C'],
       division: ['Division A', 'Division B'],

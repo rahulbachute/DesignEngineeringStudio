@@ -218,7 +218,8 @@ class SubmissionsBrowser {
       'Construction and Design Verification of a Leaf Spring',
       'Comparative Study and Selection of Springs for Engineering Applications',
       'Analysis of an Automobile Suspension System',
-      'Fatigue Design of an Automotive Propeller Shaft'
+      'Fatigue Design of an Automotive Propeller Shaft',
+      'Fatigue Analysis of a Connecting Rod'
     ];
     const loadedChallenges = this.data.map((item) => item.challenge).filter(Boolean);
     const combined = Array.from(new Set([...knownChallenges, ...loadedChallenges])).sort();
@@ -803,6 +804,21 @@ class SubmissionsBrowser {
       ];
     }
 
+    if (name.includes('connecting') || name.includes('rod') || name.includes('ea-17')) {
+      return [
+        { id: 'ea17-act-1', name: 'Task 1: Observe Engine Connecting Rod Mechanism', response: 'IC Engine reciprocating mechanism, gas force Fg and inertia force Fi identified', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Identification' },
+        { id: 'ea17-act-2', name: 'Task 2: Component & Transition Fillet Identification', response: 'Piston crown, piston pin, small-end bush, shank I-section, big-end cap, main journal, drive gear, output shaft, crank web, cyclic loading mechanism labeled', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Identification' },
+        { id: 'ea17-act-3', name: 'Task 3: Force Transmission & Load Path Flow', response: 'Force flow: Piston -> Wrist Pin -> Small End -> Shank -> Big End -> Crankpin -> Crankshaft', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Analysis' },
+        { id: 'ea17-act-4', name: 'Task 4: Gas Force vs Inertia Force Cyclic Load Analysis', response: 'Max Compression Fc = 18 kN (power stroke), Max Tensile Ft = 7 kN (suction stroke at TDC)', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ea17-act-5', name: 'Task 5: Stress Concentration at Fillet Transition Radii', response: 'Stress concentration Kt identified at small-end and big-end shank transition radii', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Analysis' },
+        { id: 'ea17-act-6', name: 'Task 6: Endurance Limit Modification Factors', response: 'ka = 0.65, kb = 0.85, kc = 0.85, Se = ka*kb*kc*(0.5*Sut) = 141.1 MPa', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Calculation' },
+        { id: 'ea17-act-7', name: 'Task 7: Modified Soderberg Fatigue Design Criterion', response: '(sig_m / Syt) + (sig_a / Se) = 1 / FoS applied for cyclic tension-compression', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Calculation' },
+        { id: 'ea17-act-8', name: 'Task 8: Forged I-Section Geometry & Buckling Verification', response: 'Selected Forged I-section (Ixx = 4 Iyy) for equal buckling safety in both planes', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Design Decision' },
+        { id: 'ea17-act-9', name: 'Task 9: Fatigue Failure & Overload Analysis', response: 'Transverse fatigue beach marks at transition radius vs hydraulic lock bending overload diagnosed', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Design Decision' },
+        { id: 'ea17-act-10', name: 'Task 10: Connecting Rod Fatigue Design Summary', response: 'Comprehensive technical report on force flow, Soderberg FoS, and I-section geometry', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Design Decision' }
+      ];
+    }
+
     return [
       { id: 'gen-act-1', name: 'Task 1: Given Data & System Identification', response: 'System parameters, loads, and boundary conditions identified', maxMarks: 2, systemSuggestedMarks: 2, category: 'Identification' },
       { id: 'gen-act-2', name: 'Task 2: Engineering Calculations & Stress Analysis', response: 'Calculations completed according to engineering formulas', maxMarks: 6, systemSuggestedMarks: 6, category: 'Calculation' },
@@ -812,6 +828,7 @@ class SubmissionsBrowser {
 
   getExpectedActivityCount(challengeName) {
     const name = String(challengeName || '').toLowerCase();
+    if (name.includes('connecting') || name.includes('rod') || name.includes('ea-17')) return 10;
     if (name.includes('borewell') || name.includes('ec-04')) return 13;
     if (name.includes('elevator') || name.includes('ec-01')) return 8;
     if (name.includes('failure') || name.includes('ec-05')) return 8;
