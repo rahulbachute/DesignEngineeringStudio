@@ -12,6 +12,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="css/theme.css" rel="stylesheet">
   <link href="components/components.css" rel="stylesheet">
+  <link href="components/guided-workflow/guided-workflow.css" rel="stylesheet">
   <link href="css/workbench.css" rel="stylesheet">
 </head>
 <body class="workbench-body">
@@ -31,6 +32,9 @@
           <button class="btn btn-outline-primary mobile-sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileTaskNavigator" aria-controls="mobileTaskNavigator">
             <i class="bi bi-list-task" aria-hidden="true"></i>
             Tasks
+          </button>
+          <button class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1 rounded-pill px-3 shadow-sm" type="button" data-workbench-report-btn title="Generate / View Submission Report">
+            <i class="bi bi-file-earmark-text"></i> Report
           </button>
           <span class="workbench-pill" data-attempt-mode-label><i class="bi bi-person" aria-hidden="true"></i> Mode Pending</span>
           <span class="workbench-pill workbench-progress-pill" data-header-progress><i class="bi bi-activity" aria-hidden="true"></i> 0%</span>
@@ -52,6 +56,12 @@
         <div class="workbench-section-header">
           <h2>Task Navigator</h2>
           <i class="bi bi-diagram-3" aria-hidden="true"></i>
+        </div>
+        <div class="px-3 pb-3 border-bottom mb-3">
+          <a href="docs/Student_User_Manual.html" target="_blank" class="btn btn-sm btn-primary w-100 text-start d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-book me-2"></i> Student Manual</span>
+            <i class="bi bi-box-arrow-up-right small"></i>
+          </a>
         </div>
         <ul class="task-list" data-task-list></ul>
       </aside>
@@ -78,8 +88,6 @@
           <i class="bi bi-info-square" aria-hidden="true"></i>
         </div>
         <div class="workbench-widget-list" data-widget-list></div>
-      </aside>
-    </div>
   <footer class="site-footer bg-dark text-white py-3 border-top border-secondary-subtle">
     <div class="container-fluid px-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2" style="font-size: 0.85rem;">
       <div>
@@ -98,6 +106,12 @@
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+      <div class="pb-3 border-bottom mb-3">
+        <a href="docs/Student_User_Manual.html" target="_blank" class="btn btn-sm btn-primary w-100 text-start d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-book me-2"></i> Student Manual</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
       <ul class="task-list" data-mobile-task-list></ul>
     </div>
   </div>

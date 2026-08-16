@@ -165,6 +165,7 @@ class ChallengeRunner {
     const themeToggle = document.querySelector("[data-workbench-theme-toggle]");
     const helpButton = document.querySelector("[data-workbench-help]");
     const resetButton = document.querySelector("[data-workbench-reset]");
+    const reportButton = document.querySelector("[data-workbench-report-btn]");
     if (themeToggle) {
       themeToggle.addEventListener("click", () => this.toggleTheme());
     }
@@ -173,6 +174,9 @@ class ChallengeRunner {
     }
     if (resetButton) {
       resetButton.addEventListener("click", () => this.resetAssignment());
+    }
+    if (reportButton) {
+      reportButton.addEventListener("click", () => this.openStudentReportModal());
     }
     this.unsubscribe.push(this.services.eventBus.listen("navigate-next", () => this.next()));
     this.unsubscribe.push(this.services.eventBus.listen("navigate-previous", () => this.previous()));
@@ -728,28 +732,345 @@ class ChallengeRunner {
     const validation = this.submissionEngine.validateSubmissionPayload(payload);
     const status = this.submissionEngine.getStatus();
     const queueCount = this.submissionEngine.getQueue().length;
+    const isSubmitted = status.submitted || status.code === "SUBMITTED";
+
     host.innerHTML = `
+      ${isSubmitted ? `
+        <div class="alert alert-success d-flex flex-column flex-md-row align-items-md-center justify-content-between p-3 rounded-4 mb-4 shadow-sm border border-success-subtle">
+          <div class="mb-3 mb-md-0">
+            <h4 class="alert-heading h6 fw-bold mb-1 text-success"><i class="bi bi-check-circle-fill me-2"></i>Submission Recorded &amp; Verified</h4>
+            <p class="mb-0 small text-success-emphasis">Submission ID: <code class="fw-bold bg-white px-2 py-1 rounded border">${this.escape(payload.submission.submissionId)}</code></p>
+          </div>
+          <button class="btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm" type="button" data-generate-student-report>
+            <i class="bi bi-file-earmark-pdf-fill me-1"></i> View &amp; Print Report
+          </button>
+        </div>
+      ` : ""}
+
       <section class="workbench-card card-result">
-        <h3>Project Summary</h3>
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h3 class="mb-0">Project Summary</h3>
+          <button class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold" type="button" data-generate-student-report>
+            <i class="bi bi-file-earmark-text me-1"></i> Report Preview
+          </button>
+        </div>
         <p>${this.escape(this.content.activities.submit.body)}</p>
         <p><strong>Completion Status:</strong> ${this.completed.size} of ${this.workflow.steps.length - 1} activities completed.</p>
         <p><strong>Submission Time:</strong> ${new Date().toLocaleString()}</p>
         <p><strong>Google Sheets:</strong> ${this.googleSheets.isConfigured() ? "Configured" : "Endpoint not configured"}</p>
         <p><strong>Submission Status:</strong> <span data-submission-status>${this.escape(status.message || (status.submitted ? "Submitted" : "Ready for validation"))}</span></p>
       </section>
+
       ${validation.valid ? "" : `<section class="workbench-card card-warning"><h3>Submission Validation</h3><ul>${validation.errors.map((error) => `<li>${this.escape(error)}</li>`).join("")}</ul><div class="mt-3"><button class="btn btn-outline-warning btn-sm fw-bold" type="button" data-edit-student-info-btn><i class="bi bi-person-gear me-1" aria-hidden="true"></i> Edit Student / Group Details</button></div></section>`}
+
       <section class="workbench-card card-student-response">
         <h3>Submission Actions</h3>
-        <p data-submission-message>${validation.valid ? "Review and submit the completed challenge package." : "Resolve the validation messages above before final submission."}</p>
+        <p data-submission-message>${validation.valid ? "Review and submit the completed challenge package, or generate your official submission report." : "Resolve the validation messages above before final submission."}</p>
         <div class="component-actions">
           <button class="btn btn-primary" type="button" data-submit-challenge ${validation.valid ? "" : "disabled"}><i class="bi bi-send-check" aria-hidden="true"></i> Submit to Google Sheets</button>
+          <button class="btn btn-success" type="button" data-generate-student-report><i class="bi bi-file-earmark-text-fill me-1"></i> Generate &amp; Print Report</button>
           <button class="btn btn-outline-primary" type="button" data-retry-submissions ${queueCount ? "" : "disabled"}><i class="bi bi-arrow-clockwise" aria-hidden="true"></i> Retry Queue (${queueCount})</button>
           <button class="btn btn-outline-secondary" type="button" data-edit-student-info-btn><i class="bi bi-pencil-square me-1" aria-hidden="true"></i> Edit Student Details</button>
           <button class="btn btn-outline-danger" type="button" data-reset-assignment-btn><i class="bi bi-arrow-counterclockwise me-1" aria-hidden="true"></i> Reset Assignment</button>
         </div>
       </section>
+
       <section class="workbench-card card-student-response"><h3>Responses Prepared for Submission</h3><pre class="mb-0">${this.escape(JSON.stringify(payload, null, 2))}</pre></section>`;
     this.bindSubmissionActions(host);
+  }
+
+  /**
+   * Generates and renders a comprehensive Student Submission Report Modal.
+   */
+  openStudentReportModal() {
+    this.autosaveAttempt();
+    const state = this.services.stateManager.getState();
+    const payload = this.submissionEngine.buildPayload(this.submissionContext(state));
+    const student = payload.studentInformation || {};
+    const config = this.config || {};
+    const workflow = this.workflow || {};
+    const rubric = this.rubric || {};
+    const learningSteps = (workflow.steps || []).filter((s) => s.component !== "submission-summary");
+    const responses = state.responses || {};
+
+    let existingModal = document.getElementById("studentReportModal");
+    if (!existingModal) {
+      existingModal = document.createElement("div");
+      existingModal.id = "studentReportModal";
+      existingModal.className = "modal fade student-report-modal";
+      existingModal.tabIndex = -1;
+      existingModal.setAttribute("aria-hidden", "true");
+      document.body.appendChild(existingModal);
+    }
+
+    const activityRows = learningSteps.map((step, idx) => {
+      const resp = responses[step.id] || {};
+      const criterion = (rubric.criteria || []).find((c) => c.id === step.id || c.stepId === step.id) || {};
+      const stepTitle = this.getStepTitle(step);
+      const isComplete = this.completed.has(step.id);
+
+      let formattedResp = "";
+      if (step.component === "image-label") {
+        const labeled = Object.keys(resp).filter((k) => k.startsWith("label-") || !isNaN(k)).length;
+        formattedResp = `<span class="badge bg-primary-subtle text-primary border">${labeled} components identified</span>`;
+      } else if (step.component === "engineering-decision-canvas" || step.component === "drs-station") {
+        const keys = Object.keys(resp);
+        if (keys.length) {
+          formattedResp = `<div class="small">${keys.map((k) => `<strong>${this.escape(k)}:</strong> ${this.escape(typeof resp[k] === "object" ? JSON.stringify(resp[k]) : resp[k])}`).join("<br>")}</div>`;
+        } else {
+          formattedResp = `<span class="text-muted small">No decision recorded</span>`;
+        }
+      } else if (step.component === "guided-workflow" || step.component === "calculation") {
+        const keys = Object.keys(resp);
+        if (keys.length) {
+          formattedResp = `<div class="small">${keys.map((k) => `<strong>${this.escape(k)}:</strong> <code class="text-dark bg-light px-1 rounded">${this.escape(resp[k])}</code>`).join(", ")}</div>`;
+        } else {
+          formattedResp = `<span class="text-muted small">No calculations entered</span>`;
+        }
+      } else if (step.component === "reflection" || step.component === "final-report") {
+        const keys = Object.keys(resp);
+        if (keys.length) {
+          formattedResp = `<div class="small fst-italic">${keys.map((k) => `<strong>${this.escape(k)}:</strong> ${this.escape(resp[k])}`).join("<br>")}</div>`;
+        } else {
+          formattedResp = `<span class="text-muted small">No reflection recorded</span>`;
+        }
+      } else {
+        const keys = Object.keys(resp);
+        if (keys.length) {
+          formattedResp = `<div class="small">${keys.map((k) => `<strong>${this.escape(k)}:</strong> ${this.escape(resp[k])}`).join(", ")}</div>`;
+        } else {
+          formattedResp = `<span class="badge bg-secondary-subtle text-secondary">Reviewed / Completed</span>`;
+        }
+      }
+
+      return `
+        <tr>
+          <td class="text-center fw-bold text-muted" style="width: 45px;">${idx + 1}</td>
+          <td>
+            <strong class="text-dark">${this.escape(stepTitle)}</strong>
+            <div class="text-muted small">${this.escape(step.component || "activity")}</div>
+          </td>
+          <td>${formattedResp}</td>
+          <td class="text-center" style="width: 110px;">
+            ${isComplete ? '<span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle-fill me-1"></i>Completed</span>' : '<span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Pending</span>'}
+          </td>
+          <td class="text-center fw-semibold text-secondary" style="width: 85px;">
+            ${criterion.maxMarks !== undefined ? criterion.maxMarks.toFixed(1) : (criterion.marks !== undefined ? Number(criterion.marks).toFixed(1) : "-")}
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    existingModal.innerHTML = `
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+          <div class="modal-header bg-dark text-white p-3 px-4 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-file-earmark-check-fill fs-4 text-warning"></i>
+              <div>
+                <h5 class="modal-title fw-bold mb-0 text-white">Student Submission Report</h5>
+                <span class="small text-white-50">${this.escape(config.id || "EA")} — ${this.escape(config.title || "Assignment")}</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-warning btn-sm px-3 fw-bold shadow-sm" data-print-student-report>
+                <i class="bi bi-printer-fill me-1"></i> Print / Save PDF
+              </button>
+              <button type="button" class="btn btn-outline-light btn-sm px-3" data-download-json-report>
+                <i class="bi bi-download me-1"></i> JSON
+              </button>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="modal-body p-4 student-report-printable">
+            <div class="student-report-doc p-3 p-md-4 rounded-3 border">
+              
+              <!-- Report Official Header -->
+              <div class="student-report-header text-center pb-3 mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                  <div class="text-start">
+                    <span class="badge bg-dark text-white px-3 py-1 rounded-pill mb-1 d-inline-block">DES • MEILP</span>
+                    <h4 class="h5 fw-bold text-dark mb-0">${this.escape(student.collegeName || "Engineering Institution")}</h4>
+                    <p class="text-muted small mb-0">Department of Mechanical Engineering</p>
+                  </div>
+                  <div class="text-end">
+                    <div class="badge bg-primary text-white px-3 py-2 rounded-3 text-uppercase fw-bold student-report-badge">
+                      ${this.escape(config.id || "ASSIGNMENT")} REPORT
+                    </div>
+                    <div class="text-muted small mt-1">Date: ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</div>
+                  </div>
+                </div>
+                <div class="p-3 bg-light rounded-3 text-center border">
+                  <h3 class="h5 fw-bold text-primary mb-1">${this.escape(config.title || "Engineering Assignment")}</h3>
+                  <div class="text-secondary small">
+                    Course: <strong>${this.escape(config.subject || "Design of Machine Elements")}</strong> | 
+                    Max CCE Marks: <strong>${(config.cceMarks || rubric.totalMarks || 12).toFixed(1)}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Student Details Grid -->
+              <div class="card mb-4 border shadow-none bg-light-subtle">
+                <div class="card-header bg-white py-2 fw-bold text-dark border-bottom">
+                  <i class="bi bi-person-badge text-primary me-2"></i>Student &amp; Submission Profile
+                </div>
+                <div class="card-body p-3">
+                  <div class="row g-3 small">
+                    <div class="col-sm-6 col-md-4">
+                      <span class="text-muted d-block">Student Name:</span>
+                      <strong class="text-dark fs-6">${this.escape(student.fullName || "Student")}</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <span class="text-muted d-block">Roll Number / PRN:</span>
+                      <strong class="text-dark">${this.escape(student.rollNumber || student.prn || "N/A")}</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <span class="text-muted d-block">Class / Div / Batch:</span>
+                      <strong class="text-dark">${this.escape([student.class, student.division, student.batch].filter(Boolean).join(" / ") || "N/A")}</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <span class="text-muted d-block">Assigned Faculty:</span>
+                      <strong class="text-dark">${this.escape(student.facultyName || "Dr. Rahul Bachute")}</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <span class="text-muted d-block">Academic Year / Attempt:</span>
+                      <strong class="text-dark">${this.escape(student.academicYear || "2026-27")} • ${this.escape(student.attemptMode || "Individual")}</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <span class="text-muted d-block">Submission ID:</span>
+                      <code class="text-primary fw-bold">${this.escape(payload.submission.submissionId || "DRAFT")}</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Performance Summary Strip -->
+              <div class="row g-3 mb-4 text-center">
+                <div class="col-4">
+                  <div class="p-3 border rounded-3 bg-light">
+                    <span class="text-muted small d-block mb-1">Activities Completed</span>
+                    <h4 class="h5 fw-bold text-dark mb-0">${payload.submissionData.completedActivities} / ${payload.submissionData.totalActivities}</h4>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-3 border rounded-3 bg-light">
+                    <span class="text-muted small d-block mb-1">Completion Rate</span>
+                    <h4 class="h5 fw-bold text-success mb-0">${payload.submissionData.completionPercent}%</h4>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-3 border rounded-3 bg-light">
+                    <span class="text-muted small d-block mb-1">CCE Weightage</span>
+                    <h4 class="h5 fw-bold text-primary mb-0">${(config.cceMarks || rubric.totalMarks || 12).toFixed(1)} Marks</h4>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Activity Response Details Table -->
+              <div class="mb-4">
+                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-list-check text-primary me-2"></i>Detailed Activity Submissions</h6>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm align-middle student-report-table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center">#</th>
+                        <th>Activity / Module</th>
+                        <th>Submitted Engineering Values / Decisions</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Max Marks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${activityRows}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Academic Sign-off / Lab Assessment Box -->
+              <div class="student-report-signoff p-4 mt-4">
+                <div class="row align-items-end g-4 text-center text-md-start">
+                  <div class="col-md-4">
+                    <div class="border-top border-dark pt-2">
+                      <span class="small text-muted d-block">Student Signature</span>
+                      <strong>${this.escape(student.fullName || "Student")}</strong>
+                    </div>
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <div class="p-2 border rounded bg-white d-inline-block px-3">
+                      <span class="small text-muted d-block">Marks Awarded</span>
+                      <strong class="fs-6 text-primary">______ / ${(config.cceMarks || rubric.totalMarks || 12).toFixed(1)}</strong>
+                    </div>
+                  </div>
+                  <div class="col-md-4 text-md-end">
+                    <div class="border-top border-dark pt-2">
+                      <span class="small text-muted d-block">Faculty Evaluator Signature</span>
+                      <strong>${this.escape(student.facultyName || "Dr. Rahul Bachute")}</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Security Hash & Footer -->
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-4 pt-3 border-top text-muted small">
+                <span>Verification Hash: <code>${(payload.submission.submissionHash || "").slice(0, 16)}...</code></span>
+                <span>DES Academic Verification System • MEILP v2.0</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer bg-light p-3 d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-primary" data-copy-report-summary>
+                <i class="bi bi-clipboard me-1"></i> Copy Summary
+              </button>
+              <button type="button" class="btn btn-primary" data-print-student-report>
+                <i class="bi bi-printer me-1"></i> Print / Save PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Bind modal actions
+    const printBtns = existingModal.querySelectorAll("[data-print-student-report]");
+    printBtns.forEach((b) => {
+      b.addEventListener("click", () => {
+        document.body.classList.add("printing-student-report");
+        window.print();
+        document.body.classList.remove("printing-student-report");
+      });
+    });
+
+    const jsonBtn = existingModal.querySelector("[data-download-json-report]");
+    if (jsonBtn) {
+      jsonBtn.addEventListener("click", () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
+        const a = document.createElement("a");
+        a.setAttribute("href", dataStr);
+        a.setAttribute("download", `Report_${config.id || "EA"}_${student.rollNumber || "Submission"}.json`);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+    }
+
+    const copyBtn = existingModal.querySelector("[data-copy-report-summary]");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", () => {
+        const summaryText = `[MEILP / DES SUBMISSION REPORT]\nAssignment: ${config.id} - ${config.title}\nStudent: ${student.fullName} (Roll: ${student.rollNumber})\nCollege: ${student.collegeName}\nFaculty: ${student.facultyName}\nStatus: ${payload.submissionData.completedActivities}/${payload.submissionData.totalActivities} Completed (${payload.submissionData.completionPercent}%)\nSubmission ID: ${payload.submission.submissionId}\nHash: ${payload.submission.submissionHash}`;
+        navigator.clipboard.writeText(summaryText).then(() => {
+          copyBtn.innerHTML = '<i class="bi bi-check2 me-1"></i> Copied!';
+          setTimeout(() => { copyBtn.innerHTML = '<i class="bi bi-clipboard me-1"></i> Copy Summary'; }, 2000);
+        });
+      });
+    }
+
+    // Show Bootstrap Modal
+    const bsModal = new bootstrap.Modal(existingModal);
+    bsModal.show();
   }
 
   /**
@@ -1079,6 +1400,11 @@ class ChallengeRunner {
         this.renderSubmission(host);
       });
     }
+
+    const reportButtons = host.querySelectorAll("[data-generate-student-report]");
+    reportButtons.forEach((btn) => {
+      btn.addEventListener("click", () => this.openStudentReportModal());
+    });
 
     const editInfoButtons = host.querySelectorAll("[data-edit-student-info-btn]");
     editInfoButtons.forEach((btn) => {

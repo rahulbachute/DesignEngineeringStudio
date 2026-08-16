@@ -502,3 +502,119 @@ body.workbench-body {
     width: 100%;
   }
 }
+
+/* ─── Student Submission Report Styles & Print Optimization ─── */
+.student-report-doc {
+  background: #ffffff;
+  color: #1a202c;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .student-report-modal .modal-content {
+  background: #172333;
+  color: #eef4fa;
+}
+
+[data-theme="dark"] .student-report-doc {
+  background: #172333;
+  color: #eef4fa;
+}
+
+[data-theme="dark"] .student-report-doc .table {
+  color: #eef4fa;
+  border-color: #2d3b4d;
+}
+
+.student-report-header {
+  border-bottom: 2px solid #0b2e59;
+  padding-bottom: 1rem;
+}
+
+.student-report-badge {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.student-report-table th {
+  background-color: #f1f5f9;
+  color: #0b2e59;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .student-report-table th {
+  background-color: #1e2d42;
+  color: #8fb8ea;
+}
+
+.student-report-signoff {
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  background-color: #f8fafc;
+}
+
+[data-theme="dark"] .student-report-signoff {
+  border-color: #2d3b4d;
+  background-color: #131c27;
+}
+
+@media print {
+  body.printing-student-report * {
+    visibility: hidden;
+  }
+  
+  body.printing-student-report .student-report-printable,
+  body.printing-student-report .student-report-printable * {
+    visibility: visible;
+  }
+
+  body.printing-student-report .student-report-printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  body.printing-student-report .student-report-printable .no-print,
+  body.printing-student-report .modal-header,
+  body.printing-student-report .modal-footer,
+  body.printing-student-report .modal-backdrop {
+    display: none !important;
+  }
+
+  body.printing-student-report .student-report-doc {
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  body.printing-student-report .table {
+    color: #000000 !important;
+    border-color: #94a3b8 !important;
+  }
+
+  body.printing-student-report .student-report-table th {
+    background-color: #f1f5f9 !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body.printing-student-report .badge {
+    border: 1px solid #64748b !important;
+    color: #000000 !important;
+    background: transparent !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+}
