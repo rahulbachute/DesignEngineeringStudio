@@ -1,0 +1,664 @@
+{
+  "assignment": {
+    "id": "EC-21",
+    "slug": "recirculating-ball-steering",
+    "title": "Design of Automotive Steering Gear (Recirculating Ball Type)"
+  },
+  "dashboard": {
+    "projectCode": "Automotive Steering Gear",
+    "projectTitle": "Design of Automotive Steering Gear (Recirculating Ball Type)",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate to Advanced",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO2: Design power screws, steering gears, and power transmission mechanisms by applying kinematics, torque multiplication, rolling contact mechanics, and efficiency criteria for reliable automotive operation.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "steering-gear-asset",
+      "title": "Design of Automotive Steering Gear (Recirculating Ball Type)",
+      "path": "assignments/recirculating-ball-steering/images/EA-21_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "steering-gear-asset",
+      "title": "Automotive Steering Gear Reference Diagram",
+      "path": "assignments/recirculating-ball-steering/images/EA-21_Student_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      {
+        "id": "individual",
+        "label": "Individual Mode",
+        "description": "Independently analyze the automotive recirculating-ball steering gear mechanism, evaluate rolling contact kinematics, torque multiplication, steering ratio, and Pitman arm output."
+      },
+      {
+        "label": "Group Mode (2–4 Students)",
+        "id": "group",
+        "description": "Collaborate on automotive steering gear kinematics, ball-nut motion analysis, rack-and-sector gear ratio derivations, and engineering design recommendations."
+      }
+    ],
+    "fields": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "Engineering College",
+        "required": true,
+        "type": "select"
+      },
+      {
+        "name": "branch",
+        "label": "Branch / Discipline",
+        "required": true,
+        "readonly": true,
+        "auto": "Mechanical Engineering"
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Understand Automotive Steering Gear and Recirculating-Ball Mechanism",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Engineering Brief — Recirculating-Ball Automotive Steering Gear",
+          "body": "In commercial road vehicles, light trucks, and heavy passenger cars, steering gear units must deliver substantial mechanical advantage while minimizing operator driver fatigue. Conventional sliding-thread power screws suffer from high friction (efficiency 15% to 25%), leading to rapid wear and excessive steering effort.\n\nThe Recirculating-Ball Steering Gear solves this challenge by introducing hardened chrome steel balls that roll continuously between the helical semi-circular raceways of the worm shaft and the ball nut. As the driver rotates the steering wheel, the balls circulate through return tubes, converting pure rotary input into low-friction axial translation of the ball nut, which subsequently rotates the sector shaft and Pitman arm via integrated rack teeth."
+        },
+        {
+          "type": "theory",
+          "title": "Given Engineering Design Data & Steering Parameters",
+          "body": "The following verified engineering data must be used for the steering gear kinematic analysis and torque calculations:\n\n• Driver Steering Wheel Input Torque (T_in): 10.0 N·m (10,000 N·mm)\n• Worm Shaft Thread Profile: Single-Start Helical Ball Raceway (n = 1 start)\n• Worm Shaft Pitch (p) and Lead (L = n × p): 10.0 mm (0.010 m)\n• Mean Ball Raceway Diameter (d_m): 28.0 mm (0.028 m)\n• Recirculating Steel Ball Diameter (d_b): 6.0 mm (AISI 52100 Bearing Steel)\n• Ball Nut Rack Teeth Pitch (p_rack): 10.0 mm (Matching linear tooth module)\n• Sector Gear Pitch Circle Radius (R_s): 50.0 mm (0.050 m)\n• Pitman Arm Effective Center Distance (L_p): 150.0 mm (0.150 m)\n• Mechanism Mechanical Efficiency (η): 90% (0.90, due to rolling contact)\n• Steering Lock-to-Lock Total Turns: 3.6 turns (±1.8 turns from straight-ahead center position)\n• Rated Steering Linkage Load Capacity: Up to 2,500 N"
+        },
+        {
+          "type": "theory",
+          "title": "Kinematic Sequence, Motion Paths & Governing Equations",
+          "body": "1. Critical Kinematic Load Path:\n  Steering Wheel Rotation (Input Torque T_in)\n  → Steering Shaft & Worm Shaft Rotation\n  → Recirculating Steel Balls Roll in Helical Grooves & Circulate via Return Tubes\n  → Ball Nut Translates AXIALLY Along Worm Axis (Pure Linear Motion; Ball Nut Does Not Rotate)\n  → Integrated Ball-Nut Rack Teeth Engage Sector Gear\n  → Sector Gear & Sector Shaft Rotate\n  → Pitman Arm Swings to Provide Steering Output Linkage Force (F_pitman)\n\n2. Key Kinematic & Mechanical Governing Equations:\n  • Ball Nut Axial Travel per Worm Revolution:  S_rev = L = n × p = 1 × 10 = 10.0 mm/rev\n  • Ball Nut Travel for 1.8 Turns (Half Lock):  S_lock = 1.8 × 10.0 = 18.0 mm\n  • Total Full Travel (3.6 Turns Lock-to-Lock):  S_total = 3.6 × 10.0 = 36.0 mm\n  • Sector Gear Angular Displacement per Rev:  θ_rev = S_rev / R_s = 10 / 50 = 0.20 rad (11.459°)\n  • Total Sector Shaft Angular Sweep:           θ_total = S_total / R_s = 36 / 50 = 0.72 rad (41.253°)\n  • Overall Steering Gear Ratio (i_overall):    i_overall = 2π · R_s / p = (2π × 50) / 10 = 10π ≈ 31.416 : 1\n  • Output Torque at Sector Shaft:              T_out = η · T_in · i_overall = 0.90 × 10 × 31.416 = 282.74 N·m\n  • Pitman Arm Linear Output Thrust Force:      F_pitman = T_out / L_p = 282.74 / 0.15 = 1,884.96 N\n  • Ball Nut Axial Thrust Driving Force:        F_axial = (2π · T_in · η) / L = (2π × 10 × 0.90) / 0.010 = 5,654.87 N\n  • Verification:                               T_out = F_axial · R_s = 5,654.87 × 0.050 = 282.74 N·m (Consistent)"
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Learning Objectives & Tasks",
+          "items": [
+            "Identify all 10 major components and kinematic interfaces on the Automotive Steering Gear diagram.",
+            "Understand how recirculating balls substitute sliding friction with rolling friction, boosting efficiency to ~90%.",
+            "Establish that worm rotation produces pure AXIAL TRANSLATION of the ball nut along the worm axis.",
+            "Differentiate the internal helical raceways from the external rack teeth of the ball nut.",
+            "Calculate worm lead (L), ball-nut axial stroke per turn (S_rev), and lock-to-lock travel (S_total).",
+            "Determine sector gear angular displacement per revolution (θ_rev) and total steering sweep (θ_total).",
+            "Derive the overall steering gear ratio (i_overall) from worm pitch and sector pitch radius.",
+            "Calculate sector shaft output torque (T_out) and Pitman arm steering thrust force (F_pitman).",
+            "Trace the complete 8-stage kinematic chain from driver steering input to road-wheel linkage output.",
+            "Formulate justified engineering recommendations on pre-load adjustment, contact fatigue, and compile the technical report."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the Automotive Steering Gear Project Charter for Recirculating-Ball Mechanism Design & Analysis."
+    },
+    "component-identification": {
+      "title": "Identify Steering Gear Components and Mechanism Interfaces",
+      "image": "assignments/recirculating-ball-steering/images/EA-21_Student_v1.0.png",
+      "figure": "Automotive Recirculating-Ball Steering Gear Diagram",
+      "description": "Engineering asset illustrating an automotive recirculating-ball steering gear mechanism with identified structural parts, recirculating ball circuits, rack-and-sector gear mesh, sector shaft, Pitman arm, and educational cross-section.",
+      "options": [
+        "Steering Shaft",
+        "Steering Input Torque, T",
+        "Bearing Support",
+        "Ball Return Passage (Return Tube)",
+        "Worm Shaft",
+        "Ball Nut (Rack Teeth)",
+        "Recirculating Steel Balls",
+        "Steering Gear Housing",
+        "Steering Gear Housing (Mounting Boss)",
+        "Pitman Arm",
+        "Sector Gear",
+        "Sector Shaft",
+        "Steering Linkage",
+        "Ball Nut Axial Motion",
+        "Ball-Nut Groove (Helical Track)"
+      ],
+      "labels": [
+        {
+          "componentNumber": 1,
+          "x": 25.0,
+          "y": 12.5,
+          "correctAnswer": "Steering Shaft",
+          "feedback": "The upper splined steering shaft receives rotational steering input directly from the vehicle steering wheel."
+        },
+        {
+          "componentNumber": 2,
+          "x": 19.9,
+          "y": 24.1,
+          "correctAnswer": "Steering Input Torque, T",
+          "feedback": "The driver-applied input torque (Tin) that initiates rotary motion into the steering gear assembly."
+        },
+        {
+          "componentNumber": 3,
+          "x": 34.7,
+          "y": 22.2,
+          "correctAnswer": "Bearing Support",
+          "feedback": "Precision angular bearing support that constrains axial thrust while permitting low-friction shaft rotation."
+        },
+        {
+          "componentNumber": 4,
+          "x": 44.8,
+          "y": 24.1,
+          "correctAnswer": "Ball Return Passage (Return Tube)",
+          "feedback": "External tubular conduits attached to the ball nut that guide steel balls continuously back to the raceway entry."
+        },
+        {
+          "componentNumber": 5,
+          "x": 27.9,
+          "y": 41.5,
+          "correctAnswer": "Worm Shaft",
+          "feedback": "The central precision-ground worm shaft featuring helical semi-circular grooves that form the inner raceway."
+        },
+        {
+          "componentNumber": 6,
+          "x": 43.1,
+          "y": 39.6,
+          "correctAnswer": "Ball Nut (Rack Teeth)",
+          "feedback": "The primary translating block containing internal ball raceways and external gear rack teeth."
+        },
+        {
+          "componentNumber": 7,
+          "x": 43.1,
+          "y": 56.8,
+          "correctAnswer": "Recirculating Steel Balls",
+          "feedback": "Hardened chrome steel balls rolling in raceways to provide low-friction rolling contact between worm and nut."
+        },
+        {
+          "componentNumber": 8,
+          "x": 29.7,
+          "y": 66.4,
+          "correctAnswer": "Steering Gear Housing",
+          "feedback": "The rigid structural casing housing the worm, ball nut, recirculating circuits, and lubricant reservoir."
+        },
+        {
+          "componentNumber": 9,
+          "x": 44.8,
+          "y": 76.1,
+          "correctAnswer": "Steering Gear Housing (Mounting Boss)",
+          "feedback": "Rigid mounting boss on the lower housing flange that secures the steering gear unit to the vehicle chassis frame."
+        },
+        {
+          "componentNumber": 10,
+          "x": 53.2,
+          "y": 83.8,
+          "correctAnswer": "Pitman Arm",
+          "feedback": "The output drop lever keyed to the sector shaft that connects to the steering drag link and tie rods."
+        }
+      ]
+    },
+    "recirculating-ball-principle": {
+      "title": "Understand Recirculating-Ball Working Principle and Friction Reduction",
+      "prompt": "Analyse the fundamental friction reduction mechanism and working principle of the recirculating-ball interface shown in the diagram.",
+      "mcq": {
+        "question": "Why does the recirculating-ball steering gear exhibit significantly higher mechanical efficiency (~90%) compared to conventional Acme/square thread steering gears (15%–25%)?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Hardened steel balls roll continuously between the worm and ball-nut raceways, substituting low rolling resistance (μ_roll ≈ 0.002) for high sliding friction (μ_slide ≈ 0.15), while return tubes ensure endless ball recirculation without jamming.",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "The ball nut rotates at twice the speed of the worm shaft, eliminating all friction contact through aerodynamic levitation inside the housing.",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "The recirculating balls expand under pressure, locking the worm directly to the sector gear without transmitting force through the ball nut.",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "The return tubes apply pressurized hydraulic fluid directly to the sector shaft, bypassing mechanical contact completely.",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "ball-nut-kinematics": {
+      "title": "Determine Ball-Nut Axial Motion and Kinematic Transformation",
+      "prompt": "Examine the kinematic behavior of the ball nut when the driver rotates the steering wheel and worm shaft.",
+      "mcq": {
+        "question": "Which statement correctly describes the kinematic motion of the ball nut during steering input?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "The ball nut is constrained from rotating by the sector gear mesh and guide tracks, causing it to undergo pure AXIAL TRANSLATION along the worm axis as the helical balls roll.",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "The ball nut rotates synchronously with the worm shaft at 1:1 speed ratio and remains stationary axially.",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "The ball nut oscillates radially perpendicular to the worm shaft without moving along its length.",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "The ball nut directly drives the Pitman arm in a circular planetary trajectory around the steering column.",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "design-data": {
+      "title": "Establish Steering Gear Design Data and Geometric Parameters",
+      "prompt": "Given Engineering Design Parameters for the Recirculating-Ball Steering Gear:\n\n• Driver Steering Input Torque: T_in = 10.0 N·m (10,000 N·mm)\n• Worm Shaft Pitch: p = 10.0 mm (Single-start n = 1, Lead L = 10.0 mm)\n• Mean Raceway Diameter: d_m = 28.0 mm\n• Steel Ball Diameter: d_b = 6.0 mm (AISI 52100 Bearing Steel)\n• Ball Nut Rack Teeth Pitch: p_rack = 10.0 mm\n• Sector Gear Pitch Circle Radius: R_s = 50.0 mm (0.050 m)\n• Pitman Arm Effective Length: L_p = 150.0 mm (0.150 m)\n• Mechanism Mechanical Efficiency: η = 90% (0.90)\n• Lock-to-Lock Steering Wheel Turns: 3.6 turns (±1.8 turns from center)\n\nConfirm all given design parameters prior to performing kinematic and torque calculations.",
+      "mcq": {
+        "question": "Which set of engineering parameters correctly represents the complete given design data for the recirculating-ball steering gear?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "T_in = 10 N·m | Worm Pitch p = 10 mm (Lead L = 10 mm) | Ball Diameter d_b = 6 mm | Sector Pitch Radius R_s = 50 mm | Pitman Arm L_p = 150 mm | Efficiency η = 90% | Total turns = 3.6 (±1.8 lock)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "T_in = 100 N·m | Worm Pitch p = 25 mm | Ball Diameter d_b = 15 mm | Sector Pitch Radius R_s = 150 mm | Pitman Arm L_p = 500 mm | Efficiency η = 25%",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "T_in = 1.0 N·m | Worm Pitch p = 2 mm | Ball Diameter d_b = 1 mm | Sector Pitch Radius R_s = 10 mm | Pitman Arm L_p = 50 mm | Efficiency η = 50%",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "T_in = 10 N·m | Worm Pitch p = 50 mm | Ball Diameter d_b = 20 mm | Sector Pitch Radius R_s = 20 mm | Pitman Arm L_p = 100 mm | Efficiency η = 70%",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "kinematic-analysis": {
+      "title": "Calculate Worm Lead, Ball-Nut Axial Travel, and Lock-to-Lock Stroke",
+      "prompt": "Given Design Parameters:\n  Worm Pitch p = 10.0 mm, Single-start thread (n = 1), Steering turns from center to lock N_lock = 1.8 turns, Total lock-to-lock turns N_total = 3.6 turns.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Worm Lead (L):\n   L = n × p = 1 × 10.0 = 10.0 mm/rev\n\n2. Ball Nut Axial Displacement per Revolution (S_rev):\n   S_rev = L = 10.0 mm\n\n3. Ball Nut Axial Travel for 1.8 Turns (Half Lock Stroke S_lock):\n   S_lock = N_lock × L = 1.8 × 10.0 = 18.0 mm\n\n4. Total Ball Nut Lock-to-Lock Stroke (S_total):\n   S_total = N_total × L = 3.6 × 10.0 = 36.0 mm (or ±18.0 mm from neutral center)\n\nCalculate the worm lead (L), half-lock axial stroke (S_lock), and total lock-to-lock travel (S_total).",
+      "mcq": {
+        "question": "What are the correct worm lead (L), half-lock stroke (S_lock), and total lock-to-lock travel (S_total) of the ball nut?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Lead L = 10.0 mm/rev  |  Half-Lock Stroke S_lock = 1.8 × 10 = 18.0 mm  |  Total Lock-to-Lock Travel S_total = 3.6 × 10 = 36.0 mm (±18.0 mm)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Lead L = 5.0 mm/rev  |  S_lock = 9.0 mm  |  S_total = 18.0 mm  (assumed double start incorrectly)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Lead L = 20.0 mm/rev  |  S_lock = 36.0 mm  |  S_total = 72.0 mm  (pitch doubled)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Lead L = 10.0 mm/rev  |  S_lock = 10.0 mm  |  S_total = 20.0 mm  (neglected 1.8 and 3.6 turn multipliers)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "rack-sector-engagement": {
+      "title": "Understand Rack-and-Sector Engagement and Angular Output",
+      "prompt": "Given Design Parameters:\n  Ball Nut Axial Travel per turn S_rev = 10.0 mm, Total lock-to-lock travel S_total = 36.0 mm, Sector Gear Pitch Radius R_s = 50.0 mm.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Sector Gear Angular Displacement per Worm Revolution (θ_rev):\n   θ_rev = S_rev / R_s = 10.0 / 50.0 = 0.20 radians\n   θ_rev (degrees) = 0.20 × (180 / π) = 11.459° per revolution\n\n2. Total Sector Shaft Angular Sweep (Lock-to-Lock θ_total):\n   θ_total = S_total / R_s = 36.0 / 50.0 = 0.72 radians\n   θ_total (degrees) = 0.72 × (180 / π) = 41.253° (±20.626° from center straight-ahead)\n\nCalculate the sector shaft angular displacement per turn (θ_rev) and total steering sweep (θ_total).",
+      "mcq": {
+        "question": "What are the correct angular displacements of the sector shaft per turn and total lock-to-lock sweep?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "θ_rev = 10 / 50 = 0.20 rad (11.459°/rev)  |  θ_total = 36 / 50 = 0.72 rad (41.253° total sweep, ±20.63° from center)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "θ_rev = 50 / 10 = 5.0 rad (286.48°/rev)  |  θ_total = 18.0 rad  (inverted pitch radius formula)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "θ_rev = 0.10 rad (5.73°/rev)  |  θ_total = 0.36 rad (20.63° total)  (used diameter instead of radius)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "θ_rev = 1.0 rad (57.3°/rev)  |  θ_total = 3.6 rad (206.26° total)  (neglected sector gear radius)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "torque-steering-ratio": {
+      "title": "Calculate Overall Steering Ratio, Output Torque, and Pitman Arm Force",
+      "prompt": "Given Design Parameters:\n  Input Torque T_in = 10.0 N·m, Sector Radius R_s = 50.0 mm (0.050 m), Worm Pitch p = 10.0 mm (0.010 m), Efficiency η = 90% (0.90), Pitman Arm Length L_p = 150.0 mm (0.150 m).\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Overall Steering Gear Ratio (i_overall):\n   i_overall = (Steering Wheel Angular Displacement) / (Sector Shaft Angular Displacement)\n   i_overall = 2π / θ_rev = (2π · R_s) / p = (2π × 50) / 10 = 10π ≈ 31.416 : 1\n   (Check in degrees: 360° / 11.459° = 31.416 : 1)\n\n2. Output Torque Delivered to Sector Shaft (T_out):\n   T_out = η · T_in · i_overall = 0.90 × 10.0 N·m × 31.416 = 282.74 N·m (282,743 N·mm)\n\n3. Pitman Arm Linear Output Thrust Force (F_pitman):\n   F_pitman = T_out / L_p = 282.74 N·m / 0.150 m = 1,884.96 N ≈ 1.885 kN\n\n4. Ball Nut Axial Driving Force (F_axial) Verification:\n   F_axial = (2π · T_in · η) / p = (2π × 10 × 0.90) / 0.010 = 5,654.87 N\n   T_out = F_axial · R_s = 5,654.87 N × 0.050 m = 282.74 N·m\n\nCalculate the overall steering ratio (i_overall), sector shaft output torque (T_out), and Pitman arm force (F_pitman).",
+      "mcq": {
+        "question": "What are the correct overall steering ratio (i_overall), output torque (T_out), and Pitman arm force (F_pitman)?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "i_overall = (2π × 50) / 10 = 31.416 : 1  |  T_out = 0.90 × 10 × 31.416 = 282.74 N·m  |  F_pitman = 282.74 / 0.150 = 1,884.96 N (1.885 kN)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "i_overall = 50 / 10 = 5.0 : 1  |  T_out = 0.90 × 10 × 5 = 45.0 N·m  |  F_pitman = 45 / 0.150 = 300.0 N (neglected 2π angular conversion)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "i_overall = 31.416 : 1  |  T_out = 10 × 31.416 = 314.16 N·m  |  F_pitman = 2,094.4 N (neglected mechanism efficiency losses)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "i_overall = 15.708 : 1  |  T_out = 141.37 N·m  |  F_pitman = 942.48 N (used sector radius = 25 mm)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "complete-kinematic-sequence": {
+      "title": "Evaluate Complete Kinematic Transmission Sequence and Motion Path",
+      "prompt": "Analyse the complete sequence of mechanical transmission from the moment the driver rotates the steering wheel to the angular deflection of the vehicle front wheels.",
+      "mcq": {
+        "question": "Which of the following sequences represents the EXACT kinematic and mechanical transmission chain in an automotive recirculating-ball steering gear?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Steering wheel rotation → Steering shaft & worm shaft rotation → Steel balls roll in helical raceway → Ball nut undergoes axial linear translation → Ball-nut rack teeth engage sector gear → Sector gear & sector shaft rotate → Pitman arm delivers linear thrust to steering linkage",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Steering wheel rotation → Worm shaft rotation → Worm teeth directly mesh with sector gear → Sector gear rotates ball nut → Pitman arm pulls return tubes",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Steering wheel rotation → Ball nut rotates inside housing → Worm shaft translates axially → Sector shaft slides linearly → Pitman arm rotates steering column",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Steering wheel rotation → Return tubes pressurize steel balls → Sector gear advances axially along Pitman arm → Worm shaft rotates front wheels directly",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "engineering-recommendation": {
+      "title": "Engineering Assessment, Contact Stress, Backlash & Safety Verification",
+      "prompt": "Step-by-Step Guidance & Engineering Analysis:\n\n1. Contact Mechanics & Anti-Backlash Preloading:\n   • Recirculating ball raceways utilize Gothic-arch profiles to maintain dual-point contact per ball, eliminating mechanical lash while minimizing Hertzian contact stress.\n   • Center-point mesh of the sector gear is slightly tapered, allowing precision pre-load adjustment via an adjusting screw to eliminate center-point play while preventing binding at full locks.\n\n2. Operational Reliability & Safety:\n   • High mechanical efficiency (90%) ensures light manual steering effort while enabling positive steering returnability (caster self-centering action).\n   • Steel ball return tubes must have smooth, tangent entry/exit radii to prevent ball scuffing or jamming under high dynamic shock loads.\n\nEvaluate the mechanism performance and select the validated engineering design decision.",
+      "scenarios": [
+        {
+          "id": "C01",
+          "name": "Design is optimal — high efficiency (90%), 31.4:1 ratio provides 1.88 kN steering linkage force with light 10 N·m input",
+          "label": "Recirculating-Ball Steering Gear: Validated Engineering Recommendation"
+        },
+        {
+          "id": "C02",
+          "name": "Design requires modification — excessive sliding friction or undersized sector gear pitch radius",
+          "label": "Recirculating-Ball Steering Gear: Design Modification Required"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-suitable",
+          "title": "APPROVE RECIRCULATING-BALL STEERING GEAR DESIGN — HIGH EFFICIENCY (90%), 31.4:1 GEAR RATIO, EXCELLENT STEERING FORCE MULTIPLICATION",
+          "suitability": "Validated Engineering Recommendation",
+          "description": "The recirculating-ball steering gear mechanism successfully provides a 31.416:1 mechanical advantage, multiplying a modest 10 N·m driver input torque into 282.74 N·m of sector shaft torque and 1,885 N of Pitman arm steering thrust. The 90% mechanical efficiency achieved via rolling ball contact dramatically reduces steering effort while preserving positive steering wheel returnability. Recommend standard pre-load adjustment on the tapered sector shaft gear mesh to achieve zero center backlash, and specify AISI 52100 high-carbon chrome steel balls (60–64 HRC) with molybdenum disulphide grease lubrication for long fatigue life."
+        },
+        {
+          "id": "opt-replace-sliding",
+          "title": "UNSAFE ALTERATION — REPLACE RECIRCULATING BALLS WITH SOLID BRONZE SLIDING THREAD TO REDUCE PART COUNT",
+          "suitability": "Hazardous Design Degradation",
+          "description": "Replacing recirculating balls with a sliding bronze nut degrades efficiency from 90% down to ~20%, causing heavy driver steering effort (requiring >45 N·m input torque), severe stick-slip friction, and premature wear on steering components."
+        },
+        {
+          "id": "opt-eliminate-nut",
+          "title": "KINEMATICALLY INVALID — DIRECTLY ENGAGE WORM SHAFT TEETH WITH SECTOR GEAR WITHOUT BALL NUT",
+          "suitability": "Mechanically Infeasible Concept",
+          "description": "Eliminating the ball nut and attempting to mesh the helical worm shaft directly with a perpendicular sector gear creates severe line-contact interference, high sliding wear, and destroys the mechanical advantage and packaging geometry of the steering box."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Automotive Recirculating-Ball Steering Gear Technical Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Automotive Steering Gear Purpose & Recirculating-Ball Working Principle",
+          "placeholder": "Explain the functional role of the automotive steering gear and describe how recirculating steel balls replace sliding friction with rolling contact to achieve ~90% mechanical efficiency."
+        },
+        {
+          "id": "r2",
+          "label": "2. Kinematic Separation & Ball-Nut Axial Translation Mechanism",
+          "placeholder": "Explain why the ball nut translates axially along the worm shaft instead of rotating, and explain how the ball return tubes maintain continuous ball circulation without jamming."
+        },
+        {
+          "id": "r3",
+          "label": "3. Given Design Parameters, Worm Lead & Ball-Nut Travel Calculations",
+          "placeholder": "State all given parameters (T_in = 10 N·m, p = 10 mm, R_s = 50 mm, L_p = 150 mm, η = 90%). Show calculations for worm lead (L = 10 mm), half-lock stroke (18 mm), and total lock-to-lock travel (36 mm)."
+        },
+        {
+          "id": "r4",
+          "label": "4. Rack-and-Sector Gear Meshing & Angular Output Calculations",
+          "placeholder": "Explain how ball-nut rack teeth engage the sector gear. Show calculations for sector angular displacement per rev (θ_rev = 0.20 rad = 11.459°) and total lock-to-lock sector sweep (θ_total = 0.72 rad = 41.25°)."
+        },
+        {
+          "id": "r5",
+          "label": "5. Overall Steering Ratio, Output Torque & Pitman Arm Force",
+          "placeholder": "Present calculations for overall steering gear ratio (i_overall = 31.416:1), sector shaft output torque (T_out = 282.74 N·m), and Pitman arm steering thrust force (F_pitman = 1,884.96 N)."
+        },
+        {
+          "id": "r6",
+          "label": "6. Complete Kinematic Sequence Analysis from Steering Wheel to Wheels",
+          "placeholder": "Detail the complete 8-stage kinematic chain: Steering wheel rotation → Worm rotation → Steel ball rolling → Ball-nut axial travel → Rack-sector mesh → Sector shaft rotation → Pitman arm output."
+        },
+        {
+          "id": "r7",
+          "label": "7. Final Engineering Judgement, Backlash Adjustment & Maintenance Recommendations",
+          "placeholder": "Summarize your final engineering assessment approving the recirculating-ball design, detailing center-point backlash adjustment protocols, ball material specifications (AISI 52100), and chassis safety considerations."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submit Automotive Steering Gear Response Package",
+      "body": "Your complete Design of Automotive Steering Gear (Recirculating Ball Type) challenge response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

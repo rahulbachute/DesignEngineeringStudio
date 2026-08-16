@@ -186,6 +186,76 @@
       "icon": "bi-cpu",
       "configPath": "assignments/connecting-rod-fatigue/config.json",
       "launchPath": "assignment-workbench.html?assignment=connecting-rod-fatigue"
+    },
+    {
+      "id": "EA-18",
+      "title": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyse the bench vice power-screw mechanism, calculate thread and collar friction torques, determine total operating torque, estimate mechanical efficiency, verify self-locking condition, and assess mechanism suitability.",
+      "status": "Ready",
+      "tasks": 10,
+      "icon": "bi-wrench-adjustable",
+      "configPath": "assignments/bench-vice/config.json",
+      "launchPath": "assignment-workbench.html?assignment=bench-vice",
+      "slug": "bench-vice",
+      "co": "CO2",
+      "weightage": "12 Marks"
+    },
+    {
+      "id": "EA-19",
+      "title": "Analysis of C-Clamp Screw and Collar Friction Effects",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyse the C-clamp power-screw mechanism, determine thread friction torque, collar friction torque, evaluate total tightening torque, investigate the relative contribution of collar friction, and assess operator hand force.",
+      "status": "Ready",
+      "tasks": 11,
+      "icon": "bi-border-inner",
+      "configPath": "assignments/c-clamp-friction/config.json",
+      "launchPath": "assignment-workbench.html?assignment=c-clamp-friction",
+      "slug": "c-clamp-friction",
+      "co": "CO2",
+      "weightage": "12 Marks"
+    },
+    {
+      "id": "EA-20",
+      "title": "Design of a Power Screw for a Hydraulic Press",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to design, analyse, and verify the bed-adjustment power screw mechanism of a hydraulic press, calculating thread and collar friction torques, operating torque, efficiency, self-locking safety, and combined stress verification under heavy positioning loads.",
+      "status": "Ready",
+      "tasks": 11,
+      "icon": "bi-gear-wide-connected",
+      "configPath": "assignments/hydraulic-press/config.json",
+      "launchPath": "assignment-workbench.html?assignment=hydraulic-press",
+      "slug": "hydraulic-press",
+      "co": "CO2",
+      "weightage": "12 Marks"
+    },
+    {
+      "id": "EC-21",
+      "title": "Design of Automotive Steering Gear (Recirculating Ball Type)",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to analyse and design an automotive recirculating-ball steering gear mechanism, evaluating rolling contact kinematics, ball-nut axial travel, rack-and-sector angular transformation, steering ratio, output torque, and Pitman arm linkage forces.",
+      "status": "Ready",
+      "tasks": 11,
+      "icon": "bi-bullseye",
+      "configPath": "assignments/recirculating-ball-steering/config.json",
+      "launchPath": "assignment-workbench.html?assignment=recirculating-ball-steering",
+      "slug": "recirculating-ball-steering",
+      "co": "CO2",
+      "weightage": "12 Marks"
+    },
+    {
+      "id": "EA-22",
+      "title": "Design of a 2-Ton Mobile Scissor Lift Power Screw",
+      "discipline": "Design of Machine Elements",
+      "summary": "Engineering challenge to design, analyse, and verify the horizontal power-screw mechanism of a 2-ton mobile scissor lift, calculating scissor kinematic force transformation, thread and collar friction torques, operating torque, efficiency, self-locking safety, and combined core stresses.",
+      "status": "Ready",
+      "tasks": 11,
+      "icon": "bi-layers-half",
+      "configPath": "assignments/mobile-scissor-lift/config.json",
+      "launchPath": "assignment-workbench.html?assignment=mobile-scissor-lift",
+      "slug": "mobile-scissor-lift",
+      "co": "CO2",
+      "weightage": "12 Marks"
     }
   ]
 }

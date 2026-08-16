@@ -1,0 +1,23 @@
+{
+  "assignment": "recirculating-ball-steering",
+  "basePath": "assignments/recirculating-ball-steering/images",
+  "assets": [
+    {
+      "id": "EA-21",
+      "name": "Engineering Asset EA-21",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/recirculating-ball-steering/images/EA-21_Student_v1.0.png",
+      "description": "Engineering asset illustrating an automotive recirculating-ball steering gear mechanism showing steering shaft, worm shaft, recirculating steel balls, ball nut, return tubes, rack teeth, sector gear, sector shaft, Pitman arm, and educational cross-section.",
+      "dimensions": { "width": 1672, "height": 941 }
+    },
+    {
+      "id": "engineeringAssetStudent",
+      "name": "Student View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/recirculating-ball-steering/images/EA-21_Student_v1.0.png",
+      "description": "Standard student edition engineering asset diagram."
+    }
+  ]
+}

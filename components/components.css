@@ -283,6 +283,14 @@
   transform: translate(-50%, -50%);
 }
 
+.label-marker.label-marker-invisible {
+  opacity: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
+}
+
 .label-table {
   margin-bottom: 0;
   color: var(--meilp-text);

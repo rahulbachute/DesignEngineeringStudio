@@ -116,6 +116,24 @@ class SubmissionEngine {
       return status;
     }
 
+    const student = payload.studentInformation || {};
+    const facultyName = student.facultyName || "Dr. Rahul Bachute";
+    const assignmentId = (context.config && context.config.id) || "default";
+
+    if (window.MEILP && window.MEILP.assignmentControlService) {
+      const access = window.MEILP.assignmentControlService.evaluateAccess(assignmentId, facultyName);
+      if (!access.enabled) {
+        const status = this.status(false, false, "ASSIGNMENT_DISABLED", `This assignment has been disabled by ${facultyName} for your class.`, [`Disabled by ${facultyName}`]);
+        this.setStatus(status);
+        return status;
+      }
+      if (access.isPastDue) {
+        const status = this.status(false, false, "DEADLINE_PASSED", `The submission deadline (${access.formattedDueDate}) set by ${facultyName} has passed.`, [`Deadline passed: ${access.formattedDueDate}`]);
+        this.setStatus(status);
+        return status;
+      }
+    }
+
     const identity = this.queueIdentity({ payload });
     if (this.inFlight.has(identity)) {
       return this.status(false, false, "DUPLICATE_IN_FLIGHT", "This submission is already being sent.");

@@ -1,0 +1,23 @@
+{
+  "assignment": "hydraulic-press",
+  "basePath": "assignments/hydraulic-press/images",
+  "assets": [
+    {
+      "id": "EA-20",
+      "name": "Engineering Asset EA-20",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/hydraulic-press/images/EA-20_Power_Screw_Hydraulic_Press_v1.0.png",
+      "description": "Engineering asset illustrating a hydraulic press with identified hydraulic pressing system, bed-adjustment power screw mechanism, handwheel, force vectors, and friction interfaces.",
+      "dimensions": { "width": 1672, "height": 941 }
+    },
+    {
+      "id": "engineeringAssetStudent",
+      "name": "Student View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/hydraulic-press/images/EA-20_Power_Screw_Hydraulic_Press_v1.0.png",
+      "description": "Standard student edition engineering asset diagram."
+    }
+  ]
+}

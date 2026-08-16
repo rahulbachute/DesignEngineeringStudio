@@ -30,7 +30,7 @@
         </button>
         <div class="collapse navbar-collapse" id="primaryNav">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center" data-nav-list></ul>
-          <a href="outputs/meilp/index.html" class="btn btn-warning fw-bold text-dark px-3 py-1 me-lg-2 ms-lg-3 shadow-sm d-inline-flex align-items-center gap-1 border-0 rounded-pill" style="font-size: 0.875rem;">
+          <a href="faculty/challenges.html" class="btn btn-warning fw-bold text-dark px-3 py-1 me-lg-2 ms-lg-3 shadow-sm d-inline-flex align-items-center gap-1 border-0 rounded-pill" id="facultyAccessBtn" style="font-size: 0.875rem;" data-bs-toggle="modal" data-bs-target="#facultyLoginModal">
             <i class="bi bi-shield-lock-fill text-dark" aria-hidden="true"></i> Faculty Login
           </a>
           <button class="btn btn-icon ms-lg-1" type="button" data-theme-toggle aria-label="Toggle theme">
@@ -42,99 +42,287 @@
   </header>
 
   <main id="main-content">
-    <section class="hero-section">
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
       <div class="container">
         <div class="row align-items-center g-5">
-          <div class="col-lg-7">
+          <div class="col-lg-8">
             <span class="section-kicker">Design Engineering Studio</span>
             <h1>Mechanical Engineering Interactive Learning Platform</h1>
             <p class="hero-copy">
               A professional interactive environment for mastering design of machine elements through active problem solving.
             </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary btn-lg" href="#assignments">
-                <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i>
-                Browse Assignments
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-5">
-            <div class="system-panel" aria-label="Platform capability summary">
-              <div class="panel-header">
-                <span>Platform Core</span>
-                <i class="bi bi-cpu" aria-hidden="true"></i>
-              </div>
-              <div class="capability-grid">
-                <div>
-                  <strong>9</strong>
-                  <span>Assignments</span>
-                </div>
-                <div>
-                  <strong>90+</strong>
-                  <span>Activities</span>
-                </div>
-                <div>
-                  <strong>OBE</strong>
-                  <span>Attainment</span>
-                </div>
-                <div>
-                  <strong>LMS</strong>
-                  <span>Engine</span>
-                </div>
-              </div>
-              <ol class="foundation-list">
-                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Configuration-driven assignment engine</li>
-                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Interactive engineering calculators &amp; diagrams</li>
-                <li><i class="bi bi-check2-circle" aria-hidden="true"></i> Real-time analytics and outcome assessment</li>
-              </ol>
-            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="content-band" id="platform">
-      <div class="container">
-        <div class="section-heading">
-          <span class="section-kicker">Platform Architecture</span>
-          <h2>Built for interactive engineering learning</h2>
-          <p>DES separates platform shell, shared components, data, assignment configuration, validation, and storage so engineering assignments run seamlessly.</p>
-        </div>
-        <div class="row g-4">
-          <div class="col-md-4">
-            <article class="feature-card">
-              <i class="bi bi-sliders" aria-hidden="true"></i>
-              <h3>Configuration Driven</h3>
-              <p>Assignment metadata, activities, and rubrics are loaded dynamically from structured configuration files.</p>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="feature-card">
-              <i class="bi bi-box-seam" aria-hidden="true"></i>
-              <h3>Interactive Tools</h3>
-              <p>Integrated Machine Design tools, SFD/BMD plotters, and diagram labelers empower active engineering analysis.</p>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="feature-card">
-              <i class="bi bi-database-check" aria-hidden="true"></i>
-              <h3>Analytics &amp; OBE</h3>
-              <p>Automated submission processing, faculty evaluation portal, and direct CO-PO-PSO attainment mapping.</p>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="content-band muted-band" id="assignments">
+
+    <!-- Progress & Assignments -->
+    <section class="content-band" id="assignments">
       <div class="container">
-        <div class="section-heading">
-          <span class="section-kicker">Assignment Registry</span>
-          <h2>Coursework Assignments</h2>
-          <p>Select an assignment below to launch the interactive engineering workbench.</p>
-        </div>
-        <div class="row g-4" data-assignment-grid>
-          <!-- Assignments loaded dynamically -->
+        <div class="row g-5">
+          
+          <!-- Assignments -->
+          <div class="col-12">
+            <div class="section-heading mb-4">
+              <span class="section-kicker">Coursework</span>
+              <h2>Your Assignments</h2>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white">
+              <div class="card-body p-3">
+                <div class="row g-3 align-items-center">
+                  <div class="col-md-8">
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <label for="studentFacultySelect" class="form-label fw-bold mb-0 text-nowrap text-dark"><i class="bi bi-person-badge text-primary me-1"></i>Select Your Faculty:</label>
+                      <select id="studentFacultySelect" class="form-select border-primary-subtle shadow-sm rounded-pill flex-grow-1" style="min-width: 180px;" onchange="if(window.MEILP && window.MEILP.renderAssignmentCards){ window.MEILP.renderAssignmentCards(); }">
+                        <option value="Dr. Rahul Bachute">Dr. Rahul Bachute</option>
+                        <option value="Dr. Niranjan Shegokar">Dr. Niranjan Shegokar</option>
+                        <option value="Prof. Atul Gowardipe">Prof. Atul Gowardipe</option>
+                      </select>
+                      <button id="btnShowAssignments" class="btn btn-primary rounded-pill px-4 shadow-sm text-nowrap" type="button" onclick="if(window.MEILP && window.MEILP.renderAssignmentCards){ window.MEILP.renderAssignmentCards(); }">
+                        <i class="bi bi-eye me-1"></i>Show Assignments
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-4 text-md-end">
+                    <span id="facultyStatusBanner" class="badge bg-primary-subtle text-primary-emphasis px-3 py-2 rounded-pill small">
+                      <i class="bi bi-shield-check me-1"></i>Viewing schedule for Dr. Rahul Bachute
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4" data-assignment-grid>
+              <!-- EC-01 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=elevator'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-building-gear" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-01</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Safety Verification of Elevator Suspension Cables</h3>
+                    <p class="text-secondary small mb-3">Configuration-driven engineering challenge for independent elevator suspension cable review.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">9 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=elevator" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-02 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=motorcycle'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-bicycle" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-02</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Determine factor of safety of motorcycle stand</h3>
+                    <p class="text-secondary small mb-3">Template-authored engineering challenge for side stand stability and load reasoning.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">9 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=motorcycle" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-03 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=materials-selection'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-tools" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-03</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Engineering Materials Selection in Two-Wheeler Components</h3>
+                    <p class="text-secondary small mb-3">Engineering challenge scaffold for material selection decisions across two-wheeler components.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">11 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=materials-selection" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-04 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=borewell-pump'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-tools" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-04</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Ergonomic Design and Safety Verification of a Borewell Pump Hand Lever</h3>
+                    <p class="text-secondary small mb-3">Configuration-driven engineering challenge for borewell pump hand lever safety and ergonomics.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">14 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=borewell-pump" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-05 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=failure-analysis'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-wrench" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-05</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Failure Analysis and Material Selection of a Failed Mechanical Component</h3>
+                    <p class="text-secondary small mb-3">Engineering challenge to investigate the failure mechanism, material, and factor of safety of a bolted joint.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">14 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=failure-analysis" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-06 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=stress-concentration'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-symmetry-horizontal" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-06</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Stress Concentration Analysis of a Plate with a Central Hole</h3>
+                    <p class="text-secondary small mb-3">Engineering challenge to analyze stress concentration, nominal vs peak stress, material selection, and safety factor of a plate with a hole.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">13 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=stress-concentration" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-07 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=shafts'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-gear-wide-connected" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-07</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Design of Shaft for a Real-World Engineering Application</h3>
+                    <p class="text-secondary small mb-3">Engineering challenge to determine loading, bearing reactions, bending moment, torque, combined loading, required shaft diameter, and factor of safety.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">11 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=shafts" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-08 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=Keys'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-key-fill" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-08</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Design and Analysis of Keys Used in Real Mechanical Systems</h3>
+                    <p class="text-secondary small mb-3">Engineering challenge to analyze shaft-hub-key connections, transmitted torque, tangential force, key width and height, shear and crushing failure modes.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">11 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=Keys" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+
+              <!-- EC-09 -->
+              <div class="col-12 col-md-6">
+                <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow bg-white" style="cursor: pointer;" onclick="window.location.href='assignment-workbench.html?assignment=coupling'">
+                  <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi bi-link-45deg" aria-hidden="true"></i></span>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">EC-09</span>
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+                      </div>
+                    </div>
+                    <h3 class="h6 fw-bold text-dark mb-2" style="font-size: 1.05rem;">Identification and Selection of Couplings Used in Mechanical Power Transmission</h3>
+                    <p class="text-secondary small mb-3">Engineering challenge to analyze shaft connections, torque transmission, misalignment accommodation, working principles, and coupling classification.</p>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-light text-dark border">13 tasks</span>
+                      <span class="badge bg-light text-dark border">Design of Machine Elements</span>
+                      <span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>
+                    </div>
+                    <a href="assignment-workbench.html?assignment=coupling" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -153,19 +341,122 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/config.js" defer></script>
-  <script src="js/storage.js" defer></script>
-  <script src="js/event-bus.js" defer></script>
-  <script src="js/state-manager.js" defer></script>
-  <script src="js/component-registry.js" defer></script>
-  <script src="js/base-component.js" defer></script>
-  <script src="js/progress-manager.js" defer></script>
-  <script src="js/router.js" defer></script>
-  <script src="js/assignment-loader.js" defer></script>
-  <script src="js/navigation.js" defer></script>
-  <script src="js/utils.js" defer></script>
-  <script src="js/validator.js" defer></script>
-  <script src="js/engine.js" defer></script>
-  <script src="js/app.js" defer></script>
+  <script src="js/config.js?v=20260813b"></script>
+  <script src="js/storage.js?v=20260813b"></script>
+  <script src="js/assignment-control-service.js?v=20260813b"></script>
+  <script src="js/event-bus.js?v=20260813b"></script>
+  <script src="js/state-manager.js?v=20260813b"></script>
+  <script src="js/component-registry.js?v=20260813b"></script>
+  <script src="js/base-component.js?v=20260813b"></script>
+  <script src="js/progress-manager.js?v=20260813b"></script>
+  <script src="js/router.js?v=20260813b"></script>
+  <script src="js/assignment-loader.js?v=20260813b"></script>
+  <script src="js/navigation.js?v=20260813b"></script>
+  <script src="js/utils.js?v=20260813b"></script>
+  <script src="js/validator.js?v=20260813b"></script>
+  <script src="js/engine.js?v=20260813b"></script>
+  <script src="js/app.js?v=20260813b"></script>
+
+  <!-- Faculty Login Modal -->
+  <div class="modal fade" id="facultyLoginModal" tabindex="-1" aria-labelledby="facultyLoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: var(--meilp-surface); color: var(--meilp-text); border: 1px solid var(--meilp-border);">
+        <div class="modal-header" style="border-bottom-color: var(--meilp-border);">
+          <h5 class="modal-title" id="facultyLoginModalLabel"><i class="bi bi-shield-lock me-2"></i>Faculty Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="facultyLoginForm">
+            <div class="mb-3">
+              <label for="facultyUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="facultyUsername" required style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
+            </div>
+            <div class="mb-3">
+              <label for="facultyPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="facultyPassword" required style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
+            </div>
+            <div class="alert alert-info py-2 px-3 mb-3 small opacity-75" style="background-color: rgba(13, 202, 240, 0.1); border-color: rgba(13, 202, 240, 0.2); color: var(--meilp-text);">
+              <i class="bi bi-info-circle me-1"></i> Guest Login: Username <code>Guest</code> | Password <code>Guest@123</code>
+            </div>
+            <div id="loginError" class="text-danger small d-none mb-3">Incorrect username or password.</div>
+            <a href="faculty/challenges.html" id="btnGoToChallengeControls" class="btn btn-primary w-100" onclick="handleFacultyLoginAction(event)"><i class="bi bi-journals me-1"></i>Go to Challenge Controls</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function resolveFacultyName(rawInput) {
+      const input = (rawInput || "").toLowerCase().trim();
+      if (input.includes("rahul") || input.includes("bachute")) {
+        return "Dr. Rahul Bachute";
+      }
+      if (input.includes("niranjan") || input.includes("shegokar")) {
+        return "Dr. Niranjan Shegokar";
+      }
+      if (input.includes("atul") || input.includes("gowardipe")) {
+        return "Prof. Atul Gowardipe";
+      }
+      if (input.includes("guest")) {
+        return "Guest";
+      }
+      return rawInput.trim() || "Dr. Rahul Bachute";
+    }
+
+    function handleFacultyLoginAction(e) {
+      try {
+        const uEl = document.getElementById("facultyUsername");
+        const userRaw = (uEl?.value || "").trim();
+        const facultyName = resolveFacultyName(userRaw);
+        localStorage.setItem("loggedInFaculty", facultyName);
+        localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(facultyName));
+      } catch (err) {}
+      window.location.href = "faculty/challenges.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const facultyBtn = document.getElementById("facultyAccessBtn");
+      const loginForm = document.getElementById("facultyLoginForm");
+      const loginError = document.getElementById("loginError");
+      let loginModal;
+
+      if (facultyBtn) {
+        facultyBtn.addEventListener("click", (e) => {
+          const modalEl = document.getElementById('facultyLoginModal');
+          if (modalEl && window.bootstrap) {
+            e.preventDefault();
+            if (!loginModal) {
+              loginModal = new bootstrap.Modal(modalEl);
+            }
+            if (loginError) loginError.classList.add("d-none");
+            const u = document.getElementById("facultyUsername");
+            const p = document.getElementById("facultyPassword");
+            if (u && !u.value) u.value = "Dr. Rahul Bachute";
+            if (p && !p.value) p.value = "dypic123";
+            loginModal.show();
+          } else {
+            localStorage.setItem("loggedInFaculty", "Dr. Rahul Bachute");
+            window.location.href = "faculty/challenges.html";
+          }
+        });
+      }
+
+      if (loginForm) {
+        loginForm.addEventListener("submit", (e) => {
+          handleFacultyLoginAction(e);
+        });
+      }
+
+    // Backup render trigger in case app.js DOMContentLoaded already fired
+    function forceInitStudentView() {
+      if (window.MEILP && typeof window.MEILP.renderAssignmentCards === 'function') {
+        window.MEILP.renderAssignmentCards();
+      } else {
+        setTimeout(forceInitStudentView, 100);
+      }
+    }
+    forceInitStudentView();
+  </script>
 </body>
 </html>

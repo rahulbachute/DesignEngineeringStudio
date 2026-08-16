@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/bench-vice/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-18",
+      "title": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/bench-vice/images/EA-18 Bench vice.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-18",
+      "title": "Bench Vice Power-Screw Mechanism Reference Diagram",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/bench-vice/images/EA-18 Bench vice.png",
+      "required": true
+    }
+  }
+}

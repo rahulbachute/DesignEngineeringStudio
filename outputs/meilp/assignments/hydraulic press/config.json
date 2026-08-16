@@ -1,0 +1,123 @@
+{
+  "id": "EA-20",
+  "projectCode": "EA-20",
+  "slug": "hydraulic-press",
+  "title": "Design of a Power Screw for a Hydraulic Press",
+  "subject": "PCC303-MEC",
+  "courseCode": "PCC303-MEC",
+  "courseName": "Design of Machine Elements",
+  "unit": "Unit III",
+  "courseOutcome": {
+    "code": "CO2",
+    "statement": "Design power screws, fasteners, and power transmission elements by applying torque, efficiency, and self-locking criteria for safe and reliable mechanical operation."
+  },
+  "programOutcomes": [
+    "PO1",
+    "PO2",
+    "PO3",
+    "PO4",
+    "PO5",
+    "PO7",
+    "PO8",
+    "PO9",
+    "PO11"
+  ],
+  "programSpecificOutcomes": [
+    "PSO1",
+    "PSO2"
+  ],
+  "bloomLevelsCovered": [
+    "L1 Understand",
+    "L2 Understand",
+    "L3 Apply",
+    "L4 Analyse",
+    "L5 Evaluate"
+  ],
+  "cceType": "Engineering Challenge",
+  "cceMarks": 12,
+  "facultyName": "Prof. Rahul Bachute",
+  "client": "Heavy Press Machinery Division — Hydraulic Press Bed Positioning System",
+  "location": "Pune",
+  "priority": "High",
+  "estimatedDuration": "90 minutes",
+  "difficulty": "Intermediate to Advanced",
+  "submissionMode": "Individual or Group",
+  "version": "1.0.0",
+  "settings": {
+    "attemptMode": "both",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true
+  },
+  "tasks": [
+    {
+      "id": "project-charter",
+      "type": "information",
+      "title": "Understand Hydraulic Press and Bed-Adjustment Power Screw Application"
+    },
+    {
+      "id": "component-identification",
+      "type": "image-label",
+      "activityCode": "EA20-A02",
+      "title": "Identify Hydraulic Press and Power-Screw Components"
+    },
+    {
+      "id": "motion-sequence",
+      "type": "text-mcq",
+      "title": "Differentiate Hydraulic Pressing Load Path vs Bed-Adjustment Mechanism"
+    },
+    {
+      "id": "design-data",
+      "type": "text-mcq",
+      "title": "Establish Engineering Design Requirements and Given Parameters"
+    },
+    {
+      "id": "screw-geometry",
+      "type": "text-mcq",
+      "title": "Determine Screw Geometry, Core/Mean Diameters, and Helix Angle"
+    },
+    {
+      "id": "thread-torque",
+      "type": "text-mcq",
+      "title": "Calculate Virtual Friction Angle and Thread Friction Torque"
+    },
+    {
+      "id": "collar-torque",
+      "type": "text-mcq",
+      "title": "Calculate Mean Collar Diameter and Thrust Collar Friction Torque"
+    },
+    {
+      "id": "total-torque-efficiency",
+      "type": "text-mcq",
+      "title": "Determine Total Operating Torque, Handwheel Effort, and Efficiency"
+    },
+    {
+      "id": "self-locking-safety",
+      "type": "text-mcq",
+      "title": "Evaluate Self-Locking Condition, Lowering Torque, and Fail-Safe Operation"
+    },
+    {
+      "id": "stress-verification",
+      "type": "recommendation",
+      "title": "Stress Analysis (Direct Compressive, Torsional Shear, Combined) and FOS Verification"
+    },
+    {
+      "id": "final-report",
+      "type": "reflection",
+      "title": "Hydraulic Press Power Screw Design & Analysis Report"
+    },
+    {
+      "id": "submit",
+      "type": "submission",
+      "title": "Submission"
+    }
+  ],
+  "dataFiles": {
+    "workflow": "assignments/hydraulic-press/workflow.json",
+    "content": "assignments/hydraulic-press/content.json",
+    "rubric": "assignments/hydraulic-press/rubric.json",
+    "assetManifest": "assignments/hydraulic-press/asset-manifest.json",
+    "evaluationTemplate": "assignments/hydraulic-press/evaluation-template.json"
+  }
+}

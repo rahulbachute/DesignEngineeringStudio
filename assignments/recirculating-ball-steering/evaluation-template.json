@@ -1,0 +1,19 @@
+{
+  "assignmentId": "EC-21",
+  "assignmentTitle": "Design of Automotive Steering Gear (Recirculating Ball Type)",
+  "maxTotalMarks": 12.0,
+  "courseOutcome": "CO2",
+  "criteria": [
+    { "id": "ea21-act-1", "name": "Task 1: Steering Gear Application Understanding", "category": "Concept", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO2", "rubricRef": "crit-01" },
+    { "id": "ea21-act-2", "name": "Task 2: Component & Interface Identification", "category": "Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-02" },
+    { "id": "ea21-act-3", "name": "Task 3: Recirculating-Ball Principle & Friction Reduction", "category": "Concept", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-03" },
+    { "id": "ea21-act-4", "name": "Task 4: Ball-Nut Axial Motion & Kinematics", "category": "Concept", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-04" },
+    { "id": "ea21-act-5", "name": "Task 5: Steering Gear Design Parameters & Given Data", "category": "Concept", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-05" },
+    { "id": "ea21-act-6", "name": "Task 6: Worm Lead & Ball-Nut Axial Travel", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO2", "rubricRef": "crit-06" },
+    { "id": "ea21-act-7", "name": "Task 7: Rack-and-Sector Angular Displacement", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO2", "rubricRef": "crit-07" },
+    { "id": "ea21-act-8", "name": "Task 8: Overall Steering Ratio, Output Torque & Pitman Force", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO2", "rubricRef": "crit-08" },
+    { "id": "ea21-act-9", "name": "Task 9: Complete Kinematic Sequence Analysis", "category": "Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-09" },
+    { "id": "ea21-act-10", "name": "Task 10: Engineering Assessment, Contact Stress & Backlash", "category": "Design Decision", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-10" },
+    { "id": "ea21-act-11", "name": "Task 11: Comprehensive Technical Design Report", "category": "Synthesis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-11" }
+  ]
+}

@@ -1,0 +1,605 @@
+{
+  "assignment": {
+    "id": "EA-18",
+    "slug": "bench-vice",
+    "title": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism"
+  },
+  "dashboard": {
+    "projectCode": "EA-18",
+    "projectTitle": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO2: Design power screws, fasteners, and power transmission elements by applying torque, efficiency, and self-locking criteria for safe and reliable mechanical operation.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-18",
+      "title": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism",
+      "path": "assignments/bench-vice/images/EA-18 Bench vice.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-18",
+      "title": "Bench Vice Power-Screw Mechanism Reference Diagram",
+      "path": "assignments/bench-vice/images/EA-18 Bench vice.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      {
+        "id": "individual",
+        "label": "Individual Mode",
+        "description": "Independently analyse the bench vice power-screw mechanism and calculate torque, efficiency and self-locking."
+      },
+      {
+        "id": "group",
+        "label": "Group Mode (2–4 Students)",
+        "description": "Collaborate on the power-screw torque requirement, collar friction, efficiency, and engineering judgement activities."
+      }
+    ],
+    "fields": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "Engineering College",
+        "required": true,
+        "type": "select"
+      },
+      {
+        "name": "branch",
+        "label": "Branch / Discipline",
+        "required": true,
+        "readonly": true,
+        "auto": "Mechanical Engineering"
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Understand the Bench Vice Power-Screw Application",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Engineering Brief — Bench Vice Power-Screw Design",
+          "body": "A workshop bench vice is a fundamental mechanical clamping device. You are required to analyse the power-screw mechanism of a conventional bench vice, estimate the total torque an operator must apply to the handle to generate a specified clamping load, determine the mechanical efficiency of the screw mechanism, and assess whether the screw is self-locking under the given friction conditions."
+        },
+        {
+          "type": "theory",
+          "title": "Power Screw — Rotary Input to Axial Output",
+          "body": "A power screw converts rotational motion into controlled linear motion and force.\n\nIn a bench vice:\n  Handle rotation → Screw rotation about its longitudinal axis\n  Screw rotation → Helical thread interaction between screw and nut (fixed body)\n  Thread interaction → Axial translation of the movable jaw\n  Jaw translation → Clamping force on the workpiece\n\nThe screw must overcome two distinct friction interfaces:\n  1. Thread Friction — resistance at the helical thread engagement between screw and nut\n  2. Collar Friction — resistance at the thrust collar interface between the screw head and the movable jaw\n\nFor a square-thread power screw, the torque to raise the load (generate clamping force) is:\n  T_s = (W × dm / 2) × [(μ + tan α) / (1 − μ × tan α)]\n\nwhere:\n  W   = clamping load (N)\n  dm  = mean screw diameter (mm)\n  μ   = coefficient of thread friction (dimensionless)\n  α   = helix angle (degrees)\n\nCollege friction torque:\n  T_c = μc × W × dc / 2\n\nTotal operating torque:\n  T = T_s + T_c\n\nMechanical efficiency of the screw:\n  η (%) = [W × L / (2π × T)] × 100\n\nSelf-locking condition (screw will not back-drive under load):\n  μ > tan α"
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives",
+          "items": [
+            "Identify the bench vice power-screw components from Engineering Asset EA-18.",
+            "Trace the load path from handle rotation through thread interaction to clamping force.",
+            "Establish all given design data for the bench vice screw mechanism.",
+            "Calculate mean screw diameter and helix angle.",
+            "Compute thread friction torque using the square-thread torque equation.",
+            "Account for collar friction and determine total operating torque.",
+            "Calculate power-screw efficiency and verify the self-locking condition.",
+            "Estimate the required operator hand force at the handle.",
+            "Provide a technically justified engineering judgement on the mechanism suitability."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-18 Project Charter for Bench Vice Power-Screw Analysis."
+    },
+    "component-identification": {
+      "title": "Identify Bench Vice Components and Mechanical Functions",
+      "image": "assignments/bench-vice/images/EA-18 Bench vice.png",
+      "figure": "Engineering Asset EA-18",
+      "description": "Engineering asset illustrating the conventional bench vice power-screw mechanism with labelled components, force arrows, and friction interfaces.",
+      "options": [
+        "Fixed Jaw",
+        "Movable Jaw",
+        "Jaw Plate",
+        "Workpiece",
+        "Power Screw",
+        "Screw Head",
+        "Sliding Handle",
+        "Threaded Engagement",
+        "Sliding Guide",
+        "Fixed Vice Body"
+      ],
+      "labels": [
+        {
+          "componentNumber": 1,
+          "x": 10.5,
+          "y": 13.5,
+          "correctAnswer": "Fixed Jaw",
+          "feedback": "The fixed jaw is integral with the vice body and remains stationary during clamping operations."
+        },
+        {
+          "componentNumber": 2,
+          "x": 40.5,
+          "y": 15.0,
+          "correctAnswer": "Movable Jaw",
+          "feedback": "The movable jaw slides horizontally along the guide rails toward or away from the fixed jaw under the action of the power screw."
+        },
+        {
+          "componentNumber": 3,
+          "x": 8.3,
+          "y": 22.5,
+          "correctAnswer": "Jaw Plate",
+          "feedback": "Hardened steel jaw plates are bolted to both jaw faces and provide the direct clamping contact surface with the workpiece."
+        },
+        {
+          "componentNumber": 4,
+          "x": 6.9,
+          "y": 30.8,
+          "correctAnswer": "Workpiece",
+          "feedback": "The workpiece is the component being held between the two opposing jaw plates during machining or assembly operations."
+        },
+        {
+          "componentNumber": 5,
+          "x": 64.0,
+          "y": 32.0,
+          "correctAnswer": "Power Screw",
+          "feedback": "The horizontal power screw converts the rotary torque applied by the operator at the handle into axial clamping force on the movable jaw."
+        },
+        {
+          "componentNumber": 6,
+          "x": 92.3,
+          "y": 36.1,
+          "correctAnswer": "Screw Head",
+          "feedback": "The screw head is the enlarged end of the power screw through which the sliding handle is inserted. It transmits handle torque to the screw."
+        },
+        {
+          "componentNumber": 7,
+          "x": 93.4,
+          "y": 68.2,
+          "correctAnswer": "Sliding Handle",
+          "feedback": "The sliding tommy-bar handle passes through the screw head perpendicular to the screw axis. Operator pushes the handle tangentially to rotate the screw."
+        },
+        {
+          "componentNumber": 8,
+          "x": 71.8,
+          "y": 33.1,
+          "correctAnswer": "Threaded Engagement",
+          "feedback": "The threaded engagement zone is where the helical thread of the power screw meshes with the internal threaded nut in the fixed vice body, converting rotation to axial force."
+        },
+        {
+          "componentNumber": 9,
+          "x": 54.6,
+          "y": 75.4,
+          "correctAnswer": "Sliding Guide",
+          "feedback": "The sliding guide rails support and constrain the movable jaw to translate strictly in the horizontal direction, preventing rotation or tilting."
+        },
+        {
+          "componentNumber": 10,
+          "x": 5.9,
+          "y": 74.7,
+          "correctAnswer": "Fixed Vice Body",
+          "feedback": "The fixed cast-iron vice body houses the threaded nut, provides the mounting base, and supports the entire mechanism."
+        }
+      ]
+    },
+    "motion-sequence": {
+      "title": "Understand Rotary-to-Linear Motion and Load Path",
+      "prompt": "Analyse how the operator's hand effort at the handle is ultimately converted into clamping force on the workpiece, referring to Engineering Asset EA-18.",
+      "mcq": {
+        "question": "Which sequence correctly describes the complete mechanical load transmission path from operator input to clamping force in a bench vice power-screw mechanism?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Operator applies tangential force on handle → Handle lever arm applies torque to screw head → Screw rotates about its longitudinal axis → Helical thread interaction with fixed nut converts rotation to axial thrust → Axial thrust drives movable jaw toward fixed jaw → Movable jaw plate applies clamping force on workpiece",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Operator pulls movable jaw directly → Clamping force is applied → Handle rotates as a result → Screw tightens afterward",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Fixed jaw moves toward workpiece → Screw pushes fixed jaw → Handle is rotated by screw → Workpiece is compressed from both sides simultaneously",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Workpiece deformation drives jaw movement → Jaw movement rotates screw → Screw rotation requires no external handle torque",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "design-data": {
+      "title": "Establish Design Data for the Power-Screw Mechanism",
+      "prompt": "Before beginning calculations, confirm all design parameters for the bench vice screw mechanism. All values are as specified in the engineering brief.",
+      "mcq": {
+        "question": "Which set of design parameters correctly represents the complete given data for the EA-18 bench vice power-screw mechanism?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Clamping load W = 20,000 N | Nominal screw diameter d = 24 mm | Single-start square thread pitch p = 5 mm | Lead L = p = 5 mm | Thread friction coefficient μ = 0.12 | Mean collar diameter dc = 36 mm | Collar friction coefficient μc = 0.10 | Effective handle radius R = 200 mm",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Clamping load W = 20,000 N | Nominal screw diameter d = 30 mm | Multi-start thread lead L = 15 mm | Thread friction μ = 0.20 | Collar diameter dc = 50 mm | Handle radius R = 150 mm",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Clamping load W = 10,000 N | d = 24 mm | p = 5 mm | L = 10 mm (double-start) | μ = 0.12 | dc = 36 mm | μc = 0.10 | R = 200 mm",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Clamping load W = 20,000 N | d = 24 mm | p = 8 mm | L = 8 mm | μ = 0.08 | dc = 24 mm | μc = 0.08 | R = 100 mm",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "mean-diameter-helix": {
+      "title": "Determine Mean Diameter and Helix Angle",
+      "prompt": "For a square-thread power screw:\n  Mean Screw Diameter:  dₘ = d − (p / 2)\n  Helix Angle:          tan α = L / (π · dₘ)\n\nGiven Data:\n  Nominal Diameter (d) = 24 mm\n  Thread Pitch (p)     = 5 mm\n  Screw Lead (L)       = p = 5 mm  (Single-Start Square Thread)\n\nCalculate the mean screw diameter (dₘ) and helix angle (α).",
+      "mcq": {
+        "question": "What are the correct mean screw diameter (dₘ) and helix angle (α) for the bench vice power screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "dₘ = d − (p / 2) = 24 − 2.5 = 21.5 mm  |  tan α = L / (π · dₘ) = 5 / (π × 21.5) = 5 / 67.54 = 0.07402  |  α = tan⁻¹(0.07402) ≈ 4.23°",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "dₘ = d − p = 24 − 5 = 19.0 mm  |  tan α = p / (π · d) = 5 / (π × 24) = 0.06631  |  α = tan⁻¹(0.06631) ≈ 3.79°",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "dₘ = d + (p / 2) = 24 + 2.5 = 26.5 mm  |  tan α = L / (2π · dₘ) = 5 / (2π × 26.5) = 0.03003  |  α = tan⁻¹(0.03003) ≈ 1.72°",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "dₘ = d = 24.0 mm  (assumed mean diameter = nominal diameter)  |  tan α = L / (π · d) = 5 / (π × 24) = 0.06631  |  α ≈ 3.79°",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "thread-torque": {
+      "title": "Calculate Thread Friction Torque",
+      "prompt": "For a square-thread power screw, the torque required to raise the clamping load (overcome thread friction and generate axial force) is given by:\n\n  Tₛ = (W · dₘ / 2) · [ (μ + tan α) / (1 − μ · tan α) ]\n\nwhere:\n  W     = 20,000 N       (Clamping Load)\n  dₘ    = 21.5 mm        (Mean Screw Diameter)\n  μ     = 0.12           (Thread Friction Coefficient)\n  α     ≈ 4.23°          (Helix Angle)\n  tan α ≈ 0.07402\n\nCalculate the friction angle φ = tan⁻¹(μ) and thread friction torque Tₛ.\nExpress the result in N·mm.",
+      "mcq": {
+        "question": "What is the correct thread friction torque Tₛ for the bench vice screw mechanism?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Tₛ = (W · dₘ / 2) · [ (μ + tan α) / (1 − μ · tan α) ] = (20,000 × 21.5 / 2) · [ (0.12 + 0.07402) / (1 − 0.12 × 0.07402) ] = 215,000 × (0.19402 / 0.991118) = 215,000 × 0.19576 ≈ 42,088 N·mm  |  φ = tan⁻¹(0.12) ≈ 6.843°",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Tₛ = W · dₘ · μ = 20,000 × 21.5 × 0.12 = 51,600 N·mm  (friction force only — helix angle α ignored; omits the (μ + tan α)/(1 − μ tan α) correction)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Tₛ = (W · dₘ / 2) · tan α = (20,000 × 21.5 / 2) × 0.07402 = 215,000 × 0.07402 = 15,914 N·mm  (load component only — thread friction μ ignored)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Tₛ = (W · L) / (2π) = (20,000 × 5) / (2π) = 100,000 / 6.2832 ≈ 15,915 N·mm  (ideal screw torque without friction)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "collar-total-torque": {
+      "title": "Account for Collar Friction and Total Operating Torque",
+      "prompt": "Collar friction torque accounts for friction at the thrust collar interface between the screw head and the movable jaw:\n\n  T_c = μ_c · W · (d_c / 2)\n\nwhere:\n  μ_c  = 0.10     (Collar Friction Coefficient)\n  W    = 20,000 N (Clamping Load)\n  d_c  = 36 mm    (Mean Collar Diameter)\n\nTotal operating torque required at the handle:\n\n  T = Tₛ + T_c\n\nUse Tₛ ≈ 42,088 N·mm from the previous activity.\nExpress results in N·mm and N·m.",
+      "mcq": {
+        "question": "What are the correct collar friction torque (T_c) and total operating torque (T), expressed in N·mm and N·m?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "T_c = μ_c · W · (d_c / 2) = 0.10 × 20,000 × (36 / 2) = 36,000 N·mm  |  T = Tₛ + T_c = 42,088 + 36,000 = 78,088 N·mm ≈ 78.09 N·m",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "T_c = μ_c · W · d_c = 0.10 × 20,000 × 36 = 72,000 N·mm  (forgot ÷ 2)  |  T = Tₛ + T_c = 42,088 + 72,000 = 114,088 N·mm ≈ 114.09 N·m",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "T_c = (μ_c · W) / d_c = (0.10 × 20,000) / 36 = 55.56 N·mm  (inverted formula)  |  T = Tₛ + T_c = 42,088 + 55.56 = 42,143.56 N·mm ≈ 42.14 N·m",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "T_c = μ_c · (d_c / 2) = 0.10 × (36 / 2) = 1.8 N·mm  (forgot load W)  |  T = Tₛ + T_c = 42,088 + 1.8 = 42,089.8 N·mm ≈ 42.09 N·m",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "efficiency-selflocking": {
+      "title": "Calculate Efficiency, Self-Locking Condition and Operator Force",
+      "prompt": "1. Power-Screw Mechanical Efficiency:\n   η (%) = [ (W · L) / (2π · T) ] × 100%\n\n2. Self-Locking Condition:\n   Screw is self-locking (will not back-drive under clamping load) if:\n   μ > tan α   (or friction angle φ > helix angle α)\n\n3. Required Operator Hand Force at Handle:\n   F = T / R\n\nGiven:\n  W = 20,000 N,   L = 5 mm,   T ≈ 78,088 N·mm,   R = 200 mm\n  μ = 0.12,   tan α ≈ 0.07402  (α ≈ 4.23°)",
+      "mcq": {
+        "question": "What are the correct efficiency (η), self-locking assessment, and required operator hand force (F)?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "η = [ (W · L) / (2π · T) ] × 100% = [ 100,000 / (2π × 78,088) ] × 100% ≈ 20.38%  |  Self-Locking: μ = 0.12 > tan α = 0.07402  →  YES (Self-locking verified)  |  F = T / R = 78,088 / 200 ≈ 390.4 N",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "η = [ (W · L) / T ] × 100% = (100,000 / 78,088) × 100% ≈ 128.06%  (forgot 2π in denominator)  |  Self-Locking: NOT self-locking  |  F = T / R = 78,088 / 200 = 390.4 N",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "η = [ L / (2π · μ · dₘ) ] × 100% = 5 / (2π × 0.12 × 21.5) × 100% ≈ 30.83%  |  Self-Locking: NO (μ < tan α)  |  F = 390.0 N",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "η = (Tₛ / T) × 100% = (42,088 / 78,088) × 100% ≈ 53.90%  (this is thread torque fraction, not overall efficiency)  |  Self-Locking: YES  |  F = 390.0 N",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "engineering-judgement": {
+      "title": "Engineering Judgement — Mechanism Suitability Assessment",
+      "stationCode": "DRS-BENCH-VICE",
+      "image": "assignments/bench-vice/images/EA-18 Bench vice.png",
+      "figure": "Engineering Asset EA-18",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Mechanism is suitable — self-locking is maintained, operator force is acceptable",
+          "label": "Mechanism Suitability: Acceptable"
+        },
+        {
+          "id": "C02",
+          "name": "Mechanism requires improvement — low efficiency and high operator effort identified",
+          "label": "Mechanism Suitability: Improvement Recommended"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-suitable",
+          "title": "MECHANISM IS SUITABLE — SELF-LOCKING CONFIRMED, OPERATOR FORCE WITHIN PRACTICAL RANGE",
+          "suitability": "Acceptable Engineering Assessment",
+          "description": "The bench vice mechanism is self-locking (μ = 0.12 > tan α ≈ 0.074), which ensures the screw will not back-drive under clamping load — a critical safety requirement. The calculated efficiency of approximately 20% is typical for conventional square-thread power screws, where friction is deliberately maintained to ensure self-locking. An operator hand force of approximately 390 N at R = 200 mm handle is within the practical operating range for a workshop bench vice. The mechanism is engineeringly suitable for the specified 20 kN clamping requirement."
+        },
+        {
+          "id": "opt-improve",
+          "title": "MECHANISM REQUIRES IMPROVEMENT — LOW EFFICIENCY AND ELEVATED OPERATOR EFFORT",
+          "suitability": "Design Improvement Recommended",
+          "description": "While the mechanism is self-locking, efficiency of approximately 20% indicates significant friction losses, with collar friction alone accounting for approximately 36,000 N·mm out of 78,088 N·mm total torque (46% of total losses). Potential improvements include: (1) Increasing handle radius beyond 200 mm to reduce operator hand force; (2) Introducing a thrust bearing at the collar interface to reduce μc from 0.10; (3) Considering ACME thread profile for improved efficiency while retaining adequate self-locking; (4) Applying appropriate lubrication to both thread and collar interfaces. The design choice depends on whether minimizing operator effort or maintaining simplicity and reliability is the primary priority."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Bench Vice Power-Screw Analysis and Design Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Power-Screw Mechanism Purpose and Operating Principle",
+          "placeholder": "Describe the function of the bench vice power screw and explain how handle rotation is converted to clamping force. Identify the two friction interfaces and their engineering significance."
+        },
+        {
+          "id": "r2",
+          "label": "2. Design Data, Mean Diameter, Helix Angle and Friction Angle",
+          "placeholder": "State all given design parameters. Show calculations for mean screw diameter dm = d − p/2, helix angle α = arctan(L / π dm), and friction angle φ = arctan(μ). Include units."
+        },
+        {
+          "id": "r3",
+          "label": "3. Thread Torque, Collar Torque and Total Operating Torque",
+          "placeholder": "Present full calculations for T_s using the square-thread torque equation, T_c using collar friction formula, and total torque T = T_s + T_c in both N·mm and N·m."
+        },
+        {
+          "id": "r4",
+          "label": "4. Efficiency, Self-Locking Condition, Operator Hand Force and Engineering Recommendation",
+          "placeholder": "Calculate power-screw efficiency η (%), verify self-locking condition (μ vs tan α), compute operator hand force F = T/R, and provide your engineering recommendation on mechanism suitability and any design improvements."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "body": "Your complete Bench Vice Power-Screw Analysis Challenge (EA-18) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

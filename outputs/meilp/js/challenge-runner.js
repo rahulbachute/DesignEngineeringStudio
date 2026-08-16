@@ -93,13 +93,68 @@ class ChallengeRunner {
     this.bindEvents();
     this.applyTheme();
     this.renderHeader();
+    
+    this.controlService = window.MEILP.assignmentControlService || new window.MEILP.AssignmentControlService();
     const state = this.services.stateManager.getState();
+    const facultyName = (state.student && state.student.facultyName) ? state.student.facultyName : "Dr. Rahul Bachute";
+    const access = this.controlService.evaluateAccess(config.id || this.assignmentSlug, facultyName);
+
+    if (!access.enabled) {
+      this.renderDisabledScreen(facultyName);
+      return;
+    }
+
+    if (access.isPastDue) {
+      this.renderPastDueBanner(access.formattedDueDate, facultyName);
+    }
+
     if (state.student.saved) {
       const mode = state.student.attemptMode || "individual";
       this.setAttemptModeLabel(mode);
       this.renderDashboard();
     } else {
       this.renderAttemptMode();
+    }
+  }
+
+  renderDisabledScreen(facultyName) {
+    this.setActivity("Assignment Disabled", "Access Restricted");
+    this.setBreadcrumb("Access Restricted");
+    const host = this.host();
+    if (host) {
+      host.innerHTML = `
+        <div class="card border-danger shadow-sm rounded-4 text-center p-5 bg-white my-4">
+          <div class="mb-3 text-danger fs-1">
+            <i class="bi bi-slash-circle-fill"></i>
+          </div>
+          <h3 class="h4 text-dark fw-bold mb-2">Assignment Disabled for Your Class</h3>
+          <p class="text-secondary max-w-lg mx-auto mb-4">
+            This assignment has been disabled by <strong>${window.MEILP.escapeHtml(facultyName)}</strong>. Students in this class cannot access or submit this coursework at this time.
+          </p>
+          <div>
+            <a href="index.html" class="btn btn-primary rounded-pill px-4">
+              <i class="bi bi-arrow-left me-1"></i> Return to Assignment Catalog
+            </a>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  renderPastDueBanner(formattedDueDate, facultyName) {
+    const existing = document.getElementById("pastDueHeaderBanner");
+    if (existing) return;
+
+    const banner = document.createElement("div");
+    banner.id = "pastDueHeaderBanner";
+    banner.className = "alert alert-warning border-0 rounded-0 m-0 py-2 px-4 d-flex justify-content-between align-items-center bg-warning-subtle text-warning-emphasis";
+    banner.innerHTML = `
+      <span><i class="bi bi-exclamation-triangle-fill me-2"></i><strong>Submission Deadline Expired:</strong> The last date for submission set by <strong>${window.MEILP.escapeHtml(facultyName)}</strong> was ${formattedDueDate}. Submissions are locked.</span>
+      <span class="badge bg-warning text-dark">View Only</span>
+    `;
+    const header = document.querySelector(".workbench-header");
+    if (header && header.parentNode) {
+      header.parentNode.insertBefore(banner, header.nextSibling);
     }
   }
 

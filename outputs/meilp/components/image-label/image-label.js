@@ -164,7 +164,17 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
       }
       const marker = document.createElement("span");
       marker.className = "label-marker";
-      marker.textContent = String(this.getComponentNumber(label, index));
+      const isHidden = this.config.hideMarkers || this.config.markerStyle === "invisible" || label.invisible;
+      if (isHidden) {
+        marker.classList.add("label-marker-invisible");
+        marker.style.opacity = "0";
+        marker.style.background = "transparent";
+        marker.style.border = "none";
+        marker.style.boxShadow = "none";
+        marker.style.color = "transparent";
+      } else {
+        marker.textContent = String(this.getComponentNumber(label, index));
+      }
       marker.style.left = `${Number(x)}%`;
       marker.style.top = `${Number(y)}%`;
       markerLayer.append(marker);
@@ -184,8 +194,12 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
     if (this.eventBus) {
       this.eventBus.listen("zoom-changed", () => this.syncMarkerLayer());
       this.eventBus.listen("transform-changed", () => this.syncMarkerLayer());
+      this.eventBus.listen("image-loaded", () => this.syncMarkerLayer());
     }
     window.addEventListener("resize", () => this.syncMarkerLayer());
+    
+    // Fallback sync after layout
+    setTimeout(() => this.syncMarkerLayer(), 100);
   }
 
   /**

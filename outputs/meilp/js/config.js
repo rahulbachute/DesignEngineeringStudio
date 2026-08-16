@@ -18,7 +18,7 @@ window.MEILP.platformConfig = {
 };
 
 window.MEILP.dataSources = {
-  assignmentRegistry: "data/assignments.json"
+  assignmentRegistry: "../../data/assignments.json"
 };
 
 window.MEILP.googleSheetsConfig = {
