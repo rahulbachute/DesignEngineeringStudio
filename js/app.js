@@ -26,6 +26,47 @@ const ALL_ASSIGNMENTS = [
   { id: "EA-22", title: "Design of a 2-Ton Mobile Scissor Lift Power Screw", discipline: "Design of Machine Elements", summary: "Engineering challenge to design, analyse, and verify the horizontal power-screw mechanism of a 2-ton mobile scissor lift, calculating scissor kinematic force transformation, thread and collar friction torques, operating torque, efficiency, self-locking safety, and combined core stresses.", tasks: 11, icon: "bi-layers-half", launchPath: "assignment-workbench.html?assignment=mobile-scissor-lift" }
 ];
 
+// ─── College to Faculty Mapping ──────────────────────────────────────────────
+const COLLEGE_FACULTY_MAP = {
+  "Ajeenkya D.Y. Patil School of Engineering, Lohegaon": [
+    "Dr. Rahul Bachute",
+    "Dr. Niranjan Shegokar",
+    "Prof. Atul Gowardipe"
+  ],
+  "Dr. D.Y. Patil Institute of Technology, Pimpri, Pune": [
+    "Dr. Rahul Bachute",
+    "Dr. Niranjan Shegokar",
+    "Prof. Atul Gowardipe"
+  ],
+  "D.Y. Patil College of Engineering, Akurdi, Pune": [
+    "Dr. Rahul Bachute",
+    "Dr. Niranjan Shegokar",
+    "Prof. Atul Gowardipe"
+  ],
+  "Jaihind College of Engineering": [
+    "Prof. Said Khandu"
+  ]
+};
+
+const DEFAULT_FACULTY_LIST = [
+  "Dr. Rahul Bachute",
+  "Dr. Niranjan Shegokar",
+  "Prof. Atul Gowardipe",
+  "Prof. Said Khandu"
+];
+
+function getFacultyForCollege(collegeName) {
+  if (!collegeName) return DEFAULT_FACULTY_LIST;
+  const match = Object.keys(COLLEGE_FACULTY_MAP).find(k => k.toLowerCase() === collegeName.toLowerCase());
+  if (match) return COLLEGE_FACULTY_MAP[match];
+  
+  const cLower = collegeName.toLowerCase();
+  if (cLower.includes("jaihind")) return COLLEGE_FACULTY_MAP["Jaihind College of Engineering"];
+  if (cLower.includes("patil") || cLower.includes("dyp")) return COLLEGE_FACULTY_MAP["Ajeenkya D.Y. Patil School of Engineering, Lohegaon"];
+
+  return DEFAULT_FACULTY_LIST;
+}
+
 // ─── Direct localStorage read — zero abstraction ──────────────────────────────
 function normalizeFacultyKey(name) {
   if (!name || typeof name !== "string") return "dr-rahul-bachute";
@@ -33,6 +74,7 @@ function normalizeFacultyKey(name) {
   if (s.includes("rahul") || s.includes("bachute")) return "dr-rahul-bachute";
   if (s.includes("niranjan") || s.includes("shegokar")) return "dr-niranjan-shegokar";
   if (s.includes("atul") || s.includes("gowardipe")) return "prof-atul-gowardipe";
+  if (s.includes("said") || s.includes("khandu")) return "prof-said-khandu";
   return s.replace(/[^a-z0-9]+/g, "-");
 }
 
@@ -67,9 +109,61 @@ function escapeHtml(str) {
   return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+function getSelectedCollege() {
+  const sel = document.getElementById("studentCollegeSelect");
+  if (sel && sel.value) return sel.value;
+  try {
+    const stored = JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollege"));
+    if (stored) return stored;
+  } catch(e) {}
+  return "Ajeenkya D.Y. Patil School of Engineering, Lohegaon";
+}
+
 function getSelectedFaculty() {
   const sel = document.getElementById("studentFacultySelect");
   return (sel && sel.value) ? sel.value : (window.localStorage.getItem("meilp:selectedStudentFaculty") ? JSON.parse(window.localStorage.getItem("meilp:selectedStudentFaculty")) : "Dr. Rahul Bachute");
+}
+
+function populateCollegeAndFacultyDropdowns() {
+  const collegeSel = document.getElementById("studentCollegeSelect");
+  const facultySel = document.getElementById("studentFacultySelect");
+  if (!collegeSel || !facultySel) return;
+
+  const colleges = window.MEILP?.colleges || [
+    "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
+    "Jaihind College of Engineering",
+    "COEP Technological University, Pune",
+    "Dr. D.Y. Patil Institute of Technology, Pimpri, Pune",
+    "D.Y. Patil College of Engineering, Akurdi, Pune",
+    "Pimpri Chinchwad College of Engineering (PCCOE), Nigdi, Pune",
+    "Vishwakarma Institute of Technology (VIT), Bibwewadi, Pune",
+    "Other – Pune",
+    "Other – Maharashtra"
+  ];
+
+  const savedCollege = getSelectedCollege();
+  collegeSel.innerHTML = colleges.map(c => `<option value="${escapeHtml(c)}"${c === savedCollege ? " selected" : ""}>${escapeHtml(c)}</option>`).join("");
+
+  updateFacultyDropdown(savedCollege);
+}
+
+function updateFacultyDropdown(collegeName) {
+  const facultySel = document.getElementById("studentFacultySelect");
+  if (!facultySel) return;
+
+  const facultyList = getFacultyForCollege(collegeName);
+  let savedFaculty = "";
+  try { savedFaculty = JSON.parse(window.localStorage.getItem("meilp:selectedStudentFaculty")) || ""; } catch(e) {}
+  if (!savedFaculty || !facultyList.includes(savedFaculty)) {
+    savedFaculty = facultyList[0] || "Dr. Rahul Bachute";
+  }
+
+  facultySel.innerHTML = facultyList.map(f => `<option value="${escapeHtml(f)}"${f === savedFaculty ? " selected" : ""}>${escapeHtml(f)}</option>`).join("");
+
+  try {
+    window.localStorage.setItem("meilp:selectedStudentCollege", JSON.stringify(collegeName));
+    window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(facultySel.value));
+  } catch(e) {}
 }
 
 // ─── Live assignment list (updated when JSON loads successfully) ───────────────
@@ -84,6 +178,7 @@ function renderAssignmentCards(cards) {
   if (Array.isArray(cards) && cards.length > 0) liveAssignments = cards;
   const assignments = liveAssignments;
 
+  const college = getSelectedCollege();
   const faculty = getSelectedFaculty();
   const controls = loadFacultyControls(faculty);
 
@@ -95,7 +190,7 @@ function renderAssignmentCards(cards) {
 
   const banner = document.getElementById("facultyStatusBanner");
   if (banner) {
-    banner.innerHTML = `<i class="bi bi-person-badge-fill me-1"></i>Schedule for <strong>${escapeHtml(faculty)}</strong> &nbsp;(${enabledCount} Active, ${disabledCount} Disabled)`;
+    banner.innerHTML = `<i class="bi bi-person-badge-fill me-1"></i>Schedule for <strong>${escapeHtml(faculty)}</strong> &nbsp;(${enabledCount} Active, ${disabledCount} Disabled) • <span class="opacity-75">${escapeHtml(college)}</span>`;
   }
 
   grid.innerHTML = assignments.map(card => {
@@ -210,17 +305,27 @@ document.addEventListener("DOMContentLoaded", function () {
       } catch (e) { /* try next */ }
     }
     // Merge JSON assignments with faculty-created custom ones
-    const merged = mergeWithCustom(base);
+    populateCollegeAndFacultyDropdowns();
     renderAssignmentCards(merged);
     console.log("[MEILP] Loaded", merged.length, "assignments (", merged.length - base.length, "custom)");
   })();
 
-  const sel = document.getElementById("studentFacultySelect");
+  populateCollegeAndFacultyDropdowns();
+
+  const collegeSel = document.getElementById("studentCollegeSelect");
+  const facultySel = document.getElementById("studentFacultySelect");
   const btn = document.getElementById("btnShowAssignments");
 
-  if (sel) {
-    sel.addEventListener("change", function () {
-      try { window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(sel.value)); } catch(e) {}
+  if (collegeSel) {
+    collegeSel.addEventListener("change", function () {
+      updateFacultyDropdown(collegeSel.value);
+      renderAssignmentCards();
+    });
+  }
+
+  if (facultySel) {
+    facultySel.addEventListener("change", function () {
+      try { window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(facultySel.value)); } catch(e) {}
       renderAssignmentCards();
     });
   }
