@@ -1,0 +1,548 @@
+{
+  "dashboard": {
+    "projectId": "EC-02",
+    "projectTitle": "Determine factor of safety of motorcycle stand and verify whether design is safe",
+    "client": "Urban Mobility Service Workshop",
+    "location": "Pune",
+    "priority": "Medium",
+    "estimatedDuration": "75 minutes",
+    "difficulty": "Intermediate",
+    "courseOutcome": "CO1",
+    "submissionMode": "Individual or Group"
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "rollNumber",
+        "label": "Roll Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "groupName",
+        "label": "Group Name",
+        "required": false
+      },
+      {
+        "name": "student1",
+        "label": "Student 1",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
+    ]
+  },
+  "resources": [
+    {
+      "id": "side-stand-diagram",
+      "type": "line-diagram",
+      "title": "Side stand layout",
+      "path": "assignments/motorcycle/images/side-stand-diagram.svg",
+      "required": true
+    }
+  ],
+  "widgets": [
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "hint",
+      "title": "Engineering Hint",
+      "icon": "bi-lightbulb",
+      "cardType": "hint",
+      "text": "Think about load path, contact patch, lean angle, and overturning tendency."
+    },
+    {
+      "id": "note",
+      "title": "Important Note",
+      "icon": "bi-exclamation-triangle",
+      "cardType": "warning",
+      "text": "A stable parked motorcycle depends on geometry, material strength, and ground contact conditions."
+    },
+    {
+      "id": "outcome",
+      "title": "Learning Outcome",
+      "icon": "bi-bullseye",
+      "cardType": "theory",
+      "text": "Analyze a mechanical support member using design reasoning."
+    },
+    {
+      "id": "co",
+      "title": "CO Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO1 with PO1, PO2, and PSO1 mapping."
+    }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Project Charter",
+      "metadata": {
+        "activityNumber": 1,
+        "marks": 1,
+        "bloomLevel": "L1 Understand",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Context",
+          "body": "A service workshop wants to review side stand stability for commuter motorcycles parked on typical urban surfaces."
+        },
+        {
+          "type": "warning",
+          "title": "Professional Responsibility",
+          "body": "A side stand failure can damage the vehicle and injure users. Recommendations must consider safety, manufacturability, and field use."
+        },
+        {
+          "type": "student-response",
+          "title": "Deliverables",
+          "items": [
+            "Identify side stand elements",
+            "Explain stability principle",
+            "Choose material",
+            "Estimate support load",
+            "Prepare engineering notebook",
+            "Submit recommendation"
+          ]
+        }
+      ],
+      "acceptanceText": "I accept the project charter and will document engineering reasoning."
+    },
+    "engineering-background": {
+      "title": "Engineering Background",
+      "metadata": {
+        "activityNumber": 2,
+        "marks": 0,
+        "bloomLevel": "L1 Understand",
+        "co": "CO1",
+        "po": [
+          "PO1"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "cards": [
+        {
+          "type": "theory",
+          "title": "Stability Background",
+          "body": "A motorcycle on a side stand remains stable when the combined center of gravity projects within the support polygon formed by the tires and stand foot."
+        },
+        {
+          "type": "hint",
+          "title": "Design Focus",
+          "body": "Consider compressive load, bending tendency, pivot support, return spring, and ground contact."
+        }
+      ]
+    },
+    "identify-stand-parts": {
+      "title": "Identify Side Stand Elements",
+      "metadata": {
+        "activityNumber": 3,
+        "marks": 2,
+        "bloomLevel": "L2 Understand",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "image": "assignments/motorcycle/images/EA-02_Student_v1.0.png",
+      "figure": "Figure 1",
+      "description": "Configurable motorcycle side stand diagram.",
+      "options": [
+        "Motorcycle Frame",
+        "Side Stand Mounting Bracket",
+        "Pivot Pin",
+        "Side Stand Arm",
+        "Return Spring",
+        "Spring Hook",
+        "Foot Pad",
+        "Ground Contact Point",
+        "Ground Line"
+      ],
+      "labels": [
+        {
+          "componentNumber": 1,
+          "correctAnswer": "Motorcycle Frame",
+          "feedback": "The motorcycle frame is the main structural base of the vehicle."
+        },
+        {
+          "componentNumber": 2,
+          "correctAnswer": "Side Stand Mounting Bracket",
+          "feedback": "The mounting bracket anchors the side stand to the motorcycle frame."
+        },
+        {
+          "componentNumber": 3,
+          "correctAnswer": "Pivot Pin",
+          "feedback": "The pivot pin allows the side stand to rotate and fold."
+        },
+        {
+          "componentNumber": 4,
+          "correctAnswer": "Side Stand Arm",
+          "feedback": "The side stand arm provides the supporting member when the motorcycle is parked."
+        },
+        {
+          "componentNumber": 5,
+          "correctAnswer": "Return Spring",
+          "feedback": "The return spring helps lift or retract the stand as needed."
+        },
+        {
+          "componentNumber": 6,
+          "correctAnswer": "Spring Hook",
+          "feedback": "The spring hook secures the return spring in position."
+        },
+        {
+          "componentNumber": 7,
+          "correctAnswer": "Foot Pad",
+          "feedback": "The foot pad increases contact area and improves stability on the ground."
+        },
+        {
+          "componentNumber": 8,
+          "correctAnswer": "Ground Contact Point",
+          "feedback": "The ground contact point is the interface where the stand transfers load to the surface."
+        },
+        {
+          "componentNumber": 9,
+          "correctAnswer": "Ground Line",
+          "feedback": "The ground line indicates the reference level for the parked motorcycle and stand."
+        }
+      ]
+    },
+    "stability-principle": {
+      "title": "Stability Principle",
+      "metadata": {
+        "activityNumber": 4,
+        "marks": 2,
+        "bloomLevel": "L2 Understand",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Explain how side stand geometry helps keep a motorcycle stable when parked.",
+      "mcq": {
+        "question": "Which factor most directly affects whether the parked motorcycle tips over?",
+        "options": [
+          "Support polygon and center of gravity projection",
+          "Paint colour",
+          "Seat cover material",
+          "Headlamp shape"
+        ]
+      }
+    },
+    "material-decision": {
+      "title": "Material Decision",
+      "metadata": {
+        "activityNumber": 5,
+        "marks": 2,
+        "bloomLevel": "L3 Apply",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2",
+          "PO5",
+          "PO7"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "prompt": "Compare possible materials for the side stand and recommend one.",
+      "options": [
+        {
+          "id": "mild-steel",
+          "title": "Mild Steel",
+          "note": "Economical and easy to fabricate for common stands."
+        },
+        {
+          "id": "aluminium-alloy",
+          "title": "Aluminium Alloy",
+          "note": "Lightweight but may require larger section and careful design."
+        },
+        {
+          "id": "stainless-steel",
+          "title": "Stainless Steel",
+          "note": "Corrosion resistant but higher cost."
+        },
+        {
+          "id": "polymer-composite",
+          "title": "Polymer Composite",
+          "note": "Lightweight but requires validation for impact and creep."
+        }
+      ]
+    },
+    "load-estimation": {
+      "title": "Engineering Calculations",
+      "metadata": {
+        "activityNumber": 6,
+        "marks": 6,
+        "bloomLevel": "L3 Apply",
+        "co": "CO1",
+        "po": [
+          "PO1",
+          "PO2",
+          "PO3"
+        ],
+        "pso": [
+          "PSO1"
+        ],
+        "estimatedTime": "25 minutes"
+      },
+      "given": [
+        "Motorcycle Mass: 150 kg",
+        "Rider Mass: 75 kg",
+        "Luggage Mass: 15 kg",
+        "g = 9.81 m/s2",
+        "Load share on side stand = 35%",
+        "Lever arm length (L) = 280 mm",
+        "Hollow stand Outer Dia (D) = 22 mm",
+        "Hollow stand Inner Dia (d) = 16 mm",
+        "Yield Strength (Syt) = 250 MPa",
+        "Critical section is at the pivot end"
+      ],
+      "steps": [
+        {
+          "id": "totalMass",
+          "type": "numeric",
+          "title": "Step 1: Total Mass",
+          "label": "Total Mass (kg)",
+          "formula": "Bike + Rider + Luggage"
+        },
+        {
+          "id": "totalWeight",
+          "type": "numeric",
+          "title": "Step 2: Total Weight",
+          "label": "Total Weight (N)",
+          "formula": "Total Mass × g"
+        },
+        {
+          "id": "standLoad",
+          "type": "numeric",
+          "title": "Step 3: Load on Side Stand (P)",
+          "label": "Load (N)",
+          "formula": "Total Weight × 0.35"
+        },
+        {
+          "id": "bendingMoment",
+          "type": "numeric",
+          "title": "Step 4: Maximum Bending Moment (M)",
+          "label": "Bending Moment (N·mm)",
+          "formula": "Load (P) × Length (L)"
+        },
+        {
+          "id": "sectionModulus",
+          "type": "numeric",
+          "title": "Step 5: Section Modulus (Z)",
+          "label": "Section Modulus (mm3)",
+          "formula": "(π / 32) × (D^4 - d^4) / D"
+        },
+        {
+          "id": "bendingStress",
+          "type": "numeric",
+          "title": "Step 6: Bending Stress (σ)",
+          "label": "Bending Stress (MPa)",
+          "formula": "Bending Moment (M) / Section Modulus (Z)"
+        },
+        {
+          "id": "factorOfSafety",
+          "type": "numeric",
+          "title": "Step 7: Factor of Safety (FoS)",
+          "label": "Factor of Safety",
+          "formula": "Yield Strength (Syt) / Bending Stress (σ)"
+        }
+      ]
+    },
+    "engineering-notebook": {
+      "title": "Report / Engineering Notebook",
+      "metadata": {
+        "activityNumber": 7,
+        "marks": 2,
+        "bloomLevel": "L4 Analyse",
+        "co": "CO1",
+        "po": [
+          "PO2",
+          "PO3",
+          "PO7",
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO1",
+          "PSO2"
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "questions": [
+        "Assumptions Made",
+        "Safe / Unsafe Decision (Include FoS Justification)",
+        "Suggested Design Improvements (if unsafe)",
+        "Conclusion"
+      ]
+    },
+    "reflection": {
+      "title": "Reflection",
+      "metadata": {
+        "activityNumber": 8,
+        "marks": 1,
+        "bloomLevel": "L5 Evaluate",
+        "co": "CO1",
+        "po": [
+          "PO8",
+          "PO9",
+          "PO11"
+        ],
+        "pso": [
+          "PSO2"
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "questions": [
+        "What did you learn?",
+        "Which engineering concept became clearer?",
+        "How would you improve this design?"
+      ]
+    },
+    "submit": {
+      "title": "Submission",
+      "metadata": {
+        "activityNumber": 9,
+        "marks": 0,
+        "bloomLevel": "Submission",
+        "co": "CO1",
+        "po": [
+          "PO8",
+          "PO11"
+        ],
+        "pso": [
+          "PSO2"
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "body": "Review your motorcycle side stand analysis and prepare the response package for future export."
+    }
+  }
+}

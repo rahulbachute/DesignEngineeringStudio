@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/shaft-fatigue-design/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-16",
+      "title": "Automotive Propeller Shaft Fatigue Design Illustration (Student Edition)",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/shaft-fatigue-design/images/EA-16_Student_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-16",
+      "title": "Automotive Propeller Shaft Fatigue Design Illustration (Faculty Reference Solution)",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/shaft-fatigue-design/images/EA-16_Faculty_v1.0.png",
+      "required": true
+    }
+  }
+}

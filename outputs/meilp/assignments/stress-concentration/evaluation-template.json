@@ -1,0 +1,14 @@
+{
+  "maxMarks": {
+    "component-identification": 1,
+    "engineering-assumptions": 0.5,
+    "free-body-diagram": 1,
+    "engineering-calculations": 2,
+    "stress-concentration": 2,
+    "maximum-stress": 1.5,
+    "material-selection": 1,
+    "factor-of-safety": 1,
+    "engineering-decision": 1,
+    "engineering-report": 1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "assignmentId": "EA-22",
+  "assignmentTitle": "Design of a 2-Ton Mobile Scissor Lift Power Screw",
+  "maxTotalMarks": 12.0,
+  "courseOutcome": "CO2",
+  "criteria": [
+    { "id": "ea22-act-1", "name": "Task 1: Mobile Scissor Lift Application Understanding", "category": "Concept", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO2", "rubricRef": "crit-01" },
+    { "id": "ea22-act-2", "name": "Task 2: Component & Interface Identification", "category": "Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-02" },
+    { "id": "ea22-act-3", "name": "Task 3: Scissor Kinematics & Horizontal Force Calculation", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-03" },
+    { "id": "ea22-act-4", "name": "Task 4: Power Screw Design Parameters & Given Data", "category": "Concept", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO2", "rubricRef": "crit-04" },
+    { "id": "ea22-act-5", "name": "Task 5: Screw Geometry, Core/Mean Diameters & Helix Angle", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO2", "rubricRef": "crit-05" },
+    { "id": "ea22-act-6", "name": "Task 6: Virtual Friction Angle & Thread Torque", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO2", "rubricRef": "crit-06" },
+    { "id": "ea22-act-7", "name": "Task 7: Thrust Collar Radius & Collar Friction Torque", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO2", "rubricRef": "crit-07" },
+    { "id": "ea22-act-8", "name": "Task 8: Total Operating Torque, Efficiency & Drive Requirement", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO2", "rubricRef": "crit-08" },
+    { "id": "ea22-act-9", "name": "Task 9: Self-Locking Condition & Fail-Safe Safety", "category": "Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-09" },
+    { "id": "ea22-act-10", "name": "Task 10: Stress Analysis & Factor of Safety Verification", "category": "Design Decision", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-10" },
+    { "id": "ea22-act-11", "name": "Task 11: Comprehensive Technical Design Report", "category": "Synthesis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO2", "rubricRef": "crit-11" }
+  ]
+}

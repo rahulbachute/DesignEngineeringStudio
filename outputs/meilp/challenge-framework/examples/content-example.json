@@ -1,0 +1,52 @@
+{
+  "projectCharter": {
+    "projectCode": "EC-XX",
+    "projectTitle": "Challenge Title",
+    "client": "Client name",
+    "engineeringBackground": "Short engineering context.",
+    "problemStatement": "Problem to solve.",
+    "learningContext": "Why this matters in the course.",
+    "objectives": ["Objective 1"],
+    "expectedDeliverables": ["Deliverable 1"],
+    "professionalResponsibility": "Safety and ethics statement.",
+    "safetyConsiderations": "Safety note.",
+    "acceptanceCriteria": "Completion criteria."
+  },
+  "learningOutcomes": {
+    "courseOutcome": "CO1",
+    "mappedProgramOutcomes": ["PO1", "PO2"],
+    "mappedProgramSpecificOutcomes": ["PSO1"],
+    "bloomLevels": ["L1 Understand", "L3 Apply"],
+    "cceMarks": 12,
+    "difficulty": "Intermediate",
+    "expectedTime": "90 minutes",
+    "prerequisites": ["Prerequisite concept"]
+  },
+  "engineeringResources": [
+    {
+      "id": "resource-1",
+      "type": "line-diagram",
+      "title": "Diagram title",
+      "path": "assignments/challenge-slug/images/diagram.svg",
+      "required": false
+    }
+  ],
+  "activities": {
+    "activity-1": {
+      "purpose": "Purpose of activity.",
+      "whyAmIDoingThis": "Student-facing reason.",
+      "engineeringTip": "Engineering tip.",
+      "commonMistakes": ["Mistake 1"],
+      "thinkLikeEngineer": "Professional thinking prompt.",
+      "activityInstructions": ["Instruction 1"],
+      "resourcesRequired": ["resource-1"],
+      "facultyDiscussionNotes": "Discussion note."
+    }
+  },
+  "engineeringTakeaways": {
+    "keyLearningPoints": ["Learning point"],
+    "engineeringPrinciples": ["Principle"],
+    "industrialRelevance": ["Industry connection"],
+    "furtherReading": ["Reference"]
+  }
+}

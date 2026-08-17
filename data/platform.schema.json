@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MEILP Assignment Registry",
+  "type": "object",
+  "required": ["assignments"],
+  "properties": {
+    "assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "summary", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "discipline": { "type": "string" },
+          "summary": { "type": "string" },
+          "status": { "type": "string" },
+          "tasks": { "type": "number" },
+          "icon": { "type": "string" },
+          "configPath": { "type": "string" }
+        }
+      }
+    }
+  }
+}

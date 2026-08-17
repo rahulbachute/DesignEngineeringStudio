@@ -1,0 +1,33 @@
+{
+  "id": "EC-XX",
+  "projectCode": "EC-XX",
+  "slug": "challenge-slug",
+  "title": "Challenge Title",
+  "courseCode": "PCC303-MEC",
+  "courseName": "Design of Machine Elements",
+  "unit": "Unit I",
+  "courseOutcome": {
+    "code": "CO1",
+    "statement": "Course outcome statement."
+  },
+  "programOutcomes": ["PO1", "PO2"],
+  "programSpecificOutcomes": ["PSO1"],
+  "bloomLevelsCovered": ["L1 Understand", "L3 Apply"],
+  "cceMarks": 12,
+  "difficulty": "Intermediate",
+  "estimatedDuration": "90 minutes",
+  "prerequisites": ["Prerequisite concept 1"],
+  "settings": {
+    "attemptMode": "both",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true
+  },
+  "tasks": [
+    { "id": "project-charter", "type": "information", "title": "Project Charter" },
+    { "id": "activity-1", "type": "image-label", "title": "Engineering Activity 1" },
+    { "id": "reflection", "type": "reflection", "title": "Reflection" },
+    { "id": "submit", "type": "submission", "title": "Submit" }
+  ]
+}

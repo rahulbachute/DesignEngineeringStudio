@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Faculty reports workspace for Design Engineering Studio" />
+    <title>Reports</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/faculty.css" rel="stylesheet" />
+  </head>
+  <body class="bg-light" data-page="reports">
+    <div class="faculty-shell d-flex flex-column flex-lg-row min-vh-100">
+      <aside class="faculty-sidebar bg-dark text-white p-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <a class="navbar-brand text-white fw-bold fs-5" href="index.html">DES Faculty</a>
+          <button class="btn btn-outline-light btn-sm d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </div>
+
+        <div class="collapse d-lg-block" id="sidebarMenu">
+          <ul class="nav nav-pills flex-column gap-1">
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="index.html"><i class="bi bi-house-door me-2"></i>Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="challenges.html"><i class="bi bi-journals me-2"></i>Challenges</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="submissions.html"><i class="bi bi-file-earmark-text me-2"></i>Student Submissions</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="evaluation.html"><i class="bi bi-clipboard-check me-2"></i>Evaluation</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="outcomes.html"><i class="bi bi-bar-chart-line me-2"></i>CO–PO–PSO–WK</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="analytics.html"><i class="bi bi-graph-up me-2"></i>Analytics</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="reports.html"><i class="bi bi-file-earmark-bar-graph me-2"></i>Reports</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="settings.html"><i class="bi bi-gear me-2"></i>Settings</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="faculty-content d-flex flex-column flex-grow-1">
+        <header class="topbar bg-white border-bottom shadow-sm">
+          <div class="container-fluid py-3 px-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h1 class="h4 mb-1">Faculty Workspace</h1>
+                <p class="text-muted mb-0">Design Engineering Studio / MEILP</p>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis">MEILP</span>
+                <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis">Faculty</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="flex-grow-1 p-4">
+          <div class="container-fluid">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+              <div>
+                <h2 class="h3 mb-1">Reports & Accreditation Center</h2>
+                <p class="text-muted mb-0">Generate professional academic and accreditation reports with reusable templates and mock exports.</p>
+              </div>
+              <div class="d-flex gap-2 flex-wrap">
+                <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-3 py-2">RAC</span>
+                <span class="badge bg-success-subtle text-success-emphasis rounded-pill px-3 py-2">Mock Data</span>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+              <div class="col-12">
+                <div class="card border-0 shadow-sm rounded-4">
+                  <div class="card-body p-4">
+                    <div class="row g-3 align-items-end">
+                      <div class="col-md-3">
+                        <label class="form-label small text-muted fw-bold" for="facultyFilter"><i class="bi bi-person-badge me-1"></i>Faculty / Evaluator</label>
+                        <input type="text" class="form-control bg-light fw-semibold" id="facultyFilter" value="Dr. Rahul Bachute" readonly />
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label small text-muted fw-bold" for="institutionFilter"><i class="bi bi-building me-1"></i>Institution</label>
+                        <input type="text" class="form-control bg-light fw-semibold" id="institutionFilter" value="Ajeenkya DY Patil School of Engineering, Pune" readonly />
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label small text-muted fw-bold" for="classFilter"><i class="bi bi-people me-1"></i>Class / Division</label>
+                        <select class="form-select" id="classFilter">
+                          <option value="A" selected>TE Mechanical — Div A</option>
+                          <option value="B">TE Mechanical — Div B</option>
+                          <option value="C">TE Mechanical — Div C</option>
+                          <option value="D">TE Mechanical — Div D</option>
+                          <option value="All">All Divisions</option>
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label small text-muted fw-bold" for="academicYearFilter"><i class="bi bi-calendar3 me-1"></i>Academic Year</label>
+                        <select class="form-select" id="academicYearFilter">
+                          <option selected>2026-27</option>
+                          <option>2025-26</option>
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label small text-muted fw-bold" for="assignmentFilter"><i class="bi bi-journal-check me-1"></i>Assignment</label>
+                        <select class="form-select" id="assignmentFilter">
+                          <option value="All" selected>All Assignments</option>
+                          <option value="EA-22">EA-22 Scissor Lift</option>
+                          <option value="EA-21">EA-21 Steering Gear</option>
+                          <option value="EA-20">EA-20 Hydraulic Press</option>
+                          <option value="EA-19">EA-19 C-Clamp</option>
+                          <option value="EA-18">EA-18 Bench Vice</option>
+                          <option value="EC-07">EC-07 Shaft Design</option>
+                          <option value="EC-08">EC-08 Key Design</option>
+                          <option value="EC-09">EC-09 Couplings</option>
+                          <option value="EC-10">EC-10 Cotter Joint</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+              <div class="col-xl-8">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h3 class="h5 mb-0">Report Categories</h3>
+                      <span class="badge bg-info-subtle text-info-emphasis">Catalog</span>
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6 col-lg-3">
+                        <div class="border rounded-4 p-3 h-100 category-card-hover" data-category-card="Assessment Reports" style="cursor: pointer;">
+                          <i class="bi bi-clipboard-check fs-4 text-primary"></i>
+                          <h6 class="mt-3 mb-1 fw-bold">Assessment</h6>
+                          <p class="small text-muted mb-0">Evaluation and assessment reporting</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-3">
+                        <div class="border rounded-4 p-3 h-100 category-card-hover" data-category-card="Outcome Reports" style="cursor: pointer;">
+                          <i class="bi bi-bar-chart-line fs-4 text-success"></i>
+                          <h6 class="mt-3 mb-1 fw-bold">Outcome</h6>
+                          <p class="small text-muted mb-0">CO/PO/PSO/WK attainment insights</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-3">
+                        <div class="border rounded-4 p-3 h-100 category-card-hover" data-category-card="Student Reports" style="cursor: pointer;">
+                          <i class="bi bi-people fs-4 text-warning"></i>
+                          <h6 class="mt-3 mb-1 fw-bold">Student</h6>
+                          <p class="small text-muted mb-0">Performance history and summaries</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-3">
+                        <div class="border rounded-4 p-3 h-100 category-card-hover" data-category-card="Challenge Reports" style="cursor: pointer;">
+                          <i class="bi bi-journals fs-4 text-info"></i>
+                          <h6 class="mt-3 mb-1 fw-bold">Challenge</h6>
+                          <p class="small text-muted mb-0">Challenge-level analytics and mapping</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-body p-4">
+                    <h3 class="h5 mb-3">Quick Actions</h3>
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-primary" id="generateReportBtn"><i class="bi bi-play-circle me-2"></i>Generate Selected Report</button>
+                      <button class="btn btn-outline-secondary" id="exportPdfBtn"><i class="bi bi-file-earmark-pdf me-2"></i>Export PDF</button>
+                      <button class="btn btn-outline-success" id="exportExcelBtn"><i class="bi bi-file-earmark-excel me-2"></i>Export Excel</button>
+                      <button class="btn btn-outline-dark" id="printReportBtn"><i class="bi bi-printer me-2"></i>Print</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+              <div class="col-lg-5">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h3 class="h5 mb-0">Report Catalog</h3>
+                      <span class="badge bg-secondary-subtle text-secondary-emphasis">Searchable</span>
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input class="form-control" id="reportSearch" type="search" placeholder="Search report" />
+                    </div>
+                    <select class="form-select mb-3" id="reportCategoryFilter">
+                      <option value="">All Categories</option>
+                      <option>Assessment Reports</option>
+                      <option>Outcome Reports</option>
+                      <option>Student Reports</option>
+                      <option>Challenge Reports</option>
+                      <option>Faculty Reports</option>
+                      <option>Department Reports</option>
+                      <option>Accreditation Reports</option>
+                      <option>Custom Reports</option>
+                    </select>
+                    <div class="list-group" id="reportCatalog"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div>
+                        <h3 class="h5 mb-0" id="reportPreviewTitle">Report Preview</h3>
+                        <div class="mt-2" id="reportPreviewMeta"></div>
+                      </div>
+                      <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-sm" id="downloadJsonBtn"><i class="bi bi-filetype-json me-1"></i>JSON</button>
+                        <button class="btn btn-outline-secondary btn-sm" id="downloadCsvBtn"><i class="bi bi-filetype-csv me-1"></i>CSV</button>
+                      </div>
+                    </div>
+                    <div id="reportPreviewBody"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+              <div class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-body">
+                    <h3 class="h5 mb-3">Outcome Chart</h3>
+                    <canvas id="reportScoreChart"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-body">
+                    <h3 class="h5 mb-3">Grade Distribution</h3>
+                    <canvas id="reportGradeChart"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-body">
+                    <h3 class="h5 mb-3">Performance Trend</h3>
+                    <canvas id="reportTrendChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <div class="col-12">
+                <div class="card border-0 shadow-sm rounded-4">
+                  <div class="card-body p-4">
+                    <h3 class="h5 mb-3">Report Template Block</h3>
+                    <div class="border rounded-4 p-4 bg-light-subtle">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                          <h6 class="mb-1">Ajeenkya D. Y. Patil School of Engineering</h6>
+                          <p class="small text-muted mb-0">Design Engineering Studio / MEILP</p>
+                        </div>
+                        <span class="badge bg-dark-subtle text-dark-emphasis">Confidential</span>
+                      </div>
+                      <div class="row g-3">
+                        <div class="col-md-3"><strong>Report Title</strong><div class="small text-muted">Academic Review Summary</div></div>
+                        <div class="col-md-3"><strong>Academic Year</strong><div class="small text-muted">2026-27</div></div>
+                        <div class="col-md-3"><strong>Generated By</strong><div class="small text-muted">DES Faculty Workspace</div></div>
+                        <div class="col-md-3"><strong>Generated Date</strong><div class="small text-muted">21 Jul 2026</div></div>
+                      </div>
+                      <div class="mt-4">
+                        <h6 class="mb-2">Signature Placeholders</h6>
+                        <div class="row g-3">
+                          <div class="col-md-4"><div class="border rounded-3 p-3 small">Prepared By<br /><br /><br />Faculty</div></div>
+                          <div class="col-md-4"><div class="border rounded-3 p-3 small">Verified By<br /><br /><br />HOD</div></div>
+                          <div class="col-md-4"><div class="border rounded-3 p-3 small">Approved By<br /><br /><br />Principal</div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <footer class="faculty-footer bg-dark text-white py-4 px-4">
+          <div class="container-fluid">
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <p class="fw-bold mb-1 fs-6 text-white">Design Engineering Studio (DES)</p>
+                <p class="mb-1 text-white-50">Developed by Dr. Rahul P. Bachute | Ajeenkya DY Patil School of Engineering, Pune</p>
+                <p class="mb-0 text-white-50 small">Email: <a class="text-info" href="mailto:rahulbachute@yahoo.com">rahulbachute@yahoo.com</a></p>
+              </div>
+              <div class="col-lg-4 text-lg-end text-white-50 small">
+                <p class="mb-0">Interactive Engineering Learning &amp; Design Platform</p>
+                <p class="mb-0">© 2026 All Rights Reserved.</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="js/data/config.js"></script>
+    <script src="js/data/auth-service.js"></script>
+    <script src="js/data/auth.js"></script>
+    <script src="js/data/models.js"></script>
+    <script src="js/data/cache-service.js"></script>
+    <script src="js/data/cache.js"></script>
+    <script src="js/data/logger.js"></script>
+    <script src="js/data/api-client.js"></script>
+    <script src="js/data/repository.js"></script>
+    <script src="js/logger.js"></script>
+    <script src="js/services/report-service.js"></script>
+    <script src="js/faculty-layout.js"></script>
+    <script src="js/report-engine.js"></script>
+  </body>
+</html>

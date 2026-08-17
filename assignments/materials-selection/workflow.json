@@ -1,0 +1,18 @@
+{
+  "start": "welcome",
+  "requiresAttemptMode": true,
+  "requiresAcceptance": true,
+  "steps": [
+    { "id": "welcome", "title": "Welcome", "component": "information-card", "statusGroup": "setup" },
+    { "id": "project-charter", "title": "Project Charter", "component": "information-card", "statusGroup": "setup" },
+    { "id": "engineering-background", "title": "Engineering Background", "component": "information-card", "statusGroup": "setup" },
+    { "id": "mission-brief", "title": "Mission Brief", "component": "information-card", "statusGroup": "setup" },
+    { "id": "drs-01-chassis", "title": "Design Review Station 1 (Chassis)", "component": "engineering-decision-canvas", "statusGroup": "decision" },
+    { "id": "drs-02-engine", "title": "Design Review Station 2 (Engine)", "component": "engineering-decision-canvas", "statusGroup": "decision" },
+    { "id": "drs-03-wheels-braking", "title": "Design Review Station 3 (Wheels & Braking)", "component": "engineering-decision-canvas", "statusGroup": "decision" },
+    { "id": "drs-04-fuel-system", "title": "Design Review Station 4 (Fuel System)", "component": "engineering-decision-canvas", "statusGroup": "decision" },
+    { "id": "engineering-notebook", "title": "Engineering Notebook", "component": "reflection", "statusGroup": "report" },
+    { "id": "reflection", "title": "Reflection", "component": "reflection", "statusGroup": "reflection" },
+    { "id": "submit", "title": "Submission", "component": "submission-summary", "statusGroup": "submission" }
+  ]
+}

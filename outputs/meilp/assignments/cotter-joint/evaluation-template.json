@@ -1,0 +1,57 @@
+{
+  "assignmentId": "EC-10",
+  "totalMarks": 12.0,
+  "maxMarks": 12.0,
+  "sections": [
+    {
+      "id": "project-charter",
+      "title": "Project Charter & Observation (Activity 1)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "power-transmission-path",
+      "title": "Power Transmission Path (Activity 2)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "component-identification",
+      "title": "Component Identification (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "working-principle",
+      "title": "Working Principle & Function (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "torque-calculation",
+      "title": "Pedal Force & Torque Calculation (Activity 5)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "design-assumptions",
+      "title": "Design Requirements & Assumptions (Activity 6)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "cotter-design-calculation",
+      "title": "Cotter Design Calculations (Activity 7)",
+      "maxMarks": 2.5
+    },
+    {
+      "id": "strength-safety-check",
+      "title": "Strength & Factor of Safety Check (Activity 8)",
+      "maxMarks": 2.0
+    },
+    {
+      "id": "engineering-decision",
+      "title": "Engineering Judgement & Decision (Activity 9)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "final-report",
+      "title": "Final Summary Report (Activity 10)",
+      "maxMarks": 1.0
+    }
+  ]
+}

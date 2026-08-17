@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Motorcycle side stand diagram</title>
+  <desc id="desc">A simplified configurable side stand diagram with numbered markers.</desc>
+  <rect width="1200" height="760" fill="#F5F7FA"/>
+  <rect x="80" y="70" width="1040" height="610" rx="8" fill="#fff" stroke="#0B2E59" stroke-width="8"/>
+  <path d="M235 295h520c70 0 130 44 152 108" fill="none" stroke="#0B2E59" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="315" cy="470" r="82" fill="#EAF3FF" stroke="#0B2E59" stroke-width="10"/>
+  <circle cx="875" cy="470" r="82" fill="#EAF3FF" stroke="#0B2E59" stroke-width="10"/>
+  <circle cx="500" cy="355" r="35" fill="#FFF3E6" stroke="#0B2E59" stroke-width="8"/>
+  <path d="M515 380L760 590" stroke="#0B2E59" stroke-width="16" stroke-linecap="round"/>
+  <path d="M540 385c60 80 95 125 145 175" fill="none" stroke="#F28C28" stroke-width="8"/>
+  <rect x="715" y="590" width="120" height="28" rx="6" fill="#EAF8EF" stroke="#0B2E59" stroke-width="7"/>
+  <g fill="#F28C28" stroke="#0B2E59" stroke-width="5">
+    <circle cx="500" cy="355" r="24"/>
+    <circle cx="620" cy="470" r="24"/>
+    <circle cx="675" cy="548" r="24"/>
+    <circle cx="775" cy="604" r="24"/>
+  </g>
+  <g fill="#111820" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="22">
+    <text x="494" y="363">1</text>
+    <text x="614" y="478">2</text>
+    <text x="669" y="556">3</text>
+    <text x="769" y="612">4</text>
+  </g>
+  <text x="100" y="720" fill="#667386" font-family="Poppins, Arial, sans-serif" font-size="24">EC-02 Motorcycle Side Stand Stability Diagram</text>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "maxMarks": {
+    "component-identification": 1,
+    "working-principle": 1,
+    "design-requirements": 1,
+    "engineering-assumptions": 0.5,
+    "free-body-diagram": 2,
+    "shaft-design-calculation": 3,
+    "material-safety-decision": 2,
+    "design-recommendation": 1.5
+  }
+}

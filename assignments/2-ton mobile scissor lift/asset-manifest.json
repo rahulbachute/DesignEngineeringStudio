@@ -1,0 +1,23 @@
+{
+  "assignment": "mobile-scissor-lift",
+  "basePath": "assignments/mobile-scissor-lift/images",
+  "assets": [
+    {
+      "id": "EA-22",
+      "name": "Engineering Asset EA-22",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/mobile-scissor-lift/images/EA-22_Student_v1.0.png",
+      "description": "Engineering asset illustrating a 2-ton mobile scissor lift with horizontal power screw, travelling nut block, crossed scissor arms, central pivot, mobile base, caster wheels, and upper lifting platform.",
+      "dimensions": { "width": 1672, "height": 941 }
+    },
+    {
+      "id": "engineeringAssetStudent",
+      "name": "Student View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/mobile-scissor-lift/images/EA-22_Student_v1.0.png",
+      "description": "Standard student edition engineering asset diagram."
+    }
+  ]
+}

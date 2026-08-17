@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MEILP configuration-driven Engineering Challenge workbench.">
+  <title>MEILP | Engineering Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="components/components.css" rel="stylesheet">
+  <link href="components/guided-workflow/guided-workflow.css" rel="stylesheet">
+  <link href="css/workbench.css" rel="stylesheet">
+</head>
+<body class="workbench-body">
+  <div class="workbench-shell">
+    <header class="workbench-header">
+      <div class="workbench-topbar">
+        <a class="workbench-logo text-decoration-none" href="index.html" aria-label="MEILP home">ME</a>
+        <div class="workbench-title-block">
+          <h1 data-workbench-title>Engineering Challenge</h1>
+          <div class="workbench-meta">
+            <span data-course-code></span>
+            <span data-course-name></span>
+            <span data-current-user>Current User: Student</span>
+          </div>
+        </div>
+        <div class="workbench-actions">
+          <button class="btn btn-outline-primary mobile-sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileTaskNavigator" aria-controls="mobileTaskNavigator">
+            <i class="bi bi-list-task" aria-hidden="true"></i>
+            Tasks
+          </button>
+          <button class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1 rounded-pill px-3 shadow-sm" type="button" data-workbench-report-btn title="Generate / View Submission Report">
+            <i class="bi bi-file-earmark-text"></i> Report
+          </button>
+          <span class="workbench-pill" data-attempt-mode-label><i class="bi bi-person" aria-hidden="true"></i> Mode Pending</span>
+          <span class="workbench-pill workbench-progress-pill" data-header-progress><i class="bi bi-activity" aria-hidden="true"></i> 0%</span>
+          <button class="btn btn-icon" type="button" data-workbench-theme-toggle aria-label="Toggle dark mode">
+            <i class="bi bi-moon-stars" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-icon text-danger" type="button" data-workbench-reset aria-label="Reset Assignment" title="Reset Assignment">
+            <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-icon" type="button" data-workbench-help aria-label="Help">
+            <i class="bi bi-question-circle" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="workbench-grid">
+      <aside class="workbench-sidebar" aria-label="Task navigator">
+        <div class="workbench-section-header">
+          <h2>Task Navigator</h2>
+          <i class="bi bi-diagram-3" aria-hidden="true"></i>
+        </div>
+        <div class="px-3 pb-3 border-bottom mb-3">
+          <a href="docs/Student_User_Manual.html" target="_blank" class="btn btn-sm btn-primary w-100 text-start d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-book me-2"></i> Student Manual</span>
+            <i class="bi bi-box-arrow-up-right small"></i>
+          </a>
+        </div>
+        <ul class="task-list" data-task-list></ul>
+      </aside>
+
+      <main class="workbench-main">
+        <nav class="workbench-breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb" data-workbench-breadcrumb></ol>
+        </nav>
+        <section class="workbench-activity" aria-label="Current activity">
+          <div class="activity-header">
+            <div>
+              <span class="component-kicker" data-activity-kicker>Loading</span>
+              <h2 data-activity-title>Engineering Challenge</h2>
+            </div>
+            <span class="workbench-pill" data-task-progress-label>Task 0 of 0</span>
+          </div>
+          <div class="activity-host" data-activity-host></div>
+        </section>
+      </main>
+
+      <aside class="workbench-inspector" aria-label="Engineering information panel">
+        <div class="workbench-section-header">
+          <h2>Engineering Information</h2>
+          <i class="bi bi-info-square" aria-hidden="true"></i>
+        </div>
+        <div class="workbench-widget-list" data-widget-list></div>
+  <footer class="site-footer bg-dark text-white py-3 border-top border-secondary-subtle">
+    <div class="container-fluid px-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2" style="font-size: 0.85rem;">
+      <div>
+        <strong class="text-white">Design Engineering Studio (DES)</strong>
+        <span class="text-white-50 ms-2">Developed by Dr. Rahul P. Bachute | Ajeenkya DY Patil School of Engineering, Pune</span>
+      </div>
+      <div class="text-white-50">
+        Interactive Engineering Learning &amp; Design Platform
+      </div>
+    </div>
+  </footer>
+
+  <div class="offcanvas offcanvas-start workbench-mobile-nav" tabindex="-1" id="mobileTaskNavigator" aria-labelledby="mobileTaskNavigatorLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title fs-6" id="mobileTaskNavigatorLabel">Task Navigator</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="pb-3 border-bottom mb-3">
+        <a href="docs/Student_User_Manual.html" target="_blank" class="btn btn-sm btn-primary w-100 text-start d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-book me-2"></i> Student Manual</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+      <ul class="task-list" data-mobile-task-list></ul>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/assignment-control-service.js" defer></script>
+  <script src="js/event-bus.js" defer></script>
+  <script src="js/state-manager.js" defer></script>
+  <script src="js/component-registry.js" defer></script>
+  <script src="js/base-component.js" defer></script>
+  <script src="js/progress-manager.js" defer></script>
+  <script src="js/router.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/assignment-loader.js" defer></script>
+  <script src="js/engine.js" defer></script>
+  <script src="js/google-sheets-service.js" defer></script>
+  <script src="js/submission-engine.js" defer></script>
+  <script src="components/student-info/student-info.js" defer></script>
+  <script src="components/progress-bar/progress-bar.js" defer></script>
+  <script src="components/assignment-navigation/assignment-navigation.js" defer></script>
+  <script src="components/image-viewer/image-viewer.js" defer></script>
+  <script src="components/image-label/image-label.js" defer></script>
+  <script src="components/engineering-decision-canvas/engineering-decision-canvas.js" defer></script>
+  <script src="components/guided-workflow/guided-workflow.js" defer></script>
+  <script src="components/register-components.js" defer></script>
+  <script src="js/challenge-runner.js" defer></script>
+</body>
+</html>

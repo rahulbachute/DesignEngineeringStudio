@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/spring-selection/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-14",
+      "title": "Spring Applications Comparative Engineering Study Illustration (Student Edition)",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/spring-selection/images/EA-14_Student_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-14",
+      "title": "Spring Applications Comparative Engineering Study Illustration (Faculty Reference Solution)",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/spring-selection/images/EA-14_Faculty_v1.0.png",
+      "required": true
+    }
+  }
+}

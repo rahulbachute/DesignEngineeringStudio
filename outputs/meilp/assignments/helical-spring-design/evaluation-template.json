@@ -1,0 +1,57 @@
+{
+  "assignmentId": "EA-12",
+  "totalMarks": 12.0,
+  "maxMarks": 12.0,
+  "sections": [
+    {
+      "id": "project-charter",
+      "title": "Observe Motorcycle Suspension (Activity 1)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "component-identification",
+      "title": "Identify Suspension Components (Activity 2)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "load-path",
+      "title": "Understand Load Path (Activity 3)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "design-requirements",
+      "title": "Establish Design Requirements (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "spring-geometry",
+      "title": "Determine Spring Geometry (Activity 5)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "spring-design-calculation",
+      "title": "Design Helical Compression Spring (Activity 6)",
+      "maxMarks": 2.5
+    },
+    {
+      "id": "strength-deflection-check",
+      "title": "Verify Strength & Deflection (Activity 7)",
+      "maxMarks": 2.0
+    },
+    {
+      "id": "application-evaluation",
+      "title": "Evaluate Application (Activity 8)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "engineering-recommendation",
+      "title": "Engineering Recommendation (Activity 9)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "final-report",
+      "title": "Engineering Design Report (Activity 10)",
+      "maxMarks": 1.0
+    }
+  ]
+}

@@ -1,0 +1,649 @@
+{
+  "assignment": {
+    "id": "EA-19",
+    "slug": "c-clamp-friction",
+    "title": "Analysis of C-Clamp Screw and Collar Friction Effects"
+  },
+  "dashboard": {
+    "projectCode": "EA-19",
+    "projectTitle": "Analysis of C-Clamp Screw and Collar Friction Effects",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO2: Design power screws, fasteners, and power transmission elements by applying torque, efficiency, and self-locking criteria for safe and reliable mechanical operation.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-19",
+      "title": "Analysis of C-Clamp Screw and Collar Friction Effects",
+      "path": "assignments/c-clamp-friction/images/EA-19_C-Clamp_Screw_Friction_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-19",
+      "title": "C-Clamp Power-Screw Mechanism Reference Diagram",
+      "path": "assignments/c-clamp-friction/images/EA-19_C-Clamp_Screw_Friction_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      {
+        "id": "individual",
+        "label": "Individual Mode",
+        "description": "Independently analyse the C-clamp power screw mechanism, determine thread and collar friction torques, and quantify collar friction effects."
+      },
+      {
+        "id": "group",
+        "label": "Group Mode (2–4 Students)",
+        "description": "Collaborate on C-clamp power screw torque calculations, collar friction contribution analysis, and engineering recommendations."
+      }
+    ],
+    "fields": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "Engineering College",
+        "required": true,
+        "type": "select"
+      },
+      {
+        "name": "branch",
+        "label": "Branch / Discipline",
+        "required": true,
+        "readonly": true,
+        "auto": "Mechanical Engineering"
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Understand the C-Clamp Power-Screw Application",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Engineering Brief — C-Clamp Screw and Collar Friction Analysis",
+          "body": "A C-clamp is a portable mechanical clamping tool used extensively in manufacturing, fabrication, welding, and woodworking. You are required to analyse the power screw mechanism of a multi-start thread C-clamp, determine the thread friction torque and collar friction torque, evaluate the total tightening torque required to achieve a specified clamping load, and quantify the significant contribution of collar friction to overall operator effort."
+        },
+        {
+          "type": "theory",
+          "title": "C-Clamp Operating Principle — Dual Friction Resistance",
+          "body": "A C-clamp power screw converts rotary effort at the sliding handle into controlled axial clamping force on the workpiece.\n\nMechanical Load Path:\n  Handle Rotation → Screw Rotation → Helical Thread Engagement → Axial Screw Translation → Pressure Pad Thrust → Clamping Force (W)\n\nDual Friction Interfaces:\n  1. Thread Friction (Tₛ): Friction generated between the external threads of the power screw and the internal threads in the C-clamp frame.\n  2. Collar Friction (T꜀): Friction generated at the thrust collar interface between the screw end and the swiveling pressure pad.\n\nTotal Tightening Torque Relation:\n  T_total = Tₛ + T꜀\n\nwhere:\n  Tₛ = (W · dₘ / 2) · [ (μ + tan α) / (1 − μ · tan α) ]\n  T꜀ = μ_c · W · (d_c / 2)\n\nKey Distinction (Pitch vs Lead for Multi-Start Screws):\n  Pitch (p): Distance between consecutive thread crests.\n  Lead (L): Distance the screw advances axially per revolution (L = n × p, where n is number of starts).\n  For a two-start screw (n = 2): L = 2p."
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives",
+          "items": [
+            "Identify the key C-clamp components and friction interfaces on Engineering Asset EA-19.",
+            "Trace the rotary-to-linear load transmission path from handle to workpiece.",
+            "Distinguish clearly between thread pitch (p) and screw lead (L) for a two-start power screw.",
+            "Calculate mean screw diameter (dₘ) and helix angle (α).",
+            "Compute thread friction torque (Tₛ) using square-thread power-screw equations.",
+            "Compute collar friction torque (T꜀) at the pressure pad thrust interface.",
+            "Determine total tightening torque (T_total) and required operator hand force (F).",
+            "Analyse the percentage increase in total torque caused by collar friction.",
+            "Formulate technically justified engineering recommendations regarding lubrication, collar design, and handle length."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the EA-19 Project Charter for C-Clamp Screw and Collar Friction Analysis."
+    },
+    "component-identification": {
+      "title": "Identify C-Clamp Components and Mechanical Functions",
+      "image": "assignments/c-clamp-friction/images/EA-19_C-Clamp_Screw_Friction_v1.0.png",
+      "figure": "Engineering Asset EA-19",
+      "description": "Engineering asset illustrating a conventional C-clamp power-screw mechanism with identified structural parts, force vectors, and friction interfaces.",
+      "options": [
+        "Fixed Upper Anvil",
+        "Workpiece",
+        "Rigid C-Clamp Frame",
+        "Movable Pressure Pad",
+        "Power Screw",
+        "Screw Thread",
+        "Threaded Engagement",
+        "Collar Friction Interface",
+        "Screw Head",
+        "Sliding Handle"
+      ],
+      "labels": [
+        {
+          "componentNumber": 1,
+          "x": 6.5,
+          "y": 9.8,
+          "correctAnswer": "Fixed Upper Anvil",
+          "feedback": "The fixed upper anvil forms the stationary reaction face of the rigid C-clamp frame."
+        },
+        {
+          "componentNumber": 2,
+          "x": 5.0,
+          "y": 24.5,
+          "correctAnswer": "Workpiece",
+          "feedback": "The workpiece is clamped between the upper anvil and the pressure pad."
+        },
+        {
+          "componentNumber": 3,
+          "x": 5.0,
+          "y": 41.8,
+          "correctAnswer": "Rigid C-Clamp Frame",
+          "feedback": "The rigid C-frame resists bending moments and tensile loads."
+        },
+        {
+          "componentNumber": 4,
+          "x": 55.0,
+          "y": 29.0,
+          "correctAnswer": "Movable Pressure Pad",
+          "feedback": "The pressure pad swivels on the screw end collar, distributing clamping force."
+        },
+        {
+          "componentNumber": 5,
+          "x": 53.3,
+          "y": 36.9,
+          "correctAnswer": "Power Screw",
+          "feedback": "The power screw transmits input torque and advances axially."
+        },
+        {
+          "componentNumber": 6,
+          "x": 53.3,
+          "y": 41.8,
+          "correctAnswer": "Screw Thread",
+          "feedback": "Helical threads convert rotational motion to axial translation."
+        },
+        {
+          "componentNumber": 7,
+          "x": 5.0,
+          "y": 60.9,
+          "correctAnswer": "Threaded Engagement",
+          "feedback": "The internal threaded nut portion of the frame where thread friction torque (Tₛ) is generated."
+        },
+        {
+          "componentNumber": 8,
+          "x": 55.0,
+          "y": 55.3,
+          "correctAnswer": "Collar Friction Interface",
+          "feedback": "The thrust interface between screw tip and pressure pad where collar friction (T꜀) acts."
+        },
+        {
+          "componentNumber": 9,
+          "x": 53.3,
+          "y": 63.9,
+          "correctAnswer": "Screw Head",
+          "feedback": "The enlarged boss at the lower end containing the sliding handle."
+        },
+        {
+          "componentNumber": 10,
+          "x": 57.6,
+          "y": 68.1,
+          "correctAnswer": "Sliding Handle",
+          "feedback": "The sliding tommy-bar handle provides the lever arm (R) for applying tightening torque."
+        }
+      ]
+    },
+    "motion-sequence": {
+      "title": "Understand the Power-Screw Load and Motion Path",
+      "prompt": "Analyse how rotational effort applied by the operator at the handle is converted into clamping force on the workpiece in Engineering Asset EA-19.",
+      "mcq": {
+        "question": "Which sequence correctly describes the complete mechanical load path and motion transformation in a C-clamp power screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Tangential force applied at handle → Torque applied to screw head → Power screw rotates in frame threads → Helical engagement converts rotation into axial movement → Pressure pad advances against workpiece → Clamping load (W) generated",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Pressure pad moves independently → Handle rotates as a reaction → Screw thread expands → Frame contracts onto workpiece",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Screw rotates without axial movement → Frame stretches outward → Fixed anvil pushes workpiece against pressure pad → Handle slides sideways",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Workpiece deformation rotates the screw → Screw advances handle downward → Collar friction creates clamping load directly",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "design-data": {
+      "title": "Establish Design Data and Engineering Assumptions",
+      "prompt": "Confirm all given engineering parameters for the EA-19 C-clamp power screw mechanism prior to conducting torque calculations.",
+      "mcq": {
+        "question": "Which set of design parameters correctly represents the complete given data for the EA-19 C-clamp mechanism?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Clamping load W = 5,000 N | Nominal diameter d = 22 mm | Pitch p = 5 mm | Number of starts n = 2 | Lead L = 10 mm | Thread friction μ = 0.15 | Collar friction μ_c = 0.10 | Mean collar diameter d_c = 28 mm | Handle radius R = 120 mm",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Clamping load W = 5,000 N | d = 22 mm | p = 5 mm | Single-start (n = 1, L = 5 mm) | μ = 0.15 | μ_c = 0.10 | d_c = 28 mm | R = 120 mm",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Clamping load W = 10,000 N | d = 30 mm | p = 6 mm | Double-start (L = 12 mm) | μ = 0.20 | μ_c = 0.15 | d_c = 40 mm | R = 200 mm",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Clamping load W = 5,000 N | d = 22 mm | p = 10 mm | Triple-start (L = 30 mm) | μ = 0.08 | μ_c = 0.05 | d_c = 20 mm | R = 100 mm",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "screw-geometry": {
+      "title": "Determine Screw Geometry and Helix Angle",
+      "prompt": "For a square-thread power screw:\n  Mean Screw Diameter:  dₘ = d − (p / 2)\n  Lead (two-start):     L = n × p = 2 × 5 = 10 mm\n  Helix Angle:          tan α = L / (π · dₘ)\n\nGiven Data:\n  d = 22 mm,   p = 5 mm,   n = 2 (Two-Start Thread)\n\nCalculate the mean screw diameter (dₘ), lead (L), and helix angle (α).",
+      "mcq": {
+        "question": "What are the correct mean screw diameter (dₘ), lead (L), and helix angle (α) for the two-start C-clamp screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "dₘ = d − (p / 2) = 22 − 2.5 = 19.5 mm  |  L = 2 × 5 = 10 mm  |  tan α = L / (π · dₘ) = 10 / (π × 19.5) = 10 / 61.261 = 0.16324  |  α = tan⁻¹(0.16324) ≈ 9.27°",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "dₘ = d − p = 22 − 5 = 17.0 mm  |  L = 5 mm  |  tan α = 5 / (π × 17) = 0.09361  |  α = tan⁻¹(0.09361) ≈ 5.35°",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "dₘ = 22.0 mm  |  L = 10 mm  |  tan α = 10 / (π × 22) = 0.14469  |  α = tan⁻¹(0.14469) ≈ 8.23°",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "dₘ = d + (p / 2) = 24.5 mm  |  L = 10 mm  |  tan α = 10 / (π × 24.5) = 0.12992  |  α = tan⁻¹(0.12992) ≈ 7.40°",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "thread-torque": {
+      "title": "Calculate Thread Friction Torque",
+      "prompt": "For a square-thread power screw, the torque required to raise the clamping load (overcome thread friction) is:\n\n  Tₛ = (W · dₘ / 2) · [ (μ + tan α) / (1 − μ · tan α) ]\n\nwhere:\n  W     = 5,000 N       (Clamping Load)\n  dₘ    = 19.5 mm       (Mean Screw Diameter)\n  μ     = 0.15          (Thread Friction Coefficient)\n  tan α = 0.16324       (α ≈ 9.27°)\n\nCalculate the thread friction angle φ = tan⁻¹(μ) and thread friction torque Tₛ (in N·mm).",
+      "mcq": {
+        "question": "What is the correct thread friction torque Tₛ for the C-clamp power screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Tₛ = (W · dₘ / 2) · [ (μ + tan α) / (1 − μ · tan α) ] = (5,000 × 19.5 / 2) · [ (0.15 + 0.16324) / (1 − 0.15 × 0.16324) ] = 48,750 × (0.31324 / 0.97551) = 48,750 × 0.32110 ≈ 15,654 N·mm (15.65 N·m)  |  φ = tan⁻¹(0.15) ≈ 8.53°",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Tₛ = W · dₘ · μ = 5,000 × 19.5 × 0.15 = 14,625 N·mm  (friction force only — helix angle α omitted)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Tₛ = (W · dₘ / 2) · tan α = 48,750 × 0.16324 = 7,958 N·mm  (ideal load component without friction)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Tₛ = (W · L) / (2π) = (5,000 × 10) / (2π) = 50,000 / 6.2832 ≈ 7,958 N·mm  (zero-friction efficiency relation)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "collar-torque": {
+      "title": "Calculate Collar Friction Torque",
+      "prompt": "Collar friction torque accounts for friction at the thrust interface between the rotating screw tip and non-rotating pressure pad:\n\n  T_c = μ_c · W · (d_c / 2)\n\nwhere:\n  μ_c = 0.10     (Collar Friction Coefficient)\n  W   = 5,000 N  (Clamping Load)\n  d_c = 28 mm    (Mean Collar Diameter)\n\nCalculate the collar friction torque T_c in N·mm and N·m.",
+      "mcq": {
+        "question": "What is the correct collar friction torque T_c for the C-clamp mechanism?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "T_c = μ_c · W · (d_c / 2) = 0.10 × 5,000 × (28 / 2) = 0.10 × 5,000 × 14 = 7,000 N·mm (7.00 N·m)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "T_c = μ_c · W · d_c = 0.10 × 5,000 × 28 = 14,000 N·mm  (forgot ÷ 2)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "T_c = (μ_c · W) / d_c = (0.10 × 5,000) / 28 = 17.86 N·mm  (inverted collar radius)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "T_c = μ_c · (d_c / 2) = 0.10 × 14 = 1.4 N·mm  (forgot clamping load W)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "total-torque-force": {
+      "title": "Determine Total Tightening Torque and Operator Hand Force",
+      "prompt": "Total Tightening Torque:\n  T_total = Tₛ + T_c\n\nRequired Operator Hand Force at Handle:\n  F = T_total / R\n\nGiven:\n  Tₛ ≈ 15,654 N·mm,   T_c = 7,000 N·mm,   Handle Radius R = 120 mm (0.12 m)\n\nCalculate total tightening torque T_total (in N·mm and N·m) and required operator hand force F (in N).",
+      "mcq": {
+        "question": "What are the correct total tightening torque T_total and required operator hand force F?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "T_total = Tₛ + T_c = 15,654 + 7,000 = 22,654 N·mm (22.65 N·m)  |  F = T_total / R = 22,654 / 120 ≈ 188.8 N",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "T_total = Tₛ = 15,654 N·mm  (collar friction omitted)  |  F = 15,654 / 120 ≈ 130.5 N",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "T_total = T_c = 7,000 N·mm  (thread friction omitted)  |  F = 7,000 / 120 ≈ 58.3 N",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "T_total = Tₛ × T_c = 15,654 × 7,000 = 109,578,000 N·mm  |  F = 913,150 N",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "collar-friction-effect": {
+      "title": "Analyse the Relative Effect and Significance of Collar Friction",
+      "prompt": "Investigate how collar friction increases the required operator tightening torque compared to thread friction alone.\n\n  Case A (Without Collar Friction):  T_without = Tₛ = 15,654 N·mm\n  Case B (With Collar Friction):     T_with = T_total = 22,654 N·mm\n  Increase due to Collar Friction:   ΔT = T_c = 7,000 N·mm\n\nCalculate the percentage increase in tightening torque caused by collar friction over thread torque alone, and its proportion of total torque.",
+      "mcq": {
+        "question": "Which evaluation accurately quantifies the impact of collar friction on C-clamp tightening torque?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Percentage increase over thread torque = (T_c / Tₛ) × 100% = (7,000 / 15,654) × 100% ≈ 44.72%  |  Proportion of total torque = (T_c / T_total) × 100% = (7,000 / 22,654) × 100% ≈ 30.90%  |  Conclusion: Collar friction increases tightening torque by ~44.7% and accounts for nearly 1/3 of total operator effort; ignoring it causes severe torque underestimation.",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Percentage increase = (T_c / T_total) × 100% = 7,000 / 22,654 × 100% = 3.09%  (decimal error)  |  Conclusion: Collar friction is negligible.",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Percentage increase = (T_s / T_c) × 100% = 15,654 / 7,000 × 100% = 223.6%  |  Conclusion: Thread friction is smaller than collar friction.",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Percentage increase = 0%  |  Conclusion: Collar friction and thread friction cancel each other out completely.",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "engineering-judgement": {
+      "title": "Engineering Judgement — C-Clamp Design Evaluation",
+      "stationCode": "DRS-CCLAMP-FRICTION",
+      "image": "assignments/c-clamp-friction/images/EA-19_C-Clamp_Screw_Friction_v1.0.png",
+      "figure": "Engineering Asset EA-19",
+      "components": [
+        {
+          "id": "C01",
+          "name": "Design is suitable — self-locking is maintained, collar friction is managed via lubrication",
+          "label": "C-Clamp Design: Acceptable Engineering Assessment"
+        },
+        {
+          "id": "C02",
+          "name": "Design requires modification — excessive operator effort or poor collar lubrication identified",
+          "label": "C-Clamp Design: Design Modification Recommended"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-suitable",
+          "title": "C-CLAMP DESIGN IS ACCEPTABLE — SELF-LOCKING CONFIRMED, OPERATOR FORCE WITHIN PRACTICAL LIMITS",
+          "suitability": "Acceptable Engineering Assessment",
+          "description": "The two-start C-clamp power screw achieves a 5 kN clamping force with an operator hand force of ~188.8 N at R = 120 mm handle, which is well within practical manual operating capability (~200 N limit). The thread friction angle (φ ≈ 8.53°) and helix angle (α ≈ 9.27°) maintain effective clamping function without spontaneous back-driving under vibration due to collar friction resistance. Regular application of grease at the thrust pad collar maintains μ_c ≤ 0.10, preventing premature wear and galling."
+        },
+        {
+          "id": "opt-improve",
+          "title": "DESIGN MODIFICATION RECOMMENDED — REDUCE COLLAR FRICTION VIA THRUST WASHER OR EXTEND HANDLE",
+          "suitability": "Design Improvement Recommended",
+          "description": "Because collar friction accounts for nearly 31% of the total tightening torque (7,000 N·mm out of 22,654 N·mm), operating effort can be significantly reduced by introducing a bronze thrust washer or needle roller thrust bearing at the pressure pad interface (reducing μ_c from 0.10 to 0.04). Alternatively, extending the sliding handle radius from 120 mm to 150 mm reduces operator hand force from 188.8 N to 151.0 N, improving ergonomics and reducing operator fatigue during repetitive industrial clamping."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "C-Clamp Power Screw Analysis and Design Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. C-Clamp Power Screw Purpose and Operating Principle",
+          "placeholder": "Describe the function of the C-clamp power screw and explain how handle rotation converts to axial clamping load on the workpiece. Highlight the two friction interfaces."
+        },
+        {
+          "id": "r2",
+          "label": "2. Screw Geometry, Pitch vs Lead for Two-Start Threads",
+          "placeholder": "State the pitch (p = 5 mm), number of starts (n = 2), lead (L = 10 mm), mean diameter (dₘ = 19.5 mm), and calculated helix angle (α ≈ 9.27°)."
+        },
+        {
+          "id": "r3",
+          "label": "3. Thread Friction Torque Computation",
+          "placeholder": "State the thread friction coefficient (μ = 0.15), friction angle (φ ≈ 8.53°), and calculated thread torque (Tₛ ≈ 15,654 N·mm)."
+        },
+        {
+          "id": "r4",
+          "label": "4. Collar Friction Torque Computation",
+          "placeholder": "State the collar friction coefficient (μ_c = 0.10), mean collar diameter (d_c = 28 mm), and calculated collar torque (T_c = 7,000 N·mm)."
+        },
+        {
+          "id": "r5",
+          "label": "5. Total Tightening Torque and Operator Hand Force",
+          "placeholder": "State total tightening torque (T_total = Tₛ + T_c ≈ 22,654 N·mm / 22.65 N·m) and required operator hand force (F ≈ 188.8 N at R = 120 mm)."
+        },
+        {
+          "id": "r6",
+          "label": "6. Analytical Evaluation of Collar Friction Contribution",
+          "placeholder": "Explain the relative effect of collar friction (~44.7% increase over thread torque alone, ~30.9% of total torque) and why collar friction cannot be neglected in power screw design."
+        },
+        {
+          "id": "r7",
+          "label": "7. Engineering Judgement and Design Recommendation",
+          "placeholder": "Summarise your engineering recommendation regarding collar lubrication, thrust washer insertion, handle length optimization, and self-locking safety."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submit C-Clamp Power-Screw Response Package",
+      "body": "Your complete C-Clamp Screw and Collar Friction Analysis Challenge (EA-19) response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

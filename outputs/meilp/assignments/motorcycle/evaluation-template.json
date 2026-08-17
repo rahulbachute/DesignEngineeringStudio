@@ -1,0 +1,11 @@
+{
+  "maxMarks": {
+    "project-charter": 1,
+    "identify-stand-parts": 2,
+    "stability-principle": 2,
+    "material-decision": 2,
+    "load-estimation": 2,
+    "engineering-notebook": 2,
+    "reflection": 1
+  }
+}

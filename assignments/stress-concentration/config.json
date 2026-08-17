@@ -1,0 +1,57 @@
+{
+  "id": "EC-06",
+  "projectCode": "EC-06",
+  "slug": "stress-concentration",
+  "title": "Stress Concentration Analysis of a Plate with a Central Hole",
+  "subject": "PCC303-MEC",
+  "courseCode": "PCC303-MEC",
+  "courseName": "Design of Machine Elements",
+  "unit": "Unit I",
+  "courseOutcome": {
+    "code": "CO1",
+    "statement": "Design levers and components subjected to stress concentration and tensile loading by selecting appropriate materials and geometry."
+  },
+  "programOutcomes": ["PO1", "PO2", "PO3", "PO4", "PO5", "PO7", "PO8", "PO9", "PO11"],
+  "programSpecificOutcomes": ["PSO1", "PSO2"],
+  "bloomLevelsCovered": ["L1 Understand", "L2 Understand", "L3 Apply", "L4 Analyse", "L5 Evaluate"],
+  "cceType": "Engineering Challenge",
+  "cceMarks": 12,
+  "facultyName": "Prof. Rahul Bachute",
+  "client": "Manufacturing Company - Design Verification Dept",
+  "location": "Pune",
+  "priority": "Critical",
+  "estimatedDuration": "90 minutes",
+  "difficulty": "Intermediate",
+  "submissionMode": "Individual or Group",
+  "version": "1.0.0",
+  "settings": {
+    "attemptMode": "both",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true
+  },
+  "tasks": [
+    { "id": "project-charter", "type": "information", "title": "Project Charter" },
+    { "id": "engineering-context", "type": "information", "title": "Engineering Context" },
+    { "id": "component-identification", "type": "image-label", "activityCode": "EC06-A03", "title": "Component Identification" },
+    { "id": "engineering-assumptions", "type": "text", "title": "Engineering Assumptions" },
+    { "id": "free-body-diagram", "type": "image-label", "title": "Free Body Diagram" },
+    { "id": "engineering-calculations", "type": "calculation", "title": "Engineering Calculations" },
+    { "id": "stress-concentration", "type": "calculation", "title": "Stress Concentration" },
+    { "id": "maximum-stress", "type": "calculation", "title": "Maximum Stress" },
+    { "id": "material-selection", "type": "selection", "title": "Material Selection" },
+    { "id": "factor-of-safety", "type": "calculation", "title": "Factor of Safety" },
+    { "id": "engineering-decision", "type": "recommendation", "title": "Engineering Decision" },
+    { "id": "engineering-report", "type": "reflection", "title": "Engineering Report" },
+    { "id": "submit", "type": "submission", "title": "Submission" }
+  ],
+  "dataFiles": {
+    "workflow": "assignments/stress-concentration/workflow.json",
+    "content": "assignments/stress-concentration/content.json",
+    "rubric": "assignments/stress-concentration/rubric.json",
+    "instructorGuide": "assignments/stress-concentration/instructor-guide.md",
+    "studentGuide": "assignments/stress-concentration/student-guide.md",
+    "evaluationTemplate": "assignments/stress-concentration/evaluation-template.json"
+  }
+}

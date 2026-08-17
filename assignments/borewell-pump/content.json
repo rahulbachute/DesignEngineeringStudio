@@ -1,0 +1,596 @@
+{
+  "dashboard": {
+    "projectId": "EC-04",
+    "projectTitle": "Ergonomic Design and Safety Verification of a Borewell Pump Hand Lever",
+    "client": "ABC Pumps Manufacturing",
+    "location": "Pune",
+    "priority": "High",
+    "estimatedDuration": "120 minutes",
+    "difficulty": "Intermediate",
+    "courseOutcome": "CO1",
+    "submissionMode": "Individual or Group"
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "rollNumber",
+        "label": "Roll Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "name",
+        "label": "Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "classYear",
+        "label": "Class and Year (e.g., TE-A)",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "groupName",
+        "label": "Group Name",
+        "required": false
+      },
+      {
+        "name": "student1",
+        "label": "Student 1",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      },
+      {
+        "name": "division",
+        "label": "Division (e.g., A, B, C)",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      }
+    ]
+  },
+  "resources": [
+    {
+      "id": "pump-diagram",
+      "type": "line-diagram",
+      "title": "Borewell Pump layout",
+      "path": "assignments/borewell-pump/images/EA-04_Student.png",
+      "required": true
+    }
+  ],
+  "activities": {
+    "project-context": {
+      "title": "Project Context",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Client Context",
+          "body": "ABC Pumps Manufacturing has received field complaints that operators experience excessive operating effort, fatigue, discomfort, and poor ergonomics while using their manual borewell pumps."
+        },
+        {
+          "type": "warning",
+          "title": "Professional Responsibility",
+          "body": "Management has tasked the Design Team to investigate whether the existing hand lever design is satisfactory. You must evaluate structural safety and ergonomic requirements, and recommend an improved design wherever necessary."
+        },
+        {
+          "type": "theory",
+          "title": "Ergonomics and Safety",
+          "body": "A borewell pump lever acts as a first-class lever. Human factors engineering requires that the operating effort be within a comfortable range to prevent fatigue. Simultaneously, the lever must be structurally safe against maximum bending moments."
+        },
+        {
+          "type": "hint",
+          "title": "Design Focus",
+          "body": "Consider the lever arm ratio (Mechanical Advantage), handle height, grip comfort, and the bending stress at the critical section near the fulcrum."
+        },
+        {
+          "type": "student-response",
+          "title": "Deliverables",
+          "items": [
+            "Component Identification & Working Principle",
+            "Ergonomic Analysis & Free Body Diagram",
+            "Force & Effort Analysis",
+            "Structural Analysis & Factor of Safety",
+            "Material Selection & Engineering Decision",
+            "Final Engineering Report"
+          ]
+        }
+      ],
+      "acceptanceText": "I accept the project charter and will document engineering reasoning."
+    },
+    "identify-components": {
+      "title": "Component Identification",
+      "image": "assignments/borewell-pump/images/EA-04_Student.png",
+      "figure": "Figure 1",
+      "description": "Configurable Borewell Pump diagram.",
+      "options": [
+        "Handle Grip",
+        "Lever Arm",
+        "Fulcrum",
+        "Pivot Pin",
+        "Connecting Rod",
+        "Pump Rod",
+        "Bush",
+        "Fasteners"
+      ],
+      "callouts": [
+        {
+          "id": "1",
+          "top": "55%",
+          "left": "85%"
+        },
+        {
+          "id": "2",
+          "top": "30%",
+          "left": "60%"
+        },
+        {
+          "id": "3",
+          "top": "18%",
+          "left": "34%"
+        },
+        {
+          "id": "4",
+          "top": "19%",
+          "left": "47%"
+        },
+        {
+          "id": "5",
+          "top": "40%",
+          "left": "47%"
+        },
+        {
+          "id": "6",
+          "top": "60%",
+          "left": "47%"
+        },
+        {
+          "id": "7",
+          "top": "9%",
+          "left": "38%"
+        },
+        {
+          "id": "8",
+          "top": "75%",
+          "left": "30%"
+        }
+      ]
+    },
+    "working-principle": {
+      "title": "Working Principle",
+      "question": "Explain the working principle of the borewell pump hand lever.",
+      "placeholder": "Describe how force is transmitted, the class of lever, and how mechanical advantage is achieved...",
+      "mcq": {
+        "question": "Which class of lever is typically used in a manual borewell pump?",
+        "options": [
+          {
+            "id": "c1",
+            "text": "First-Class Lever",
+            "correct": true
+          },
+          {
+            "id": "c2",
+            "text": "Second-Class Lever",
+            "correct": false
+          },
+          {
+            "id": "c3",
+            "text": "Third-Class Lever",
+            "correct": false
+          },
+          {
+            "id": "c4",
+            "text": "Rotary Actuator",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "design-requirements": {
+      "title": "Design Requirements",
+      "description": "Enter the required design parameters based on the problem statement.",
+      "given": [
+        {
+          "label": "Pump Resistance",
+          "value": "250 N"
+        },
+        {
+          "label": "Stroke Length",
+          "value": "100 mm"
+        },
+        {
+          "label": "Required Factor of Safety",
+          "value": "2.5"
+        },
+        {
+          "label": "Max Ergonomic Effort",
+          "value": "50 N"
+        }
+      ],
+      "fields": [
+        {
+          "id": "pumpLoad",
+          "label": "Pump Resistance (N)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "strokeLength",
+          "label": "Stroke Length (mm)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "reqSafety",
+          "label": "Required Factor of Safety",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "maxEffort",
+          "label": "Max Ergonomic Effort (N)",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    "engineering-assumptions": {
+      "title": "Engineering Assumptions",
+      "description": "Clearly state all engineering assumptions before performing calculations.",
+      "prompts": [
+        {
+          "id": "assumptions",
+          "label": "List your assumptions (e.g. regarding friction, dynamic effects, load distribution):"
+        }
+      ]
+    },
+    "ergonomic-analysis": {
+      "title": "Ergonomic Analysis",
+      "question": "Evaluate the current ergonomic design.",
+      "placeholder": "Discuss handle height, reach, grip diameter, operating posture, user comfort, fatigue, and repetitive motion...",
+      "mcq": {
+        "question": "Which ergonomic factor most directly causes localized hand fatigue during pumping?",
+        "options": [
+          {
+            "id": "e1",
+            "text": "Lever color and finish",
+            "correct": false
+          },
+          {
+            "id": "e2",
+            "text": "Improper grip diameter and lack of padding",
+            "correct": true
+          },
+          {
+            "id": "e3",
+            "text": "Foundation bolt size",
+            "correct": false
+          },
+          {
+            "id": "e4",
+            "text": "Water temperature",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "free-body-diagram": {
+      "title": "Free Body Diagram",
+      "image": "assignments/borewell-pump/images/EA-04_FBD.png",
+      "figure": "Figure 2",
+      "description": "Identify forces acting on the pump lever.",
+      "options": [
+        "Applied Force",
+        "Pump Resistance",
+        "Fulcrum Reaction",
+        "Moment"
+      ],
+      "callouts": [
+        {
+          "id": "f1",
+          "top": "57%",
+          "left": "81%"
+        },
+        {
+          "id": "f2",
+          "top": "68%",
+          "left": "47%"
+        },
+        {
+          "id": "f3",
+          "top": "15%",
+          "left": "38%"
+        },
+        {
+          "id": "f4",
+          "top": "33%",
+          "left": "60%"
+        }
+      ]
+    },
+    "force-effort-analysis": {
+      "title": "Force & Effort Analysis",
+      "description": "Calculate the Mechanical Advantage, Required Human Effort, and Reaction Force at the fulcrum.",
+      "given": [
+        {
+          "label": "Pump Resistance (F_r)",
+          "value": "250 N"
+        },
+        {
+          "label": "Effort Arm Length (b)",
+          "value": "750 mm"
+        },
+        {
+          "label": "Load Arm Length (a)",
+          "value": "150 mm"
+        }
+      ],
+      "fields": [
+        {
+          "id": "effortArm",
+          "label": "Effort Arm Length (mm)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "loadArm",
+          "label": "Load Arm Length (mm)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "ma",
+          "label": "Mechanical Advantage",
+          "type": "number",
+          "required": true,
+          "readonly": false
+        },
+        {
+          "id": "effort",
+          "label": "Required Human Effort (N)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "reaction",
+          "label": "Reaction at Fulcrum (N)",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    "structural-analysis": {
+      "title": "Structural Analysis",
+      "description": "Calculate the Maximum Bending Moment, Section Properties, and Bending Stress in the lever.",
+      "given": [
+        {
+          "label": "Pump Resistance (F_r)",
+          "value": "250 N"
+        },
+        {
+          "label": "Load Arm Length (a)",
+          "value": "150 mm"
+        },
+        {
+          "label": "Lever Arm Diameter (d_i)",
+          "value": "30 mm"
+        }
+      ],
+      "fields": [
+        {
+          "id": "moment",
+          "label": "Maximum Bending Moment (N-mm)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "area",
+          "label": "Cross-sectional Area (mm²)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "inertia",
+          "label": "Moment of Inertia (mm⁴)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "modulus",
+          "label": "Section Modulus (mm³)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "stress",
+          "label": "Maximum Bending Stress (MPa)",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    "material-selection": {
+      "title": "Material Selection",
+      "description": "Select the most suitable material for the hand lever.",
+      "options": [
+        {
+          "id": "m1",
+          "title": "Mild Steel",
+          "properties": [
+            "Syt = 250 MPa",
+            "Low cost",
+            "Ductile",
+            "Heavier"
+          ],
+          "selectable": true
+        },
+        {
+          "id": "m2",
+          "title": "EN8 Steel",
+          "properties": [
+            "Syt = 465 MPa",
+            "High strength",
+            "Moderate cost",
+            "Good wear resistance"
+          ],
+          "selectable": true
+        },
+        {
+          "id": "m3",
+          "title": "Stainless Steel",
+          "properties": [
+            "Syt = 310 MPa",
+            "Corrosion resistant",
+            "High cost"
+          ],
+          "selectable": true
+        },
+        {
+          "id": "m4",
+          "title": "Aluminium Alloy",
+          "properties": [
+            "Syt = 275 MPa",
+            "Lightweight",
+            "Lower stiffness",
+            "High cost"
+          ],
+          "selectable": true
+        }
+      ]
+    },
+    "factor-of-safety": {
+      "title": "Factor of Safety",
+      "description": "Determine the actual Factor of Safety using the selected material's Yield Strength.",
+      "fields": [
+        {
+          "id": "syt",
+          "label": "Yield Strength (Syt) (MPa)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "fos",
+          "label": "Factor of Safety",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    "engineering-decision": {
+      "title": "Engineering Decision",
+      "question": "Based on both structural safety and ergonomic limits, is the design safe?",
+      "options": [
+        {
+          "id": "safe",
+          "label": "SAFE",
+          "color": "success"
+        },
+        {
+          "id": "unsafe",
+          "label": "UNSAFE",
+          "color": "danger"
+        }
+      ],
+      "placeholder": "Provide your engineering justification..."
+    },
+    "final-engineering-report": {
+      "title": "Final Engineering Report",
+      "description": "Recommend design improvements and reflect on your learning.",
+      "prompts": [
+        {
+          "id": "improvement",
+          "label": "Recommendations (e.g., Increase Lever Length, Modify Cross Section, Improve Handle Grip, Reduce Weight, Change Material, Improve Ergonomics):"
+        },
+        {
+          "id": "reduction",
+          "label": "Percentage Reduction in Human Effort after redesign (%):"
+        },
+        {
+          "id": "r1",
+          "label": "What did you learn about integrating human factors with structural design?"
+        },
+        {
+          "id": "r2",
+          "label": "How did this assignment change your perspective on everyday engineering objects?"
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submit Assignment",
+      "description": "Review your progress and submit your assignment."
+    }
+  }
+}

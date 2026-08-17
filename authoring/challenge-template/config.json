@@ -1,0 +1,45 @@
+{
+  "id": "EC-XX",
+  "slug": "challenge-slug",
+  "title": "Engineering Challenge Title",
+  "subject": "COURSE-CODE",
+  "courseName": "Course Name",
+  "unit": "Unit",
+  "courseOutcome": "CO",
+  "po": ["PO1"],
+  "pso": ["PSO1"],
+  "cceType": "Assignment",
+  "assignmentWeightage": "Configured by faculty",
+  "client": "Client or scenario owner",
+  "location": "Project location",
+  "priority": "Medium",
+  "estimatedDuration": "90 minutes",
+  "difficulty": "Intermediate",
+  "submissionMode": "Both",
+  "version": "1.0.0",
+  "settings": {
+    "attemptMode": "both",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true
+  },
+  "tasks": [
+    { "id": "project-charter", "type": "information", "title": "Project Charter" },
+    { "id": "engineering-background", "type": "information", "title": "Engineering Background" },
+    { "id": "learning-outcomes", "type": "information", "title": "Learning Outcomes" },
+    { "id": "activity-1", "type": "image-viewer", "title": "Engineering Activity 1" },
+    { "id": "activity-2", "type": "text-response", "title": "Engineering Activity 2" },
+    { "id": "engineering-notebook", "type": "notebook", "title": "Report / Engineering Notebook" },
+    { "id": "reflection", "type": "reflection", "title": "Reflection" },
+    { "id": "submit", "type": "submission", "title": "Submit" }
+  ],
+  "dataFiles": {
+    "workflow": "assignments/challenge-slug/workflow.json",
+    "content": "assignments/challenge-slug/content.json",
+    "rubric": "assignments/challenge-slug/rubric.json",
+    "engineeringBrief": "assignments/challenge-slug/engineering-brief.md",
+    "instructorGuide": "assignments/challenge-slug/instructor-guide.md",
+    "studentGuide": "assignments/challenge-slug/student-guide.md"
+  }
+}

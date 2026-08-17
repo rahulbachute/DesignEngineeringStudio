@@ -1,0 +1,47 @@
+{
+  "assignmentId": "EC-08",
+  "totalMarks": 12,
+  "maxMarks": 12,
+  "sections": [
+    {
+      "id": "component-identification",
+      "title": "Component Identification (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "working-principle",
+      "title": "Working Principle & Mechanics (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "design-requirements",
+      "title": "Design Requirements (Activity 5)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "engineering-assumptions",
+      "title": "Engineering Assumptions (Activity 6)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "key-design-calculation",
+      "title": "Key Design Calculation (Activity 7)",
+      "maxMarks": 3.0
+    },
+    {
+      "id": "failure-analysis-safety",
+      "title": "Failure Analysis & Safety Verification (Activity 8)",
+      "maxMarks": 2.5
+    },
+    {
+      "id": "engineering-decision",
+      "title": "Engineering Decision & Improvements (Activity 9)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "design-recommendation",
+      "title": "Engineering Report & Reflection (Activity 10)",
+      "maxMarks": 1.5
+    }
+  ]
+}

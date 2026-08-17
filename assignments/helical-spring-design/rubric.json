@@ -1,0 +1,108 @@
+{
+  "assignmentId": "EA-12",
+  "assignmentTitle": "Design of a Helical Compression Spring for Motorcycle Suspension",
+  "totalMarks": 12.0,
+  "criteria": [
+    {
+      "id": "project-charter",
+      "title": "Observe the Motorcycle Suspension",
+      "marks": 0.5,
+      "bloomLevel": "L1 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO8", "PO11"],
+      "pso": ["PSO1"],
+      "description": "Understanding client brief, motorcycle rear twin-shock suspension application, and project scope."
+    },
+    {
+      "id": "component-identification",
+      "activityCode": "EA12-A02",
+      "title": "Identify the Suspension Components",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate labeling of helical compression spring, hydraulic damper, upper/lower spring seats, swingarm/frame eyes, and preload adjuster collar on EA-12."
+    },
+    {
+      "id": "load-path",
+      "title": "Understand the Load Path",
+      "marks": 0.5,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Distinguishing mechanical roles of helical spring (energy storage/restoring force) and damper (energy dissipation)."
+    },
+    {
+      "id": "design-requirements",
+      "title": "Establish Design Requirements",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Identifying working load (1250 N), deflection (45 mm), shear modulus G, and target spring index C = 6.0."
+    },
+    {
+      "id": "spring-geometry",
+      "title": "Determine Spring Geometry",
+      "marks": 1.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Calculating mean coil diameter D = 48 mm, outer diameter Do = 56 mm, and inner diameter Di = 40 mm."
+    },
+    {
+      "id": "spring-design-calculation",
+      "title": "Design the Helical Compression Spring",
+      "marks": 2.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO5"],
+      "pso": ["PSO1"],
+      "description": "Calculating Wahl factor K = 1.2525, max torsional shear stress tau = 373.76 N/mm², and active coils N = 13."
+    },
+    {
+      "id": "strength-deflection-check",
+      "title": "Verify Strength and Deflection",
+      "marks": 2.0,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Verifying actual Factor of Safety (FoS = 1.20) and spring stiffness (k = 27.78 N/mm)."
+    },
+    {
+      "id": "application-evaluation",
+      "title": "Evaluate the Motorcycle Application",
+      "marks": 1.0,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Evaluating spring suitability under passenger payload and bump impact loading."
+    },
+    {
+      "id": "engineering-recommendation",
+      "title": "Engineering Recommendation",
+      "marks": 1.0,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Recommending shot peening, material upgrades, or wire diameter adjustments for enhanced fatigue life."
+    },
+    {
+      "id": "final-report",
+      "title": "Engineering Design Report",
+      "marks": 1.0,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO8", "PO9", "PO11"],
+      "pso": ["PSO2"],
+      "description": "Synthesizing concise engineering design report covering spring dimensions, stress checks, FoS, and manufacturing specs."
+    }
+  ]
+}

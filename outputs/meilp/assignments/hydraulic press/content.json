@@ -1,0 +1,662 @@
+{
+  "assignment": {
+    "id": "EA-20",
+    "slug": "hydraulic-press",
+    "title": "Design of a Power Screw for a Hydraulic Press"
+  },
+  "dashboard": {
+    "projectCode": "Hydraulic Press",
+    "projectTitle": "Design of a Power Screw for a Hydraulic Press",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate to Advanced",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO2: Design power screws, fasteners, and power transmission elements by applying torque, efficiency, and self-locking criteria for safe and reliable mechanical operation.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "hydraulic-press-asset",
+      "title": "Design of a Power Screw for a Hydraulic Press",
+      "path": "assignments/hydraulic-press/images/EA-20_Power_Screw_Hydraulic_Press_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "hydraulic-press-asset",
+      "title": "Hydraulic Press Power-Screw Reference Diagram",
+      "path": "assignments/hydraulic-press/images/EA-20_Power_Screw_Hydraulic_Press_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      {
+        "id": "individual",
+        "label": "Individual Mode",
+        "description": "Independently design and analyse the hydraulic press bed-adjustment power screw mechanism, evaluate thread and collar friction torques, efficiency, and structural safety."
+      },
+      {
+        "label": "Group Mode (2–4 Students)",
+        "id": "group",
+        "description": "Collaborate on hydraulic press power screw design calculations, self-locking safety verification, stress analysis, and engineering recommendations."
+      }
+    ],
+    "fields": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "Engineering College",
+        "required": true,
+        "type": "select"
+      },
+      {
+        "name": "branch",
+        "label": "Branch / Discipline",
+        "required": true,
+        "readonly": true,
+        "auto": "Mechanical Engineering"
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Understand Hydraulic Press and Bed-Adjustment Power Screw Application",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Engineering Brief — Hydraulic Press Bed-Adjustment Power Screw",
+          "body": "In an industrial hydraulic press, pressing operations (forming, stamping, coining) generate massive compressive loads (e.g. 100 kN) delivered by the hydraulic cylinder and ram. To accommodate diverse die heights and workpiece dimensions, the vertical position of the heavy press bed must be precisely adjusted prior to pressing.\n\nYou are tasked as a Machine Design Engineer with designing and evaluating the heavy-duty vertical power screw mechanism located at the base of the press frame. This screw elevates, lowers, and positions the adjustable press bed assembly (axial load W = 25 kN) using an operating handwheel."
+        },
+        {
+          "type": "theory",
+          "title": "Given Engineering Design Data & Machine Parameters",
+          "body": "The following verified engineering data must be used for the power screw design and analysis:\n\n• Primary Hydraulic Pressing Capacity: 100 kN (Fluid ram downward force on workpiece)\n• Bed Positioning Axial Dead Load (W): 25 kN = 25,000 N (Dead weight of adjustable press bed, bolster plate, and fixtures)\n• Power Screw Thread Profile: Single-Start ISO Metric Trapezoidal Thread (Tr 40x6)\n• Nominal / Major Diameter (d): 40 mm\n• Pitch (p): 6 mm\n• Number of Starts (n): 1 (Single-start) ⇒ Lead (L = n × p): 6 mm\n• Thread Flank Included Angle (2β): 30° ⇒ Flank Half-Angle (β): 15°\n• Coefficient of Thread Friction (μ): 0.15 (Boundary-lubricated steel screw on bronze nut)\n• Thrust Collar Dimensions: Inside Diameter Di = 45 mm, Outside Diameter Do = 75 mm\n• Mean Collar Diameter (Dc): 60 mm ⇒ Mean Collar Radius (Rc): 30 mm = 0.030 m\n• Coefficient of Thrust Collar Friction (μ_c): 0.12 (Flat annular bronze collar interface)\n• Operating Handwheel: Diameter Dh = 400 mm ⇒ Radius Rh = 200 mm = 0.20 m\n• Screw Material: AISI 1045 Normalized Carbon Steel (Yield Strength Syt = 380 MPa)"
+        },
+        {
+          "type": "theory",
+          "title": "Operating Principle, Load Paths & Governing Equations",
+          "body": "1. Critical Engineering Load Path Separation:\n  • Hydraulic Pressing System: Hydraulic Pump → Fluid Pressure → Hydraulic Cylinder → Piston / Ram → Pressing Head → Workpiece → Press Bed → Press Frame (100 kN pressing capacity).\n  • Bed-Adjustment Power Screw: Operating Handwheel → Rotary Input → Power Screw Rotation → Thread Interaction → Axial Bed Adjustment (W = 25 kN positioning dead weight).\n\n2. Power Screw Geometry (ISO Metric Trapezoidal Tr 40x6):\n  • Core Diameter:   d_c = d − p = 40 − 6 = 34.0 mm\n  • Mean Diameter:   d_m = d − (p / 2) = 40 − 3 = 37.0 mm\n  • Lead:            L = n × p = 1 × 6 = 6.0 mm (Single Start)\n  • Helix Angle (α): tan α = L / (π · d_m) = 6 / (π × 37) = 0.051617  ⇒  α ≈ 2.955°\n\n3. Virtual Friction & Torque Formulations (Flank Angle β = 15°):\n  • Virtual Friction: μ' = μ / cos β = 0.15 / cos(15°) = 0.15529  ⇒  φ' = tan⁻¹(μ') ≈ 8.827°\n  • Thread Friction Torque to Raise Load:\n      T_t = (W · d_m / 2) · [ (μ' + tan α) / (1 − μ' · tan α) ] = (W · d_m / 2) · tan(α + φ')\n  • Thrust Collar Friction Torque:\n      T_c = μ_c · W · R_c   (where R_c = (D_i + D_o) / 4 = (45 + 75) / 4 = 30.0 mm)\n  • Total Operating Torque:\n      T_total = T_t + T_c\n\n4. Efficiency & Self-Locking Safety:\n  • Overall Mechanical Efficiency: η = (W · L) / (2 · π · T_total)\n  • Self-Locking Condition: φ' > α  (or tan φ' > tan α, η < 50%)\n  • Lowering Torque: T_lower = (W · d_m / 2) · tan(φ' − α) + T_c > 0 (Positive torque confirms fail-safe operation; no overhauling).\n\n5. Stress Analysis & Factor of Safety (AISI 1045 Normalized Steel, S_yt = 380 MPa):\n  • Direct Compressive Stress:  σ_c = W / A_c = W / [ (π / 4) · d_c² ]\n  • Torsional Shear Stress:     τ = (16 · T_t) / (π · d_c³)\n  • Maximum Principal Stress:   σ_max = (σ_c / 2) + √[ (σ_c / 2)² + τ² ]\n  • Factor of Safety:           FOS = S_yt / σ_max"
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Objectives & Required Tasks",
+          "items": [
+            "Identify all 10 machine components and friction interfaces on the Hydraulic Press diagram.",
+            "Differentiate the load paths of the primary hydraulic pressing circuit vs. the bed positioning screw.",
+            "Establish the verified engineering design parameters (W = 25 kN, Tr 40x6, μ = 0.15, μ_c = 0.12, D_h = 400 mm).",
+            "Calculate core diameter (d_c), mean diameter (d_m), lead (L), and helix angle (α).",
+            "Compute virtual friction angle (φ') and thread friction torque (T_t).",
+            "Determine mean thrust collar radius (R_c) and collar friction torque (T_c).",
+            "Calculate total operating torque (T_total), manual handwheel effort (F_h), and mechanical efficiency (η).",
+            "Verify the self-locking safety condition and calculate positive lowering torque (T_lower).",
+            "Perform stress analysis (σ_c, τ, σ_max) and evaluate the structural Factor of Safety.",
+            "Formulate justified engineering recommendations for ergonomic reduction gearing and compile the final design report."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the Hydraulic Press Project Charter for Power Screw Design & Analysis."
+    },
+    "component-identification": {
+      "title": "Identify Hydraulic Press and Power-Screw Components",
+      "image": "assignments/hydraulic-press/images/EA-20_Power_Screw_Hydraulic_Press_v1.0.png",
+      "figure": "Hydraulic Press System Diagram",
+      "description": "Engineering asset illustrating a hydraulic press with identified hydraulic pressing system, bed-adjustment power screw mechanism, handwheel, force vectors, and friction interfaces.",
+      "options": [
+        "Hydraulic Cylinder",
+        "Pressure Gauge",
+        "Hydraulic Piston / Ram",
+        "Pressing Head",
+        "Adjustable Press Bed",
+        "Guide Columns",
+        "Hydraulic Pump Unit",
+        "Bed-Adjustment Power Screw",
+        "Operating Handwheel",
+        "Thread & Collar Friction Interfaces",
+        "Workpiece / Die Assembly",
+        "Hydraulic Hose",
+        "Base Foundation Plate"
+      ],
+      "labels": [
+        {
+          "componentNumber": 1,
+          "x": 6.5,
+          "y": 9.8,
+          "correctAnswer": "Hydraulic Cylinder",
+          "feedback": "The top-mounted hydraulic cylinder houses fluid pressure to actuate the central pressing ram."
+        },
+        {
+          "componentNumber": 2,
+          "x": 7.5,
+          "y": 20.0,
+          "correctAnswer": "Pressure Gauge",
+          "feedback": "The pressure gauge monitors hydraulic line pressure during pressing operations."
+        },
+        {
+          "componentNumber": 3,
+          "x": 2.5,
+          "y": 41.5,
+          "correctAnswer": "Hydraulic Piston / Ram",
+          "feedback": "The heavy vertical ram translates hydraulic fluid pressure into linear pressing force."
+        },
+        {
+          "componentNumber": 4,
+          "x": 7.0,
+          "y": 52.0,
+          "correctAnswer": "Pressing Head",
+          "feedback": "The platen attached to the ram tip that applies compressive force onto the tooling and workpiece."
+        },
+        {
+          "componentNumber": 5,
+          "x": 10.0,
+          "y": 69.5,
+          "correctAnswer": "Adjustable Press Bed",
+          "feedback": "The heavy horizontal worktable that supports dies and workpieces; vertically positioned by the power screw."
+        },
+        {
+          "componentNumber": 6,
+          "x": 51.5,
+          "y": 36.5,
+          "correctAnswer": "Guide Columns",
+          "feedback": "Precision ground vertical tie rods / columns that maintain strict ram alignment and absorb side thrust."
+        },
+        {
+          "componentNumber": 7,
+          "x": 52.0,
+          "y": 56.0,
+          "correctAnswer": "Hydraulic Pump Unit",
+          "feedback": "The motor-driven hydraulic pump unit that pressurizes hydraulic fluid for the primary cylinder."
+        },
+        {
+          "componentNumber": 8,
+          "x": 52.0,
+          "y": 75.0,
+          "correctAnswer": "Bed-Adjustment Power Screw",
+          "feedback": "The central trapezoidal power screw that elevates and lowers the press bed during setup."
+        },
+        {
+          "componentNumber": 9,
+          "x": 52.0,
+          "y": 80.5,
+          "correctAnswer": "Operating Handwheel",
+          "feedback": "The manual handwheel providing operator input torque to rotate the bed-adjustment screw."
+        },
+        {
+          "componentNumber": 10,
+          "x": 52.0,
+          "y": 86.0,
+          "correctAnswer": "Thread & Collar Friction Interfaces",
+          "feedback": "Critical contact zones where helical thread friction (Tt) and thrust collar friction (Tc) oppose screw rotation."
+        }
+      ]
+    },
+    "motion-sequence": {
+      "title": "Differentiate Hydraulic Pressing Load Path vs Bed-Adjustment Mechanism",
+      "prompt": "Analyse the operational distinction between the hydraulic pressing action and the power-screw bed adjustment mechanism shown in the Hydraulic Press diagram.",
+      "mcq": {
+        "question": "Which of the following statements correctly traces the primary load transmission path during the hydraulic pressing operation?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Hydraulic Pump → Fluid Pressure → Hydraulic Cylinder → Piston/Ram → Pressing Head → Workpiece → Press Bed → Press Frame",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Operating Handwheel → Rotary Input → Power Screw → Press Bed → Workpiece → Hydraulic Cylinder",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Hydraulic Pump → Power Screw → Thread Interaction → Hydraulic Ram → Workpiece",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Pressing Head → Guide Columns → Handwheel → Thrust Collar → Base Foundation",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "design-data": {
+      "title": "Establish Engineering Design Requirements and Given Parameters",
+      "prompt": "Given Engineering Design Data for Hydraulic Press Power Screw:\n\n• Bed Positioning Axial Dead Load: W = 25 kN (25,000 N)\n• Screw Thread Profile: Tr 40x6 (Single-start, Nominal d = 40 mm, Pitch p = 6 mm, Included Angle 2β = 30°, Flank Angle β = 15°)\n• Thread Friction Coefficient: μ = 0.15 (Steel on Bronze)\n• Thrust Collar Dimensions: Inner Diameter Di = 45 mm, Outer Diameter Do = 75 mm\n• Collar Friction Coefficient: μ_c = 0.12\n• Operating Handwheel: Diameter Dh = 400 mm (Radius Rh = 200 mm)\n• Screw Material: AISI 1045 Normalized Steel (Yield Strength Syt = 380 MPa)\n\nConfirm all given engineering parameters for the Hydraulic Press bed-adjustment power screw mechanism prior to conducting torque calculations.",
+      "mcq": {
+        "question": "Which set of design parameters correctly represents the complete given data for the Hydraulic Press power screw design?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Bed Positioning Load W = 25 kN (25,000 N) | Thread: Tr 40x6 (single-start, 2β = 30°) | Thread friction μ = 0.15 | Collar: D_i = 45 mm, D_o = 75 mm, μ_c = 0.12 | Handwheel: D_h = 400 mm (R_h = 200 mm)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Bed Positioning Load W = 100 kN | Thread: Square 40x6 | μ = 0.25 | Collar: D_i = 20 mm, D_o = 40 mm, μ_c = 0.20 | Handwheel: D_h = 200 mm",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Bed Positioning Load W = 2.5 kN | Thread: M40 V-thread | μ = 0.05 | Collar: D_i = 50 mm, D_o = 100 mm, μ_c = 0.05 | Handwheel: D_h = 500 mm",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Bed Positioning Load W = 250 kN | Thread: Tr 60x9 | μ = 0.15 | Collar: D_i = 60 mm, D_o = 120 mm, μ_c = 0.15 | Handwheel: D_h = 600 mm",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "screw-geometry": {
+      "title": "Determine Screw Geometry, Core/Mean Diameters, and Helix Angle",
+      "prompt": "Given Design Parameters:\n  Nominal diameter d = 40 mm, Pitch p = 6 mm, Single-start thread (n = 1).\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Pitch & Lead (Single-Start Thread):\n   Pitch p = 6 mm\n   Lead L = n × p = 1 × 6 = 6.0 mm\n\n2. Core / Minor Diameter:\n   d_c = d − p = 40 − 6 = 34.0 mm\n\n3. Mean / Pitch Diameter:\n   d_m = d − (p / 2) = 40 − 3 = 37.0 mm\n\n4. Thread Helix Angle (α):\n   tan α = L / (π · d_m) = 6 / (π × 37) = 6 / 116.2389 = 0.051617\n   α = tan⁻¹(0.051617) ≈ 2.955° (0.05157 rad)\n\nCalculate the core diameter (d_c), mean diameter (d_m), lead (L), and helix angle (α).",
+      "mcq": {
+        "question": "What are the correct core diameter (d_c), mean diameter (d_m), lead (L), and helix angle (α) for the Tr 40x6 power screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "d_c = 34.0 mm  |  d_m = 37.0 mm  |  Lead L = 6.0 mm  |  tan α = 6 / (π × 37) = 0.05162  ⇒  α ≈ 2.955°",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "d_c = 37.0 mm  |  d_m = 40.0 mm  |  Lead L = 12.0 mm  |  tan α = 0.09549  ⇒  α ≈ 5.454°",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "d_c = 31.0 mm  |  d_m = 35.5 mm  |  Lead L = 3.0 mm  |  tan α = 0.02690  ⇒  α ≈ 1.541°",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "d_c = 34.0 mm  |  d_m = 38.0 mm  |  Lead L = 18.0 mm  |  tan α = 0.15079  ⇒  α ≈ 8.572°",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "thread-torque": {
+      "title": "Calculate Virtual Friction Angle and Thread Friction Torque",
+      "prompt": "Given Design Parameters:\n  Axial Load W = 25,000 N (25 kN), Mean diameter d_m = 37 mm (0.037 m), Thread friction μ = 0.15, Flank half-angle β = 15°, tan α = 0.051617.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Virtual Coefficient of Friction (μ') for Trapezoidal Thread Flank (2β = 30°, β = 15°):\n   μ' = μ / cos β = 0.15 / cos(15°) = 0.15 / 0.96593 = 0.15529\n\n2. Virtual Friction Angle (φ'):\n   φ' = tan⁻¹(μ') = tan⁻¹(0.15529) ≈ 8.827° (0.1541 rad)\n\n3. Thread Torque to Raise Bed Assembly against Axial Load W = 25,000 N:\n   T_t = (W · d_m / 2) · [ (μ' + tan α) / (1 − μ' · tan α) ] = (W · d_m / 2) · tan(α + φ')\n   tan(α + φ') = (0.051617 + 0.15529) / (1 − 0.051617 × 0.15529) = 0.206907 / 0.991984 = 0.208579\n   T_t = (25,000 × 0.037 / 2) × 0.208579 = 462.5 × 0.208579 = 96.47 N·m (96,470 N·mm)\n\nCalculate the virtual friction angle (φ') and thread friction torque (T_t).",
+      "mcq": {
+        "question": "What are the correct virtual friction parameters and thread friction torque T_t?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "μ' = 0.1553  |  φ' = tan⁻¹(0.1553) ≈ 8.827°  |  tan(α + φ') = 0.20858  |  T_t = 25,000 × 0.0185 × 0.20858 = 96.47 N·m (96,470 N·mm)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "μ' = 0.1500  |  φ' = 8.531°  |  T_t = 25,000 × 0.0185 × 0.20162 = 93.25 N·m (flank angle β omitted)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "μ' = 0.1732  |  φ' = 9.826°  |  T_t = 25,000 × 0.037 × 0.2260 = 209.05 N·m (forgot ÷ 2 on diameter)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "μ' = 0.1553  |  φ' = 8.827°  |  T_t = W · (d_m / 2) · tan α = 462.5 × 0.05162 = 23.87 N·m (frictionless ideal torque)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "collar-torque": {
+      "title": "Calculate Mean Collar Diameter and Thrust Collar Friction Torque",
+      "prompt": "Given Design Parameters:\n  Axial Load W = 25,000 N, Collar inside diameter D_i = 45 mm, Collar outside diameter D_o = 75 mm, Collar friction coefficient μ_c = 0.12.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Mean Thrust Collar Diameter & Radius (Uniform Pressure Theory):\n   Mean Collar Diameter:  D_c = (D_i + D_o) / 2 = (45 + 75) / 2 = 60.0 mm\n   Mean Collar Radius:    R_c = D_c / 2 = 30.0 mm = 0.030 m\n\n2. Thrust Collar Friction Torque (T_c):\n   T_c = μ_c · W · R_c\n       = 0.12 × 25,000 N × 0.030 m = 90.00 N·m (90,000 N·mm)\n\nCalculate the mean collar radius (R_c) and collar friction torque (T_c).",
+      "mcq": {
+        "question": "What is the correct thrust collar friction torque T_c for the bed support collar?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "D_c = (45 + 75) / 2 = 60.0 mm  |  R_c = 30.0 mm (0.030 m)  |  T_c = μ_c · W · R_c = 0.12 × 25,000 × 0.030 = 90.00 N·m (90,000 N·mm)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "D_c = 60.0 mm  |  T_c = μ_c · W · D_c = 0.12 × 25,000 × 0.060 = 180.00 N·m  (used diameter instead of radius)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "D_c = 75.0 mm  |  R_c = 37.5 mm  |  T_c = 0.12 × 25,000 × 0.0375 = 112.50 N·m  (used outside radius only)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "D_c = 45.0 mm  |  R_c = 22.5 mm  |  T_c = 0.12 × 25,000 × 0.0225 = 67.50 N·m  (used inside radius only)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "total-torque-efficiency": {
+      "title": "Determine Total Operating Torque, Handwheel Effort, and Efficiency",
+      "prompt": "Given Design Parameters:\n  Thread torque T_t = 96.47 N·m, Collar torque T_c = 90.00 N·m, Axial Load W = 25,000 N, Lead L = 0.006 m (6 mm), Handwheel diameter D_h = 400 mm (R_h = 200 mm = 0.20 m).\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Total Operating Torque to Raise Bed:\n   T_total = T_t + T_c = 96.47 N·m + 90.00 N·m = 186.47 N·m (186,470 N·mm)\n\n2. Operator Handwheel Effort (Single-Point Tangential Force F_h):\n   Handwheel Radius: R_h = D_h / 2 = 400 / 2 = 200 mm = 0.20 m\n   F_h = T_total / R_h = 186.47 / 0.20 = 932.35 N\n   (Or a balanced two-hand rim couple of 466.18 N applied across diameter D_h)\n\n3. Overall Mechanical Efficiency (η):\n   η = (Useful Work Output / revolution) / (Work Input / revolution)\n   η = (W · L) / (2 · π · T_total) = (25,000 × 0.006) / (2 · π · 186.47) = 150 / 1171.63 = 0.1280 (12.80%)\n\nCalculate total operating torque T_total, handwheel force F_h, and overall efficiency η.",
+      "mcq": {
+        "question": "What are the correct total operating torque T_total, operator hand effort F_h, and mechanical efficiency η?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "T_total = 96.47 + 90.00 = 186.47 N·m  |  F_h = 186.47 / 0.20 = 932.35 N (or 466.18 N couple)  |  η = (25,000 × 0.006) / (2π × 186.47) = 12.80%",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "T_total = 96.47 N·m (neglected collar friction)  |  F_h = 482.35 N  |  η = (150) / (2π × 96.47) = 24.75%",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "T_total = 276.47 N·m  |  F_h = 1382.35 N  |  η = 8.63%",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "T_total = 186.47 N·m  |  F_h = 186.47 N  |  η = 50.00%",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "self-locking-safety": {
+      "title": "Evaluate Self-Locking Condition, Lowering Torque, and Fail-Safe Operation",
+      "prompt": "Given Design Parameters:\n  Axial Load W = 25,000 N, Mean diameter d_m = 37 mm, Virtual friction μ' = 0.15529 (φ' ≈ 8.827°), Helix angle tan α = 0.051617 (α ≈ 2.955°), Collar torque T_c = 90.00 N·m.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Self-Locking Criterion:\n   A power screw is inherently self-locking when the friction angle exceeds the helix angle:\n   φ' > α   ⇒   8.827° > 2.955°   (tan φ' = 0.1553 > tan α = 0.0516)\n   Overall efficiency η = 12.80% < 50% also mathematically confirms self-locking.\n\n2. Torque Required to Lower the Bed (T_lower):\n   T_lower = (W · d_m / 2) · [ (μ' − tan α) / (1 + μ' · tan α) ] + T_c\n           = (W · d_m / 2) · tan(φ' − α) + T_c\n   tan(φ' − α) = (0.15529 − 0.051617) / (1 + 0.15529 × 0.051617) = 0.103673 / 1.008016 = 0.102848\n   T_t,lower = 25,000 × 0.0185 × 0.102848 = 47.57 N·m\n   T_lower = T_t,lower + T_c = 47.57 + 90.00 = +137.57 N·m\n\n   Since T_lower > 0 (+137.57 N·m), positive torque must be actively applied to lower the bed. The bed will NEVER drop or overhaul under gravity.\n\nEvaluate the self-locking condition and calculate the lowering torque T_lower.",
+      "mcq": {
+        "question": "What is the lowering torque T_lower and the operational safety conclusion?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "Self-locking is CONFIRMED (φ' = 8.827° > α = 2.955°)  |  T_lower = (W · d_m / 2) · tan(φ' − α) + T_c = 47.57 + 90.00 = +137.57 N·m  |  Bed cannot overhaul under gravity",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Mechanism is OVERHAULING (α > φ')  |  T_lower = −137.57 N·m  |  External brake required to prevent bed crashing",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Self-locking is indeterminate  |  T_lower = 0.00 N·m  |  Bed is in neutral equilibrium",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Self-locking is confirmed  |  T_lower = 186.47 N·m  |  Lowering torque equals raising torque",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "stress-verification": {
+      "title": "Stress Analysis (Direct Compressive, Torsional Shear, Combined) and FOS Verification",
+      "prompt": "Given Design & Material Parameters:\n  Axial Load W = 25,000 N, Core diameter d_c = 34.0 mm, Thread torque T_t = 96.47 N·m (96,470 N·mm), Material: AISI 1045 Normalized Steel (Yield Strength S_yt = 380 MPa).\n\nStep-by-Step Guidance & Governing Formulas for Stress Verification:\n\n1. Direct Compressive Stress (σ_c) in Core Diameter (d_c = 34 mm):\n   Core Area:  A_c = (π / 4) · (d_c)² = (π / 4) · (34)² = 907.92 mm²\n   σ_c = W / A_c = 25,000 / 907.92 = 27.53 N/mm² (MPa)\n\n2. Torsional Shear Stress (τ) from Thread Torque (T_t = 96,470 N·mm):\n   τ = (16 · T_t) / (π · d_c³) = (16 × 96,470) / (π × 34³) = 1,543,520 / 123,479.2 = 12.50 N/mm² (MPa)\n\n3. Maximum Principal Compressive Stress (σ_max) [Rankine Theory]:\n   σ_max = (σ_c / 2) + √[ (σ_c / 2)² + τ² ] = 13.77 + √[ (13.77)² + (12.50)² ] = 13.77 + 18.59 = 32.36 MPa\n\n4. Maximum Shear Stress (τ_max) [Guest / Tresca Theory]:\n   τ_max = √[ (σ_c / 2)² + τ² ] = 18.59 MPa\n\n5. Factor of Safety (FOS) on Yield Strength (AISI 1045 Normalized Steel, S_yt = 380 MPa):\n   FOS = S_yt / σ_max = 380 / 32.36 = 11.74  (FOS_shear = S_sy / τ_max = 219.26 / 18.59 = 11.79)\n\nEvaluate structural safety and select the validated engineering recommendation.",
+      "scenarios": [
+        {
+          "id": "C01",
+          "name": "Design is structurally robust and self-locking — ergonomic gear reduction recommended for handwheel effort",
+          "label": "Hydraulic Press Power Screw: Optimal Engineering Assessment"
+        },
+        {
+          "id": "C02",
+          "name": "Design requires alteration — unsafe overhauling or undersized core diameter identified",
+          "label": "Hydraulic Press Power Screw: Modification Required"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-suitable",
+          "title": "APPROVE Tr 40x6 DESIGN — STRUCTURALLY SAFE (FOS = 11.74), 100% SELF-LOCKING, RECOMMEND 4:1 BEVEL GEARBOX",
+          "suitability": "Optimal Engineering Assessment",
+          "description": "The Tr 40x6 power screw exhibits outstanding structural safety under the 25 kN axial lifting load. The combined maximum principal compressive stress is only 32.36 MPa, providing a robust Factor of Safety of 11.74 against yield strength (S_yt = 380 MPa for normalized AISI 1045 steel). This high FOS fully guards against column buckling and dynamic impact shocks during press operation. Self-locking is 100% guaranteed (φ' = 8.827° > α = 2.955°, T_lower = +137.57 N·m). To optimize ergonomics and reduce the 932 N manual handwheel effort down to comfortable industrial levels (< 240 N), recommend coupling a standard 4:1 bevel gearbox or ratchet handle."
+        },
+        {
+          "id": "opt-downsize",
+          "title": "UNSAFE DOWNSIZING — REDUCE SCREW DIAMETER TO Tr 24x4 TO SAVE WEIGHT AND MATERIAL COST",
+          "suitability": "Hazardous Design Alteration",
+          "description": "Downsizing the screw to Tr 24x4 drastically diminishes column buckling stability (buckling resistance scales with d⁴) and elevates compressive core stress by over 200%, creating severe buckling and thread stripping hazards under dynamic pressing vibrations."
+        },
+        {
+          "id": "opt-ballscrew",
+          "title": "CRITICALLY UNSAFE — REPLACE TRAPEZOIDAL THREAD WITH RECIRCULATING BALL SCREW FOR HIGH EFFICIENCY",
+          "suitability": "Extremely Dangerous Alteration",
+          "description": "Replacing the trapezoidal screw with a high-efficiency ball screw (η > 90%) eliminates self-locking. Under the 25 kN bed weight, the press bed would instantly crash downwards when the handwheel is released, creating a fatal shop-floor safety hazard."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "Hydraulic Press Power Screw Design & Analysis Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Hydraulic Press vs. Bed-Adjustment Power Screw Mechanism",
+          "placeholder": "Explain the functional separation between the primary hydraulic pressing circuit (100 kN ram capacity) and the secondary bed-positioning power screw (25 kN lifting load). Identify the two main friction interfaces."
+        },
+        {
+          "id": "r2",
+          "label": "2. Given Design Data, Screw Geometry, Core/Mean Diameters, and Helix Angle",
+          "placeholder": "State all given design parameters (W = 25 kN, d = 40 mm, p = 6 mm, single-start). Show values for core diameter (d_c = 34 mm), mean diameter (d_m = 37 mm), lead (L = 6 mm), and calculated helix angle (α ≈ 2.955°)."
+        },
+        {
+          "id": "r3",
+          "label": "3. Virtual Friction, Thread Torque, and Collar Friction Torque",
+          "placeholder": "State the virtual coefficient of friction (μ' = 0.1553, φ' ≈ 8.827°), thread friction torque (T_t ≈ 96.47 N·m), mean collar diameter (D_c = 60 mm, R_c = 30 mm), and thrust collar torque (T_c = 90.00 N·m)."
+        },
+        {
+          "id": "r4",
+          "label": "4. Total Operating Torque, Handwheel Effort, and Mechanical Efficiency",
+          "placeholder": "State total operating torque (T_total = 186.47 N·m), operator handwheel effort (F_h ≈ 932.35 N single-point / 466.2 N rim couple at R_h = 200 mm), and overall mechanical efficiency (η ≈ 12.80%)."
+        },
+        {
+          "id": "r5",
+          "label": "5. Self-Locking Condition and Lowering Torque Safety",
+          "placeholder": "Explain the self-locking condition (φ' = 8.827° > α = 2.955°), calculate the required positive lowering torque (T_lower ≈ 137.57 N·m), and confirm why gravitational overhauling is impossible."
+        },
+        {
+          "id": "r6",
+          "label": "6. Stress Analysis and Factor of Safety Verification",
+          "placeholder": "State direct compressive stress (σ_c = 27.53 MPa), torsional shear stress (τ = 12.50 MPa), maximum principal stress (σ_max = 32.36 MPa), and justify the high Factor of Safety (FOS = 11.74) for AISI 1045 steel."
+        },
+        {
+          "id": "r7",
+          "label": "7. Final Engineering Judgement and Operational Recommendation",
+          "placeholder": "Summarize your final engineering recommendation approving the Tr 40x6 design, detailing maintenance/lubrication protocols, and justifying a 4:1 mechanical gear reduction for ergonomic handwheel operation."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submit Hydraulic Press Power-Screw Response Package",
+      "body": "Your complete Hydraulic Press Power Screw Design & Analysis response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

@@ -1,0 +1,169 @@
+You are a professional engineering illustrator creating a publication-quality engineering textbook illustration for undergraduate Mechanical Engineering students.
+
+This illustration will become the official Engineering Asset EA-01 for the Design Engineering Studio (DES).
+
+=====================================================================
+
+TITLE
+
+Engineering System Familiarization
+
+Challenge:
+EC-01 – Elevator Suspension Cable Safety Verification
+
+=====================================================================
+
+OBJECTIVE
+
+Create a clean, accurate, engineering textbook style cross-sectional illustration of a modern traction elevator system.
+
+The purpose of this figure is educational.
+
+Students will study the engineering system BEFORE beginning engineering calculations.
+
+The emphasis is understanding the machine element, the load path, and the engineering system.
+
+=====================================================================
+
+ILLUSTRATION STYLE
+
+• Engineering textbook illustration
+• Professional CAD/manual drawing appearance
+• Clean vector graphics
+• White background
+• Thin black engineering outlines
+• Light neutral colours
+• No artistic rendering
+• No photorealism
+• No shadows
+• No gradients
+• No perspective
+• Orthographic cross-sectional view
+• Portrait A4 layout
+• Publication quality
+• Suitable for printing in engineering manuals
+
+=====================================================================
+
+SHOW THE COMPLETE TRACTION ELEVATOR SYSTEM
+
+Include:
+
+1. Electric Motor
+2. Drive Sheave
+3. Suspension Wire Ropes
+4. Elevator Car
+5. Car Frame
+6. Counterweight
+7. Guide Rails (Car)
+8. Guide Rails (Counterweight)
+9. Deflector Sheave
+10. Machine Beam
+11. Elevator Shaft
+12. Pit
+13. Pit Buffer
+14. Top Clearance
+15. Landing Doors
+16. Floor Levels
+17. Passenger inside the elevator car (simple human silhouette only)
+18. Rope Path
+19. Direction of Elevator Motion
+20. Direction of Rope Movement (where appropriate)
+
+=====================================================================
+
+ENGINEERING ACCURACY
+
+The illustration should resemble a real traction elevator installation.
+
+Ensure:
+
+• Correct rope routing
+• Correct counterweight location
+• Proper guide rail arrangement
+• Correct drive sheave arrangement
+• Realistic proportions
+• Proper machine room arrangement
+• Correct suspension of the elevator car
+• Suspension wire ropes should be visually prominent because they are the primary machine element of this challenge.
+
+=====================================================================
+
+EDUCATIONAL EMPHASIS
+
+The Suspension Wire Rope is the focus of this Engineering Challenge.
+
+Make the ropes slightly thicker than in a standard engineering drawing so students immediately recognize the primary machine element.
+
+The rope should be visually distinguishable while maintaining a professional engineering drawing appearance.
+
+=====================================================================
+
+LABELS
+
+This is the STUDENT VERSION.
+
+DO NOT write component names.
+
+Instead:
+
+Use numbered circular callouts (1–20).
+
+Ensure:
+
+• Callouts do not overlap.
+• Leader lines are neat.
+• Numbers are easy to read.
+• The illustration remains uncluttered.
+
+Leave adequate white space around the figure for annotation.
+
+=====================================================================
+
+REMOVE
+
+Do NOT include:
+
+• Decorative building details
+• Architectural finishes
+• Dimensions
+• Manufacturing details
+• Fasteners
+• Electrical wiring
+• Maintenance information
+• Excessive mechanical details
+
+Only include details necessary to understand the engineering system.
+
+=====================================================================
+
+LAYOUT
+
+At the top of the page leave space for the following title:
+
+------------------------------------------------
+
+DES Engineering Asset EA-01
+
+Know the Engineering System
+
+EC-01
+Elevator Suspension Cable Safety Verification
+
+------------------------------------------------
+
+Below the illustration leave sufficient blank space for worksheet activities.
+
+=====================================================================
+
+OUTPUT
+
+Produce a publication-quality engineering illustration suitable for:
+
+• Mechanical Engineering textbook
+• Laboratory Manual
+• Design Engineering Studio (DES)
+• Outcome Based Education (OBE)
+• Continuous Comprehensive Evaluation (CCE)
+
+The final figure should look like an illustration from an engineering design textbook—not a marketing graphic or architectural drawing.

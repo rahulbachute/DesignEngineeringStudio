@@ -1,0 +1,84 @@
+{
+  "totalMarks": 30,
+  "cceType": "Engineering Challenge",
+  "courseOutcome": "CO1",
+  "criteria": [
+    {
+      "activityId": "drs-01-chassis",
+      "activityNumber": 1,
+      "title": "Chassis Material Selection",
+      "marks": 6,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L4 Analyse",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Assess material selection and justification for Chassis components" }
+    },
+    {
+      "activityId": "drs-02-engine",
+      "activityNumber": 2,
+      "title": "Engine Material Selection",
+      "marks": 10,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L4 Analyse",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Assess material selection and justification for Engine components" }
+    },
+    {
+      "activityId": "drs-03-wheels-braking",
+      "activityNumber": 3,
+      "title": "Wheels & Braking Material Selection",
+      "marks": 6,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L4 Analyse",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Assess material selection and justification for Wheels & Braking components" }
+    },
+    {
+      "activityId": "drs-04-fuel-system",
+      "activityNumber": 4,
+      "title": "Fuel System Material Selection",
+      "marks": 2,
+      "coMapping": "CO1",
+      "poMapping": ["PO1", "PO2"],
+      "psoMapping": ["PSO1"],
+      "bloomLevel": "L4 Analyse",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Assess material selection and justification for Fuel System components" }
+    },
+    {
+      "activityId": "engineering-notebook",
+      "activityNumber": 5,
+      "title": "Engineering Notebook",
+      "marks": 4,
+      "coMapping": "CO1",
+      "poMapping": ["PO2", "PO3", "PO7", "PO8", "PO11"],
+      "psoMapping": ["PSO1", "PSO2"],
+      "bloomLevel": "L5 Evaluate",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Assess completeness of notebook entries" }
+    },
+    {
+      "activityId": "reflection",
+      "activityNumber": 6,
+      "title": "Reflection",
+      "marks": 2,
+      "coMapping": "CO1",
+      "poMapping": ["PO8", "PO9", "PO11"],
+      "psoMapping": ["PSO2"],
+      "bloomLevel": "L5 Evaluate",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "Evaluate reflective clarity" }
+    }
+  ],
+  "levels": [
+    { "level": "Excellent", "description": "Accurate engineering reasoning, complete OBE-aligned response, and professional documentation." },
+    { "level": "Satisfactory", "description": "Mostly correct response with minor technical or documentation gaps." },
+    { "level": "Needs Improvement", "description": "Incomplete response, weak justification, or missing engineering evidence." }
+  ]
+}

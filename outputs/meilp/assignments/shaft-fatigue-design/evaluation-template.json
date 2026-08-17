@@ -1,0 +1,57 @@
+{
+  "assignmentId": "EA-16",
+  "totalMarks": 12.0,
+  "maxMarks": 12.0,
+  "sections": [
+    {
+      "id": "project-charter",
+      "title": "Observe Drivetrain (Activity 1)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "component-identification",
+      "title": "Identify Components (Activity 2)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "torque-transmission-path",
+      "title": "Understand Torque Transmission (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "critical-sections-stress-concentration",
+      "title": "Identify Stress Concentration (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "fluctuating-torsional-loading",
+      "title": "Analyze Fluctuating Torque (Activity 5)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "fatigue-strength-factors",
+      "title": "Determine Endurance Limit (Activity 6)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "fatigue-design-criterion",
+      "title": "Apply Soderberg Criterion (Activity 7)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "shaft-diameter-verification",
+      "title": "Shaft Diameter Verification (Activity 8)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "fatigue-failure-analysis",
+      "title": "Practical Fatigue Failure (Activity 9)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "final-report",
+      "title": "Fatigue Design Report (Activity 10)",
+      "maxMarks": 1.5
+    }
+  ]
+}

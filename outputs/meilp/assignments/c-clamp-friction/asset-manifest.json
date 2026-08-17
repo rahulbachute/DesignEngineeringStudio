@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/c-clamp-friction/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-19",
+      "title": "Analysis of C-Clamp Screw and Collar Friction Effects",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/c-clamp-friction/images/EA-19_C-Clamp_Screw_Friction_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-19",
+      "title": "C-Clamp Power-Screw Mechanism Reference Diagram",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/c-clamp-friction/images/EA-19_C-Clamp_Screw_Friction_v1.0.png",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "assignmentId": "EA-14",
+  "assignmentTitle": "Comparative Study and Selection of Springs for Engineering Applications",
+  "totalMarks": 12.0,
+  "criteria": [
+    {
+      "id": "project-charter",
+      "title": "Observe Springs in Real Applications",
+      "marks": 0.5,
+      "bloomLevel": "L1 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO8", "PO11"],
+      "pso": ["PSO1"],
+      "description": "Understanding client brief, real-world spring applications, and project scope."
+    },
+    {
+      "id": "component-identification",
+      "activityCode": "EA14-A02",
+      "title": "Identify the Four Spring Configurations",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate labeling of helical compression spring, extension spring, concentric springs, leaf spring, and mounting hardware on EA-14."
+    },
+    {
+      "id": "application-function-match",
+      "title": "Identify Application and Function",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Correct matching of spring arrangements with their intended mechanical applications and functional purposes."
+    },
+    {
+      "id": "loading-conditions-compare",
+      "title": "Compare Loading Conditions",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Comparing primary internal stress states (torsional shear in wire vs flexural bending in leaves)."
+    },
+    {
+      "id": "construction-geometry-compare",
+      "title": "Compare Construction and Geometry",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Understanding geometric features, opposite helix winding in concentric springs, and leaf laminations."
+    },
+    {
+      "id": "design-requirements-compare",
+      "title": "Compare Design Requirements",
+      "marks": 1.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Comparing operating frequency, space constraints, surge avoidance, and load capacity requirements."
+    },
+    {
+      "id": "performance-advantages-compare",
+      "title": "Compare Performance, Advantages and Limitations",
+      "marks": 1.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Evaluating fail-safe redundancy, hook stress concentrations, and inter-leaf friction trade-offs."
+    },
+    {
+      "id": "engineering-tradeoff",
+      "title": "Engineering Trade-Off",
+      "marks": 1.5,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Analyzing complex engineering scenarios and selecting optimal spring configurations."
+    },
+    {
+      "id": "spring-selection-decision",
+      "title": "Select the Appropriate Spring",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Selecting and justifying spring arrangements for transfer applications based on functional requirements."
+    },
+    {
+      "id": "final-report",
+      "title": "Comparative Engineering Recommendation",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO8", "PO9", "PO11"],
+      "pso": ["PSO2"],
+      "description": "Synthesizing concise comparative recommendation report covering spring classification, selection matrix, and maintenance insights."
+    }
+  ]
+}

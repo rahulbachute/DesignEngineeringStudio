@@ -1,0 +1,16 @@
+{
+  "maxMarks": {
+    "component-identification": 1,
+    "working-principle": 1,
+    "engineering-assumptions": 0.5,
+    "failure-observation": 1,
+    "free-body-diagram": 1,
+    "engineering-calculations": 6,
+    "material-selection": 1,
+    "stress-concentration": 1,
+    "engineering-investigation": 1,
+    "design-improvement": 1,
+    "engineering-decision": 1,
+    "engineering-report": 1
+  }
+}

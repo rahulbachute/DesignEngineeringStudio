@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/suspension-system-design/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-15",
+      "title": "Motorcycle Automobile Rear Suspension System Illustration (Student Edition)",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/suspension-system-design/images/EA-15_Student_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-15",
+      "title": "Motorcycle Automobile Rear Suspension System Illustration (Faculty Reference Solution)",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/suspension-system-design/images/EA-15_Faculty_v1.0.png",
+      "required": true
+    }
+  }
+}

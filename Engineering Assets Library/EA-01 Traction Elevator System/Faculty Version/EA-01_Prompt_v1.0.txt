@@ -1,0 +1,34 @@
+Use the previously approved Student Version of DES Engineering Asset EA-01.
+
+Do NOT modify the engineering drawing or geometry.
+
+Create the Faculty Reference Version.
+
+Replace the numbered callouts with engineering labels connected by clean leader lines.
+
+Label the following components:
+
+• Electric Motor
+• Drive Sheave
+• Suspension Wire Rope
+• Elevator Car
+• Car Frame
+• Counterweight
+• Guide Rails (Car)
+• Guide Rails (Counterweight)
+• Deflector Sheave
+• Machine Beam
+• Elevator Shaft
+• Pit
+• Pit Buffer
+• Landing Door
+• Floor Level
+• Passenger
+• Rope Path
+• Direction of Elevator Motion
+
+Keep the suspension wire rope visually prominent.
+
+Maintain the same page layout, colours, proportions, and illustration style so that both Student and Faculty versions are identical except for the labels.
+
+The illustration shall remain publication-quality and suitable for inclusion in engineering textbooks, faculty manuals, and the Design Engineering Studio (DES).

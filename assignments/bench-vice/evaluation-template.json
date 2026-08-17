@@ -1,0 +1,57 @@
+{
+  "assignmentId": "EA-18",
+  "totalMarks": 12.0,
+  "maxMarks": 12.0,
+  "sections": [
+    {
+      "id": "project-charter",
+      "title": "Understand Bench Vice Application (Activity 1)",
+      "maxMarks": 0.5
+    },
+    {
+      "id": "component-identification",
+      "title": "Identify Components (Activity 2)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "motion-sequence",
+      "title": "Understand Motion Sequence (Activity 3)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "design-data",
+      "title": "Establish Design Data (Activity 4)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "mean-diameter-helix",
+      "title": "Mean Diameter and Helix Angle (Activity 5)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "thread-torque",
+      "title": "Thread Friction Torque (Activity 6)",
+      "maxMarks": 2.0
+    },
+    {
+      "id": "collar-total-torque",
+      "title": "Collar Friction and Total Torque (Activity 7)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "efficiency-selflocking",
+      "title": "Efficiency and Self-Locking (Activity 8)",
+      "maxMarks": 1.0
+    },
+    {
+      "id": "engineering-judgement",
+      "title": "Engineering Judgement (Activity 9)",
+      "maxMarks": 1.5
+    },
+    {
+      "id": "final-report",
+      "title": "Bench Vice Design Report (Activity 10)",
+      "maxMarks": 1.0
+    }
+  ]
+}

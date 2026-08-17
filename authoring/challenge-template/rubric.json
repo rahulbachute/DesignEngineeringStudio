@@ -1,0 +1,41 @@
+{
+  "totalMarks": 10,
+  "criteria": [
+    {
+      "activityId": "project-charter",
+      "title": "Project Understanding",
+      "marks": 2,
+      "coMapping": "CO1",
+      "bloomLevel": "Understand",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "" }
+    },
+    {
+      "activityId": "activity-1",
+      "title": "Engineering Analysis",
+      "marks": 3,
+      "coMapping": "CO1",
+      "bloomLevel": "Apply",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "" }
+    },
+    {
+      "activityId": "engineering-notebook",
+      "title": "Engineering Notebook",
+      "marks": 3,
+      "coMapping": "CO1",
+      "bloomLevel": "Analyze",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "" }
+    },
+    {
+      "activityId": "reflection",
+      "title": "Reflection",
+      "marks": 2,
+      "coMapping": "CO1",
+      "bloomLevel": "Evaluate",
+      "facultyRemarks": "",
+      "autoEvaluation": { "enabled": false, "futureRule": "" }
+    }
+  ]
+}

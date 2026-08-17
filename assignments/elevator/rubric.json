@@ -1,0 +1,68 @@
+{
+  "totalMarks": 24,
+  "criteria": [
+    {
+      "id": "project-charter",
+      "title": "Project Charter Verification",
+      "marks": 1,
+      "type": "completion",
+      "description": "Student read and accepted the project charter."
+    },
+    {
+      "id": "design-requirements",
+      "title": "Design Requirements Identification",
+      "marks": 2,
+      "type": "scoring",
+      "description": "Accurately extracts the maximum load, cabin weight, and number of ropes from the charter."
+    },
+    {
+      "id": "identify-components",
+      "title": "Component Identification (Image Labeling)",
+      "marks": 2,
+      "type": "auto-grading",
+      "description": "Correctly matches the 20 numbered callouts to the corresponding elevator component names."
+    },
+    {
+      "id": "free-body-diagram",
+      "title": "Free Body Diagram Analysis",
+      "marks": 2,
+      "type": "auto-grading",
+      "description": "Accurately maps the upwards tensile force and downwards gravity vectors on the system."
+    },
+    {
+      "id": "working-principle",
+      "title": "Working Principle Explanation",
+      "marks": 2,
+      "type": "scoring",
+      "description": "Clear explanation of how the traction elevator works, identifying the sheave as the traction source."
+    },
+    {
+      "id": "engineering-model",
+      "title": "Engineering Model Identification",
+      "marks": 2,
+      "type": "scoring",
+      "description": "Correctly explains the load path transferring weight to the suspension system."
+    },
+    {
+      "id": "material-selection",
+      "title": "Material Selection Justification",
+      "marks": 2,
+      "type": "scoring",
+      "description": "Selects a high-strength material (e.g., High Carbon Steel) and justifies the choice based on yield strength."
+    },
+    {
+      "id": "engineering-calculations",
+      "title": "Load, Stress, and Factor of Safety Calculations",
+      "marks": 9,
+      "type": "auto-grading",
+      "description": "Accurate calculation of total passenger load, load per rope, tensile stress, and Factor of Safety. Diameter should be 12mm within +- 1mm tolerance."
+    },
+    {
+      "id": "engineering-decision",
+      "title": "Engineering Decision & Justification",
+      "marks": 2,
+      "type": "scoring",
+      "description": "Correctly decides SAFE or UNSAFE based on FoS and provides sound engineering justification."
+    }
+  ]
+}

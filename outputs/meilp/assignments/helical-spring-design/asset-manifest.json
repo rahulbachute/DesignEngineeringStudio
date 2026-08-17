@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "basePath": "assignments/helical-spring-design/images",
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "EA-12",
+      "title": "Motorcycle Helical Compression Spring Suspension Illustration (Student Edition)",
+      "role": "student",
+      "type": "image",
+      "path": "assignments/helical-spring-design/images/EA-12_Student_v1.0.png",
+      "required": true
+    },
+    "engineeringAssetFaculty": {
+      "id": "EA-12",
+      "title": "Motorcycle Helical Compression Spring Suspension Illustration (Faculty Reference Solution)",
+      "role": "faculty",
+      "type": "image",
+      "path": "assignments/helical-spring-design/images/EA-12_Faculty_v1.0.png",
+      "required": true
+    }
+  }
+}

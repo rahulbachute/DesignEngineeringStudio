@@ -1,0 +1,674 @@
+{
+  "assignment": {
+    "id": "EA-22",
+    "slug": "mobile-scissor-lift",
+    "title": "Design of a 2-Ton Mobile Scissor Lift Power Screw"
+  },
+  "dashboard": {
+    "projectCode": "Mobile Scissor Lift",
+    "projectTitle": "Design of a 2-Ton Mobile Scissor Lift Power Screw",
+    "courseCode": "PCC303-MEC",
+    "courseName": "Design of Machine Elements",
+    "unit": "Unit III",
+    "difficultyLevel": "Intermediate to Advanced",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO2: Design power screws, scissor lifting mechanisms, and power transmission elements by applying kinematics, torque, efficiency, stress analysis, and self-locking criteria for safe industrial operation.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "scissor-lift-asset",
+      "title": "Design of a 2-Ton Mobile Scissor Lift Power Screw",
+      "path": "assignments/mobile-scissor-lift/images/EA-22_Student_v1.0.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "scissor-lift-asset",
+      "title": "Mobile Scissor Lift Power Screw Engineering Diagram",
+      "path": "assignments/mobile-scissor-lift/images/EA-22_Student_v1.0.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "registration": {
+    "attemptModes": [
+      {
+        "id": "individual",
+        "label": "Individual Mode",
+        "description": "Independently design the power screw for the 2-ton mobile scissor lift, evaluate kinematic scissor forces, thread/collar friction torques, efficiency, self-locking safety, and combined core stresses."
+      },
+      {
+        "label": "Group Mode (2–4 Students)",
+        "id": "group",
+        "description": "Collaborate on scissor lift kinematics, horizontal power screw load transformation, trapezoidal thread calculations, safety factor verifications, and engineering recommendations."
+      }
+    ],
+    "fields": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "Engineering College",
+        "required": true,
+        "type": "select"
+      },
+      {
+        "name": "branch",
+        "label": "Branch / Discipline",
+        "required": true,
+        "readonly": true,
+        "auto": "Mechanical Engineering"
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO2 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    }
+  ],
+  "activities": {
+    "project-charter": {
+      "title": "Understand Mobile Scissor Lift and Power-Screw Drive Application",
+      "cards": [
+        {
+          "type": "information",
+          "title": "Engineering Brief — 2-Ton Mobile Scissor Lift Power Screw Design",
+          "body": "In workshop maintenance, automotive assembly, and heavy material handling, mobile scissor lifts provide stable vertical positioning of heavy components. While some industrial lifts rely on hydraulic cylinders, purely mechanical power-screw scissor lifts provide rigid height holding, zero fluid leakage risk, and fail-safe self-locking security without requiring hydraulic valves or check circuits.\n\nThe mechanical lifting mechanism utilizes a horizontal power screw mounted across the lower chassis frame. As the operator rotates the power screw via a handwheel or gearmotor, the threaded travelling nut block translates axially along the screw axis. This horizontal displacement pulls the lower slider pivot of the crossed scissor arms inward, forcing the scissor links to rotate upward about their central crossing pivot and raising the top platform carrying the 2-ton payload."
+        },
+        {
+          "type": "theory",
+          "title": "Given Engineering Design Data & Scissor Lift Parameters",
+          "body": "The following verified engineering data must be used for the power screw kinematic analysis, torque calculations, and stress verifications:\n\n• Rated Vertical Platform Lifting Load (W): 2.0 Tonnes = 2,000 kg (W = 19,620 N ≈ 20.0 kN)\n• Scissor Arm Critical Starting Angle (θ): 15° to horizontal (lowest collapsed position where horizontal screw force is maximum)\n• Horizontal Screw Driving Thrust Force (F_screw): F_screw = W / tan(θ) = 20,000 / tan(15°) = 74,641 N (74.64 kN)\n• Power Screw Nominal Outer Diameter (d): 50.0 mm (0.050 m)\n• Power Screw Pitch (p) & Lead (L = 1 × p): 8.0 mm (0.008 m, Single-start thread)\n• Thread Profile: ISO Metric Trapezoidal Thread (2β = 30°, Flank angle β = 15°)\n• Coefficient of Thread Friction (μ): 0.15 (Lubricated steel-on-bronze/steel)\n• Thrust Bearing / Collar Friction Interface: Inner Dia D_i = 55 mm, Outer Dia D_o = 85 mm\n• Mean Collar Diameter (D_c): D_c = (55 + 85) / 2 = 70.0 mm (Mean radius R_c = 35.0 mm = 0.035 m)\n• Coefficient of Collar Friction (μ_c): 0.10 (Thrust ball bearing / lubricated collar)\n• Screw Material & Yield Strength: High-Strength Alloy Steel AISI 4140 (S_yt = 380 MPa)\n• Manual Operating Handwheel Diameter (D_h): 500.0 mm (Radius R_h = 250.0 mm = 0.250 m)"
+        },
+        {
+          "type": "theory",
+          "title": "Scissor Kinematics, Power Screw Mechanics & Governing Equations",
+          "body": "1. Critical Kinematic Load Path:\n  Rotary Input (Handwheel / Gearmotor Torque T_total)\n  → Horizontal Power Screw Rotation\n  → Threaded Travelling Nut Block Translates AXIALLY Along Screw Axis (Pure Linear Motion; Nut Does Not Rotate)\n  → Scissor Arm Lower Slider Pivot Pulled Inward\n  → Crossed Scissor Arms Rotate Upward Around Central Fulcrum Pivot\n  → Top Platform Rises Vertically with 2-Ton (20 kN) Payload\n\n2. Key Kinematic & Mechanical Governing Equations:\n  • Peak Horizontal Thrust on Screw:          F_screw = W / tan(θ) = 20,000 / tan(15°) = 74,641 N (74.64 kN)\n  • Screw Core Diameter:                      d_c = d - p = 50 - 8 = 42.0 mm\n  • Screw Mean Diameter:                      d_m = d - 0.5·p = 50 - 4 = 46.0 mm\n  • Helix Angle:                              tan(α) = L / (π · d_m) = 8 / (π × 46) = 0.05536  →  α = 3.169°\n  • Virtual Friction Coefficient:             μ' = μ / cos(β) = 0.15 / cos(15°) = 0.1553\n  • Virtual Friction Angle:                   tan(ϕ') = μ' = 0.1553  →  ϕ' = 8.827°\n  • Thread Raising Torque:                    T_t = F_screw · (d_m / 2) · tan(α + ϕ') = 74,641 × 0.023 × tan(11.996°) = 364.76 N·m\n  • Thrust Collar Friction Torque:            T_c = μ_c · F_screw · R_c = 0.10 × 74,641 × 0.035 = 261.24 N·m\n  • Total Operating Torque:                   T_total = T_t + T_c = 364.76 + 261.24 = 626.00 N·m\n  • Self-Locking Condition:                   ϕ' (8.83°) > α (3.17°)  →  STRICTLY SELF-LOCKING (Fail-Safe)\n  • Direct Compressive Core Stress:           σ_c = F_screw / [ (π/4) · d_c² ] = 74,641 / 1,385.4 = 53.88 MPa\n  • Torsional Shear Stress on Core:           τ = (16 · T_t) / (π · d_c³) = (16 × 364.76 × 10³) / (π × 42³) = 25.04 MPa\n  • Maximum Combined Principal Stress:        σ_max = (σ_c / 2) + √[ (σ_c / 2)² + τ² ] = 26.94 + √(725.8 + 627.0) = 63.73 MPa\n  • Factor of Safety on Yield:                FOS = S_yt / σ_max = 380 / 63.73 = 5.96  (Safe & Robust)"
+        },
+        {
+          "type": "student-response",
+          "title": "Engineering Learning Objectives & Required Tasks",
+          "items": [
+            "Identify all 10 major components on the 2-Ton Mobile Scissor Lift Power Screw diagram.",
+            "Understand the fundamental kinematic transformation from horizontal screw rotation to vertical platform elevation.",
+            "Calculate the critical peak horizontal thrust force (F_screw = 74.64 kN) acting on the power screw at lowest scissor angle (θ = 15°).",
+            "Determine power screw geometric parameters: core diameter (d_c = 42 mm), mean diameter (d_m = 46 mm), and helix angle (α = 3.17°).",
+            "Calculate trapezoidal virtual friction coefficient (μ' = 0.1553), virtual friction angle (ϕ' = 8.83°), and thread friction torque (T_t = 364.76 N·m).",
+            "Calculate mean collar radius (R_c = 35 mm) and thrust bearing collar friction torque (T_c = 261.24 N·m).",
+            "Determine total operating torque (T_total = 626.0 N·m), overall mechanical efficiency (η = 15.6%), and drive gear reduction requirements.",
+            "Evaluate the self-locking safety criterion (ϕ' > α) proving fail-safe load holding without accidental lowering.",
+            "Perform combined stress analysis (direct compressive + torsional shear) on the screw core and verify the Factor of Safety (FOS = 5.96).",
+            "Compile the comprehensive technical design and safety analysis report for the 2-ton mobile scissor lift power screw."
+          ]
+        }
+      ],
+      "acceptanceText": "I have read and understood the 2-Ton Mobile Scissor Lift Project Charter for Power Screw Design & Kinematic Analysis."
+    },
+    "component-identification": {
+      "title": "Identify Mobile Scissor Lift and Power-Screw Components",
+      "image": "assignments/2-ton mobile scissor lift/images/EA-22_Student_Labeled_v1.0.png",
+      "figure": "2-Ton Mobile Scissor Lift Power Screw Diagram",
+      "hideMarkers": true,
+      "markerStyle": "invisible",
+      "description": "Engineering asset illustrating a 2-ton mobile scissor lift mechanism featuring a horizontal power screw, travelling nut block, crossed scissor arms, central pivot, mobile base, caster wheels, and upper lifting platform.",
+      "options": [
+        "2-Ton Lifting Load & Platform",
+        "Upper Scissor Arm Pivot",
+        "Crossed Scissor Arms",
+        "Central Crossing Pivot Pin",
+        "Lower Fixed Base Pivot",
+        "Horizontal Power Screw",
+        "Threaded Nut / Travelling Block",
+        "Screw End Support & Thrust Bearing",
+        "Handwheel / Rotary Input Drive",
+        "Mobile Base & Caster Wheels",
+        "Lower Slider Pivot Block",
+        "Platform Support Structure",
+        "Screw Thread (Trapezoidal Profile)"
+      ],
+      "labels": [
+        {
+          "componentNumber": 1,
+          "x": 16.34,
+          "y": 11.04,
+          "invisible": true,
+          "correctAnswer": "2-Ton Lifting Load & Platform",
+          "feedback": "The top lifting platform carrying the rated 2-ton (20 kN) vertical workshop payload."
+        },
+        {
+          "componentNumber": 2,
+          "x": 61.45,
+          "y": 26.01,
+          "invisible": true,
+          "correctAnswer": "Upper Scissor Arm Pivot",
+          "feedback": "The upper pivot connection linking the top of the scissor arms to the underside of the platform."
+        },
+        {
+          "componentNumber": 3,
+          "x": 61.45,
+          "y": 32.54,
+          "invisible": true,
+          "correctAnswer": "Crossed Scissor Arms",
+          "feedback": "Heavy-duty structural steel scissor links that convert horizontal nut motion into vertical platform elevation."
+        },
+        {
+          "componentNumber": 4,
+          "x": 61.45,
+          "y": 39.04,
+          "invisible": true,
+          "correctAnswer": "Central Crossing Pivot Pin",
+          "feedback": "The heavy central fulcrum pin about which the crossed scissor arm links rotate symmetrically."
+        },
+        {
+          "componentNumber": 5,
+          "x": 61.48,
+          "y": 67.09,
+          "invisible": true,
+          "correctAnswer": "Lower Fixed Base Pivot",
+          "feedback": "The stationary pivot bracket anchoring the fixed end of the lower scissor arm to the base frame."
+        },
+        {
+          "componentNumber": 6,
+          "x": 21.89,
+          "y": 65.63,
+          "invisible": true,
+          "correctAnswer": "Horizontal Power Screw",
+          "feedback": "The precision-machined horizontal trapezoidal lead screw transmitting axial thrust to raise the lift."
+        },
+        {
+          "componentNumber": 7,
+          "x": 61.45,
+          "y": 44.53,
+          "invisible": true,
+          "correctAnswer": "Threaded Nut / Travelling Block",
+          "feedback": "The internally threaded bronze drive nut that translates axially along the screw, pulling the scissor slider pivot."
+        },
+        {
+          "componentNumber": 8,
+          "x": 61.47,
+          "y": 56.24,
+          "invisible": true,
+          "correctAnswer": "Screw End Support & Thrust Bearing",
+          "feedback": "The heavy-duty thrust bearing housing that supports the screw end and absorbs the 74.64 kN horizontal reaction thrust."
+        },
+        {
+          "componentNumber": 9,
+          "x": 3.90,
+          "y": 64.21,
+          "invisible": true,
+          "correctAnswer": "Handwheel / Rotary Input Drive",
+          "feedback": "The rotary input drive interface through which operating torque (T_total) is applied to the power screw."
+        },
+        {
+          "componentNumber": 10,
+          "x": 61.48,
+          "y": 83.32,
+          "invisible": true,
+          "correctAnswer": "Mobile Base & Caster Wheels",
+          "feedback": "The rigid mobile chassis equipped with heavy-duty caster wheels enabling easy workshop maneuverability."
+        }
+      ]
+    },
+    "scissor-kinematics": {
+      "title": "Analyse Scissor Kinematics and Peak Horizontal Power Screw Force",
+      "prompt": "Analyse the kinematic load transformation of the scissor mechanism to determine the peak horizontal axial thrust force transmitted to the power screw.\n\nGiven Parameters:\n• Rated Vertical Platform Load: W = 2.0 Tonnes = 19,620 N ≈ 20.0 kN\n• Lowest Collapsed Starting Angle: θ = 15° (Critical position where horizontal screw force is maximum)\n\nGoverning Scissor Statics Formulation:\nFrom the equilibrium of the symmetric scissor linkage, the horizontal thrust force (F_screw) required to support the load is:\n  F_screw = W / tan(θ)\n\nCalculate the peak horizontal thrust force (F_screw) acting on the power screw at θ = 15°.",
+      "mcq": {
+        "question": "What is the peak horizontal thrust force (F_screw) acting on the power screw at the critical starting angle θ = 15°?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "F_screw = 20,000 / tan(15°) = 20,000 / 0.26795 = 74,641 N (74.64 kN)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "F_screw = 20,000 × tan(15°) = 5,359 N (5.36 kN)  (multiplied instead of divided by tan θ)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "F_screw = 20,000 / sin(15°) = 77,274 N (used sin θ instead of tan θ)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "F_screw = 20,000 N (20.0 kN)  (assumed horizontal force equals vertical payload directly)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "design-data": {
+      "title": "Establish Engineering Design Data and Scissor Lift Parameters",
+      "prompt": "Given Engineering Design Parameters for the 2-Ton Mobile Scissor Lift Power Screw:\n\n• Rated Vertical Load: W = 20.0 kN (20,000 N)\n• Critical Peak Horizontal Thrust: F_screw = 74,641 N (74.64 kN at θ = 15°)\n• Power Screw Nominal Diameter: d = 50.0 mm\n• Thread Pitch: p = 8.0 mm (Single-start n = 1, Lead L = 8.0 mm)\n• Thread Profile: ISO Metric Trapezoidal Thread (2β = 30°, β = 15°)\n• Coefficient of Thread Friction: μ = 0.15\n• Thrust Collar Dimensions: Inner D_i = 55 mm, Outer D_o = 85 mm (Mean D_c = 70 mm, R_c = 35 mm)\n• Coefficient of Collar Friction: μ_c = 0.10\n• Screw Material: AISI 4140 Alloy Steel (Yield Strength S_yt = 380 MPa)\n\nConfirm all given engineering parameters prior to performing screw geometry and torque calculations.",
+      "mcq": {
+        "question": "Which set of engineering parameters correctly represents the complete design data for the 2-ton mobile scissor lift power screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "F_screw = 74.64 kN | d = 50 mm | p = 8 mm (Lead L = 8 mm) | 2β = 30° | μ = 0.15 | D_c = 70 mm (R_c = 35 mm) | μ_c = 0.10 | S_yt = 380 MPa",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "F_screw = 20.0 kN | d = 25 mm | p = 4 mm | 2β = 60° | μ = 0.30 | D_c = 40 mm | μ_c = 0.25 | S_yt = 250 MPa",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "F_screw = 150.0 kN | d = 100 mm | p = 20 mm | 2β = 0° | μ = 0.05 | D_c = 120 mm | μ_c = 0.05 | S_yt = 500 MPa",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "F_screw = 74.64 kN | d = 50 mm | p = 16 mm (Double start) | 2β = 45° | μ = 0.15 | D_c = 100 mm | μ_c = 0.10 | S_yt = 200 MPa",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "screw-geometry": {
+      "title": "Determine Screw Geometry, Core/Mean Diameters, and Helix Angle",
+      "prompt": "Given Design Parameters:\n  Nominal Diameter d = 50.0 mm, Pitch p = 8.0 mm, Single-start thread (n = 1, Lead L = 8.0 mm), Thread Profile Trapezoidal (2β = 30°, β = 15°).\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Core / Minor Diameter (d_c):\n   d_c = d - p = 50.0 - 8.0 = 42.0 mm (0.042 m)\n\n2. Mean / Pitch Diameter (d_m):\n   d_m = d - 0.5 × p = 50.0 - 4.0 = 46.0 mm (0.046 m)\n\n3. Helix / Lead Angle (α):\n   tan(α) = L / (π × d_m) = 8.0 / (π × 46.0) = 8.0 / 144.513 = 0.055358\n   α = arctan(0.055358) = 3.169° ≈ 3.17°\n\nCalculate the core diameter (d_c), mean diameter (d_m), and helix angle (α).",
+      "mcq": {
+        "question": "What are the correct core diameter (d_c), mean diameter (d_m), and helix angle (α) for the power screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "d_c = 42.0 mm  |  d_m = 46.0 mm  |  tan(α) = 8 / (π × 46) = 0.05536  →  α = 3.169° (3.17°)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "d_c = 46.0 mm  |  d_m = 48.0 mm  |  α = 6.34°  (subtracted half-pitch for core diameter)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "d_c = 34.0 mm  |  d_m = 42.0 mm  |  α = 4.25°  (subtracted double pitch for core diameter)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "d_c = 42.0 mm  |  d_m = 50.0 mm  |  α = 2.91°  (used nominal diameter in helix angle calculation)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "thread-torque": {
+      "title": "Calculate Virtual Friction Angle and Thread Friction Torque",
+      "prompt": "Given Design Parameters:\n  Horizontal Force F_screw = 74,641 N, Mean Diameter d_m = 46.0 mm (Radius r_m = 23.0 mm = 0.023 m), Helix Angle α = 3.169°, Coefficient of Friction μ = 0.15, Flank Angle β = 15°.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Virtual Coefficient of Friction (μ'):\n   μ' = μ / cos(β) = 0.15 / cos(15°) = 0.15 / 0.96593 = 0.15529 ≈ 0.1553\n\n2. Virtual Friction Angle (ϕ'):\n   tan(ϕ') = μ' = 0.15529  →  ϕ' = arctan(0.15529) = 8.827° ≈ 8.83°\n\n3. Combined Angle (α + ϕ'):\n   α + ϕ' = 3.169° + 8.827° = 11.996°\n   tan(α + ϕ') = tan(11.996°) = 0.21248\n\n4. Thread Friction Torque to Raise Load (T_t):\n   T_t = F_screw × (d_m / 2) × tan(α + ϕ')\n   T_t = 74,641 N × 0.023 m × 0.21248 = 364.76 N·m (364,760 N·mm)\n\nCalculate the virtual friction coefficient (μ'), virtual friction angle (ϕ'), and thread raising torque (T_t).",
+      "mcq": {
+        "question": "What are the correct virtual friction coefficient (μ'), virtual friction angle (ϕ'), and thread friction torque (T_t)?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "μ' = 0.1553  |  ϕ' = 8.827° (8.83°)  |  T_t = 74,641 × 0.023 × tan(11.996°) = 364.76 N·m (364,760 N·mm)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "μ' = 0.1500  |  ϕ' = 8.531°  |  T_t = 345.10 N·m  (neglected trapezoidal flank angle effect)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "μ' = 0.1732  |  ϕ' = 9.826°  |  T_t = 412.30 N·m  (used 30° instead of 15° flank angle)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "μ' = 0.1553  |  ϕ' = 8.827°  |  T_t = 729.52 N·m  (used diameter d_m instead of radius r_m)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "collar-torque": {
+      "title": "Calculate Mean Collar Diameter and Thrust Bearing Friction Torque",
+      "prompt": "Given Design Parameters:\n  Thrust Collar Inner Diameter D_i = 55.0 mm, Outer Diameter D_o = 85.0 mm, Coefficient of Collar Friction μ_c = 0.10, Horizontal Force F_screw = 74,641 N.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Mean Collar Diameter (D_c) & Mean Collar Radius (R_c):\n   Under Uniform Wear Theory:\n   D_c = (D_i + D_o) / 2 = (55.0 + 85.0) / 2 = 70.0 mm (0.070 m)\n   R_c = D_c / 2 = 70.0 / 2 = 35.0 mm = 0.035 m\n\n2. Thrust Collar / Bearing Friction Torque (T_c):\n   T_c = μ_c × F_screw × R_c\n   T_c = 0.10 × 74,641 N × 0.035 m = 261.24 N·m (261,244 N·mm)\n\nCalculate the mean collar radius (R_c) and thrust collar friction torque (T_c).",
+      "mcq": {
+        "question": "What are the correct mean collar radius (R_c) and thrust collar friction torque (T_c)?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "R_c = (55 + 85) / 4 = 35.0 mm (0.035 m)  |  T_c = 0.10 × 74,641 × 0.035 = 261.24 N·m (261,244 N·mm)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "R_c = 70.0 mm  |  T_c = 0.10 × 74,641 × 0.070 = 522.49 N·m  (used diameter instead of radius)",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "R_c = 35.0 mm  |  T_c = 0.15 × 74,641 × 0.035 = 391.87 N·m  (used thread friction μ instead of collar friction μ_c)",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "R_c = 27.5 mm  |  T_c = 205.26 N·m  (used inner collar radius only)",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "total-torque-efficiency": {
+      "title": "Determine Total Operating Torque, Overall Efficiency, and Drive Requirement",
+      "prompt": "Given Design Parameters:\n  Thread Friction Torque T_t = 364.76 N·m, Collar Friction Torque T_c = 261.24 N·m, Horizontal Thrust F_screw = 74,641 N, Screw Lead L = 8.0 mm (0.008 m), Handwheel Diameter D_h = 500 mm (R_h = 250 mm = 0.25 m).\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Total Operating Torque to Raise 2-Ton Load (T_total):\n   T_total = T_t + T_c = 364.76 + 261.24 = 626.00 N·m (626,004 N·mm)\n\n2. Ideal Torque without Friction (T_ideal):\n   T_ideal = (F_screw × L) / (2π) = (74,641 × 0.008) / (2π) = 597.13 / 6.28318 = 95.04 N·m\n\n3. Overall Power Screw Mechanical Efficiency (η):\n   η = T_ideal / T_total = 95.04 / 626.00 = 0.1518 ≈ 15.2% (or thread efficiency η_thread = tan(α)/tan(α+ϕ') = 26.1%)\n\n4. Operator Manual Handwheel Effort Assessment:\n   Direct Hand Force: F_h = T_total / R_h = 626.0 / 0.25 = 2,504 N (Exceeds human ergonomic limit ~200 N).\n   Engineering Requirement: An integrated 15:1 reduction gearbox (worm reducer) is mandatory to bring manual input effort to an ergonomic 196 N.\n\nCalculate the total operating torque (T_total), mechanical efficiency (η), and evaluate drive requirements.",
+      "mcq": {
+        "question": "What are the correct total operating torque (T_total), overall efficiency (η), and operating drive recommendation?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "T_total = 364.76 + 261.24 = 626.00 N·m  |  η = 95.04 / 626.00 = 15.2%  |  Requires 15:1 reduction gearbox (direct manual force of 2,504 N exceeds ergonomic limits)",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "T_total = 364.76 N·m  |  η = 26.1%  |  Neglected collar friction; direct manual drive is suitable",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "T_total = 1,252.00 N·m  |  η = 7.6%  |  Requires 50:1 reduction gearbox",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "T_total = 626.00 N·m  |  η = 85.0%  |  Direct handwheel operation without gearbox",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "self-locking-safety": {
+      "title": "Evaluate Self-Locking Condition, Lowering Safety, and Fail-Safe Holding",
+      "prompt": "Analyse the self-locking behavior and lowering torque of the power screw mechanism under the 2-ton load.\n\nGiven Parameters:\n  Helix Angle α = 3.169°, Virtual Friction Angle ϕ' = 8.827°, Horizontal Force F_screw = 74,641 N, Mean Radius r_m = 0.023 m, Collar Torque T_c = 261.24 N·m.\n\nStep-by-Step Guidance & Governing Formulas:\n\n1. Self-Locking Condition:\n   A power screw is inherently self-locking if the virtual friction angle exceeds the helix angle:\n   ϕ' > α  →  8.827° > 3.169°  (Condition strictly satisfied!)\n\n2. Lowering Torque (T_lower):\n   T_t_lower = F_screw × r_m × tan(ϕ' - α) = 74,641 × 0.023 × tan(8.827° - 3.169°) = 1,716.74 × tan(5.658°) = 170.07 N·m\n   T_lower_total = T_t_lower + T_c = 170.07 + 261.24 = 431.31 N·m\n   Since T_lower > 0, positive torque is required to lower the platform; the load will NEVER back-drive or drop accidentally.\n\nEvaluate the self-locking safety condition and lowering torque.",
+      "mcq": {
+        "question": "Which statement correctly assesses the self-locking and lowering safety of the 2-ton scissor lift power screw?",
+        "options": [
+          {
+            "id": "opt1",
+            "label": "The screw is strictly SELF-LOCKING because ϕ' (8.83°) > α (3.17°); lowering requires a positive torque of 431.31 N·m, ensuring fail-safe holding that prevents accidental load descent without brakes.",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "The screw is OVER-HAULING because α > ϕ'; the 2-ton platform will collapse rapidly unless an external hydraulic brake is applied.",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "The screw has zero friction and will free-fall immediately upon releasing the handwheel.",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Self-locking is achieved only if the thread pitch is increased to 30 mm.",
+            "value": "incorrect3"
+          }
+        ]
+      }
+    },
+    "stress-verification": {
+      "title": "Stress Analysis (Direct Compressive, Torsional Shear, Combined) and FOS Verification",
+      "prompt": "Step-by-Step Guidance & Stress Verification:\n\n1. Direct Compressive Stress on Core (σ_c):\n   Core Area: A_c = (π / 4) × d_c² = (π / 4) × 42² = 1,385.44 mm²\n   σ_c = F_screw / A_c = 74,641 N / 1,385.44 mm² = 53.88 MPa (N/mm²)\n\n2. Torsional Shear Stress on Core (τ):\n   Polar Modulus: Z_p = (π / 16) × d_c³ = (π / 16) × 42³ = 14,547 mm³\n   τ = T_t / Z_p = (364.76 × 10³ N·mm) / 14,547 mm³ = 25.04 MPa\n\n3. Maximum Combined Principal Stress (σ_max) & Maximum Shear Stress (τ_max):\n   σ_max = (σ_c / 2) + √[ (σ_c / 2)² + τ² ] = (53.88 / 2) + √[ 26.94² + 25.04² ] = 26.94 + 36.78 = 63.72 MPa\n   τ_max = √[ (σ_c / 2)² + τ² ] = 36.78 MPa\n\n4. Factor of Safety (FOS) on AISI 4140 Alloy Steel (S_yt = 380 MPa):\n   FOS = S_yt / σ_max = 380 / 63.72 = 5.96\n   (Alternatively on Guest Maximum Shear Theory: FOS_shear = S_ys / τ_max = (0.5 × 380) / 36.78 = 5.17)\n\nEvaluate the stress state and select the validated engineering design decision.",
+      "scenarios": [
+        {
+          "id": "C01",
+          "name": "Design is Safe & Validated — FOS = 5.96 under 74.64 kN peak horizontal thrust with fail-safe self-locking",
+          "label": "2-Ton Scissor Lift Power Screw: Validated Engineering Recommendation"
+        },
+        {
+          "id": "C02",
+          "name": "Design is Unsafe — Core diameter undersized or overhauling risk",
+          "label": "2-Ton Scissor Lift Power Screw: Design Modification Required"
+        }
+      ],
+      "options": [
+        {
+          "id": "opt-suitable",
+          "title": "APPROVE 2-TON SCISSOR LIFT POWER SCREW DESIGN — ROBUST FOS = 5.96, HIGH SELF-LOCKING SAFETY, 15:1 GEARMOTOR RECOMMENDATION",
+          "suitability": "Validated Engineering Recommendation",
+          "description": "The power screw design for the 2-ton mobile scissor lift is fully validated and approved. Under the critical peak horizontal thrust of 74.64 kN at lowest scissor angle (θ = 15°), the Tr 50 × 8 screw core develops a combined maximum principal stress of 63.72 MPa, providing a generous Factor of Safety of 5.96 against yielding on AISI 4140 alloy steel (S_yt = 380 MPa). The virtual friction angle ϕ' = 8.83° comfortably exceeds the helix angle α = 3.17°, ensuring 100% fail-safe self-locking capability that prevents accidental collapse. Recommend an integrated 15:1 worm gear reducer for effortless manual/motorized operation and periodic molybdenum disulphide lubrication on the phosphor-bronze travelling nut."
+        },
+        {
+          "id": "opt-downsize-screw",
+          "title": "UNSAFE ALTERATION — DOWNSIZE SCREW TO Tr 25 × 4 TO REDUCE COMPONENT WEIGHT",
+          "suitability": "Hazardous Under-Dimensioning",
+          "description": "Downsizing the screw to Tr 25 × 4 causes the core compressive stress to skyrocket above 215 MPa and torsional shear stress to exceed 160 MPa, reducing the Factor of Safety below 1.2 and creating catastrophic buckling and shear failure hazards under 2-ton loads."
+        },
+        {
+          "id": "opt-multi-start",
+          "title": "HAZARDOUS PROPOSAL — USE FOUR-START THREAD TO INCREASE LIFTING SPEED",
+          "suitability": "Dangerous Loss of Self-Locking",
+          "description": "Using a four-start thread quadruples the helix angle from 3.17° to 12.4°, which exceeds the virtual friction angle (ϕ' = 8.83°). This destroys the self-locking property, causing the loaded platform to free-fall violently the moment driving torque is removed."
+        }
+      ]
+    },
+    "final-report": {
+      "title": "2-Ton Mobile Scissor Lift Power Screw Design & Analysis Report",
+      "questions": [
+        {
+          "id": "r1",
+          "label": "1. Mobile Scissor Lift Working Principle & Power Screw Drive Function",
+          "placeholder": "Explain how the horizontal power screw converts rotational input into axial translation of the travelling nut block, and describe how this displacement articulates the scissor arms to raise the 2-ton platform."
+        },
+        {
+          "id": "r2",
+          "label": "2. Scissor Kinematics & Critical Peak Horizontal Force Determination",
+          "placeholder": "Explain why the peak horizontal force on the power screw occurs at the lowest scissor angle (θ = 15°). State the governing formula F_screw = W / tan(θ) and calculate F_screw = 74.64 kN."
+        },
+        {
+          "id": "r3",
+          "label": "3. Power Screw Geometric Dimensions & Helix Angle Derivation",
+          "placeholder": "State given screw parameters (d = 50 mm, p = 8 mm, single-start). Show calculations for core diameter (d_c = 42 mm), mean diameter (d_m = 46 mm), and helix angle (α = 3.17°)."
+        },
+        {
+          "id": "r4",
+          "label": "4. Trapezoidal Thread Virtual Friction & Raising Torque Calculations",
+          "placeholder": "Show derivations for virtual friction coefficient (μ' = 0.1553), virtual friction angle (ϕ' = 8.83°), and thread friction raising torque (T_t = 364.76 N·m)."
+        },
+        {
+          "id": "r5",
+          "label": "5. Thrust Collar Friction, Total Operating Torque & Drive Mechanism Selection",
+          "placeholder": "Calculate mean collar radius (R_c = 35 mm), collar friction torque (T_c = 261.24 N·m), total operating torque (T_total = 626.0 N·m), overall efficiency (15.2%), and justify the requirement for a 15:1 reduction gearbox."
+        },
+        {
+          "id": "r6",
+          "label": "6. Self-Locking Condition & Fail-Safe Holding Safety Verification",
+          "placeholder": "Prove the self-locking condition (ϕ' > α) and calculate the lowering torque (T_lower = 431.31 N·m). Explain why self-locking is critical for workshop operator safety."
+        },
+        {
+          "id": "r7",
+          "label": "7. Combined Stress Analysis, Factor of Safety & Engineering Judgement",
+          "placeholder": "Present calculations for direct compressive stress (σ_c = 53.88 MPa), torsional shear stress (τ = 25.04 MPa), maximum combined principal stress (σ_max = 63.72 MPa), and Factor of Safety (FOS = 5.96 on AISI 4140). Summarize your final engineering approval."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submit 2-Ton Mobile Scissor Lift Response Package",
+      "body": "Your complete Design of a 2-Ton Mobile Scissor Lift Power Screw challenge response package is prepared for final submission to Google Sheets."
+    }
+  }
+}

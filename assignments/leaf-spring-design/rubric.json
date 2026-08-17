@@ -1,0 +1,108 @@
+{
+  "assignmentId": "EA-13",
+  "assignmentTitle": "Construction and Design Verification of a Leaf Spring",
+  "totalMarks": 12.0,
+  "criteria": [
+    {
+      "id": "project-charter",
+      "title": "Observe the Leaf Spring Suspension",
+      "marks": 0.5,
+      "bloomLevel": "L1 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO8", "PO11"],
+      "pso": ["PSO1"],
+      "description": "Understanding client brief, commercial vehicle rear axle leaf spring application, and project scope."
+    },
+    {
+      "id": "component-identification",
+      "activityCode": "EA13-A02",
+      "title": "Identify Leaf Spring Components",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate labeling of master leaf, graduated leaves, front spring eye, rear eye & shackle, centre bolt, U-bolts, axle seat, and rear axle on EA-13."
+    },
+    {
+      "id": "leaf-construction",
+      "title": "Understand Leaf Spring Construction",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Understanding multi-leaf construction, master vs graduated leaves, uniform bending strength principle, and rebound clips."
+    },
+    {
+      "id": "load-path",
+      "title": "Understand the Load Path",
+      "marks": 0.5,
+      "bloomLevel": "L2 Understand",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Tracing the load transmission path from vehicle chassis to leaf spring eyes, axle seat, and road wheels."
+    },
+    {
+      "id": "engineering-model",
+      "title": "Establish the Engineering Model",
+      "marks": 1.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Converting axle load (40 kN) to spring central load (20 kN), eye end reaction (10 kN), and semi-span length (500 mm)."
+    },
+    {
+      "id": "design-requirements",
+      "title": "Establish Design Requirements",
+      "marks": 1.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Identifying leaf parameters: n = 10 total leaves, leaf width b = 60 mm, leaf thickness t = 8 mm, and material yield strength Syt = 900 N/mm²."
+    },
+    {
+      "id": "bending-stress-verification",
+      "title": "Verify Bending Stress",
+      "marks": 2.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO5"],
+      "pso": ["PSO1"],
+      "description": "Calculating maximum bending moment (M_max = 5000 kN.mm), total section modulus (Z = 6400 mm³), and max bending stress (sigma_b = 781.25 N/mm²)."
+    },
+    {
+      "id": "deflection-safety-check",
+      "title": "Verify Deflection and Factor of Safety",
+      "marks": 2.0,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Determining spring deflection (delta = 117.94 mm) and actual Factor of Safety (FoS = 1.15)."
+    },
+    {
+      "id": "engineering-judgement",
+      "title": "Engineering Judgement",
+      "marks": 1.0,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Evaluating spring suitability under static payload and dynamic shock overload, proposing leaf count or thickness adjustments."
+    },
+    {
+      "id": "final-report",
+      "title": "Engineering Verification Report",
+      "marks": 1.0,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO3",
+      "po": ["PO8", "PO9", "PO11"],
+      "pso": ["PSO2"],
+      "description": "Synthesizing concise engineering verification report covering leaf spring construction, stress checks, FoS, and maintenance specs."
+    }
+  ]
+}

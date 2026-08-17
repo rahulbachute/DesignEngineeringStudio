@@ -1,0 +1,108 @@
+{
+  "assignmentId": "EA-18",
+  "assignmentTitle": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism",
+  "totalMarks": 12.0,
+  "criteria": [
+    {
+      "id": "project-charter",
+      "title": "Understand the Bench Vice Power-Screw Application",
+      "marks": 0.5,
+      "bloomLevel": "L1 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO8", "PO11"],
+      "pso": ["PSO1"],
+      "description": "Understanding the engineering context: handle rotation converts to screw rotation, thread interaction drives axial movement of the movable jaw, and generates clamping force."
+    },
+    {
+      "id": "component-identification",
+      "activityCode": "EA18-A02",
+      "title": "Identify Bench Vice Components and Mechanical Functions",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Accurate identification of Fixed Jaw, Movable Jaw, Jaw Plate, Workpiece, Power Screw, Screw Head, Sliding Handle, Threaded Engagement, and Sliding Guide on Engineering Asset EA-18."
+    },
+    {
+      "id": "motion-sequence",
+      "title": "Understand Rotary-to-Linear Motion and Load Path",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Correctly sequencing: Handle rotation → Power screw rotation → Thread interaction → Axial movement of movable jaw → Clamping force."
+    },
+    {
+      "id": "design-data",
+      "title": "Establish Design Data for the Power-Screw Mechanism",
+      "marks": 1.0,
+      "bloomLevel": "L2 Understand",
+      "co": "CO2",
+      "po": ["PO1", "PO2"],
+      "pso": ["PSO1"],
+      "description": "Correctly identifying all given design parameters: W = 20,000 N, d = 24 mm, p = 5 mm, L = p = 5 mm (single-start), μ = 0.12, dc = 36 mm, μc = 0.10, R = 200 mm."
+    },
+    {
+      "id": "mean-diameter-helix",
+      "title": "Determine Mean Diameter and Helix Angle",
+      "marks": 1.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3"],
+      "pso": ["PSO1"],
+      "description": "Correct application of dm = d − p/2 = 21.5 mm and tan α = L / (π dm) giving α ≈ 4.23° with appropriate units and working."
+    },
+    {
+      "id": "thread-torque",
+      "title": "Calculate Thread Friction Torque",
+      "marks": 2.0,
+      "bloomLevel": "L3 Apply",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Correct computation of friction angle φ = atan(μ) and application of T_s = (W dm / 2) [(μ + tan α) / (1 − μ tan α)] in N·mm, showing all working steps."
+    },
+    {
+      "id": "collar-total-torque",
+      "title": "Account for Collar Friction and Total Operating Torque",
+      "marks": 1.5,
+      "bloomLevel": "L3 Apply",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Correct calculation of T_c = μc W dc / 2 and total torque T = T_s + T_c in consistent units."
+    },
+    {
+      "id": "efficiency-selflocking",
+      "title": "Calculate Efficiency, Self-Locking Condition and Operator Force",
+      "marks": 1.0,
+      "bloomLevel": "L4 Analyse",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO4"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Correct calculation of η = [W L / (2π T)] × 100, correct self-locking check μ > tan α, and operator hand force F = T / R in SI units."
+    },
+    {
+      "id": "engineering-judgement",
+      "title": "Engineering Judgement — Mechanism Suitability Assessment",
+      "marks": 1.5,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO2",
+      "po": ["PO1", "PO2", "PO3", "PO7", "PO8"],
+      "pso": ["PSO1", "PSO2"],
+      "description": "Technically justified engineering recommendation addressing total torque, efficiency level, self-locking behavior, operator effort, and potential design improvements."
+    },
+    {
+      "id": "final-report",
+      "title": "Bench Vice Power-Screw Analysis and Design Report",
+      "marks": 1.0,
+      "bloomLevel": "L5 Evaluate",
+      "co": "CO2",
+      "po": ["PO8", "PO9", "PO11"],
+      "pso": ["PSO2"],
+      "description": "Concise engineering report covering all ten required items: mechanism purpose, mean diameter, helix angle, thread torque, collar torque, total torque, efficiency, self-locking conclusion, operator force, and engineering recommendation."
+    }
+  ]
+}

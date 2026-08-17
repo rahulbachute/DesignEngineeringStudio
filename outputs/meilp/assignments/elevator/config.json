@@ -1,0 +1,58 @@
+{
+  "id": "EC-01",
+  "projectCode": "EC-01",
+  "slug": "elevator",
+  "title": "Safety Verification of Elevator Suspension Cables",
+  "subject": "PCC303-MEC",
+  "courseCode": "PCC303-MEC",
+  "courseName": "Design of Machine Elements",
+  "unit": "Unit I",
+  "courseOutcome": {
+    "code": "CO1",
+    "statement": "Design levers and components subjected to eccentric loading by selecting appropriate materials."
+  },
+  "programOutcomes": ["PO1", "PO2", "PO3", "PO5", "PO7", "PO8", "PO9", "PO11"],
+  "programSpecificOutcomes": ["PSO1", "PSO2"],
+  "bloomLevelsCovered": ["L1 Understand", "L2 Understand", "L3 Apply", "L4 Analyse", "L5 Evaluate"],
+  "cceType": "Engineering Challenge",
+  "cceMarks": 24,
+  "facultyName": "Faculty Name",
+  "client": "ABC Commercial Complex Pvt Ltd",
+  "location": "Hinjewadi, Pune",
+  "priority": "High",
+  "estimatedDuration": "90 minutes",
+  "difficulty": "Intermediate",
+  "submissionMode": "Individual or Group",
+  "version": "1.0.0",
+  "settings": {
+    "attemptMode": "both",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true
+  },
+  "tasks": [
+    { "id": "project-charter", "type": "information", "title": "Understand the Project Charter" },
+    { "id": "design-requirements", "type": "calculation", "title": "Design Requirements" },
+    { "id": "engineering-assumptions", "type": "reflection", "title": "Engineering Assumptions" },
+    { "id": "identify-components", "type": "image-label", "activityCode": "EC01-A01", "title": "Identify the Components of a Traction Elevator System" },
+    { "id": "free-body-diagram", "type": "image-label", "title": "Free Body Diagram Analysis" },
+    { "id": "working-principle", "type": "text-mcq", "title": "Working Principle of Traction Elevator" },
+    { "id": "engineering-model", "type": "text-mcq", "title": "Engineering Model" },
+    { "id": "material-selection", "type": "selection", "title": "Material Selection" },
+    { "id": "engineering-calculations", "type": "calculation", "title": "Engineering Calculations" },
+    { "id": "engineering-decision", "type": "recommendation", "title": "Engineering Decision" },
+    { "id": "reflection", "type": "reflection", "title": "Report / Engineering Notebook and Reflection" },
+    { "id": "submit", "type": "submission", "title": "Submission" }
+  ],
+  "dataFiles": {
+    "workflow": "assignments/elevator/workflow.json",
+    "content": "assignments/elevator/content.json",
+    "rubric": "assignments/elevator/rubric.json",
+    "engineeringBrief": "assignments/elevator/engineering-charter.md",
+    "instructorGuide": "assignments/elevator/faculty-guide.md",
+    "studentGuide": "assignments/elevator/student-guide.md",
+    "evaluationTemplate": "assignments/elevator/evaluation-template.json",
+    "challengeOverview": "assignments/elevator/challenge-overview.md"
+  }
+}
