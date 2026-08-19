@@ -37,21 +37,9 @@ class AssignmentControlService {
    */
   normalizeFacultyId(facultyId) {
     if (!facultyId || typeof facultyId !== "string") {
-      return "dr-rahul-bachute";
+      return "unknown";
     }
-    const raw = facultyId.trim().toLowerCase();
-
-    if (raw.includes("rahul") || raw.includes("bachute")) {
-      return "dr-rahul-bachute";
-    }
-    if (raw.includes("niranjan") || raw.includes("shegokar")) {
-      return "dr-niranjan-shegokar";
-    }
-    if (raw.includes("atul") || raw.includes("gowardipe")) {
-      return "prof-atul-gowardipe";
-    }
-
-    return raw.replace(/[^a-z0-9]+/g, "-");
+    return facultyId.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   }
 
   /**
@@ -88,14 +76,10 @@ class AssignmentControlService {
   }
 
   /**
-   * Returns default faculty members list for selection.
+   * Returns registered faculty members list if loaded, or empty array.
    */
   getFacultyList() {
-    return [
-      { id: "dr-rahul-bachute", name: "Dr. Rahul Bachute", email: "rahul.bachute@dypic.in" },
-      { id: "dr-niranjan-shegokar", name: "Dr. Niranjan Shegokar", email: "niranjan.shegokar@dypic.in" },
-      { id: "prof-atul-gowardipe", name: "Prof. Atul Gowardipe", email: "atul.gowardipe@dypic.in" }
-    ];
+    return [];
   }
 
   /**

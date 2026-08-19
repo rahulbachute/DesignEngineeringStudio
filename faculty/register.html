@@ -158,8 +158,6 @@
               <span class="input-group-text"><i class="bi bi-building"></i></span>
               <select class="form-select" id="regCollege" required>
                 <option value="COL001" data-name="Ajeenkya D.Y. Patil School of Engineering, Lohegaon" selected>Ajeenkya D.Y. Patil School of Engineering, Lohegaon</option>
-                <option value="COL002" data-name="Jaihind College of Engineering">Jaihind College of Engineering</option>
-                <option value="COL009" data-name="Other – Maharashtra">Other – Maharashtra</option>
               </select>
             </div>
           </div>
@@ -339,6 +337,16 @@
             };
             localStorage.setItem("DES_FACULTY_SESSION", JSON.stringify(userObj));
             localStorage.setItem("loggedInFaculty", userObj.facultyName);
+
+            try {
+              let regList = [];
+              const rawReg = localStorage.getItem("DES_REGISTERED_FACULTIES");
+              if (rawReg) regList = JSON.parse(rawReg) || [];
+              if (!regList.some(f => f.facultyId === userObj.facultyId)) {
+                regList.push(userObj);
+                localStorage.setItem("DES_REGISTERED_FACULTIES", JSON.stringify(regList));
+              }
+            } catch (e) {}
 
             document.getElementById("btnProceedToLogin").href = "challenges.html";
             document.getElementById("btnProceedToLogin").innerHTML = '<i class="bi bi-box-arrow-in-right me-1"></i> Go to Faculty Workspace';

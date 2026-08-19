@@ -984,7 +984,7 @@ class ChallengeRunner {
                       </div>
                       <div class="col-sm-6 col-md-4">
                         <span class="text-muted d-block">Assigned Faculty:</span>
-                        <strong class="text-dark">${this.escape(student.facultyName || "Dr. Rahul Bachute")}</strong>
+                        <strong class="text-dark">${this.escape(student.facultyName || "Unknown / Unassigned Faculty")}</strong>
                       </div>
                       <div class="col-sm-6 col-md-4">
                         <span class="text-muted d-block">Academic Year / Attempt:</span>
@@ -1059,7 +1059,7 @@ class ChallengeRunner {
                     <div class="col-md-4 text-md-end">
                       <div class="border-top border-dark pt-2">
                         <span class="small text-muted d-block">Faculty Evaluator Signature</span>
-                        <strong>${this.escape(student.facultyName || "Dr. Rahul Bachute")}</strong>
+                        <strong>${this.escape(student.facultyName || "Unknown / Unassigned Faculty")}</strong>
                       </div>
                     </div>
                   </div>

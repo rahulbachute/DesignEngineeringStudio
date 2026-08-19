@@ -91,26 +91,50 @@ const ACTIVE_COLLEGE_REGISTRY = [
 ];
 
 const ACTIVE_FACULTY_REGISTRY = [
-  { facultyId: "FAC001", facultyName: "Dr. Rahul Bachute", email: "bachuterahul@gmail.com", collegeId: "COL001", collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon", department: "Mechanical Engineering", role: "ADMIN", status: "ACTIVE" },
-  { facultyId: "FAC002", facultyName: "Dr. Niranjan Shegokar", email: "niranjan.shegokar@dypic.in", collegeId: "COL001", collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon", department: "Mechanical Engineering", role: "FACULTY", status: "ACTIVE" },
-  { facultyId: "FAC003", facultyName: "Prof. Atul Gowardipe", email: "atul.gowardipe@dypic.in", collegeId: "COL001", collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon", department: "Mechanical Engineering", role: "FACULTY", status: "ACTIVE" },
-  { facultyId: "FAC004", facultyName: "Prof. Said Khandu", email: "saidkhandu@gmail.com", collegeId: "COL002", collegeName: "Jaihind College of Engineering", department: "Mechanical Engineering", role: "FACULTY", status: "ACTIVE" }
+  {
+    facultyId: "FAC001",
+    facultyName: "Dr. Rahul Bachute",
+    email: "rahul.bachute@dypic.in",
+    collegeId: "COL001",
+    collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
+    department: "Mechanical Engineering",
+    role: "HOD",
+    status: "ACTIVE"
+  },
+  {
+    facultyId: "FAC002",
+    facultyName: "Dr. Niranjan Shegokar",
+    email: "niranjan.shegokar@dypic.in",
+    collegeId: "COL001",
+    collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
+    department: "Mechanical Engineering",
+    role: "FACULTY",
+    status: "ACTIVE"
+  },
+  {
+    facultyId: "FAC003",
+    facultyName: "Prof. Atul Gowardipe",
+    email: "atul.gowardipe@dypic.in",
+    collegeId: "COL001",
+    collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
+    department: "Mechanical Engineering",
+    role: "FACULTY",
+    status: "ACTIVE"
+  },
+  {
+    facultyId: "FAC004",
+    facultyName: "Prof. Said Khandu",
+    email: "said.khandu@jcoe.edu.in",
+    collegeId: "COL002",
+    collegeName: "Jaihind College of Engineering",
+    department: "Mechanical Engineering",
+    role: "FACULTY",
+    status: "ACTIVE"
+  }
 ];
 
-// ─── Legacy Mapping (Preserved strictly for backward compatibility) ───────────
-const COLLEGE_FACULTY_MAP = {
-  "Ajeenkya D.Y. Patil School of Engineering, Lohegaon": [
-    "Dr. Rahul Bachute",
-    "Dr. Niranjan Shegokar",
-    "Prof. Atul Gowardipe"
-  ],
-  "Jaihind College of Engineering": [
-    "Prof. Said Khandu"
-  ]
-};
-
 let currentLoadedColleges = ACTIVE_COLLEGE_REGISTRY;
-let currentLoadedFaculties = ACTIVE_FACULTY_REGISTRY;
+let currentLoadedFaculties = [];
 
 async function fetchColleges() {
   const endpoint = window.MEILP?.googleSheetsConfig?.submissionWebAppUrl;
@@ -124,7 +148,7 @@ async function fetchColleges() {
         }
       }
     } catch (e) {
-      console.warn("[MEILP] Remote colleges fetch failed, using active registry fallback:", e.message);
+      console.warn("[MEILP] Remote colleges fetch failed, using fallback list:", e.message);
     }
   }
   return ACTIVE_COLLEGE_REGISTRY.filter(c => c.status === "ACTIVE");
@@ -138,26 +162,49 @@ async function fetchFacultyList(collegeId) {
       const res = await fetch(`${endpoint}?action=facultyList&collegeId=${encodeURIComponent(collegeId)}`, { signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined });
       if (res.ok) {
         const json = await res.json();
-        if (json && json.success && Array.isArray(json.data)) {
-          return json.data.filter(f => f.status === "ACTIVE");
+        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+          return json.data.filter(f => f.status === "ACTIVE" && (!collegeId || f.collegeId === collegeId));
         }
       }
     } catch (e) {
-      console.warn("[MEILP] Remote facultyList fetch failed, using active registry fallback:", e.message);
+      console.warn("[MEILP] Remote facultyList fetch failed, using fallback list:", e.message);
     }
   }
-  return ACTIVE_FACULTY_REGISTRY.filter(f => f.collegeId === collegeId && f.status === "ACTIVE");
+
+  // Fallback to local storage & static active faculty registry
+  let localFaculties = [];
+  try {
+    const rawLocal = window.localStorage ? window.localStorage.getItem("DES_REGISTERED_FACULTIES") : null;
+    if (rawLocal) {
+      const parsed = JSON.parse(rawLocal);
+      if (Array.isArray(parsed)) localFaculties = parsed;
+    }
+    const currentSession = window.localStorage ? JSON.parse(window.localStorage.getItem("DES_FACULTY_SESSION") || "null") : null;
+    if (currentSession && currentSession.facultyId && currentSession.facultyId !== "GUEST") {
+      if (!localFaculties.some(f => f.facultyId === currentSession.facultyId)) {
+        localFaculties.push(currentSession);
+      }
+    }
+  } catch (e) {}
+
+  const allFaculties = [...ACTIVE_FACULTY_REGISTRY, ...localFaculties];
+  const seen = new Set();
+  const result = [];
+  for (const f of allFaculties) {
+    if (f && f.facultyId && !seen.has(f.facultyId)) {
+      seen.add(f.facultyId);
+      if (f.status === "ACTIVE" && f.collegeId === collegeId) {
+        result.push(f);
+      }
+    }
+  }
+  return result;
 }
 
 // ─── Direct localStorage read — zero abstraction ──────────────────────────────
 function normalizeFacultyKey(name) {
-  if (!name || typeof name !== "string") return "dr-rahul-bachute";
-  const s = name.trim().toLowerCase();
-  if (s.includes("rahul") || s.includes("bachute")) return "dr-rahul-bachute";
-  if (s.includes("niranjan") || s.includes("shegokar")) return "dr-niranjan-shegokar";
-  if (s.includes("atul") || s.includes("gowardipe")) return "prof-atul-gowardipe";
-  if (s.includes("said") || s.includes("khandu")) return "prof-said-khandu";
-  return s.replace(/[^a-z0-9]+/g, "-");
+  if (!name || typeof name !== "string") return "unknown";
+  return name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
 function loadFacultyControls(facultyName) {
@@ -477,6 +524,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } catch (e) { /* try next */ }
     }
     // Merge JSON assignments with faculty-created custom ones
+    const merged = mergeWithCustom(base);
     populateCollegeAndFacultyDropdowns();
     renderAssignmentCards(merged);
     console.log("[MEILP] Loaded", merged.length, "assignments (", merged.length - base.length, "custom)");

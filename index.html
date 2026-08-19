@@ -415,23 +415,6 @@
   </div>
 
   <script>
-    function resolveFacultyName(rawInput) {
-      const input = (rawInput || "").toLowerCase().trim();
-      if (input.includes("rahul") || input.includes("bachute")) {
-        return "Dr. Rahul Bachute";
-      }
-      if (input.includes("niranjan") || input.includes("shegokar")) {
-        return "Dr. Niranjan Shegokar";
-      }
-      if (input.includes("atul") || input.includes("gowardipe")) {
-        return "Prof. Atul Gowardipe";
-      }
-      if (input.includes("guest")) {
-        return "Guest";
-      }
-      return rawInput.trim() || "Dr. Rahul Bachute";
-    }
-
     async function handleFacultyLoginAction(e) {
       if (e) {
         e.preventDefault();
@@ -443,6 +426,14 @@
       const btn = document.getElementById("btnGoToChallengeControls");
       const userRaw = (uEl?.value || "").trim();
       const passRaw = (pEl?.value || "").trim();
+
+      if (!userRaw || !passRaw) {
+        if (errEl) {
+          errEl.textContent = "Please enter both Email/Login ID and password.";
+          errEl.classList.remove("d-none");
+        }
+        return false;
+      }
 
       if (errEl) errEl.classList.add("d-none");
       if (btn) {
@@ -463,11 +454,27 @@
             }
           }
         } else {
-          const facultyName = resolveFacultyName(userRaw);
-          localStorage.setItem("loggedInFaculty", facultyName);
-          localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(facultyName));
-          window.location.href = "faculty/challenges.html";
-          return false;
+          // Direct fetch to Google Sheet
+          const endpoint = window.MEILP?.googleSheetsConfig?.submissionWebAppUrl;
+          if (endpoint) {
+            const res = await fetch(`${endpoint}?action=facultyLogin`, {
+              method: "POST",
+              headers: { "Content-Type": "text/plain;charset=utf-8" },
+              body: JSON.stringify({ loginId: userRaw, password: passRaw })
+            });
+            const json = await res.json();
+            if (json && json.success && json.data) {
+              localStorage.setItem("DES_FACULTY_SESSION", JSON.stringify(json.data));
+              localStorage.setItem("loggedInFaculty", json.data.facultyName || json.data.facultyId);
+              window.location.href = "faculty/challenges.html";
+              return false;
+            } else {
+              if (errEl) {
+                errEl.textContent = json.error || "Invalid credentials in Faculty Registry.";
+                errEl.classList.remove("d-none");
+              }
+            }
+          }
         }
       } catch (err) {
         if (errEl) {

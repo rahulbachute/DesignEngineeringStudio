@@ -43,6 +43,7 @@ class SubmissionEngine {
     const activityResponses = this.buildActivityResponses(learningSteps, state.responses || {}, rubric);
     const completedActivities = completedTaskIds.filter((id) => learningStepIds.has(id)).length;
     const totalActivities = learningSteps.length;
+    const completionPercent = totalActivities ? Math.round((completedActivities / totalActivities) * 100) : 0;
     const attemptId = state.attemptId || student.attemptId || this.createSubmissionId(config, student, submittedAt);
     const baseSubmission = {
       submissionId: this.createSubmissionId(config, student, submittedAt),
@@ -118,7 +119,7 @@ class SubmissionEngine {
     }
 
     const student = payload.studentInformation || {};
-    const facultyName = student.facultyName || "Dr. Rahul Bachute";
+    const facultyName = student.facultyName || "Unknown / Unassigned Faculty";
     const assignmentId = (context.config && context.config.id) || "default";
 
     if (window.MEILP && window.MEILP.assignmentControlService) {

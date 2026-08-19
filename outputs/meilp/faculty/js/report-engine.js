@@ -26,8 +26,8 @@ class ReportEngine {
 
   initFacultyInfo() {
     const user = window.DESAuth?.getCurrentUser?.() || {};
-    const loggedIn = localStorage.getItem("loggedInFaculty") || user.name || "Dr. Rahul Bachute";
-    const facultyName = loggedIn.toLowerCase() === "guest" ? "Guest Faculty" : (loggedIn.includes("@") ? "Dr. Rahul Bachute" : loggedIn);
+    const loggedIn = localStorage.getItem("loggedInFaculty") || user.name || "Faculty Member";
+    const facultyName = loggedIn.toLowerCase() === "guest" ? "Guest Faculty" : (user.name || loggedIn);
     
     const facultyInput = document.getElementById("facultyFilter");
     if (facultyInput) {
@@ -36,7 +36,7 @@ class ReportEngine {
 
     const institutionInput = document.getElementById("institutionFilter");
     if (institutionInput && !institutionInput.value) {
-      institutionInput.value = "Ajeenkya DY Patil School of Engineering, Pune";
+      institutionInput.value = user.collegeName || "Engineering Institution";
     }
   }
 

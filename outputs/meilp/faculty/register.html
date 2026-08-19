@@ -338,6 +338,16 @@
             localStorage.setItem("DES_FACULTY_SESSION", JSON.stringify(userObj));
             localStorage.setItem("loggedInFaculty", userObj.facultyName);
 
+            try {
+              let regList = [];
+              const rawReg = localStorage.getItem("DES_REGISTERED_FACULTIES");
+              if (rawReg) regList = JSON.parse(rawReg) || [];
+              if (!regList.some(f => f.facultyId === userObj.facultyId)) {
+                regList.push(userObj);
+                localStorage.setItem("DES_REGISTERED_FACULTIES", JSON.stringify(regList));
+              }
+            } catch (e) {}
+
             document.getElementById("btnProceedToLogin").href = "challenges.html";
             document.getElementById("btnProceedToLogin").innerHTML = '<i class="bi bi-box-arrow-in-right me-1"></i> Go to Faculty Workspace';
           } else {

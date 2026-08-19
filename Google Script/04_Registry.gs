@@ -33,11 +33,7 @@ function generateSalt() {
  */
 function normalizeKey(str) {
   if (!str || typeof str !== "string") return "";
-  var s = str.trim().toLowerCase();
-  if (s.indexOf("rahul") !== -1 || s.indexOf("bachute") !== -1) return "dr-rahul-bachute";
-  if (s.indexOf("niranjan") !== -1 || s.indexOf("shegokar") !== -1) return "dr-niranjan-shegokar";
-  if (s.indexOf("atul") !== -1 || s.indexOf("gowardipe") !== -1) return "prof-atul-gowardipe";
-  return s.replace(/[^a-z0-9]+/g, "-");
+  return str.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
 /**
@@ -175,7 +171,7 @@ var DEFAULT_COLLEGES = [
 function getColleges() {
   try {
     var colSheetName = (CONFIG.SHEETS && CONFIG.SHEETS.COLLEGE_REGISTRY) || "College_Registry";
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(colSheetName);
+    var sheet = getSheet(colSheetName);
     var colleges = [];
 
     if (sheet && sheet.getLastRow() > 1) {
@@ -193,19 +189,16 @@ function getColleges() {
           });
         }
       }
+      return response(colleges);
     }
 
-    if (colleges.length < 5) {
-      return response(DEFAULT_COLLEGES.map(function (c, idx) {
-        return {
-          collegeId: "COL" + ("000" + (idx + 1)).slice(-3),
-          collegeName: c,
-          status: "ACTIVE"
-        };
-      }));
-    }
-
-    return response(colleges);
+    return response(DEFAULT_COLLEGES.map(function (c, idx) {
+      return {
+        collegeId: "COL" + ("000" + (idx + 1)).slice(-3),
+        collegeName: c,
+        status: "ACTIVE"
+      };
+    }));
   } catch (err) {
     logError(err, "getColleges");
     return response(DEFAULT_COLLEGES.map(function (c, idx) {
@@ -477,8 +470,8 @@ function registerFaculty(payload) {
     }
 
     var facSheetName = (CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(facSheetName);
-    if (!sheet) {
+    var sheet = getSheet(facSheetName);
+    if (!sheet && typeof SpreadsheetApp !== "undefined" && SpreadsheetApp.getActiveSpreadsheet) {
       sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet(facSheetName);
     }
 
@@ -883,7 +876,7 @@ function getAssignmentControls(payload) {
     facultyId = String(facultyId).trim();
 
     var sheetName = (CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_CONTROLS) || "Assignment_Controls";
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+    var sheet = getSheet(sheetName);
     if (!sheet) {
       return response([]);
     }
@@ -1015,8 +1008,8 @@ function saveAssignmentControl(payload) {
     }
 
     var ctrlSheetName = (CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_CONTROLS) || "Assignment_Controls";
-    var ctrlSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ctrlSheetName);
-    if (!ctrlSheet) {
+    var ctrlSheet = getSheet(ctrlSheetName);
+    if (!ctrlSheet && typeof SpreadsheetApp !== "undefined" && SpreadsheetApp.getActiveSpreadsheet) {
       ctrlSheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet(ctrlSheetName);
     }
     if (ctrlSheet.getLastRow() === 0) {
