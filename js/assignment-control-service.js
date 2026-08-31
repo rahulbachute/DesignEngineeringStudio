@@ -2,7 +2,7 @@ window.MEILP = window.MEILP || {};
 
 /**
  * Service to manage faculty-wise assignment deadlines and enable/disable availability controls.
- * Settings are stored per faculty member (namespaced by facultyId or name).
+ * All controls are strictly namespaced by canonical Faculty_ID (e.g., FAC001, FAC002).
  */
 class AssignmentControlService {
   constructor(options = {}) {
@@ -25,7 +25,7 @@ class AssignmentControlService {
         set(key, val) {
           try {
             localStorage.setItem(`${ns}:${key}`, JSON.stringify(val));
-          } catch {}
+          } catch { }
           return val;
         }
       };
@@ -33,13 +33,91 @@ class AssignmentControlService {
   }
 
   /**
-   * Normalizes any faculty identifier (email, display name, ID) into a unified canonical storage key.
+   * Resolves any faculty identifier (email, display name, legacy key, or ID) to a canonical uppercase Faculty_ID.
+   * Faculty_ID is the authoritative identifier; Faculty_Name is for display only.
+   */
+  resolveFacultyId(facultyIdentifier) {
+    if (!facultyIdentifier || typeof facultyIdentifier !== "string") {
+      return "UNKNOWN";
+    }
+    const trimmed = facultyIdentifier.trim();
+    if (!trimmed || trimmed.toUpperCase() === "UNKNOWN" || trimmed.toLowerCase().includes("unknown") || trimmed.toLowerCase().includes("unassigned")) {
+      return "UNKNOWN";
+    }
+
+    // Direct Faculty_ID format: FAC001, FAC002, etc.
+    if (/^FAC\d+$/i.test(trimmed)) {
+      return trimmed.toUpperCase();
+    }
+    // Admin format: ADMIN001, etc.
+    if (/^ADMIN\d+$/i.test(trimmed)) {
+      return trimmed.toUpperCase();
+    }
+
+    // Registry lookup
+    const registries = [];
+    if (typeof ACTIVE_FACULTY_REGISTRY !== "undefined" && Array.isArray(ACTIVE_FACULTY_REGISTRY)) {
+      registries.push(...ACTIVE_FACULTY_REGISTRY);
+    }
+    if (window.MEILP && Array.isArray(window.MEILP.ACTIVE_FACULTY_REGISTRY)) {
+      registries.push(...window.MEILP.ACTIVE_FACULTY_REGISTRY);
+    }
+    try {
+      const rawLocal = localStorage.getItem("DES_REGISTERED_FACULTIES");
+      if (rawLocal) {
+        const parsed = JSON.parse(rawLocal);
+        if (Array.isArray(parsed)) registries.push(...parsed);
+      }
+      const rawSession = localStorage.getItem("DES_FACULTY_SESSION");
+      if (rawSession) {
+        const session = JSON.parse(rawSession);
+        if (session && session.facultyId) registries.push(session);
+      }
+    } catch (e) { }
+
+    const lower = trimmed.toLowerCase();
+    const match = registries.find(f =>
+      f && (
+        (f.facultyId && f.facultyId.toLowerCase() === lower) ||
+        (f.facultyName && f.facultyName.toLowerCase() === lower) ||
+        (f.email && f.email.toLowerCase() === lower) ||
+        (f.loginId && f.loginId.toLowerCase() === lower)
+      )
+    );
+
+    if (match && match.facultyId) {
+      return match.facultyId.toUpperCase();
+    }
+
+    // Default Institutional Registry (offline fallback if cloud registry is syncing)
+    const DEFAULT_INSTITUTIONAL_REGISTRY = [
+      { facultyId: "ADMIN001", facultyName: "System Administrator", email: "bachuterahul@gmail.com", role: "ADMIN" },
+      { facultyId: "FAC001", facultyName: "Dr. Rahul Bachute", email: "rahul.bachute@dypic.in", role: "FACULTY" },
+      { facultyId: "FAC002", facultyName: "Dr. Niranjan Shegokar", email: "niranjan.shegokar@dypic.in", role: "FACULTY" },
+      { facultyId: "FAC003", facultyName: "Prof. Atul Gowardipe", email: "atul.gowardipe@dypic.in", role: "FACULTY" },
+      { facultyId: "FAC004", facultyName: "Prof. Said Khandu", email: "saidkhandu@gmail.com", role: "FACULTY" }
+    ];
+
+    const defaultMatch = DEFAULT_INSTITUTIONAL_REGISTRY.find(f =>
+      f && (
+        (f.facultyId && f.facultyId.toLowerCase() === lower) ||
+        (f.facultyName && f.facultyName.toLowerCase() === lower) ||
+        (f.email && f.email.toLowerCase() === lower)
+      )
+    );
+
+    if (defaultMatch && defaultMatch.facultyId) {
+      return defaultMatch.facultyId.toUpperCase();
+    }
+
+    return trimmed.toUpperCase();
+  }
+
+  /**
+   * Normalizes any faculty identifier into canonical Faculty_ID.
    */
   normalizeFacultyId(facultyId) {
-    if (!facultyId || typeof facultyId !== "string") {
-      return "unknown";
-    }
-    return facultyId.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    return this.resolveFacultyId(facultyId);
   }
 
   /**
@@ -83,23 +161,52 @@ class AssignmentControlService {
   }
 
   /**
-   * Gets stored controls object for a specific faculty member.
-   * Directly reads from window.localStorage first for cross-tab stability.
+   * Gets stored controls map for a specific faculty member keyed by canonical Faculty_ID.
+   * Reads from window.localStorage with automatic legacy key migration.
    */
-  getFacultyControlsMap(facultyId) {
-    const key = this.normalizeFacultyId(facultyId);
-    const fullKey = `${this.storageNamespace}:${key}`;
+  getFacultyControlsMap(facultyIdentifier) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (canonicalId === "UNKNOWN") {
+      return {};
+    }
+
+    const canonicalKey = `${this.storageNamespace}:${canonicalId}`;
+
     try {
       if (typeof window !== "undefined" && window.localStorage) {
-        const raw = window.localStorage.getItem(fullKey);
+        const raw = window.localStorage.getItem(canonicalKey);
         if (raw) {
           return JSON.parse(raw);
         }
+
+        // Backward compatibility migration: check lowercase ID or legacy name-based keys
+        const legacyCandidates = [canonicalId.toLowerCase()];
+        if (canonicalId === "FAC001") {
+          legacyCandidates.push("dr-rahul-bachute", "rahul-bachute");
+        }
+        if (typeof facultyIdentifier === "string" && facultyIdentifier.length > 0) {
+          legacyCandidates.push(facultyIdentifier.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""));
+        }
+
+        for (const cand of legacyCandidates) {
+          if (!cand || cand === "unknown") continue;
+          const legacyKey = `${this.storageNamespace}:${cand}`;
+          const rawLegacy = window.localStorage.getItem(legacyKey);
+          if (rawLegacy) {
+            try {
+              const parsed = JSON.parse(rawLegacy);
+              if (parsed && typeof parsed === "object") {
+                window.localStorage.setItem(canonicalKey, JSON.stringify(parsed));
+                return parsed;
+              }
+            } catch (e) { }
+          }
+        }
       }
-    } catch {}
+    } catch { }
 
     if (this.storage && typeof this.storage.get === "function") {
-      const stored = this.storage.get(key, null);
+      const stored = this.storage.get(canonicalId, null);
       if (stored !== null && typeof stored === "object") {
         return stored;
       }
@@ -111,16 +218,19 @@ class AssignmentControlService {
   /**
    * Gets assignment controls for a specific assignment and faculty member.
    */
-  getControls(assignmentId, facultyId) {
-    const map = this.getFacultyControlsMap(facultyId);
+  getControls(assignmentId, facultyIdentifier) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    const map = this.getFacultyControlsMap(canonicalId);
     const id = assignmentId || "default";
     const existing = map[id] || {};
 
     return {
       assignmentId: id,
-      facultyId: facultyId || "Dr. Rahul Bachute",
+      facultyId: canonicalId,
       enabled: typeof existing.enabled === "boolean" ? existing.enabled : true,
       dueDate: existing.dueDate || null,
+      releaseDate: existing.releaseDate || null,
+      allowLate: Boolean(existing.allowLate),
       note: existing.note || "",
       updatedAt: existing.updatedAt || null
     };
@@ -135,9 +245,11 @@ class AssignmentControlService {
 
   /**
    * Fetches cloud-based controls from Google Sheets backend for a specific faculty member.
+   * Stores results under canonical Faculty_ID key.
    */
-  async fetchCloudControls(facultyId) {
-    if (!facultyId || String(facultyId).trim().toUpperCase() === "UNKNOWN") {
+  async fetchCloudControls(facultyIdentifier) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (!canonicalId || canonicalId === "UNKNOWN") {
       return [];
     }
     const endpoint = this.getEndpoint();
@@ -145,13 +257,13 @@ class AssignmentControlService {
 
     try {
       const sep = endpoint.includes("?") ? "&" : "?";
-      const res = await fetch(`${endpoint}${sep}action=getAssignmentControls&facultyId=${encodeURIComponent(facultyId)}`, {
+      const res = await fetch(`${endpoint}${sep}action=getAssignmentControls&facultyId=${encodeURIComponent(canonicalId)}`, {
         signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined
       });
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && Array.isArray(json.data)) {
-          const map = this.getFacultyControlsMap(facultyId);
+          const map = this.getFacultyControlsMap(canonicalId);
           json.data.forEach((item) => {
             if (item && item.assignmentId) {
               map[item.assignmentId] = {
@@ -163,11 +275,10 @@ class AssignmentControlService {
               };
             }
           });
-          const normKey = this.normalizeFacultyId(facultyId);
-          const fullKey = `${this.storageNamespace}:${normKey}`;
+          const canonicalKey = `${this.storageNamespace}:${canonicalId}`;
           try {
-            window.localStorage.setItem(fullKey, JSON.stringify(map));
-          } catch {}
+            window.localStorage.setItem(canonicalKey, JSON.stringify(map));
+          } catch { }
           return json.data;
         }
       }
@@ -180,19 +291,20 @@ class AssignmentControlService {
   /**
    * Saves assignment control record to Google Sheets backend.
    */
-  async saveCloudControl(assignmentId, facultyId, controls = {}) {
-    if (!facultyId || String(facultyId).trim().toUpperCase() === "UNKNOWN") {
+  async saveCloudControl(assignmentId, facultyIdentifier, controls = {}) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (!canonicalId || canonicalId === "UNKNOWN") {
       return null;
     }
     const endpoint = this.getEndpoint();
     if (!endpoint) return null;
 
-    const authFacultyId = (window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()?.facultyId) || facultyId;
+    const authFacultyId = (window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()?.facultyId) || canonicalId;
 
     try {
       const payload = {
         action: "saveAssignmentControl",
-        facultyId,
+        facultyId: canonicalId,
         assignmentId,
         enabled: typeof controls.enabled === "boolean" ? controls.enabled : true,
         dueDate: controls.dueDate || "",
@@ -204,7 +316,7 @@ class AssignmentControlService {
       const sep = endpoint.includes("?") ? "&" : "?";
       const postUrl = `${endpoint}${sep}action=saveAssignmentControl`;
 
-      const res = await fetch(postUrl, {
+      await fetch(postUrl, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -219,12 +331,16 @@ class AssignmentControlService {
 
   /**
    * Saves assignment controls for a specific assignment and faculty member.
-   * Writes to local cache immediately and asynchronously persists to Google Sheets.
+   * Stores under canonical Faculty_ID key and asynchronously persists to Google Sheets.
    */
-  setControls(assignmentId, facultyId, controls = {}) {
-    const normKey = this.normalizeFacultyId(facultyId);
-    const fullKey = `${this.storageNamespace}:${normKey}`;
-    const map = this.getFacultyControlsMap(facultyId);
+  setControls(assignmentId, facultyIdentifier, controls = {}) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (canonicalId === "UNKNOWN") {
+      return null;
+    }
+
+    const canonicalKey = `${this.storageNamespace}:${canonicalId}`;
+    const map = this.getFacultyControlsMap(canonicalId);
     const id = assignmentId || "default";
 
     map[id] = {
@@ -238,24 +354,20 @@ class AssignmentControlService {
 
     try {
       if (typeof window !== "undefined" && window.localStorage) {
-        window.localStorage.setItem(fullKey, JSON.stringify(map));
-        if (facultyId && typeof facultyId === "string" && facultyId.includes("@")) {
-          const rawKey = `${this.storageNamespace}:${facultyId.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-          window.localStorage.setItem(rawKey, JSON.stringify(map));
-        }
+        window.localStorage.setItem(canonicalKey, JSON.stringify(map));
       }
-    } catch {}
+    } catch { }
 
     if (this.storage && typeof this.storage.set === "function") {
-      this.storage.set(normKey, map);
+      this.storage.set(canonicalId, map);
     }
 
     // Persist to Google Sheets backend
-    this.saveCloudControl(id, facultyId, map[id]);
+    this.saveCloudControl(id, canonicalId, map[id]);
 
     if (typeof window !== "undefined" && window.dispatchEvent) {
       window.dispatchEvent(new CustomEvent("meilp:assignment-controls-updated", {
-        detail: { assignmentId: id, facultyId, controls: map[id] }
+        detail: { assignmentId: id, facultyId: canonicalId, controls: map[id] }
       }));
     }
 
@@ -265,8 +377,21 @@ class AssignmentControlService {
   /**
    * Evaluates access status for an assignment under a specific faculty member.
    */
-  evaluateAccess(assignmentId, facultyId) {
-    const ctrl = this.getControls(assignmentId, facultyId);
+  evaluateAccess(assignmentId, facultyIdentifier) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (canonicalId === "UNKNOWN") {
+      return {
+        enabled: true,
+        dueDate: null,
+        formattedDueDate: null,
+        isPastDue: false,
+        canSubmit: true,
+        note: "",
+        facultyId: "UNKNOWN"
+      };
+    }
+
+    const ctrl = this.getControls(assignmentId, canonicalId);
     const now = new Date();
     let isPastDue = false;
     let formattedDueDate = null;

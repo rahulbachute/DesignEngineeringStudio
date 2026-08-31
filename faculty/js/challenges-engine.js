@@ -3,7 +3,7 @@ class ChallengesEngine {
     this.challenges = [];
     this.filteredChallenges = [];
     this.controlService = window.MEILP?.assignmentControlService || new window.MEILP.AssignmentControlService();
-    this.activeFaculty = "Dr. Rahul Bachute";
+    this.activeFaculty = "FACULTY";
   }
 
   async init() {
@@ -14,21 +14,33 @@ class ChallengesEngine {
 
   initFacultyProfile() {
     const user = window.DESAuth?.getCurrentUser?.();
-    if (user && user.name && !user.isGuest) {
-      this.activeFaculty = user.name;
+    if (user && user.facultyId && !user.isGuest) {
+      this.activeFaculty = user.facultyId;
     }
     const selector = document.getElementById("facultySelector");
-    if (selector) {
-      selector.value = this.activeFaculty;
+    if (selector && user) {
+      selector.value = user.facultyId || user.name || this.activeFaculty;
     }
   }
 
   getActiveFaculty() {
+    const user = window.DESAuth?.getCurrentUser?.();
+    if (user && user.facultyId && user.facultyId !== "GUEST") {
+      return user.facultyId;
+    }
     const selector = document.getElementById("facultySelector");
     if (selector && selector.value) {
       return selector.value;
     }
-    return this.activeFaculty || "Dr. Rahul Bachute";
+    return this.activeFaculty || "FACULTY";
+  }
+
+  getActiveFacultyName() {
+    const user = window.DESAuth?.getCurrentUser?.();
+    if (user && user.name && !user.isGuest) {
+      return user.name;
+    }
+    return this.getActiveFaculty();
   }
 
   async loadChallenges() {
@@ -393,7 +405,7 @@ class ChallengesEngine {
     if (inputEnable) inputEnable.checked = ctrl.enabled;
     if (inputDue) inputDue.value = ctrl.dueDate || "";
     if (inputNote) inputNote.value = ctrl.note || "";
-    if (facultyLabel) facultyLabel.textContent = faculty;
+    if (facultyLabel) facultyLabel.textContent = this.getActiveFacultyName();
 
     const modalTitle = document.getElementById("settingsModalTitle");
     if (modalTitle) modalTitle.innerHTML = `<i class="bi bi-sliders me-2"></i>Class Settings: ${this.escapeHtml(c.id)}`;

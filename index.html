@@ -81,15 +81,7 @@
                     <div class="d-flex align-items-center gap-2">
                       <label for="studentCollegeSelect" class="form-label fw-bold mb-0 text-nowrap text-dark"><i class="bi bi-building text-primary me-1"></i>Select Your College:</label>
                       <select id="studentCollegeSelect" class="form-select border-primary-subtle shadow-sm rounded-pill flex-grow-1">
-                        <option value="COL001">Ajeenkya D.Y. Patil School of Engineering, Lohegaon</option>
-                        <option value="COL002">Jaihind College of Engineering</option>
-                        <option value="COL003">COEP Technological University, Pune</option>
-                        <option value="COL004">Dr. D.Y. Patil Institute of Technology, Pimpri, Pune</option>
-                        <option value="COL005">D.Y. Patil College of Engineering, Akurdi, Pune</option>
-                        <option value="COL006">Pimpri Chinchwad College of Engineering (PCCOE), Nigdi, Pune</option>
-                        <option value="COL007">Vishwakarma Institute of Technology (VIT), Bibwewadi, Pune</option>
-                        <option value="COL008">Other – Pune</option>
-                        <option value="COL009">Other – Maharashtra</option>
+                        <option value="" disabled selected>Select Your College</option>
                       </select>
                     </div>
                   </div>
@@ -97,9 +89,7 @@
                     <div class="d-flex align-items-center gap-2">
                       <label for="studentFacultySelect" class="form-label fw-bold mb-0 text-nowrap text-dark"><i class="bi bi-person-badge text-primary me-1"></i>Select Your Faculty:</label>
                       <select id="studentFacultySelect" class="form-select border-primary-subtle shadow-sm rounded-pill flex-grow-1">
-                        <option value="FAC001">Dr. Rahul Bachute</option>
-                        <option value="FAC002">Dr. Niranjan Shegokar</option>
-                        <option value="FAC003">Prof. Atul Gowardipe</option>
+                        <option value="" disabled selected>Select Your Faculty</option>
                       </select>
                     </div>
                   </div>
@@ -112,7 +102,7 @@
                 <div class="row mt-2 pt-2 border-top">
                   <div class="col-12 text-md-end">
                     <span id="facultyStatusBanner" class="badge bg-primary-subtle text-primary-emphasis px-3 py-2 rounded-pill small">
-                      <i class="bi bi-shield-check me-1"></i>Viewing schedule for Dr. Rahul Bachute
+                      <i class="bi bi-info-circle me-1"></i>Showing standard coursework for students and visitors
                     </span>
                   </div>
                 </div>
@@ -379,7 +369,7 @@
   <script src="js/validator.js?v=20260813b"></script>
   <script src="js/engine.js?v=20260813b"></script>
   <script src="js/app.js?v=20260813b"></script>
-  <script src="faculty/js/data/auth.js?v=20260816"></script>
+  <script src="faculty/js/data/auth.js?v=20260831c"></script>
 
   <!-- Faculty Login Modal -->
   <div class="modal fade" id="facultyLoginModal" tabindex="-1" aria-labelledby="facultyLoginModalLabel" aria-hidden="true">

@@ -201,17 +201,25 @@ async function fetchFacultyList(collegeId) {
   return result;
 }
 
-// ─── Direct localStorage read — zero abstraction ──────────────────────────────
-function normalizeFacultyKey(name) {
-  if (!name || typeof name !== "string") return "unknown";
-  return name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+// ─── Direct localStorage read & unified service access ──────────────────────────
+function normalizeFacultyKey(facultyId) {
+  if (!facultyId || typeof facultyId !== "string") return "UNKNOWN";
+  const svc = window.MEILP?.assignmentControlService || (window.MEILP?.AssignmentControlService ? new window.MEILP.AssignmentControlService() : null);
+  if (svc && typeof svc.resolveFacultyId === "function") {
+    return svc.resolveFacultyId(facultyId);
+  }
+  return facultyId.trim().toUpperCase();
 }
 
-function loadFacultyControls(facultyName) {
-  if (!facultyName || facultyName.includes("Unknown") || facultyName.includes("Unassigned")) {
+function loadFacultyControls(facultyIdentifier) {
+  if (!facultyIdentifier || facultyIdentifier === "UNKNOWN" || String(facultyIdentifier).includes("Unknown") || String(facultyIdentifier).includes("Unassigned")) {
     return {};
   }
-  const key = "meilp-assignment-controls:" + normalizeFacultyKey(facultyName);
+  const svc = window.MEILP?.assignmentControlService || (window.MEILP?.AssignmentControlService ? new window.MEILP.AssignmentControlService() : null);
+  if (svc && typeof svc.getFacultyControlsMap === "function") {
+    return svc.getFacultyControlsMap(facultyIdentifier);
+  }
+  const key = "meilp-assignment-controls:" + normalizeFacultyKey(facultyIdentifier);
   try {
     const raw = window.localStorage.getItem(key);
     return raw ? JSON.parse(raw) : {};
@@ -247,21 +255,13 @@ function getSelectedCollege() {
     const match = currentLoadedColleges.find(c => c.collegeId === sel.value);
     if (match) return match.collegeName;
   }
-  try {
-    const stored = JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollege"));
-    if (stored) return stored;
-  } catch(e) {}
-  return "Ajeenkya D.Y. Patil School of Engineering, Lohegaon";
+  return "";
 }
 
 function getSelectedCollegeId() {
   const sel = document.getElementById("studentCollegeSelect");
   if (sel && sel.value) return sel.value;
-  try {
-    const stored = JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollegeId"));
-    if (stored) return stored;
-  } catch(e) {}
-  return "COL001";
+  return "";
 }
 
 function getSelectedFaculty() {
@@ -271,22 +271,54 @@ function getSelectedFaculty() {
     const match = currentLoadedFaculties.find(f => f.facultyId === sel.value);
     if (match) return match.facultyName;
   }
-  try {
-    const stored = JSON.parse(window.localStorage.getItem("meilp:selectedStudentFaculty"));
-    if (stored) return stored;
-  } catch(e) {}
-  return "Unknown / Unassigned Faculty";
+  return "";
 }
 
 function getSelectedFacultyId() {
   const sel = document.getElementById("studentFacultySelect");
   if (sel && sel.value) return sel.value;
-  try {
-    const stored = JSON.parse(window.localStorage.getItem("meilp:selectedStudentFacultyId"));
-    if (stored) return stored;
-  } catch(e) {}
-  return "UNKNOWN";
+  return "";
 }
+
+// ─── Student Profile Context (Requirement 9 & 10) ──────────────────────────────
+function getStudentProfile() {
+  try {
+    const raw = window.localStorage.getItem("meilp:studentProfile");
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return {
+    fullName: "",
+    rollNo: "",
+    email: "",
+    division: "",
+    academicYear: "",
+    collegeId: getSelectedCollegeId(),
+    collegeName: getSelectedCollege(),
+    facultyId: getSelectedFacultyId(),
+    facultyName: getSelectedFaculty(),
+    registeredAt: ""
+  };
+}
+
+function saveStudentProfile(profile = {}) {
+  const current = getStudentProfile();
+  const updated = {
+    ...current,
+    ...profile,
+    updatedAt: new Date().toISOString()
+  };
+  try {
+    window.localStorage.setItem("meilp:studentProfile", JSON.stringify(updated));
+    if (updated.collegeId) window.localStorage.setItem("meilp:selectedStudentCollegeId", JSON.stringify(updated.collegeId));
+    if (updated.collegeName) window.localStorage.setItem("meilp:selectedStudentCollege", JSON.stringify(updated.collegeName));
+    if (updated.facultyId) window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify(updated.facultyId));
+    if (updated.facultyName) window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(updated.facultyName));
+  } catch (e) {}
+  return updated;
+}
+
+window.MEILP.getStudentProfile = getStudentProfile;
+window.MEILP.saveStudentProfile = saveStudentProfile;
 
 async function populateCollegeAndFacultyDropdowns() {
   const collegeSel = document.getElementById("studentCollegeSelect");
@@ -295,35 +327,51 @@ async function populateCollegeAndFacultyDropdowns() {
 
   currentLoadedColleges = await fetchColleges();
 
+  // Profile-gated restoration: restore ONLY from valid structured meilp:studentProfile
   let savedCollegeId = "";
+  let savedFacultyId = "";
+
   try {
-    savedCollegeId = JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollegeId")) || "";
+    const rawProfile = window.localStorage.getItem("meilp:studentProfile");
+    if (rawProfile) {
+      const profile = JSON.parse(rawProfile);
+      if (profile && typeof profile === "object" && profile.collegeId && profile.facultyId) {
+        savedCollegeId = String(profile.collegeId).trim().toUpperCase();
+        savedFacultyId = String(profile.facultyId).trim().toUpperCase();
+      }
+    }
   } catch(e) {}
 
-  if (!savedCollegeId) {
-    try {
-      const savedName = JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollege")) || "";
-      const match = currentLoadedColleges.find(c => c.collegeName === savedName || c.collegeId === savedName);
-      if (match) savedCollegeId = match.collegeId;
-    } catch(e) {}
-  }
+  const isCollegeValid = savedCollegeId && currentLoadedColleges.some(c => c.collegeId === savedCollegeId);
+  const activeCollegeId = isCollegeValid ? savedCollegeId : "";
 
-  if (!savedCollegeId || !currentLoadedColleges.some(c => c.collegeId === savedCollegeId)) {
-    savedCollegeId = currentLoadedColleges[0]?.collegeId || "COL001";
-  }
-
-  collegeSel.innerHTML = currentLoadedColleges.map(c =>
-    `<option value="${escapeHtml(c.collegeId)}"${c.collegeId === savedCollegeId ? " selected" : ""}>${escapeHtml(c.collegeName)}</option>`
+  const defaultCollegeOption = `<option value="" disabled ${!activeCollegeId ? "selected" : ""}>Select Your College</option>`;
+  const collegeOptions = currentLoadedColleges.map(c =>
+    `<option value="${escapeHtml(c.collegeId)}"${c.collegeId === activeCollegeId ? " selected" : ""}>${escapeHtml(c.collegeName)}</option>`
   ).join("");
+  collegeSel.innerHTML = defaultCollegeOption + collegeOptions;
 
-  await updateFacultyDropdown(savedCollegeId);
+  if (activeCollegeId) {
+    collegeSel.value = activeCollegeId;
+    await updateFacultyDropdown(activeCollegeId, savedFacultyId);
+  } else {
+    collegeSel.value = "";
+    facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+    facultySel.value = "";
+    facultySel.disabled = false;
+  }
 }
 
-async function updateFacultyDropdown(collegeId) {
+async function updateFacultyDropdown(collegeId, explicitFacultyId) {
   const facultySel = document.getElementById("studentFacultySelect");
   if (!facultySel) return;
 
-  // Clear previous selection immediately and show loading state
+  if (!collegeId) {
+    facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+    facultySel.disabled = false;
+    return;
+  }
+
   facultySel.innerHTML = `<option value="" disabled selected>Loading faculties...</option>`;
   facultySel.disabled = true;
 
@@ -339,33 +387,56 @@ async function updateFacultyDropdown(collegeId) {
 
   facultySel.disabled = false;
 
-  if (currentLoadedFaculties && currentLoadedFaculties.length > 0) {
-    let savedFacultyId = "";
+  // Determine target faculty ID from explicit parameter or valid profile check
+  let targetFacultyId = "";
+  if (typeof explicitFacultyId === "string" && explicitFacultyId.trim()) {
+    targetFacultyId = explicitFacultyId.trim().toUpperCase();
+  } else {
     try {
-      savedFacultyId = JSON.parse(window.localStorage.getItem("meilp:selectedStudentFacultyId")) || "";
+      const rawProfile = window.localStorage.getItem("meilp:studentProfile");
+      if (rawProfile) {
+        const profile = JSON.parse(rawProfile);
+        if (profile && typeof profile === "object" && String(profile.collegeId).toUpperCase() === collegeId.toUpperCase() && profile.facultyId) {
+          targetFacultyId = String(profile.facultyId).trim().toUpperCase();
+        }
+      }
     } catch(e) {}
+  }
 
-    // Verify saved faculty belongs to this college
-    if (!savedFacultyId || !currentLoadedFaculties.some(f => f.facultyId === savedFacultyId)) {
-      savedFacultyId = currentLoadedFaculties[0].facultyId;
-    }
+  if (currentLoadedFaculties && currentLoadedFaculties.length > 0) {
+    const isFacultyValid = targetFacultyId && currentLoadedFaculties.some(f => f.facultyId === targetFacultyId);
+    const isUnknown = targetFacultyId === "UNKNOWN";
 
-    facultySel.innerHTML = currentLoadedFaculties.map(f =>
-      `<option value="${escapeHtml(f.facultyId)}"${f.facultyId === savedFacultyId ? " selected" : ""}>${escapeHtml(f.facultyName)}</option>`
+    const defaultOption = `<option value="" disabled ${(!isFacultyValid && !isUnknown) ? "selected" : ""}>Select Your Faculty</option>`;
+    const facultyOptions = currentLoadedFaculties.map(f =>
+      `<option value="${escapeHtml(f.facultyId)}"${(isFacultyValid && f.facultyId === targetFacultyId) ? " selected" : ""}>${escapeHtml(f.facultyName)}</option>`
     ).join("");
-    facultySel.value = savedFacultyId;
+    const unknownOption = `<option value="UNKNOWN"${isUnknown ? " selected" : ""}>Unknown / Unassigned Faculty</option>`;
 
-    const selectedFaculty = currentLoadedFaculties.find(f => f.facultyId === savedFacultyId) || currentLoadedFaculties[0];
+    facultySel.innerHTML = defaultOption + facultyOptions + unknownOption;
 
-    try {
-      window.localStorage.setItem("meilp:selectedStudentCollegeId", JSON.stringify(activeCollege.collegeId));
-      window.localStorage.setItem("meilp:selectedStudentCollege", JSON.stringify(activeCollege.collegeName));
-      window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify(selectedFaculty.facultyId));
-      window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(selectedFaculty.facultyName));
-    } catch(e) {
-      console.error("[MEILP] Storage set error:", e);
+    if (isFacultyValid) {
+      facultySel.value = targetFacultyId;
+    } else if (isUnknown) {
+      facultySel.value = "UNKNOWN";
+    } else {
+      facultySel.value = "";
     }
 
+    if (facultySel.value) {
+      const selectedFaculty = currentLoadedFaculties.find(f => f.facultyId === facultySel.value);
+      try {
+        window.localStorage.setItem("meilp:selectedStudentCollegeId", JSON.stringify(activeCollege.collegeId));
+        window.localStorage.setItem("meilp:selectedStudentCollege", JSON.stringify(activeCollege.collegeName));
+        if (selectedFaculty) {
+          window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify(selectedFaculty.facultyId));
+          window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(selectedFaculty.facultyName));
+        } else if (isUnknown) {
+          window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify("UNKNOWN"));
+          window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify("Unknown / Unassigned Faculty"));
+        }
+      } catch(e) {}
+    }
   } else {
     // Zero active faculty registered for this college -> Show Unknown / Unassigned Faculty
     facultySel.innerHTML = `<option value="UNKNOWN" selected>Unknown / Unassigned Faculty</option>`;
@@ -395,7 +466,7 @@ function renderAssignmentCards(cards) {
   const college = getSelectedCollege();
   const faculty = getSelectedFaculty();
   const facultyId = getSelectedFacultyId();
-  const controls = loadFacultyControls(faculty);
+  const controls = (facultyId && facultyId !== "UNKNOWN") ? loadFacultyControls(facultyId) : {};
 
   let enabledCount = 0, disabledCount = 0;
   assignments.forEach(a => {
@@ -405,10 +476,12 @@ function renderAssignmentCards(cards) {
 
   const banner = document.getElementById("facultyStatusBanner");
   if (banner) {
-    if (facultyId === "UNKNOWN" || faculty.includes("Unknown") || faculty.includes("Unassigned")) {
-      banner.innerHTML = `<i class="bi bi-info-circle me-1"></i>Showing standard coursework for <strong>Unknown / Unassigned Faculty</strong> • <span class="opacity-75">${escapeHtml(college)}</span>`;
+    if (!facultyId) {
+      banner.innerHTML = `<i class="bi bi-info-circle me-1"></i>Showing standard coursework for students and visitors`;
+    } else if (facultyId === "UNKNOWN" || faculty.includes("Unknown") || faculty.includes("Unassigned")) {
+      banner.innerHTML = `<i class="bi bi-info-circle me-1"></i>Showing standard coursework for <strong>Unknown / Unassigned Faculty</strong>${college ? ` • <span class="opacity-75">${escapeHtml(college)}</span>` : ""}`;
     } else {
-      banner.innerHTML = `<i class="bi bi-person-badge-fill me-1"></i>Schedule for <strong>${escapeHtml(faculty)}</strong> &nbsp;(${enabledCount} Active, ${disabledCount} Disabled) • <span class="opacity-75">${escapeHtml(college)}</span>`;
+      banner.innerHTML = `<i class="bi bi-person-badge-fill me-1"></i>Schedule for <strong>${escapeHtml(faculty)}</strong> &nbsp;(${enabledCount} Active, ${disabledCount} Disabled)${college ? ` • <span class="opacity-75">${escapeHtml(college)}</span>` : ""}`;
     }
   }
 
@@ -431,7 +504,7 @@ function renderAssignmentCards(cards) {
       return `<div class="col-12 col-md-6 col-lg-4">
         <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4"
           style="background-color:#f8f9fa;border-color:#dee2e6;opacity:0.75;filter:grayscale(30%);cursor:not-allowed;"
-          onclick="alert('Disabled by ${escapeHtml(faculty)} for your class.')">
+          onclick="alert('Disabled by ${escapeHtml(faculty || "Faculty")} for your class.')">
           <div>
             <div class="d-flex justify-content-between align-items-start mb-3">
               <span class="card-icon fs-3 text-secondary bg-secondary-subtle p-3 rounded-4"><i class="bi ${escapeHtml(icon)}"></i></span>
@@ -537,11 +610,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const btn = document.getElementById("btnShowAssignments");
 
   const syncAndRenderControls = async function(facId) {
-    if (facId && facId !== "UNKNOWN") {
+    const canonicalId = (facId && facId !== "UNKNOWN") ? normalizeFacultyKey(facId) : null;
+    if (canonicalId && canonicalId !== "UNKNOWN") {
       try {
         const svc = window.MEILP?.assignmentControlService || (window.MEILP?.AssignmentControlService ? new window.MEILP.AssignmentControlService() : null);
         if (svc && typeof svc.fetchCloudControls === "function") {
-          await svc.fetchCloudControls(facId);
+          await svc.fetchCloudControls(canonicalId);
         }
       } catch (err) {
         console.warn("[MEILP] Cloud control sync failed:", err);
@@ -560,14 +634,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (facultySel) {
     facultySel.addEventListener("change", function () {
+      const activeCollege = currentLoadedColleges.find(c => c.collegeId === (collegeSel ? collegeSel.value : ""));
       const activeFaculty = currentLoadedFaculties.find(f => f.facultyId === facultySel.value);
       try {
         if (facultySel.value === "UNKNOWN") {
           window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify("UNKNOWN"));
           window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify("Unknown / Unassigned Faculty"));
+          saveStudentProfile({
+            collegeId: activeCollege?.collegeId || (collegeSel ? collegeSel.value : ""),
+            collegeName: activeCollege?.collegeName || "",
+            facultyId: "UNKNOWN",
+            facultyName: "Unknown / Unassigned Faculty"
+          });
         } else if (activeFaculty) {
           window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify(activeFaculty.facultyId));
           window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(activeFaculty.facultyName));
+          saveStudentProfile({
+            collegeId: activeCollege?.collegeId || (collegeSel ? collegeSel.value : ""),
+            collegeName: activeCollege?.collegeName || "",
+            facultyId: activeFaculty.facultyId,
+            facultyName: activeFaculty.facultyName
+          });
+        } else if (!facultySel.value) {
+          window.localStorage.removeItem("meilp:selectedStudentFacultyId");
+          window.localStorage.removeItem("meilp:selectedStudentFaculty");
         }
       } catch(e) {}
       syncAndRenderControls(facultySel.value);

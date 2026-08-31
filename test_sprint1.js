@@ -112,6 +112,7 @@ const mockEnv = {
     const rows = mockSpreadsheet[sheetName];
     if (!rows) return null;
     return {
+      getLastRow: () => rows.length,
       getDataRange: () => ({
         getValues: () => rows
       }),
