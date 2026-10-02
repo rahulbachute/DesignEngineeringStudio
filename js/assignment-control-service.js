@@ -394,8 +394,17 @@ class AssignmentControlService {
     const ctrl = this.getControls(assignmentId, canonicalId);
     const now = new Date();
     let isPastDue = false;
+    let isUnreleased = false;
     let formattedDueDate = null;
     let parsedDue = null;
+    let parsedRelease = null;
+
+    if (ctrl.releaseDate) {
+      parsedRelease = this.parseDueDate(ctrl.releaseDate);
+      if (parsedRelease) {
+        isUnreleased = now < parsedRelease;
+      }
+    }
 
     if (ctrl.dueDate) {
       parsedDue = this.parseDueDate(ctrl.dueDate);
@@ -412,12 +421,16 @@ class AssignmentControlService {
       }
     }
 
-    const canSubmit = ctrl.enabled && (!parsedDue || !isPastDue);
+    const allowLate = Boolean(ctrl.allowLate);
+    const canSubmit = ctrl.enabled && !isUnreleased && (!parsedDue || !isPastDue || allowLate);
 
     return {
       enabled: ctrl.enabled,
       dueDate: ctrl.dueDate,
       formattedDueDate,
+      releaseDate: ctrl.releaseDate || null,
+      isUnreleased,
+      allowLate,
       isPastDue,
       canSubmit,
       note: ctrl.note,

@@ -134,12 +134,27 @@ function saveEvaluation(payload) {
 
   try {
     // -------------------------------------------------------------------
+    // Step 0: Role authorization check.
+    // Guests and students are strictly prohibited from evaluating submissions.
+    // Valid authenticated faculty ID is required.
+    // -------------------------------------------------------------------
+    var evalFacultyId = (payload && (payload.facultyId || payload.faculty_id || payload.authFacultyId || payload.evalFacultyId)) || "";
+    var evalRole = (payload && (payload.role || payload.authRole || payload.evaluatorRole || payload.evalRole)) || "";
+    if (String(evalRole).trim().toUpperCase() === "GUEST" || String(evalRole).trim().toUpperCase() === "STUDENT" || String(evalFacultyId).trim().toUpperCase() === "GUEST") {
+      return response(null, false, "Unauthorized: Guests and students are not permitted to evaluate submissions.", 403);
+    }
+    if (!evalFacultyId || String(evalFacultyId).trim().toUpperCase() === "UNKNOWN") {
+      return response(null, false, "Unauthorized: Valid authenticated faculty ID required for evaluation.", 403);
+    }
+    evalFacultyId = String(evalFacultyId).trim();
+
+    // -------------------------------------------------------------------
     // Step 1: Defensive extraction and required-field validation.
     // -------------------------------------------------------------------
     var submissionId = payload && payload.submissionId;
-    var facultyName = (payload && payload.facultyName) || (payload && payload.evaluatorName);
+    var facultyName = (payload && payload.facultyName) || (payload && payload.evaluatorName) || evalFacultyId;
     var facultyEmail = (payload && payload.facultyEmail) || (payload && payload.evaluatedBy) || '';
-    var evaluation = (payload && payload.evaluation) || (payload && payload.hasEvaluation ? payload : '');
+    var evaluation = (payload && payload.evaluation) || (payload && (payload.marks !== undefined ? payload.marks : '')) || (payload && payload.hasEvaluation ? payload : '');
     var facultyMarks = (payload && payload.facultyMarks) || (payload && payload.activities) || [];
     var feedback = (payload && (payload.feedback || payload.remarks)) || '';
     var rubricScores = normalizeRubricScores_((payload && payload.rubricScores) || {}, facultyMarks);
@@ -223,31 +238,72 @@ function saveEvaluation(payload) {
     // Ensure the evaluating faculty has authority over this submission.
     // -------------------------------------------------------------------
     var evalFacultyId = (payload && (payload.facultyId || payload.faculty_id || payload.authFacultyId)) || "";
-    if (evalFacultyId && evalFacultyId.toUpperCase() !== "UNKNOWN") {
-      var selSheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION);
-      if (selSheet) {
-        var selData = selSheet.getDataRange().getValues();
-        if (selData.length > 1) {
-          var selMap = getHeaderMap(selData[0]);
-          var matchedSelection = false;
-          var foundAttempt = false;
-          for (var si = 1; si < selData.length; si++) {
-            var sRow = selData[si];
-            var sAttId = String(sRow[selMap["Attempt_ID"]] || "").trim();
-            var sStuId = String(sRow[selMap["Student_ID"]] || "").trim();
-            var sAsgId = String(sRow[selMap["Assignment_ID"]] || "").trim();
-            var sFacId = String(sRow[selMap["Faculty_ID"]] || "").trim();
+    var evalRole = (payload && (payload.role || payload.authRole || payload.evaluatorRole)) || "";
+    if (String(evalRole).trim().toUpperCase() === "GUEST" || String(evalRole).trim().toUpperCase() === "STUDENT" || String(evalFacultyId).trim().toUpperCase() === "GUEST") {
+      return response(null, false, "Unauthorized: Guests and students are not permitted to evaluate submissions.", 403);
+    }
+    if (!evalFacultyId || String(evalFacultyId).trim().toUpperCase() === "UNKNOWN") {
+      return response(null, false, "Unauthorized: Valid authenticated faculty ID required for evaluation.", 403);
+    }
+    evalFacultyId = String(evalFacultyId).trim();
 
-            if (sAttId === String(submissionId).trim() || (sStuId === String(rollNumber).trim() && sAsgId === String(challengeId).trim())) {
-              foundAttempt = true;
-              if (sFacId.toUpperCase() === evalFacultyId.toUpperCase()) {
-                matchedSelection = true;
-              }
-              break;
+    var selSheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION);
+    if (selSheet) {
+      var selData = selSheet.getDataRange().getValues();
+      if (selData.length > 1) {
+        var selMap = getHeaderMap(selData[0]);
+        var matchedSelection = false;
+        var foundAttempt = false;
+        var assignedFacultyId = "";
+
+        for (var si = 1; si < selData.length; si++) {
+          var sRow = selData[si];
+          var sAttId = String(sRow[selMap["Attempt_ID"]] || "").trim();
+          var sStuId = String(sRow[selMap["Student_ID"]] || "").trim();
+          var sAsgId = String(sRow[selMap["Assignment_ID"]] || "").trim();
+          var sFacId = String(sRow[selMap["Faculty_ID"]] || "").trim();
+
+          if (sAttId === String(submissionId).trim() || (sStuId === String(rollNumber).trim() && sAsgId === String(challengeId).trim())) {
+            foundAttempt = true;
+            assignedFacultyId = sFacId;
+            if (sFacId.toUpperCase() === evalFacultyId.toUpperCase()) {
+              matchedSelection = true;
             }
+            break;
           }
-          if (foundAttempt && !matchedSelection) {
-            return response(null, false, "Unauthorized: You are not authorized to evaluate submissions assigned to another faculty member.", 403);
+        }
+
+        if (foundAttempt) {
+          // Rule: UNKNOWN attempts cannot be evaluated by arbitrary faculty before controlled allocation
+          if (assignedFacultyId.toUpperCase() === "UNKNOWN") {
+            return response(null, false, "This attempt is unassigned (UNKNOWN faculty) and cannot be evaluated until a faculty allocation is made.", 403);
+          }
+
+          if (!matchedSelection) {
+            // Check if evaluator is an ADMIN
+            var isEvaluatorAdmin = false;
+            var facRegSheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+            if (facRegSheet) {
+              var fRegData = facRegSheet.getDataRange().getValues();
+              if (fRegData.length > 1) {
+                var fRegMap = getHeaderMap(fRegData[0]);
+                for (var fri = 1; fri < fRegData.length; fri++) {
+                  var rfId = String(fRegData[fri][fRegMap["Faculty_ID"]] || "").trim();
+                  if (rfId.toUpperCase() === evalFacultyId.toUpperCase()) {
+                    var rfRole = String(fRegData[fri][fRegMap["Role"]] || "").trim().toUpperCase();
+                    var rfStatus = String(fRegData[fri][fRegMap["Status"]] || "").trim().toUpperCase();
+                    if (rfRole === "ADMIN" && (rfStatus === "ACTIVE" || !rfStatus)) {
+                      isEvaluatorAdmin = true;
+                    }
+                    break;
+                  }
+                }
+              }
+            }
+
+            if (!isEvaluatorAdmin) {
+              return response(null, false, "Unauthorized: You are not authorized to evaluate submissions assigned to another faculty member.", 403);
+            }
           }
         }
       }

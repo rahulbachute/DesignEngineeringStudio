@@ -94,6 +94,12 @@ class SubmissionEngine {
     if (!submission.submittedAt) {
       errors.push("Submission timestamp is missing.");
     }
+    const activeRole = (typeof window !== "undefined" && window.MEILP && typeof window.MEILP.getActiveRole === "function")
+      ? window.MEILP.getActiveRole()
+      : (typeof localStorage !== "undefined" ? localStorage.getItem("meilp:activeRole") : null);
+    if (activeRole === "GUEST" || student.isGuest || student.role === "GUEST" || student.studentId === "GUEST") {
+      errors.push("Guest mode is strictly read-only. Submissions are disabled.");
+    }
     this.validateStudentInformation(student, submission.attemptMode, errors);
     if (!activities.length) {
       errors.push("At least one activity response is required.");
@@ -110,6 +116,16 @@ class SubmissionEngine {
    * Submits the current context, or queues it when transport is unavailable.
    */
   async submit(context = {}) {
+    const activeRole = (typeof window !== "undefined" && window.MEILP && typeof window.MEILP.getActiveRole === "function")
+      ? window.MEILP.getActiveRole()
+      : (typeof localStorage !== "undefined" ? localStorage.getItem("meilp:activeRole") : null);
+
+    if (activeRole === "GUEST" || (context.state && context.state.student && context.state.student.isGuest) || (context.student && context.student.isGuest) || context.isGuest) {
+      const status = this.status(false, false, "GUEST_READ_ONLY", "Guest mode is strictly read-only. Submissions are disabled.", ["Guest mode cannot submit assignments."]);
+      this.setStatus(status);
+      return status;
+    }
+
     const payload = this.buildPayload(context);
     const validation = this.validateSubmissionPayload(payload);
     if (!validation.valid) {
@@ -427,6 +443,31 @@ class SubmissionEngine {
       const classYear = String(safeStudent.classYear || safeStudent.class || "");
       const match = classYear.match(/(?:div|division|\b)[-\s]*([A-D])\b/i) || classYear.match(/-(A|B|C|D)\b/i);
       safeStudent.division = (match && match[1]) ? match[1].toUpperCase() : "A";
+    }
+
+    const collegeKey = safeStudent.collegeId || safeStudent.selectedCollegeId || safeStudent.collegeName;
+    const isRegistered = (typeof window !== "undefined" && window.MEILP && typeof window.MEILP.isRegisteredCollege === "function")
+      ? window.MEILP.isRegisteredCollege(collegeKey)
+      : false;
+    if (!isRegistered) {
+      errors.push("Your College is not registered with MEILP. Guest users cannot submit assignments.");
+    } else {
+      const activeFaculties = (typeof window !== "undefined" && window.MEILP && typeof window.MEILP.getActiveFacultiesForCollege === "function")
+        ? window.MEILP.getActiveFacultiesForCollege(collegeKey)
+        : [];
+      const facId = safeStudent.facultyId || safeStudent.selectedFacultyId;
+      if (activeFaculties.length > 0) {
+        if (!facId || String(facId).trim().toUpperCase() === "UNKNOWN") {
+          errors.push("Faculty selection is mandatory for registered colleges. UNKNOWN is not permitted.");
+        } else if (!activeFaculties.some(f => f.facultyId.toUpperCase() === String(facId).trim().toUpperCase())) {
+          errors.push("Selected faculty does not belong to this college or is not active.");
+        }
+      } else {
+        // Zero active faculties: UNKNOWN is allowed
+        if (facId && String(facId).trim().toUpperCase() !== "UNKNOWN") {
+          errors.push("This college has zero active registered faculties. Faculty must be unassigned.");
+        }
+      }
     }
   }
 

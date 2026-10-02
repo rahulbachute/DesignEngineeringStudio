@@ -308,20 +308,48 @@
      */
     hasPermission(requiredRole) {
       const currentUser = this.getCurrentUser();
-      const userRole = String(currentUser.role || 'FACULTY').toUpperCase();
+      const userRole = String(currentUser.role || 'GUEST').toUpperCase();
+      const req = String(requiredRole || '').toUpperCase();
+
       if (userRole === 'ADMIN') {
         return true;
       }
-      if (requiredRole === 'evaluation' || requiredRole === 'evaluate') {
-        return !currentUser.isGuest;
+      if (req === 'EVALUATION' || req === 'EVALUATE') {
+        return currentUser.isAuthenticated && !currentUser.isGuest && (userRole === 'FACULTY' || userRole === 'ADMIN');
       }
+      if (req === 'FACULTY_DASHBOARD' || req === 'FACULTY_CONTROLS') {
+        return currentUser.isAuthenticated && !currentUser.isGuest && (userRole === 'FACULTY' || userRole === 'ADMIN');
+      }
+
       const rolePermissions = {
-        FACULTY: ['FACULTY', 'STUDENT', 'EVALUATION'],
-        ADMIN: ['FACULTY', 'STUDENT', 'ADMIN', 'EVALUATION', 'ALL'],
-        GUEST: ['GUEST', 'STUDENT'],
+        FACULTY: ['FACULTY', 'EVALUATION', 'FACULTY_DASHBOARD', 'FACULTY_CONTROLS'],
+        ADMIN: ['FACULTY', 'STUDENT', 'ADMIN', 'EVALUATION', 'ALL', 'FACULTY_DASHBOARD', 'FACULTY_CONTROLS'],
+        GUEST: ['GUEST'],
         STUDENT: ['STUDENT']
       };
-      return rolePermissions[userRole]?.includes(String(requiredRole).toUpperCase()) || false;
+      return rolePermissions[userRole]?.includes(req) || false;
+    },
+
+    /**
+     * Enforce faculty authentication on protected faculty pages.
+     * Redirects unauthorized users (students, guests, unauthenticated visitors) to ../index.html.
+     * @param {string} pageType - e.g. 'dashboard', 'evaluation', 'challenges'
+     * @returns {boolean} Whether access was granted.
+     */
+    enforceFacultyAccess(pageType) {
+      const currentUser = this.getCurrentUser();
+      const userRole = String(currentUser.role || 'GUEST').toUpperCase();
+      const isAuth = currentUser.isAuthenticated && !currentUser.isGuest && (userRole === 'FACULTY' || userRole === 'ADMIN');
+
+      if (!isAuth) {
+        if (typeof window !== 'undefined' && window.location) {
+          console.warn("[Faculty Security] Unauthorized direct access to " + (pageType || "faculty portal") + ". Redirecting to gateway.");
+          const target = window.location.pathname && window.location.pathname.includes('/faculty/') ? '../index.html' : 'index.html';
+          window.location.href = target;
+        }
+        return false;
+      }
+      return true;
     }
   };
 

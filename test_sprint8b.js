@@ -201,8 +201,8 @@ async function main() {
     assert.strictEqual(elements.studentFacultySelect.value, "FAC003");
   });
 
-  // TEST 5: Valid profile collegeId = COL001, facultyId = UNKNOWN -> COL001 + UNKNOWN restored
-  await runAsyncTest("Valid profile with UNKNOWN faculty -> restored as UNKNOWN", async () => {
+  // TEST 5: Profile with UNKNOWN on registered college COL001 -> faculty cleared per Phase 2A
+  await runAsyncTest("Profile with UNKNOWN on registered college COL001 -> faculty cleared per Phase 2A", async () => {
     localStorage.clear();
     localStorage.setItem("meilp:studentProfile", JSON.stringify({
       collegeId: "COL001",
@@ -211,7 +211,7 @@ async function main() {
     }));
     await populateCollegeAndFacultyDropdowns();
     assert.strictEqual(elements.studentCollegeSelect.value, "COL001");
-    assert.strictEqual(elements.studentFacultySelect.value, "UNKNOWN");
+    assert.strictEqual(elements.studentFacultySelect.value, "");
   });
 
   // TEST 6: Invalid combination (COL002 + FAC001) -> Faculty remains unselected (no silent fallback)
@@ -235,6 +235,7 @@ async function main() {
 
   // TEST 8: All EA-01 through EA-22 remain visible without faculty selection
   runTest("All EA-01 through EA-22 remain visible in public catalogue without faculty selection", () => {
+    elements.studentCollegeSelect.value = "";
     elements.studentFacultySelect.value = "";
     renderAssignmentCards(global.ALL_ASSIGNMENTS);
     assert.strictEqual(global.ALL_ASSIGNMENTS.length, 22);

@@ -20,6 +20,14 @@ class EvaluationEngine {
   async init() {
     this.bindEvents();
     this.renderLoadingState();
+    const canEvaluate = window.DESAuth?.hasPermission ? window.DESAuth.hasPermission('evaluation') : false;
+    if (!canEvaluate) {
+      console.warn("[Evaluation Guard] Unauthorized access to evaluation engine. Redirecting.");
+      if (typeof window !== 'undefined' && window.location) {
+        window.location.href = "../index.html?unauthorized=evaluation";
+      }
+      return;
+    }
     const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
     if (isGuest) {
       if (this.elements.saveButton) this.elements.saveButton.disabled = true;
@@ -415,6 +423,8 @@ class EvaluationEngine {
 
     return {
       submissionId: this.currentEvaluation.submissionId,
+      facultyId: currentUser.facultyId || '',
+      authFacultyId: currentUser.facultyId || '',
       facultyName: currentUser.name || this.facultyName || 'Faculty',
       facultyEmail: currentUser.email || '',
       facultyMarks,

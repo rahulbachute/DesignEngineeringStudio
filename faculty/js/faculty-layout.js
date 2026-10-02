@@ -14,6 +14,15 @@ window.handleFacultyLogout = handleFacultyLogout;
 
 document.addEventListener('DOMContentLoaded', () => {
   const page = document.body.dataset.page || 'index';
+
+  // Direct Access Security Check for all faculty pages
+  if (typeof window !== 'undefined' && window.location && !window.location.pathname.includes('register.html')) {
+    if (window.DESAuth && typeof window.DESAuth.enforceFacultyAccess === 'function') {
+      const allowed = window.DESAuth.enforceFacultyAccess(page);
+      if (!allowed) return;
+    }
+  }
+
   const links = document.querySelectorAll('[data-nav-link]');
 
   links.forEach((link) => {

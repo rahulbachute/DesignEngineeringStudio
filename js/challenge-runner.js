@@ -104,32 +104,85 @@ class ChallengeRunner {
     let facultyId = state.student && state.student.facultyId;
     let facultyName = state.student && state.student.facultyName;
 
-    if (!attemptId) {
-      // New Attempt: Bind current selected college & faculty from localStorage
-      attemptId = "ATT-" + (config.id || "ASG") + "-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase();
-      try {
-        collegeId = JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollegeId")) || "COL001";
-        collegeName = JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollege")) || "Ajeenkya D.Y. Patil School of Engineering, Lohegaon";
-        facultyId = JSON.parse(window.localStorage.getItem("meilp:selectedStudentFacultyId")) || "UNKNOWN";
-        facultyName = JSON.parse(window.localStorage.getItem("meilp:selectedStudentFaculty")) || "Unknown / Unassigned Faculty";
-      } catch (e) {
-        collegeId = collegeId || "COL001";
-        collegeName = collegeName || "Ajeenkya D.Y. Patil School of Engineering, Lohegaon";
-        facultyId = facultyId || "UNKNOWN";
-        facultyName = facultyName || "Unknown / Unassigned Faculty";
+    try {
+      const storedColId = window.localStorage ? JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollegeId")) : null;
+      const storedColName = window.localStorage ? JSON.parse(window.localStorage.getItem("meilp:selectedStudentCollege")) : null;
+      const storedFacId = window.localStorage ? JSON.parse(window.localStorage.getItem("meilp:selectedStudentFacultyId")) : null;
+      const storedFacName = window.localStorage ? JSON.parse(window.localStorage.getItem("meilp:selectedStudentFaculty")) : null;
+
+      collegeId = storedColId || collegeId || "";
+      collegeName = storedColName || collegeName || "";
+      facultyId = storedFacId || facultyId || "";
+      facultyName = storedFacName || facultyName || "";
+    } catch (e) {
+      collegeId = collegeId || "";
+      collegeName = collegeName || "";
+      facultyId = facultyId || "";
+      facultyName = facultyName || "";
+    }
+
+    const activeRole = window.MEILP?.getActiveRole ? window.MEILP.getActiveRole() : (window.localStorage ? window.localStorage.getItem("meilp:activeRole") : "");
+
+    // Check if college is registered
+    const isRegistered = (typeof window.MEILP?.isRegisteredCollege === "function")
+      ? window.MEILP.isRegisteredCollege(collegeId || collegeName)
+      : false;
+
+    const isGuestRole = activeRole === "GUEST" || (state.student && state.student.isGuest === true) || !isRegistered;
+
+    if (isGuestRole) {
+      // CASE 1: No college / unregistered college -> Guest only.
+      // Public browsing allowed, but NO Attempt_ID, NO AFS, NO submission.
+      attemptId = null;
+      state = this.services.stateManager.update(s => ({
+        ...s,
+        attemptId: null,
+        student: { ...s.student, isGuest: true, role: "GUEST", attemptId: null, collegeId, collegeName, facultyId: "", facultyName: "" }
+      }));
+    } else {
+      // REGISTERED COLLEGE
+      const activeFaculties = (typeof window.MEILP?.getActiveFacultiesForCollege === "function")
+        ? window.MEILP.getActiveFacultiesForCollege(collegeId || collegeName)
+        : [];
+
+      if (activeFaculties.length > 0) {
+        const hasValidFaculty = facultyId && facultyId !== "UNKNOWN" && activeFaculties.some(f => f.facultyId.toUpperCase() === String(facultyId).toUpperCase());
+
+        if (!hasValidFaculty) {
+          // CASE 2: Registered college + active faculties + faculty not selected
+          // BLOCK assignment attempt. Require explicit faculty selection.
+          attemptId = null;
+          state = this.services.stateManager.update(s => ({
+            ...s,
+            attemptId: null,
+            student: { ...s.student, attemptId: null, facultyId: "", facultyName: "" }
+          }));
+
+          this.renderFacultyRequiredScreen(collegeName || collegeId, false);
+          return;
+        }
+        // CASE 3: Registered college + active faculties + valid faculty selected -> ALLOW attempt
+      } else {
+        // CASE 4: Registered college + zero active faculties -> Faculty_ID = "UNKNOWN"
+        facultyId = "UNKNOWN";
+        facultyName = "Unassigned Faculty / No Faculty";
       }
 
-      state = this.services.stateManager.update((s) => ({
-        attemptId,
-        student: {
-          ...s.student,
+      if (!attemptId) {
+        // New Attempt: Bind current selected college & faculty
+        attemptId = "ATT-" + (config.id || "ASG") + "-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase();
+        state = this.services.stateManager.update((s) => ({
           attemptId,
-          collegeId,
-          collegeName,
-          facultyId,
-          facultyName
-        }
-      }));
+          student: {
+            ...s.student,
+            attemptId,
+            collegeId,
+            collegeName,
+            facultyId,
+            facultyName
+          }
+        }));
+      }
     }
 
     const effectiveFaculty = (state.student && state.student.facultyName) ? state.student.facultyName : "Unknown / Unassigned Faculty";
@@ -151,6 +204,33 @@ class ChallengeRunner {
       this.renderDashboard();
     } else {
       this.renderAttemptMode();
+    }
+  }
+
+  renderFacultyRequiredScreen(collegeName, hasZeroFaculty) {
+    this.setActivity("Faculty Selection Required", "Access Restricted");
+    this.setBreadcrumb("Selection Required");
+    const host = this.host();
+    if (host) {
+      const msg = hasZeroFaculty
+        ? "Faculty selection is required for this registered college before you can start an assignment."
+        : `Please select your Faculty for <strong>${this.escape(collegeName || "your registered college")}</strong> before starting this assignment.`;
+
+      host.innerHTML = `
+        <div class="card border-warning shadow-sm rounded-4 text-center p-5 bg-white my-4">
+          <div class="mb-3 text-warning fs-1">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+          </div>
+          <h3 class="h4 text-dark fw-bold mb-2">Faculty Selection Required</h3>
+          <p class="text-secondary mb-4 mx-auto" style="max-width: 540px;">
+            ${msg}
+          </p>
+          <div class="d-flex justify-content-center gap-3">
+            <a href="index.html#assignments" class="btn btn-primary rounded-pill px-4 py-2">
+              <i class="bi bi-person-badge me-2"></i>Select Faculty
+            </a>
+          </div>
+        </div>`;
     }
   }
 
@@ -1365,6 +1445,28 @@ class ChallengeRunner {
     const assignmentId = (this.config && this.config.id) || this.assignmentSlug;
 
     if (!attemptId) return;
+
+    const activeRole = window.MEILP?.getActiveRole ? window.MEILP.getActiveRole() : (window.localStorage ? window.localStorage.getItem("meilp:activeRole") : "");
+    if (activeRole === "GUEST" || student.isGuest === true || student.role === "GUEST") {
+      return;
+    }
+
+    // AFS creation allowed ONLY for registered colleges
+    const isRegistered = (typeof window.MEILP?.isRegisteredCollege === "function")
+      ? window.MEILP.isRegisteredCollege(collegeId)
+      : false;
+    if (!isRegistered) {
+      return;
+    }
+
+    const activeFaculties = (typeof window.MEILP?.getActiveFacultiesForCollege === "function")
+      ? window.MEILP.getActiveFacultiesForCollege(collegeId)
+      : [];
+    if (activeFaculties.length > 0) {
+      if (!facultyId || facultyId.toUpperCase() === "UNKNOWN") {
+        return;
+      }
+    }
 
     const endpoint = window.MEILP?.googleSheetsConfig?.submissionWebAppUrl;
     if (!endpoint) return;

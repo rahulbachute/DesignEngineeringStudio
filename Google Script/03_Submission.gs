@@ -119,11 +119,35 @@ function saveStudentSubmission(payload) {
     var submissionData = (payload && payload.submissionData) || {};
 
     var submissionHash = submission.submissionHash || '';
-    var rollNumber = studentInfo.rollNumber || '';
-    var challengeId = challengeMeta.id || '';
+    var rollNumber = studentInfo.rollNumber || studentInfo.rollNo || '';
+    var challengeId = challengeMeta.id || challengeMeta.challengeId || '';
 
     // -------------------------------------------------------------------
-    // Step 4: Required-field validation. A submission cannot be
+    // Step 4a: Role authorization check. Guest mode is strictly read-only.
+    // -------------------------------------------------------------------
+    var reqRole = (payload && (payload.role || payload.activeRole || payload.userRole)) ||
+                  (submission && submission.role) ||
+                  (studentInfo && studentInfo.role) || "";
+    var isGuest = String(reqRole).trim().toUpperCase() === "GUEST" ||
+                  (payload && payload.isGuest === true) ||
+                  (submission && submission.isGuest === true) ||
+                  (studentInfo && studentInfo.isGuest === true) ||
+                  String(rollNumber).trim().toUpperCase() === "GUEST" ||
+                  String(studentInfo.name || "").trim().toUpperCase() === "GUEST" ||
+                  String(studentInfo.studentId || "").trim().toUpperCase() === "GUEST" ||
+                  String(payload && payload.studentId || "").trim().toUpperCase() === "GUEST";
+
+    if (isGuest) {
+      return response(
+        null,
+        false,
+        "Guest mode is strictly read-only and cannot submit student assignments.",
+        403
+      );
+    }
+
+    // -------------------------------------------------------------------
+    // Step 4b: Required-field validation. A submission cannot be
     // deduplicated or attempt-counted without all three of these, so
     // reject early with a 400 rather than writing a malformed row.
     // -------------------------------------------------------------------
@@ -150,13 +174,15 @@ function saveStudentSubmission(payload) {
     }
 
     // -------------------------------------------------------------------
-    // Step 5b: Due-Date and Late Submission Enforcement.
-    // Obtain facultyId for this attempt and check Assignment_Controls.
+    // Step 5b: Authoritative Attempt Association and Assignment Control Enforcement
     // -------------------------------------------------------------------
     var attemptId = submission.attemptId || submission.submissionId || payload.attemptId || '';
-    var facultyId = (studentInfo && (studentInfo.facultyId || studentInfo.selectedFacultyId)) || "";
+    var clientFacultyId = String((studentInfo && (studentInfo.facultyId || studentInfo.selectedFacultyId)) || "").trim();
+    var clientCollegeId = String((studentInfo && (studentInfo.collegeId || studentInfo.selectedCollegeId)) || "").trim();
+    var facultyId = clientFacultyId;
+    var matchedAfs = null;
 
-    // If facultyId not directly in studentInfo, look up Assignment_Faculty_Selection
+    // Search Assignment_Faculty_Selection for authoritative attempt record
     var selSheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION);
     if (selSheet) {
       var selData = selSheet.getDataRange().getValues();
@@ -167,14 +193,157 @@ function saveStudentSubmission(payload) {
           var sAttId = String(sRow[selMap["Attempt_ID"]] || "").trim();
           var sStuId = String(sRow[selMap["Student_ID"]] || "").trim();
           var sAsgId = String(sRow[selMap["Assignment_ID"]] || "").trim();
-          if ((attemptId && sAttId === String(attemptId).trim()) || (sStuId === rollNumber && sAsgId === challengeId)) {
-            facultyId = String(sRow[selMap["Faculty_ID"]] || "").trim();
+          if (attemptId && sAttId === String(attemptId).trim()) {
+            matchedAfs = {
+              attemptId: sAttId,
+              studentId: sStuId,
+              collegeId: String(sRow[selMap["College_ID"]] || "").trim(),
+              facultyId: String(sRow[selMap["Faculty_ID"]] || "").trim(),
+              assignmentId: sAsgId
+            };
             break;
           }
         }
       }
     }
 
+    if (matchedAfs) {
+      // 1. Authoritative Attempt Lock Enforcement
+      // Do NOT allow client to rebind attempt to another student, assignment, faculty, or college.
+      if (rollNumber && matchedAfs.studentId && rollNumber.toUpperCase() !== matchedAfs.studentId.toUpperCase()) {
+        return response(null, false, "Attempt tampering detected: student (" + rollNumber + ") does not match registered attempt record (" + matchedAfs.studentId + ").", 403);
+      }
+      if (challengeId && matchedAfs.assignmentId && challengeId.toUpperCase() !== matchedAfs.assignmentId.toUpperCase()) {
+        return response(null, false, "Attempt tampering detected: assignment (" + challengeId + ") does not match registered attempt record (" + matchedAfs.assignmentId + ").", 403);
+      }
+      if (clientFacultyId && matchedAfs.facultyId && clientFacultyId.toUpperCase() !== matchedAfs.facultyId.toUpperCase()) {
+        return response(null, false, "Attempt tampering detected: faculty (" + clientFacultyId + ") does not match registered attempt record (" + matchedAfs.facultyId + ").", 403);
+      }
+      if (clientCollegeId && matchedAfs.collegeId && clientCollegeId.toUpperCase() !== matchedAfs.collegeId.toUpperCase()) {
+        return response(null, false, "Attempt tampering detected: college (" + clientCollegeId + ") does not match registered attempt record (" + matchedAfs.collegeId + ").", 403);
+      }
+
+      // Lock to authoritative server records
+      facultyId = matchedAfs.facultyId;
+      rollNumber = matchedAfs.studentId;
+      challengeId = matchedAfs.assignmentId;
+      if (payload && payload.studentInformation) {
+        payload.studentInformation.facultyId = matchedAfs.facultyId;
+        payload.studentInformation.collegeId = matchedAfs.collegeId;
+        payload.studentInformation.rollNumber = matchedAfs.studentId;
+      }
+    } else {
+      // Attempt not pre-registered in AFS (e.g. direct API submission or legacy payload)
+      if (clientFacultyId && clientFacultyId.toUpperCase() !== "UNKNOWN") {
+        var isFacActive = false;
+        var facSheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+        if (facSheet) {
+          var fData = facSheet.getDataRange().getValues();
+          if (fData.length > 1) {
+            var fMap = getHeaderMap(fData[0]);
+            for (var fi = 1; fi < fData.length; fi++) {
+              var rFId = String(fData[fi][fMap["Faculty_ID"]] || "").trim();
+              if (rFId.toUpperCase() === clientFacultyId.toUpperCase()) {
+                var rStatus = String(fData[fi][fMap["Status"]] || "").trim().toUpperCase();
+                var rColId = String(fData[fi][fMap["College_ID"]] || "").trim().toUpperCase();
+                if (rStatus === "ACTIVE" || !rStatus) {
+                  if (!clientCollegeId || !rColId || rColId === clientCollegeId.toUpperCase()) {
+                    isFacActive = true;
+                    facultyId = rFId;
+                  } else {
+                    return response(null, false, "Faculty does not belong to the selected college.", 400);
+                  }
+                } else {
+                  return response(null, false, "Faculty is inactive.", 400);
+                }
+                break;
+              }
+            }
+          }
+        }
+        if (!isFacActive && facSheet && facSheet.getLastRow() > 1) {
+          return response(null, false, "Invalid or nonexistent Faculty_ID.", 400);
+        }
+        if (!facultyId) facultyId = clientFacultyId;
+      } else {
+        facultyId = "UNKNOWN";
+      }
+    }
+
+    // Check if the effective college is in the active College_Registry
+    var targetCollegeId = matchedAfs ? matchedAfs.collegeId : clientCollegeId;
+    var isRegisteredCollege = false;
+    if (targetCollegeId) {
+      var colSheet = getSheetSafe_(CONFIG.SHEETS.COLLEGE_REGISTRY);
+      if (colSheet) {
+        var colData = colSheet.getDataRange().getValues();
+        if (colData.length > 1) {
+          var colMap = getHeaderMap(colData[0]);
+          for (var cj = 1; cj < colData.length; cj++) {
+            var cRowId = String(colData[cj][colMap["College_ID"]] || "").trim();
+            if (cRowId.toUpperCase() === String(targetCollegeId).trim().toUpperCase()) {
+              var cStatus = String(colData[cj][colMap["Status"]] || "").trim().toUpperCase();
+              if (cStatus === "ACTIVE" || !cStatus) {
+                isRegisteredCollege = true;
+              }
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    // Rule C: Unregistered college / no college cannot submit assignments
+    if (!isRegisteredCollege) {
+      return response(
+        null,
+        false,
+        "Submission rejected: College is not registered or active with MEILP. Guest users cannot submit assignments.",
+        403
+      );
+    }
+
+    // Query active registered faculties belonging to targetCollegeId
+    var activeFacultyCount = 0;
+    var facSheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+    if (facSheet) {
+      var fData = facSheet.getDataRange().getValues();
+      if (fData.length > 1) {
+        var fMap = getHeaderMap(fData[0]);
+        for (var fi = 1; fi < fData.length; fi++) {
+          var rFId = String(fData[fi][fMap["Faculty_ID"]] || "").trim();
+          var rStatus = String(fData[fi][fMap["Status"]] || "").trim().toUpperCase();
+          var rColId = String(fData[fi][fMap["College_ID"]] || "").trim().toUpperCase();
+          if ((rStatus === "ACTIVE" || !rStatus) && rColId === String(targetCollegeId).trim().toUpperCase() && rFId.toUpperCase() !== "UNKNOWN") {
+            activeFacultyCount++;
+          }
+        }
+      }
+    }
+
+    if (activeFacultyCount > 0) {
+      // Rule A: Registered college with active faculties requires valid active faculty. UNKNOWN is strictly rejected!
+      if (!facultyId || String(facultyId).trim().toUpperCase() === "UNKNOWN") {
+        return response(
+          null,
+          false,
+          "Submission rejected: Registered college requires valid active faculty allocation. UNKNOWN is not permitted.",
+          403
+        );
+      }
+    } else {
+      // Rule B: Registered college with zero active faculties allows UNKNOWN submission!
+      if (String(facultyId).trim().toUpperCase() !== "UNKNOWN") {
+        return response(
+          null,
+          false,
+          "Submission rejected: College has zero active registered faculties. Faculty_ID must be UNKNOWN.",
+          400
+        );
+      }
+    }
+
+    // 2. Authoritative Assignment Controls Enforcement
     if (facultyId && facultyId.toUpperCase() !== "UNKNOWN") {
       var ctrlSheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_CONTROLS);
       if (ctrlSheet) {
@@ -187,6 +356,32 @@ function saveStudentSubmission(payload) {
             var cAsgId = String(cRow[ctrlMap["Assignment_ID"]] || "").trim();
 
             if (cFacId.toUpperCase() === facultyId.toUpperCase() && cAsgId.toUpperCase() === challengeId.toUpperCase()) {
+              // A. Enabled check
+              var isEnabled = cRow[ctrlMap["Enabled"]] !== false && String(cRow[ctrlMap["Enabled"]]).toLowerCase() !== "false";
+              if (!isEnabled) {
+                return response(
+                  null,
+                  false,
+                  "This assignment has been disabled by the faculty for your class.",
+                  403
+                );
+              }
+
+              // B. Release Date check
+              var releaseDateStr = cRow[ctrlMap["Release_Date"]];
+              if (releaseDateStr) {
+                var parsedReleaseDate = new Date(releaseDateStr);
+                if (!isNaN(parsedReleaseDate.getTime()) && new Date() < parsedReleaseDate) {
+                  return response(
+                    null,
+                    false,
+                    "This assignment is scheduled to open on " + releaseDateStr + ". Submissions are not yet open.",
+                    403
+                  );
+                }
+              }
+
+              // C. Due Date and Allow Late check
               var dueDateStr = cRow[ctrlMap["Due_Date"]];
               var allowLate = cRow[ctrlMap["Allow_Late"]] === true || String(cRow[ctrlMap["Allow_Late"]]).toLowerCase() === "true";
 

@@ -564,6 +564,8 @@ class SubmissionsBrowser {
 
     return {
       submissionId: record.id,
+      facultyId: currentUser.facultyId || '',
+      authFacultyId: currentUser.facultyId || '',
       facultyName: currentUser.name || 'Faculty',
       facultyEmail: currentUser.email || '',
       evaluation: {
