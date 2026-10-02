@@ -84,10 +84,7 @@ const ACTIVE_COLLEGE_REGISTRY = [
   { collegeId: "COL054", collegeName: "Universal College of Engineering & Research, Sasewadi", status: "ACTIVE" },
   { collegeId: "COL055", collegeName: "Vidya Pratishthan's K.B. Institute of Engineering & Technology, Baramati", status: "ACTIVE" },
   { collegeId: "COL056", collegeName: "Vishwakarma Institute of Technology (VIT), Bibwewadi, Pune", status: "ACTIVE" },
-  { collegeId: "COL057", collegeName: "Zeal College of Engineering & Research, Narhe", status: "ACTIVE" },
-  { collegeId: "COL058", collegeName: "Other – Pune", status: "ACTIVE" },
-  { collegeId: "COL059", collegeName: "Other – Maharashtra", status: "ACTIVE" },
-  { collegeId: "COL060", collegeName: "Other – Outside Maharashtra", status: "ACTIVE" }
+  { collegeId: "COL057", collegeName: "Zeal College of Engineering & Research, Narhe", status: "ACTIVE" }
 ];
 
 const ACTIVE_FACULTY_REGISTRY = [
@@ -137,6 +134,13 @@ let currentLoadedColleges = ACTIVE_COLLEGE_REGISTRY;
 let currentLoadedFaculties = [];
 
 async function fetchColleges() {
+  const isActualCollege = (c) => {
+    if (!c || c.status !== "ACTIVE") return false;
+    const name = (c.collegeName || "").trim().toUpperCase();
+    if (name.startsWith("OTHER") || name.includes("UNREGISTERED") || name.includes("UNKNOWN") || name.includes("GUEST")) return false;
+    return true;
+  };
+
   const endpoint = window.MEILP?.googleSheetsConfig?.submissionWebAppUrl;
   if (endpoint) {
     try {
@@ -144,18 +148,28 @@ async function fetchColleges() {
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-          return json.data.filter(c => c.status === "ACTIVE");
+          return json.data.filter(isActualCollege);
         }
       }
     } catch (e) {
       console.warn("[MEILP] Remote colleges fetch failed, using fallback list:", e.message);
     }
   }
-  return ACTIVE_COLLEGE_REGISTRY.filter(c => c.status === "ACTIVE");
+  return ACTIVE_COLLEGE_REGISTRY.filter(isActualCollege);
 }
 
 async function fetchFacultyList(collegeId) {
   if (!collegeId) return [];
+  const canonicalColId = String(collegeId).trim().toUpperCase();
+
+  // If MEILP helper is available, check it first
+  if (window.MEILP && typeof window.MEILP.getActiveFacultiesForCollege === "function") {
+    const list = window.MEILP.getActiveFacultiesForCollege(collegeId);
+    if (list && list.length > 0) {
+      return list.filter(f => f.status === "ACTIVE" && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN");
+    }
+  }
+
   const endpoint = window.MEILP?.googleSheetsConfig?.submissionWebAppUrl;
   if (endpoint) {
     try {
@@ -163,7 +177,7 @@ async function fetchFacultyList(collegeId) {
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-          return json.data.filter(f => f.status === "ACTIVE" && (!collegeId || f.collegeId === collegeId));
+          return json.data.filter(f => f.status === "ACTIVE" && (!collegeId || String(f.collegeId).toUpperCase() === canonicalColId) && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN");
         }
       }
     } catch (e) {
@@ -193,7 +207,8 @@ async function fetchFacultyList(collegeId) {
   for (const f of allFaculties) {
     if (f && f.facultyId && !seen.has(f.facultyId)) {
       seen.add(f.facultyId);
-      if (f.status === "ACTIVE" && f.collegeId === collegeId) {
+      const fColId = String(f.collegeId || "").trim().toUpperCase();
+      if (f.status === "ACTIVE" && fColId === canonicalColId && f.facultyId.toUpperCase() !== "UNKNOWN") {
         result.push(f);
       }
     }
@@ -228,9 +243,12 @@ function loadFacultyControls(facultyIdentifier) {
 
 function parseDueDate(str) {
   if (!str) return null;
+  if (str instanceof Date) {
+    return isNaN(str.getTime()) ? null : str;
+  }
   let d = new Date(str);
   if (!isNaN(d.getTime())) return d;
-  const m = str.match(/^(\d{1,2})[.\/\-](\d{1,2})[.\/\-](\d{4})(?:[T\s,]+(\d{1,2}):(\d{2}))?/);
+  const m = typeof str === "string" ? str.match(/^(\d{1,2})[.\/\-](\d{1,2})[.\/\-](\d{4})(?:[T\s,]+(\d{1,2}):(\d{2}))?/) : null;
   if (m) {
     d = new Date(+m[3], +m[2] - 1, +m[1], m[4] ? +m[4] : 23, m[5] ? +m[5] : 59);
     if (!isNaN(d.getTime())) return d;
@@ -244,12 +262,107 @@ function formatDueDate(str) {
   return d.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit", hour12: true });
 }
 
+// ─── Dynamic Due Date Badge Calculation & Live Updates ────────────────────────
+const DUE_DATE_THRESHOLDS = {
+  SEVEN_DAYS_MS: 7 * 24 * 60 * 60 * 1000,
+  SEVENTY_TWO_HOURS_MS: 72 * 60 * 60 * 1000,
+  TWENTY_FOUR_HOURS_MS: 24 * 60 * 60 * 1000
+};
+
+const DUE_STATE_CLASSES = [
+  "due-safe",
+  "due-approaching",
+  "due-soon",
+  "due-urgent",
+  "due-overdue"
+];
+
+function getDueDateState(dueDateInput, nowMs) {
+  if (!dueDateInput) return null;
+  const d = (dueDateInput instanceof Date) ? (isNaN(dueDateInput.getTime()) ? null : dueDateInput) : parseDueDate(dueDateInput);
+  if (!d || isNaN(d.getTime())) return null;
+
+  const currentNow = typeof nowMs === "number" ? nowMs : Date.now();
+  const remaining = d.getTime() - currentNow;
+
+  if (remaining > DUE_DATE_THRESHOLDS.SEVEN_DAYS_MS) {
+    return "safe";
+  }
+  if (remaining > DUE_DATE_THRESHOLDS.SEVENTY_TWO_HOURS_MS) {
+    return "approaching";
+  }
+  if (remaining > DUE_DATE_THRESHOLDS.TWENTY_FOUR_HOURS_MS) {
+    return "soon";
+  }
+  if (remaining > 0) {
+    return "urgent";
+  }
+  return "overdue";
+}
+
+let dueDateTickerInterval = null;
+
+function stopDueDateBadgeTicker() {
+  if (dueDateTickerInterval) {
+    clearInterval(dueDateTickerInterval);
+    dueDateTickerInterval = null;
+  }
+}
+
+function updateDueDateBadges(nowMs) {
+  if (typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
+  const badges = document.querySelectorAll(".due-date-badge[data-due-date]");
+  if (!badges || !badges.forEach) return;
+  badges.forEach(badge => {
+    const rawDateStr = typeof badge.getAttribute === "function" ? badge.getAttribute("data-due-date") : (badge.dataset ? badge.dataset.dueDate : null);
+    if (!rawDateStr) return;
+    const d = parseDueDate(rawDateStr);
+    if (!d || isNaN(d.getTime())) return;
+
+    const state = getDueDateState(d, nowMs);
+    if (!state) return;
+
+    if (badge.classList && typeof badge.classList.remove === "function") {
+      DUE_STATE_CLASSES.forEach(cls => badge.classList.remove(cls));
+      badge.classList.add(`due-${state}`);
+    }
+
+    const storedFormatted = typeof badge.getAttribute === "function" ? badge.getAttribute("data-formatted-date") : (badge.dataset ? badge.dataset.formattedDate : null);
+    const formatted = storedFormatted || formatDueDate(rawDateStr);
+    if (formatted) {
+      const isOverdue = state === "overdue";
+      const icon = isOverdue ? "bi-clock-history" : "bi-calendar-event";
+      const label = isOverdue ? `Deadline Passed: ${formatted}` : `Due: ${formatted}`;
+      badge.innerHTML = `<i class="bi ${icon} me-1"></i>${escapeHtml(label)}`;
+    }
+  });
+}
+
+function startDueDateBadgeTicker() {
+  stopDueDateBadgeTicker();
+  if (typeof setInterval !== "undefined") {
+    dueDateTickerInterval = setInterval(() => {
+      updateDueDateBadges();
+    }, 60000);
+    if (dueDateTickerInterval && typeof dueDateTickerInterval.unref === "function") {
+      dueDateTickerInterval.unref();
+    }
+  }
+}
+
+if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+  window.addEventListener("beforeunload", () => {
+    stopDueDateBadgeTicker();
+  });
+}
+
 function escapeHtml(str) {
   if (typeof window.MEILP.escapeHtml === "function") return window.MEILP.escapeHtml(str);
   return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 function getSelectedCollege() {
+  if (getActiveRole() === "GUEST") return "";
   const sel = document.getElementById("studentCollegeSelect");
   if (sel && sel.value) {
     const match = currentLoadedColleges.find(c => c.collegeId === sel.value);
@@ -259,12 +372,14 @@ function getSelectedCollege() {
 }
 
 function getSelectedCollegeId() {
+  if (getActiveRole() === "GUEST") return "";
   const sel = document.getElementById("studentCollegeSelect");
   if (sel && sel.value) return sel.value;
   return "";
 }
 
 function getSelectedFaculty() {
+  if (getActiveRole() === "GUEST") return "";
   const sel = document.getElementById("studentFacultySelect");
   if (sel && sel.value) {
     if (sel.value === "UNKNOWN") return "Unknown / Unassigned Faculty";
@@ -275,6 +390,7 @@ function getSelectedFaculty() {
 }
 
 function getSelectedFacultyId() {
+  if (getActiveRole() === "GUEST") return "";
   const sel = document.getElementById("studentFacultySelect");
   if (sel && sel.value) return sel.value;
   return "";
@@ -320,36 +436,175 @@ function saveStudentProfile(profile = {}) {
 window.MEILP.getStudentProfile = getStudentProfile;
 window.MEILP.saveStudentProfile = saveStudentProfile;
 
-async function populateCollegeAndFacultyDropdowns() {
+function getActiveRole() {
+  try {
+    const raw = window.localStorage ? window.localStorage.getItem("meilp:activeRole") : null;
+    if (raw) return String(raw).trim().toUpperCase();
+  } catch(e) {}
+  return "STUDENT";
+}
+
+function syncGatewayControls(role) {
+  const activeRole = role || getActiveRole();
+  const collegeSel = document.getElementById("studentCollegeSelect");
+  const facultySel = document.getElementById("studentFacultySelect");
+  const btnShow = document.getElementById("btnShowAssignments");
+  const banner = document.getElementById("facultyStatusBanner");
+
+  if (activeRole === "GUEST") {
+    if (collegeSel) {
+      collegeSel.value = "";
+      collegeSel.disabled = true;
+    }
+    if (facultySel) {
+      if (facultySel.innerHTML !== undefined) {
+        facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+      }
+      facultySel.value = "";
+      facultySel.disabled = true;
+    }
+    if (btnShow) btnShow.disabled = true;
+    if (banner) {
+      banner.innerHTML = `<i class="bi bi-eye-fill me-1"></i><strong>Guest Mode (Read-Only)</strong>: Browsing standard coursework catalogue. Submissions and attempt creation are disabled.`;
+    }
+  } else {
+    if (collegeSel) collegeSel.disabled = false;
+    if (facultySel) facultySel.disabled = false;
+    if (collegeSel && !collegeSel.value) {
+      if (facultySel) {
+        if (facultySel.innerHTML !== undefined) {
+          facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+        }
+        facultySel.value = "";
+      }
+      if (btnShow) btnShow.disabled = true;
+    } else if (collegeSel && collegeSel.value) {
+      updateFacultyDropdown(collegeSel.value, facultySel ? facultySel.value : "");
+    }
+  }
+}
+
+function setActiveRole(role) {
+  const norm = String(role || "STUDENT").trim().toUpperCase();
+  try {
+    if (window.localStorage) {
+      window.localStorage.setItem("meilp:activeRole", norm);
+    }
+  } catch(e) {}
+  syncGatewayControls(norm);
+  return norm;
+}
+
+window.MEILP.getActiveRole = getActiveRole;
+window.MEILP.setActiveRole = setActiveRole;
+window.MEILP.syncGatewayControls = syncGatewayControls;
+
+function isRegisteredCollege(collegeId) {
+  if (!collegeId) return false;
+  const key = String(collegeId).trim().toUpperCase();
+  if (key === "OTHER" || key.startsWith("OTHER") || key.includes("UNREGISTERED") || key.includes("UNKNOWN") || key.includes("GUEST")) {
+    return false;
+  }
+  const list = (typeof currentLoadedColleges !== "undefined" && currentLoadedColleges && currentLoadedColleges.length > 0) 
+    ? currentLoadedColleges 
+    : ((window.MEILP && window.MEILP.ACTIVE_COLLEGE_REGISTRY) || []);
+  return list.some(c => {
+    const cId = (c.collegeId || "").trim().toUpperCase();
+    const cName = (c.collegeName || "").trim().toUpperCase();
+    if (cName.startsWith("OTHER") || cName.includes("UNREGISTERED") || cName.includes("UNKNOWN") || cName.includes("GUEST")) {
+      return false;
+    }
+    return (cId && cId === key) || (cName && cName === key);
+  });
+}
+
+window.MEILP.isRegisteredCollege = isRegisteredCollege;
+
+async function populateCollegeAndFacultyDropdowns(options = {}) {
   const collegeSel = document.getElementById("studentCollegeSelect");
   const facultySel = document.getElementById("studentFacultySelect");
   if (!collegeSel || !facultySel) return;
 
   currentLoadedColleges = await fetchColleges();
 
-  // Profile-gated restoration: restore ONLY from valid structured meilp:studentProfile
+  // 1. Determine active role FIRST
+  const role = getActiveRole();
+
+  if (role === "GUEST") {
+    // -------------------------------------------------------------------------
+    // GUEST INITIALIZATION
+    // Neutral controls, no student profile restoration, controls disabled
+    // -------------------------------------------------------------------------
+    const defaultCollegeOption = `<option value="" disabled selected>Select Your College</option>`;
+    const collegeOptions = currentLoadedColleges.map(c =>
+      `<option value="${escapeHtml(c.collegeId)}">${escapeHtml(c.collegeName)}</option>`
+    ).join("");
+    collegeSel.innerHTML = defaultCollegeOption + collegeOptions;
+    collegeSel.value = "";
+    collegeSel.disabled = true;
+
+    facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+    facultySel.value = "";
+    facultySel.disabled = true;
+
+    const btnShow = document.getElementById("btnShowAssignments");
+    if (btnShow) btnShow.disabled = true;
+
+    const banner = document.getElementById("facultyStatusBanner");
+    if (banner) {
+      banner.innerHTML = `<i class="bi bi-eye-fill me-1"></i><strong>Guest Mode (Read-Only)</strong>: Browsing standard coursework catalogue. Submissions and attempt creation are disabled.`;
+    }
+    return;
+  }
+
+  // ---------------------------------------------------------------------------
+  // STUDENT INITIALIZATION
+  // ---------------------------------------------------------------------------
+  const isCoursework = Boolean(
+    typeof window !== "undefined" && window.MEILP && window.MEILP.isCourseworkPage
+  );
+
+  const allowRestore = !isCoursework && (!options || options.restoreProfile !== false);
+
   let savedCollegeId = "";
   let savedFacultyId = "";
 
-  try {
-    const rawProfile = window.localStorage.getItem("meilp:studentProfile");
-    if (rawProfile) {
-      const profile = JSON.parse(rawProfile);
-      if (profile && typeof profile === "object" && profile.collegeId && profile.facultyId) {
-        savedCollegeId = String(profile.collegeId).trim().toUpperCase();
-        savedFacultyId = String(profile.facultyId).trim().toUpperCase();
+  if (allowRestore) {
+    try {
+      const rawProfile = window.localStorage.getItem("meilp:studentProfile");
+      if (rawProfile) {
+        const profile = JSON.parse(rawProfile);
+        if (profile && typeof profile === "object" && profile.collegeId) {
+          savedCollegeId = String(profile.collegeId).trim().toUpperCase();
+          if (profile.facultyId) {
+            savedFacultyId = String(profile.facultyId).trim().toUpperCase();
+          }
+        }
       }
-    }
-  } catch(e) {}
+    } catch(e) {}
+  }
 
-  const isCollegeValid = savedCollegeId && currentLoadedColleges.some(c => c.collegeId === savedCollegeId);
+  const isCollegeValid = savedCollegeId && currentLoadedColleges.some(c => c.collegeId.toUpperCase() === savedCollegeId);
   const activeCollegeId = isCollegeValid ? savedCollegeId : "";
+
+  // If college is registered and has active faculty, UNKNOWN must never be restored from prior profile
+  if (activeCollegeId && isRegisteredCollege(activeCollegeId)) {
+    const facs = (typeof window.MEILP?.getActiveFacultiesForCollege === "function")
+      ? window.MEILP.getActiveFacultiesForCollege(activeCollegeId)
+      : [];
+    if (facs.length > 0 && savedFacultyId === "UNKNOWN") {
+      savedFacultyId = "";
+    }
+  }
 
   const defaultCollegeOption = `<option value="" disabled ${!activeCollegeId ? "selected" : ""}>Select Your College</option>`;
   const collegeOptions = currentLoadedColleges.map(c =>
-    `<option value="${escapeHtml(c.collegeId)}"${c.collegeId === activeCollegeId ? " selected" : ""}>${escapeHtml(c.collegeName)}</option>`
+    `<option value="${escapeHtml(c.collegeId)}"${(activeCollegeId && c.collegeId.toUpperCase() === activeCollegeId) ? " selected" : ""}>${escapeHtml(c.collegeName)}</option>`
   ).join("");
   collegeSel.innerHTML = defaultCollegeOption + collegeOptions;
+  collegeSel.disabled = false;
+
+  const btnShow = document.getElementById("btnShowAssignments");
 
   if (activeCollegeId) {
     collegeSel.value = activeCollegeId;
@@ -359,6 +614,7 @@ async function populateCollegeAndFacultyDropdowns() {
     facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
     facultySel.value = "";
     facultySel.disabled = false;
+    if (btnShow) btnShow.disabled = true;
   }
 }
 
@@ -366,16 +622,59 @@ async function updateFacultyDropdown(collegeId, explicitFacultyId) {
   const facultySel = document.getElementById("studentFacultySelect");
   if (!facultySel) return;
 
+  if (getActiveRole() === "GUEST") {
+    facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+    facultySel.value = "";
+    facultySel.disabled = true;
+    return;
+  }
+
   if (!collegeId) {
     facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+    facultySel.value = "";
     facultySel.disabled = false;
+    try {
+      window.localStorage.removeItem("meilp:selectedStudentCollegeId");
+      window.localStorage.removeItem("meilp:selectedStudentCollege");
+      window.localStorage.removeItem("meilp:selectedStudentFacultyId");
+      window.localStorage.removeItem("meilp:selectedStudentFaculty");
+    } catch(e) {}
+    return;
+  }
+
+  const isRegistered = isRegisteredCollege(collegeId);
+  const activeCollege = currentLoadedColleges.find(c => c.collegeId.toUpperCase() === String(collegeId).trim().toUpperCase() || c.collegeName.toUpperCase() === String(collegeId).trim().toUpperCase()) || { collegeId, collegeName: collegeId };
+
+  if (!isRegistered) {
+    // -------------------------------------------------------------------------
+    // UNREGISTERED COLLEGE -> Treat as GUEST
+    // -------------------------------------------------------------------------
+    facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+    facultySel.value = "";
+    facultySel.disabled = true;
+
+    try {
+      window.localStorage.removeItem("meilp:selectedStudentFacultyId");
+      window.localStorage.removeItem("meilp:selectedStudentFaculty");
+      window.localStorage.setItem("meilp:activeRole", "GUEST");
+    } catch(e) {}
+
+    if (window.updateGatewayRoleUI) {
+      window.updateGatewayRoleUI("GUEST");
+    }
+    if (window.MEILP && typeof window.MEILP.setActiveRole === "function") {
+      window.MEILP.setActiveRole("GUEST");
+    }
+
+    const banner = document.getElementById("facultyStatusBanner");
+    if (banner) {
+      banner.innerHTML = `<i class="bi bi-info-circle me-1"></i><strong>Your College is not yet registered with MEILP.</strong> You can continue as a Guest to explore our engineering learning resources and assignments. Guest users cannot create attempts or submit assignments.`;
+    }
     return;
   }
 
   facultySel.innerHTML = `<option value="" disabled selected>Loading faculties...</option>`;
   facultySel.disabled = true;
-
-  const activeCollege = currentLoadedColleges.find(c => c.collegeId === collegeId) || { collegeId, collegeName: collegeId };
 
   try {
     currentLoadedFaculties = await fetchFacultyList(collegeId);
@@ -387,67 +686,88 @@ async function updateFacultyDropdown(collegeId, explicitFacultyId) {
 
   facultySel.disabled = false;
 
-  // Determine target faculty ID from explicit parameter or valid profile check
+  const validActiveFaculties = (currentLoadedFaculties || []).filter(f =>
+    f && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN" && (f.status === "ACTIVE" || !f.status)
+  );
+
+  const isCoursework = Boolean(
+    typeof window !== "undefined" && window.MEILP && window.MEILP.isCourseworkPage
+  );
+
   let targetFacultyId = "";
   if (typeof explicitFacultyId === "string" && explicitFacultyId.trim()) {
     targetFacultyId = explicitFacultyId.trim().toUpperCase();
-  } else {
+  } else if (!isCoursework) {
     try {
       const rawProfile = window.localStorage.getItem("meilp:studentProfile");
       if (rawProfile) {
         const profile = JSON.parse(rawProfile);
-        if (profile && typeof profile === "object" && String(profile.collegeId).toUpperCase() === collegeId.toUpperCase() && profile.facultyId) {
+        if (profile && typeof profile === "object" && String(profile.collegeId).toUpperCase() === String(collegeId).toUpperCase() && profile.facultyId) {
           targetFacultyId = String(profile.facultyId).trim().toUpperCase();
         }
       }
     } catch(e) {}
   }
 
-  if (currentLoadedFaculties && currentLoadedFaculties.length > 0) {
-    const isFacultyValid = targetFacultyId && currentLoadedFaculties.some(f => f.facultyId === targetFacultyId);
-    const isUnknown = targetFacultyId === "UNKNOWN";
+  if (validActiveFaculties.length > 0) {
+    // -------------------------------------------------------------------------
+    // REGISTERED COLLEGE WITH ONE OR MORE ACTIVE FACULTIES
+    // "Unassigned Faculty / No Faculty" and "UNKNOWN" MUST NOT APPEAR!
+    // Initial state: "Select Your Faculty" (disabled, placeholder)
+    // -------------------------------------------------------------------------
+    const isFacultyValid = targetFacultyId && targetFacultyId !== "UNKNOWN" && validActiveFaculties.some(f => f.facultyId.toUpperCase() === targetFacultyId);
 
-    const defaultOption = `<option value="" disabled ${(!isFacultyValid && !isUnknown) ? "selected" : ""}>Select Your Faculty</option>`;
-    const facultyOptions = currentLoadedFaculties.map(f =>
-      `<option value="${escapeHtml(f.facultyId)}"${(isFacultyValid && f.facultyId === targetFacultyId) ? " selected" : ""}>${escapeHtml(f.facultyName)}</option>`
+    const defaultOption = `<option value="" disabled ${!isFacultyValid ? "selected" : ""}>Select Your Faculty</option>`;
+    const facultyOptions = validActiveFaculties.map(f =>
+      `<option value="${escapeHtml(f.facultyId)}"${(isFacultyValid && f.facultyId.toUpperCase() === targetFacultyId) ? " selected" : ""}>${escapeHtml(f.facultyName)}</option>`
     ).join("");
-    const unknownOption = `<option value="UNKNOWN"${isUnknown ? " selected" : ""}>Unknown / Unassigned Faculty</option>`;
 
-    facultySel.innerHTML = defaultOption + facultyOptions + unknownOption;
+    facultySel.innerHTML = defaultOption + facultyOptions;
 
     if (isFacultyValid) {
       facultySel.value = targetFacultyId;
-    } else if (isUnknown) {
-      facultySel.value = "UNKNOWN";
-    } else {
-      facultySel.value = "";
-    }
-
-    if (facultySel.value) {
-      const selectedFaculty = currentLoadedFaculties.find(f => f.facultyId === facultySel.value);
+      const selectedFaculty = validActiveFaculties.find(f => f.facultyId.toUpperCase() === targetFacultyId);
       try {
         window.localStorage.setItem("meilp:selectedStudentCollegeId", JSON.stringify(activeCollege.collegeId));
         window.localStorage.setItem("meilp:selectedStudentCollege", JSON.stringify(activeCollege.collegeName));
         if (selectedFaculty) {
           window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify(selectedFaculty.facultyId));
           window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify(selectedFaculty.facultyName));
-        } else if (isUnknown) {
-          window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify("UNKNOWN"));
-          window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify("Unknown / Unassigned Faculty"));
         }
+      } catch(e) {}
+    } else {
+      facultySel.value = "";
+      try {
+        window.localStorage.setItem("meilp:selectedStudentCollegeId", JSON.stringify(activeCollege.collegeId));
+        window.localStorage.setItem("meilp:selectedStudentCollege", JSON.stringify(activeCollege.collegeName));
+        window.localStorage.removeItem("meilp:selectedStudentFacultyId");
+        window.localStorage.removeItem("meilp:selectedStudentFaculty");
       } catch(e) {}
     }
   } else {
-    // Zero active faculty registered for this college -> Show Unknown / Unassigned Faculty
-    facultySel.innerHTML = `<option value="UNKNOWN" selected>Unknown / Unassigned Faculty</option>`;
+    // -------------------------------------------------------------------------
+    // REGISTERED COLLEGE WITH ZERO ACTIVE FACULTIES
+    // Automatically select "Unassigned Faculty / No Faculty" with Faculty_ID = "UNKNOWN"
+    // Student remains a STUDENT. Attempts & submissions are allowed.
+    // -------------------------------------------------------------------------
+    facultySel.innerHTML = `<option value="UNKNOWN" selected>Unassigned Faculty / No Faculty</option>`;
     facultySel.value = "UNKNOWN";
-
     try {
       window.localStorage.setItem("meilp:selectedStudentCollegeId", JSON.stringify(activeCollege.collegeId));
       window.localStorage.setItem("meilp:selectedStudentCollege", JSON.stringify(activeCollege.collegeName));
       window.localStorage.setItem("meilp:selectedStudentFacultyId", JSON.stringify("UNKNOWN"));
-      window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify("Unknown / Unassigned Faculty"));
+      window.localStorage.setItem("meilp:selectedStudentFaculty", JSON.stringify("Unassigned Faculty / No Faculty"));
+      saveStudentProfile({
+        collegeId: activeCollege.collegeId,
+        collegeName: activeCollege.collegeName,
+        facultyId: "UNKNOWN",
+        facultyName: "Unassigned Faculty / No Faculty"
+      });
     } catch(e) {}
+  }
+
+  if (getActiveRole() === "GUEST") {
+    facultySel.disabled = true;
   }
 }
 
@@ -463,10 +783,11 @@ function renderAssignmentCards(cards) {
   if (Array.isArray(cards) && cards.length > 0) liveAssignments = cards;
   const assignments = liveAssignments;
 
-  const college = getSelectedCollege();
-  const faculty = getSelectedFaculty();
-  const facultyId = getSelectedFacultyId();
-  const controls = (facultyId && facultyId !== "UNKNOWN") ? loadFacultyControls(facultyId) : {};
+  const activeRole = getActiveRole();
+  const college = (activeRole === "GUEST") ? "" : getSelectedCollege();
+  const faculty = (activeRole === "GUEST") ? "" : getSelectedFaculty();
+  const facultyId = (activeRole === "GUEST") ? "" : getSelectedFacultyId();
+  const controls = (facultyId && facultyId !== "UNKNOWN" && activeRole !== "GUEST") ? loadFacultyControls(facultyId) : {};
 
   let enabledCount = 0, disabledCount = 0;
   assignments.forEach(a => {
@@ -475,11 +796,63 @@ function renderAssignmentCards(cards) {
   });
 
   const banner = document.getElementById("facultyStatusBanner");
+  const collegeId = (activeRole === "GUEST") ? "" : getSelectedCollegeId();
+  const isRegistered = isRegisteredCollege(collegeId);
+  const activeFaculties = (typeof window.MEILP?.getActiveFacultiesForCollege === "function" && isRegistered)
+    ? window.MEILP.getActiveFacultiesForCollege(collegeId)
+    : (currentLoadedFaculties || []).filter(f => f && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN" && (f.status === "ACTIVE" || !f.status));
+  const hasActiveFaculties = activeFaculties.length > 0;
+
+  // Student is blocked when:
+  // - No college selected, OR
+  // - College is registered AND has active faculties, but student hasn't selected one (!facultyId or facultyId === "UNKNOWN")
+  const isNoCollegeSelected = activeRole === "STUDENT" && !collegeId;
+  const isFacultyNotSelected = activeRole === "STUDENT" && isRegistered && hasActiveFaculties && (!facultyId || facultyId === "UNKNOWN");
+  const isStudentBlocked = isNoCollegeSelected || isFacultyNotSelected;
+
+  const btnShow = document.getElementById("btnShowAssignments");
+  const collegeSel = document.getElementById("studentCollegeSelect");
+  const facultySel = document.getElementById("studentFacultySelect");
+
+  if (activeRole === "GUEST") {
+    if (collegeSel) {
+      collegeSel.disabled = true;
+      if (collegeSel.value !== "") collegeSel.value = "";
+    }
+    if (facultySel) {
+      facultySel.disabled = true;
+      if (facultySel.value !== "") {
+        if (facultySel.innerHTML !== undefined) {
+          facultySel.innerHTML = `<option value="" disabled selected>Select Your Faculty</option>`;
+        }
+        facultySel.value = "";
+      }
+    }
+    if (btnShow) btnShow.disabled = true;
+  } else {
+    if (collegeSel) collegeSel.disabled = false;
+    if (btnShow) {
+      if (!collegeId) {
+        btnShow.disabled = true;
+      } else if (isRegistered && !hasActiveFaculties) {
+        btnShow.disabled = false;
+      } else {
+        btnShow.disabled = isStudentBlocked;
+      }
+    }
+  }
+
   if (banner) {
-    if (!facultyId) {
+    if (activeRole === "GUEST") {
+      banner.innerHTML = `<i class="bi bi-eye-fill me-1"></i><strong>Guest Mode (Read-Only)</strong>: Browsing standard coursework catalogue. Submissions and attempt creation are disabled.`;
+    } else if (isFacultyNotSelected) {
+      banner.innerHTML = `<i class="bi bi-exclamation-triangle-fill text-warning me-1"></i><strong>Faculty Selection Required</strong>: Please select your faculty before continuing.`;
+    } else if (isRegistered && !hasActiveFaculties) {
+      banner.innerHTML = `<i class="bi bi-info-circle me-1"></i>Showing standard coursework for <strong>${escapeHtml(college)}</strong> (Unassigned Faculty / No Faculty)`;
+    } else if (!facultyId) {
       banner.innerHTML = `<i class="bi bi-info-circle me-1"></i>Showing standard coursework for students and visitors`;
     } else if (facultyId === "UNKNOWN" || faculty.includes("Unknown") || faculty.includes("Unassigned")) {
-      banner.innerHTML = `<i class="bi bi-info-circle me-1"></i>Showing standard coursework for <strong>Unknown / Unassigned Faculty</strong>${college ? ` • <span class="opacity-75">${escapeHtml(college)}</span>` : ""}`;
+      banner.innerHTML = `<i class="bi bi-info-circle me-1"></i>Showing standard coursework for <strong>Unassigned Faculty / No Faculty</strong>${college ? ` • <span class="opacity-75">${escapeHtml(college)}</span>` : ""}`;
     } else {
       banner.innerHTML = `<i class="bi bi-person-badge-fill me-1"></i>Schedule for <strong>${escapeHtml(faculty)}</strong> &nbsp;(${enabledCount} Active, ${disabledCount} Disabled)${college ? ` • <span class="opacity-75">${escapeHtml(college)}</span>` : ""}`;
     }
@@ -489,15 +862,14 @@ function renderAssignmentCards(cards) {
     const ctrl = controls[card.id] || {};
     const enabled = typeof ctrl.enabled === "boolean" ? ctrl.enabled : true;
     const rawDue = ctrl.dueDate || null;
-    const formatted = formatDueDate(rawDue);
-    const isPastDue = rawDue ? (new Date() > parseDueDate(rawDue)) : false;
+    const dObj = rawDue ? parseDueDate(rawDue) : null;
+    const formatted = (rawDue && dObj) ? formatDueDate(rawDue) : null;
+    const dueState = dObj ? getDueDateState(dObj) : null;
     const icon = card.icon || "bi-journal-text";
     const launchUrl = card.launchPath || `assignment-workbench.html?assignment=${card.id}`;
 
-    const deadlinePill = (rawDue && formatted)
-      ? (isPastDue
-          ? `<span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle"><i class="bi bi-clock-history me-1"></i>Deadline Passed: ${formatted}</span>`
-          : `<span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle"><i class="bi bi-calendar-event me-1"></i>Due: ${formatted}</span>`)
+    const deadlinePill = (dObj && formatted && dueState)
+      ? `<span class="badge border due-date-badge due-${dueState}" data-due-date="${escapeHtml(dObj.toISOString())}" data-formatted-date="${escapeHtml(formatted)}"><i class="bi ${dueState === "overdue" ? "bi-clock-history" : "bi-calendar-event"} me-1"></i>${dueState === "overdue" ? "Deadline Passed: " : "Due: "}${escapeHtml(formatted)}</span>`
       : `<span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>`;
 
     if (!enabled) {
@@ -528,10 +900,22 @@ function renderAssignmentCards(cards) {
       </div>`;
     }
 
+    const launchHandler = isNoCollegeSelected
+      ? `alert('Please select your College before starting this assignment.'); const s = document.getElementById('studentCollegeSelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }`
+      : (isFacultyNotSelected
+          ? `alert('Please select your Faculty before starting this assignment.'); const s = document.getElementById('studentFacultySelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }`
+          : `window.location.href='${launchUrl}'`);
+
+    const launchButton = isNoCollegeSelected
+      ? `<button class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation(); alert('Please select your College before starting this assignment.'); const s = document.getElementById('studentCollegeSelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</button>`
+      : (isFacultyNotSelected
+          ? `<button class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation(); alert('Please select your Faculty before starting this assignment.'); const s = document.getElementById('studentFacultySelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</button>`
+          : `<a href="${launchUrl}" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>`);
+
     return `<div class="col-12 col-md-6 col-lg-4">
       <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow"
         style="background-color:#fff;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;"
-        onclick="window.location.href='${launchUrl}'">
+        onclick="${launchHandler}">
         <div>
           <div class="d-flex justify-content-between align-items-start mb-3">
             <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi ${escapeHtml(icon)}"></i></span>
@@ -550,16 +934,30 @@ function renderAssignmentCards(cards) {
             ${deadlinePill}
           </div>
           ${ctrl.note ? `<div class="alert alert-info py-1 px-2 small mb-3"><i class="bi bi-info-circle me-1"></i>${escapeHtml(ctrl.note)}</div>` : ""}
-          <a href="${launchUrl}" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>
+          ${launchButton}
         </div>
       </article>
     </div>`;
   }).join("");
+
+  startDueDateBadgeTicker();
 }
 
 // ─── Expose globally ──────────────────────────────────────────────────────────
 window.MEILP.renderAssignmentCards = renderAssignmentCards;
 window.MEILP.loadFacultyControls = loadFacultyControls;
+window.MEILP.populateCollegeAndFacultyDropdowns = populateCollegeAndFacultyDropdowns;
+window.MEILP.updateFacultyDropdown = updateFacultyDropdown;
+window.MEILP.getSelectedCollege = getSelectedCollege;
+window.MEILP.getSelectedCollegeId = getSelectedCollegeId;
+window.MEILP.getSelectedFaculty = getSelectedFaculty;
+window.MEILP.getSelectedFacultyId = getSelectedFacultyId;
+window.MEILP.getDueDateState = getDueDateState;
+window.MEILP.updateDueDateBadges = updateDueDateBadges;
+window.MEILP.startDueDateBadgeTicker = startDueDateBadgeTicker;
+window.MEILP.stopDueDateBadgeTicker = stopDueDateBadgeTicker;
+window.MEILP.DUE_DATE_THRESHOLDS = DUE_DATE_THRESHOLDS;
+window.MEILP.DUE_STATE_CLASSES = DUE_STATE_CLASSES;
 
 // ─── Bind controls ────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", function () {
@@ -626,7 +1024,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (collegeSel) {
     collegeSel.addEventListener("change", async function () {
-      await updateFacultyDropdown(collegeSel.value);
+      if (getActiveRole() === "GUEST") return;
+      try {
+        window.localStorage.removeItem("meilp:selectedStudentFacultyId");
+        window.localStorage.removeItem("meilp:selectedStudentFaculty");
+      } catch(e) {}
+      await updateFacultyDropdown(collegeSel.value, "");
       const facId = getSelectedFacultyId();
       syncAndRenderControls(facId);
     });
@@ -634,6 +1037,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (facultySel) {
     facultySel.addEventListener("change", function () {
+      if (getActiveRole() === "GUEST") return;
       const activeCollege = currentLoadedColleges.find(c => c.collegeId === (collegeSel ? collegeSel.value : ""));
       const activeFaculty = currentLoadedFaculties.find(f => f.facultyId === facultySel.value);
       try {
@@ -665,6 +1069,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   if (btn) {
     btn.addEventListener("click", function () {
+      if (getActiveRole() === "GUEST") return;
       const facId = getSelectedFacultyId();
       syncAndRenderControls(facId);
     });
@@ -672,6 +1077,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Trigger initial cloud sync after dropdowns are populated
   populateCollegeAndFacultyDropdowns().then(() => {
+    if (getActiveRole() === "GUEST") return;
     const facId = getSelectedFacultyId();
     if (facId && facId !== "UNKNOWN") {
       syncAndRenderControls(facId);

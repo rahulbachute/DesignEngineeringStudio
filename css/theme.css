@@ -381,3 +381,79 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   MEILP — DYNAMIC DUE-DATE BADGE STYLES (Scoped to .due-date-badge)
+   ========================================================================== */
+.due-date-badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* 1. Safe: > 7 days remaining (soft/light green) */
+.due-date-badge.due-safe {
+  background-color: #d1e7dd !important;
+  color: #0f5132 !important;
+  border-color: #badbcc !important;
+}
+
+/* 2. Approaching: 3 to 7 days remaining (soft/light yellow) */
+.due-date-badge.due-approaching {
+  background-color: #fff3cd !important;
+  color: #664d03 !important;
+  border-color: #ffecb5 !important;
+}
+
+/* 3. Soon: 24 to 72 hours remaining (soft/light orange) */
+.due-date-badge.due-soon {
+  background-color: #ffe5d0 !important;
+  color: #8c3b00 !important;
+  border-color: #fed2b2 !important;
+}
+
+/* 4. Urgent: < 24 hours remaining (soft/light red) */
+.due-date-badge.due-urgent {
+  background-color: #f8d7da !important;
+  color: #842029 !important;
+  border-color: #f5c2c7 !important;
+}
+
+/* 5. Overdue: Due date passed (stronger red) */
+.due-date-badge.due-overdue {
+  background-color: #f1aeb5 !important;
+  color: #58151c !important;
+  border-color: #ea868f !important;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .due-date-badge.due-safe {
+  background-color: rgba(25, 135, 84, 0.2) !important;
+  color: #75b798 !important;
+  border-color: rgba(25, 135, 84, 0.4) !important;
+}
+
+[data-theme="dark"] .due-date-badge.due-approaching {
+  background-color: rgba(255, 193, 7, 0.2) !important;
+  color: #ffda6a !important;
+  border-color: rgba(255, 193, 7, 0.4) !important;
+}
+
+[data-theme="dark"] .due-date-badge.due-soon {
+  background-color: rgba(253, 126, 20, 0.2) !important;
+  color: #feb272 !important;
+  border-color: rgba(253, 126, 20, 0.4) !important;
+}
+
+[data-theme="dark"] .due-date-badge.due-urgent {
+  background-color: rgba(220, 53, 69, 0.2) !important;
+  color: #ea868f !important;
+  border-color: rgba(220, 53, 69, 0.4) !important;
+}
+
+[data-theme="dark"] .due-date-badge.due-overdue {
+  background-color: rgba(220, 53, 69, 0.35) !important;
+  color: #f1aeb5 !important;
+  border-color: rgba(220, 53, 69, 0.6) !important;
+}
