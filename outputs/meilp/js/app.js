@@ -774,6 +774,58 @@ async function updateFacultyDropdown(collegeId, explicitFacultyId) {
 // ─── Live assignment list (updated when JSON loads successfully) ───────────────
 let liveAssignments = ALL_ASSIGNMENTS;
 
+// ─── Direct Assignment Launch Guard ──────────────────────────────────────────
+function launchAssignment(assignmentId, event) {
+  if (event) {
+    if (typeof event.preventDefault === "function") event.preventDefault();
+    if (typeof event.stopPropagation === "function") event.stopPropagation();
+  }
+  const doAlert = function (msg) {
+    if (typeof window !== "undefined" && typeof window.alert === "function") {
+      window.alert(msg);
+    } else if (typeof alert === "function") {
+      alert(msg);
+    }
+  };
+  const activeRole = getActiveRole();
+  const collegeId = getSelectedCollegeId();
+  const facultyId = getSelectedFacultyId();
+  const isRegistered = isRegisteredCollege(collegeId);
+  const activeFaculties = (typeof window.MEILP?.getActiveFacultiesForCollege === "function" && isRegistered)
+    ? window.MEILP.getActiveFacultiesForCollege(collegeId)
+    : (currentLoadedFaculties || []).filter(f => f && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN" && (f.status === "ACTIVE" || !f.status));
+  const hasActiveFaculties = activeFaculties.length > 0;
+
+  if (activeRole === "STUDENT" || !activeRole) {
+    if (!collegeId || !isRegistered) {
+      doAlert("Please select your College before starting this assignment.");
+      const s = document.getElementById("studentCollegeSelect");
+      if (s) {
+        if (typeof s.scrollIntoView === "function") s.scrollIntoView({ behavior: "smooth" });
+        if (typeof s.focus === "function") s.focus();
+      }
+      return false;
+    }
+    if (hasActiveFaculties && (!facultyId || facultyId === "UNKNOWN")) {
+      doAlert("Please select your Faculty before starting this assignment.");
+      const s = document.getElementById("studentFacultySelect");
+      if (s) {
+        if (typeof s.scrollIntoView === "function") s.scrollIntoView({ behavior: "smooth" });
+        if (typeof s.focus === "function") s.focus();
+      }
+      return false;
+    }
+  }
+
+  const allList = (typeof liveAssignments !== "undefined" && Array.isArray(liveAssignments) && liveAssignments.length > 0)
+    ? liveAssignments
+    : ALL_ASSIGNMENTS;
+  const found = allList.find(a => a && a.id === assignmentId);
+  const targetPath = (found && found.launchPath) ? found.launchPath : `assignment-workbench.html?assignment=${encodeURIComponent(assignmentId)}`;
+  window.location.href = targetPath;
+  return true;
+}
+
 // ─── Main render function ─────────────────────────────────────────────────────
 function renderAssignmentCards(cards) {
   const grid = document.querySelector("[data-assignment-grid]");
@@ -900,17 +952,8 @@ function renderAssignmentCards(cards) {
       </div>`;
     }
 
-    const launchHandler = isNoCollegeSelected
-      ? `alert('Please select your College before starting this assignment.'); const s = document.getElementById('studentCollegeSelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }`
-      : (isFacultyNotSelected
-          ? `alert('Please select your Faculty before starting this assignment.'); const s = document.getElementById('studentFacultySelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }`
-          : `window.location.href='${launchUrl}'`);
-
-    const launchButton = isNoCollegeSelected
-      ? `<button class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation(); alert('Please select your College before starting this assignment.'); const s = document.getElementById('studentCollegeSelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</button>`
-      : (isFacultyNotSelected
-          ? `<button class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation(); alert('Please select your Faculty before starting this assignment.'); const s = document.getElementById('studentFacultySelect'); if (s) { s.scrollIntoView({ behavior: 'smooth' }); s.focus(); }"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</button>`
-          : `<a href="${launchUrl}" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation();"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</a>`);
+    const launchHandler = `window.MEILP.launchAssignment('${escapeHtml(card.id)}', event);`;
+    const launchButton = `<button type="button" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm" onclick="event.stopPropagation(); window.MEILP.launchAssignment('${escapeHtml(card.id)}', event);"><i class="bi bi-rocket-takeoff me-1"></i>Launch Workbench</button>`;
 
     return `<div class="col-12 col-md-6 col-lg-4">
       <article class="assignment-card h-100 d-flex flex-column justify-content-between p-4 shadow-sm border rounded-4 hover-shadow"
@@ -958,6 +1001,10 @@ window.MEILP.startDueDateBadgeTicker = startDueDateBadgeTicker;
 window.MEILP.stopDueDateBadgeTicker = stopDueDateBadgeTicker;
 window.MEILP.DUE_DATE_THRESHOLDS = DUE_DATE_THRESHOLDS;
 window.MEILP.DUE_STATE_CLASSES = DUE_STATE_CLASSES;
+window.MEILP.launchAssignment = launchAssignment;
+if (typeof window !== "undefined") {
+  window.launchAssignment = launchAssignment;
+}
 
 // ─── Bind controls ────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", function () {

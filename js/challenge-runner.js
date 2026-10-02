@@ -226,7 +226,7 @@ class ChallengeRunner {
             ${msg}
           </p>
           <div class="d-flex justify-content-center gap-3">
-            <a href="index.html#assignments" class="btn btn-primary rounded-pill px-4 py-2">
+            <a href="coursework.html" class="btn btn-primary rounded-pill px-4 py-2">
               <i class="bi bi-person-badge me-2"></i>Select Faculty
             </a>
           </div>
@@ -249,7 +249,7 @@ class ChallengeRunner {
             This assignment has been disabled by <strong>${window.MEILP.escapeHtml(facultyName)}</strong>. Students in this class cannot access or submit this coursework at this time.
           </p>
           <div>
-            <a href="index.html" class="btn btn-primary rounded-pill px-4">
+            <a href="coursework.html" class="btn btn-primary rounded-pill px-4">
               <i class="bi bi-arrow-left me-1"></i> Return to Assignment Catalog
             </a>
           </div>
