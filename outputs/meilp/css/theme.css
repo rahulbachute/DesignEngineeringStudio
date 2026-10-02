@@ -457,3 +457,108 @@ a {
   color: #f1aeb5 !important;
   border-color: rgba(220, 53, 69, 0.6) !important;
 }
+
+/* ─── MEILP Launch Prerequisite Validation Modal (Google Sites & Direct) ─── */
+.meilp-launch-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 1055;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 1;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.meilp-launch-modal-backdrop.d-none {
+  display: none !important;
+}
+
+.meilp-launch-modal-dialog {
+  width: 100%;
+  max-width: 440px;
+  margin: auto;
+  pointer-events: auto;
+  animation: meilpModalFadeIn 0.2s ease-out;
+}
+
+@keyframes meilpModalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.meilp-launch-modal-content {
+  background-color: var(--meilp-surface, #ffffff);
+  color: var(--meilp-text, #17212F);
+  border: 1px solid var(--meilp-border, #D9E1EA);
+  border-radius: 16px;
+  box-shadow: var(--meilp-shadow, 0 18px 45px rgba(11, 46, 89, 0.13));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.meilp-launch-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem 0.9rem;
+  border-bottom: 1px solid var(--meilp-border, #D9E1EA);
+}
+
+.meilp-launch-modal-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--meilp-text, #17212F);
+}
+
+.meilp-launch-modal-body {
+  padding: 1.25rem 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--meilp-text, #17212F);
+}
+
+.meilp-launch-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.75rem 1.25rem 1.25rem;
+  border-top: none;
+}
+
+.meilp-launch-modal-ok-btn {
+  min-width: 90px;
+  box-shadow: 0 4px 12px rgba(11, 46, 89, 0.2);
+}
+
+[data-theme="dark"] .meilp-launch-modal-content {
+  background-color: var(--meilp-surface, #182231);
+  color: var(--meilp-text, #EDF2F7);
+  border-color: var(--meilp-border, #2B3A4C);
+}
+
+[data-theme="dark"] .meilp-launch-modal-header {
+  border-bottom-color: var(--meilp-border, #2B3A4C);
+}
+
+[data-theme="dark"] .meilp-launch-modal-title,
+[data-theme="dark"] .meilp-launch-modal-body {
+  color: var(--meilp-text, #EDF2F7);
+}
+
+[data-theme="dark"] .meilp-launch-modal-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
