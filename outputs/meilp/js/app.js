@@ -820,6 +820,7 @@ function showLaunchValidationMessage(message, options) {
     modal.setAttribute("aria-modal", "true");
     modal.setAttribute("aria-labelledby", "meilpLaunchValidationTitle");
     modal.setAttribute("aria-describedby", "meilpLaunchValidationMessage");
+    modal.setAttribute("tabindex", "-1");
     modal.style.display = "none";
     modal.innerHTML = `
       <div class="meilp-launch-modal-dialog">
@@ -842,6 +843,11 @@ function showLaunchValidationMessage(message, options) {
         </div>
       </div>`;
     document.body.appendChild(modal);
+  } else {
+    // Ensure modal is attached directly to document.body to guarantee viewport-fixed containing block
+    if (modal.parentElement !== document.body && document.body) {
+      document.body.appendChild(modal);
+    }
   }
 
   const titleEl = document.getElementById("meilpLaunchValidationTitle");
@@ -852,6 +858,7 @@ function showLaunchValidationMessage(message, options) {
 
   modal.classList.remove("d-none");
   modal.style.display = "flex";
+  modal.setAttribute("tabindex", "-1");
 
   const okBtn = document.getElementById("meilpLaunchValidationOkBtn");
   const closeBtn = document.getElementById("meilpLaunchValidationCloseBtn");
@@ -861,7 +868,13 @@ function showLaunchValidationMessage(message, options) {
     modal.style.display = "none";
     if (okBtn) okBtn.removeEventListener("click", onOkClick);
     if (closeBtn) closeBtn.removeEventListener("click", onCloseClick);
-    document.removeEventListener("keydown", onKeyDown);
+    modal.removeEventListener("click", onBackdropClick);
+    if (typeof window !== "undefined") {
+      window.removeEventListener("keydown", onKeyDown, true);
+    }
+    if (typeof document !== "undefined") {
+      document.removeEventListener("keydown", onKeyDown, true);
+    }
 
     if (targetElementId) {
       const targetEl = document.getElementById(targetElementId);
@@ -892,12 +905,23 @@ function showLaunchValidationMessage(message, options) {
     cleanupAndDismiss();
   }
 
-  function onKeyDown(e) {
-    if (e.key === "Escape" || e.keyCode === 27) {
+  function onBackdropClick(e) {
+    if (e && e.target === modal) {
       if (typeof e.preventDefault === "function") e.preventDefault();
+      if (typeof e.stopPropagation === "function") e.stopPropagation();
       cleanupAndDismiss();
     }
   }
+
+  function onKeyDown(e) {
+    if (e.key === "Escape" || e.keyCode === 27 || e.key === "Esc") {
+      if (typeof e.preventDefault === "function") e.preventDefault();
+      if (typeof e.stopPropagation === "function") e.stopPropagation();
+      cleanupAndDismiss();
+    }
+  }
+
+  modal.addEventListener("click", onBackdropClick);
 
   if (okBtn) {
     okBtn.addEventListener("click", onOkClick, { once: true });
@@ -912,7 +936,21 @@ function showLaunchValidationMessage(message, options) {
   if (closeBtn) {
     closeBtn.addEventListener("click", onCloseClick, { once: true });
   }
-  document.addEventListener("keydown", onKeyDown);
+
+  try {
+    if (typeof modal.focus === "function") {
+      modal.focus({ preventScroll: true });
+    }
+  } catch (err) {
+    try { modal.focus(); } catch (e) {}
+  }
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("keydown", onKeyDown, true);
+  }
+  if (typeof document !== "undefined") {
+    document.addEventListener("keydown", onKeyDown, true);
+  }
 }
 
 // ─── Direct Assignment Launch Guard ──────────────────────────────────────────
@@ -1133,13 +1171,36 @@ window.MEILP.DUE_DATE_THRESHOLDS = DUE_DATE_THRESHOLDS;
 window.MEILP.DUE_STATE_CLASSES = DUE_STATE_CLASSES;
 window.MEILP.launchAssignment = launchAssignment;
 window.MEILP.showLaunchValidationMessage = showLaunchValidationMessage;
+// ─── Coursework Initial Scroll Position Helper ───────────────────────────────
+function initCourseworkScroll() {
+  if (typeof window !== "undefined" && window.MEILP && window.MEILP.isCourseworkPage) {
+    if (!window.__courseworkInitialScrollDone) {
+      window.__courseworkInitialScrollDone = true;
+      var hist = (typeof window !== "undefined" && window.history) || (typeof history !== "undefined" ? history : null);
+      if (hist && "scrollRestoration" in hist) {
+        hist.scrollRestoration = "manual";
+      }
+      if (typeof window.scrollTo === "function") {
+        window.scrollTo(0, 0);
+      }
+      if (typeof document !== "undefined") {
+        if (document.documentElement) document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+      }
+    }
+  }
+}
+
+window.MEILP.initCourseworkScroll = initCourseworkScroll;
 if (typeof window !== "undefined") {
   window.launchAssignment = launchAssignment;
   window.showLaunchValidationMessage = showLaunchValidationMessage;
+  window.initCourseworkScroll = initCourseworkScroll;
 }
 
 // ─── Bind controls ────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", function () {
+  initCourseworkScroll();
   // Render immediately with hardcoded list so page never shows blank
   renderAssignmentCards(ALL_ASSIGNMENTS);
 

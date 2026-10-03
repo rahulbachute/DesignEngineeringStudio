@@ -10,10 +10,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="css/theme.css?v=20261002c" rel="stylesheet">
-  <!-- Immediate direct navigation safety check -->
+  <link href="css/theme.css?v=20261003a" rel="stylesheet">
+  <!-- Immediate direct navigation safety check & initial scroll position -->
   <script>
     (function () {
+      try {
+        if (typeof history !== "undefined" && "scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+        if (typeof window !== "undefined" && !window.__courseworkInitialScrollDone) {
+          window.__courseworkInitialScrollDone = true;
+          if (typeof window.scrollTo === "function") {
+            window.scrollTo(0, 0);
+          }
+          if (document.documentElement) document.documentElement.scrollTop = 0;
+          if (document.body) document.body.scrollTop = 0;
+        }
+      } catch (e) {}
+
       try {
         var role = localStorage.getItem("meilp:activeRole");
         var norm = role ? String(role).trim().toUpperCase() : "";
@@ -405,22 +419,22 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/config.js?v=20261002c"></script>
-  <script src="js/storage.js?v=20261002c"></script>
-  <script src="js/assignment-control-service.js?v=20261002c"></script>
-  <script src="js/event-bus.js?v=20261002c"></script>
-  <script src="js/state-manager.js?v=20261002c"></script>
-  <script src="js/component-registry.js?v=20261002c"></script>
-  <script src="js/base-component.js?v=20261002c"></script>
-  <script src="js/progress-manager.js?v=20261002c"></script>
-  <script src="js/router.js?v=20261002c"></script>
-  <script src="js/assignment-loader.js?v=20261002c"></script>
-  <script src="js/navigation.js?v=20261002c"></script>
-  <script src="js/utils.js?v=20261002c"></script>
-  <script src="js/validator.js?v=20261002c"></script>
-  <script src="js/engine.js?v=20261002c"></script>
-  <script src="js/app.js?v=20261002c"></script>
-  <script src="faculty/js/data/auth.js?v=20261002c"></script>
+  <script src="js/config.js?v=20261003a"></script>
+  <script src="js/storage.js?v=20261003a"></script>
+  <script src="js/assignment-control-service.js?v=20261003a"></script>
+  <script src="js/event-bus.js?v=20261003a"></script>
+  <script src="js/state-manager.js?v=20261003a"></script>
+  <script src="js/component-registry.js?v=20261003a"></script>
+  <script src="js/base-component.js?v=20261003a"></script>
+  <script src="js/progress-manager.js?v=20261003a"></script>
+  <script src="js/router.js?v=20261003a"></script>
+  <script src="js/assignment-loader.js?v=20261003a"></script>
+  <script src="js/navigation.js?v=20261003a"></script>
+  <script src="js/utils.js?v=20261003a"></script>
+  <script src="js/validator.js?v=20261003a"></script>
+  <script src="js/engine.js?v=20261003a"></script>
+  <script src="js/app.js?v=20261003a"></script>
+  <script src="faculty/js/data/auth.js?v=20261003a"></script>
 
   <script>
     function handleSwitchRole(e) {
@@ -470,12 +484,37 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", syncCourseworkRole);
-    window.addEventListener("pageshow", syncCourseworkRole);
+    function resetCourseworkScrollToTopOnce() {
+      try {
+        if (typeof history !== "undefined" && "scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+        if (typeof window !== "undefined" && !window.__courseworkInitialScrollDone) {
+          window.__courseworkInitialScrollDone = true;
+          if (typeof window.scrollTo === "function") {
+            window.scrollTo(0, 0);
+          }
+          if (document.documentElement) document.documentElement.scrollTop = 0;
+          if (document.body) document.body.scrollTop = 0;
+        }
+      } catch (e) {}
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      resetCourseworkScrollToTopOnce();
+      syncCourseworkRole();
+    });
+    window.addEventListener("pageshow", function (event) {
+      if (event && event.persisted) {
+        window.__courseworkInitialScrollDone = false;
+        resetCourseworkScrollToTopOnce();
+      }
+      syncCourseworkRole();
+    });
   </script>
 
   <!-- MEILP Launch Prerequisite Validation Modal (Google Sites & Direct) -->
-  <div id="meilpLaunchValidationModal" class="meilp-launch-modal-backdrop d-none" role="alertdialog" aria-modal="true" aria-labelledby="meilpLaunchValidationTitle" aria-describedby="meilpLaunchValidationMessage" style="display: none;">
+  <div id="meilpLaunchValidationModal" class="meilp-launch-modal-backdrop d-none" role="alertdialog" aria-modal="true" tabindex="-1" aria-labelledby="meilpLaunchValidationTitle" aria-describedby="meilpLaunchValidationMessage" style="display: none;">
     <div class="meilp-launch-modal-dialog">
       <div class="meilp-launch-modal-content">
         <div class="meilp-launch-modal-header">
