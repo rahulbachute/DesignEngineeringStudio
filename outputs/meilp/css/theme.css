@@ -519,3 +519,42 @@ a {
 [data-theme="dark"] .meilp-launch-banner-close {
   filter: invert(1) grayscale(100%) brightness(200%);
 }
+
+/* ─── In-Flow Faculty Login Panel ────────────────────────────────────────────── */
+.faculty-login-panel {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--meilp-surface, #ffffff);
+  color: var(--meilp-text, #17212F);
+  border: 1px solid var(--meilp-border, #E2E8F0);
+  border-left: 5px solid var(--meilp-accent, #F28C28);
+  box-shadow: 0 6px 20px rgba(11, 46, 89, 0.08);
+}
+
+.faculty-login-panel.d-none {
+  display: none !important;
+}
+
+.faculty-login-panel-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--meilp-text, #17212F);
+}
+
+.faculty-login-close-btn {
+  font-size: 0.8rem;
+  transition: all 0.15s ease-in-out;
+}
+
+[data-theme="dark"] .faculty-login-panel {
+  background-color: var(--meilp-surface, #182231);
+  color: var(--meilp-text, #EDF2F7);
+  border-color: rgba(255, 255, 255, 0.12);
+  border-left-color: var(--meilp-accent, #F28C28);
+}
+
+[data-theme="dark"] .faculty-login-panel-title {
+  color: var(--meilp-text, #EDF2F7);
+}
+

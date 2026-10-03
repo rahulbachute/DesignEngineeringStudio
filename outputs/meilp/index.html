@@ -36,7 +36,7 @@
           <a href="faculty/register.html" class="btn btn-outline-primary fw-semibold px-3 py-1 me-lg-2 ms-lg-2 shadow-sm d-inline-flex align-items-center gap-1 rounded-pill" id="facultyRegisterBtn" style="font-size: 0.875rem; text-decoration: none;">
             <i class="bi bi-person-plus-fill" aria-hidden="true"></i> Register Faculty
           </a>
-          <button type="button" class="btn btn-warning fw-bold text-dark px-3 py-1 me-lg-2 shadow-sm d-inline-flex align-items-center gap-1 border-0 rounded-pill" id="facultyAccessBtn" style="font-size: 0.875rem;" data-bs-toggle="modal" data-bs-target="#facultyLoginModal">
+          <button type="button" class="btn btn-warning fw-bold text-dark px-3 py-1 me-lg-2 shadow-sm d-inline-flex align-items-center gap-1 border-0 rounded-pill" id="facultyAccessBtn" style="font-size: 0.875rem;" onclick="showFacultyLoginPanel();">
             <i class="bi bi-shield-lock-fill text-dark" aria-hidden="true"></i> Faculty Login
           </button>
           <button class="btn btn-icon ms-lg-1" type="button" data-theme-toggle aria-label="Toggle theme">
@@ -104,6 +104,44 @@
             </div>
           </div>
 
+          <!-- In-Flow Faculty Login Panel (Google Sites & Direct Embed Safe) -->
+          <div id="facultyLoginPanel" class="faculty-login-panel mt-4 p-4 rounded-4 d-none" style="display: none;" role="region" aria-labelledby="facultyLoginPanelTitle" data-legacy-id="facultyLoginModal">
+            <!-- Legacy modal reference: id="facultyLoginModal" -->
+            <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom" style="border-color: var(--meilp-border) !important;">
+              <h5 class="faculty-login-panel-title mb-0 d-flex align-items-center gap-2" id="facultyLoginPanelTitle">
+                <i class="bi bi-shield-lock-fill text-primary" aria-hidden="true"></i>
+                <span>Faculty Login</span>
+              </h5>
+              <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 d-inline-flex align-items-center gap-1 faculty-login-close-btn" id="facultyLoginCloseBtn" onclick="hideFacultyLoginPanel();" aria-label="Close Faculty Login">
+                <i class="bi bi-x-lg" aria-hidden="true"></i> Close
+              </button>
+            </div>
+
+            <form id="facultyLoginForm" onsubmit="event.preventDefault(); handleFacultyLoginAction(event); return false;">
+              <div class="mb-3">
+                <label for="facultyUsername" class="form-label fw-semibold">Faculty Username / Email / ID</label>
+                <input type="text" class="form-control" id="facultyUsername" required autocomplete="off" placeholder="Enter username or email" style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
+              </div>
+              <div class="mb-3">
+                <label for="facultyPassword" class="form-label fw-semibold">Password</label>
+                <input type="password" class="form-control" id="facultyPassword" required autocomplete="new-password" placeholder="Enter password" style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
+              </div>
+              <div class="alert alert-info py-2 px-3 mb-3 small opacity-75" style="background-color: rgba(13, 202, 240, 0.1); border-color: rgba(13, 202, 240, 0.2); color: var(--meilp-text);">
+                <i class="bi bi-info-circle me-1"></i> Guest Login: Username <code>Guest</code> | Password <code>Guest@123</code>
+              </div>
+              <div id="loginError" class="text-danger small d-none mb-3">Incorrect username or password.</div>
+              <button type="submit" id="btnGoToChallengeControls" class="btn btn-primary w-100 py-2 rounded-pill fw-semibold shadow-sm">
+                <i class="bi bi-journals me-1"></i>Login to Faculty Workspace
+              </button>
+              <div class="mt-3 text-center small border-top pt-3" style="border-color: var(--meilp-border) !important;">
+                <span class="text-muted">New Faculty Member?</span>
+                <a href="faculty/register.html" class="fw-semibold text-primary text-decoration-none ms-1">
+                  <i class="bi bi-person-plus me-1"></i>Register Profile
+                </a>
+              </div>
+            </form>
+          </div>
+
           <div class="mt-4 pt-3 border-top text-center text-muted small">
             <i class="bi bi-info-circle me-1"></i>Select your role to proceed to the dedicated workspace.
           </div>
@@ -134,38 +172,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="faculty/js/data/auth.js?v=20260831c"></script>
 
-  <!-- Faculty Login Modal -->
-  <div class="modal fade" id="facultyLoginModal" tabindex="-1" aria-labelledby="facultyLoginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="background-color: var(--meilp-surface); color: var(--meilp-text); border: 1px solid var(--meilp-border);">
-        <div class="modal-header" style="border-bottom-color: var(--meilp-border);">
-          <h5 class="modal-title" id="facultyLoginModalLabel"><i class="bi bi-shield-lock me-2"></i>Faculty Login</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="facultyLoginForm" onsubmit="event.preventDefault(); handleFacultyLoginAction(event); return false;">
-            <div class="mb-3">
-              <label for="facultyUsername" class="form-label">Username / Email / Faculty ID</label>
-              <input type="text" class="form-control" id="facultyUsername" required autocomplete="off" style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
-            </div>
-            <div class="mb-3">
-              <label for="facultyPassword" class="form-label">Password</label>
-              <input type="password" class="form-control" id="facultyPassword" required autocomplete="new-password" style="background-color: var(--meilp-background); color: var(--meilp-text); border-color: var(--meilp-border);">
-            </div>
-            <div class="alert alert-info py-2 px-3 mb-3 small opacity-75" style="background-color: rgba(13, 202, 240, 0.1); border-color: rgba(13, 202, 240, 0.2); color: var(--meilp-text);">
-              <i class="bi bi-info-circle me-1"></i> Guest Login: Username <code>Guest</code> | Password <code>Guest@123</code>
-            </div>
-            <div id="loginError" class="text-danger small d-none mb-3">Incorrect username or password.</div>
-            <button type="submit" id="btnGoToChallengeControls" class="btn btn-primary w-100"><i class="bi bi-journals me-1"></i>Login to Faculty Workspace</button>
-            <div class="mt-3 text-center small border-top pt-3" style="border-color: var(--meilp-border) !important;">
-              <span class="text-muted">New Faculty Member?</span>
-              <a href="faculty/register.html" class="fw-semibold text-primary text-decoration-none ms-1"><i class="bi bi-person-plus me-1"></i>Register Profile</a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Faculty Login in-flow panel is hosted inside #accessGateway -->
 
   <script>
     async function handleFacultyLoginAction(e) {
@@ -273,13 +280,51 @@
           return;
         }
 
-        const modalEl = document.getElementById("facultyLoginModal");
-        if (modalEl && window.bootstrap && typeof window.bootstrap.Modal === "function") {
-          const m = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-          m.show();
-        } else {
-          window.location.href = "faculty/challenges.html";
+        showFacultyLoginPanel();
+      }
+    }
+
+    function showFacultyLoginPanel() {
+      const panel = document.getElementById("facultyLoginPanel") || document.getElementById("facultyLoginModal");
+      if (!panel) return;
+
+      const loginError = document.getElementById("loginError");
+      if (loginError) loginError.classList.add("d-none");
+
+      const u = document.getElementById("facultyUsername");
+      const p = document.getElementById("facultyPassword");
+      if (u) u.value = "";
+      if (p) p.value = "";
+
+      panel.classList.remove("d-none");
+      panel.style.display = "block";
+
+      if (typeof panel.scrollIntoView === "function") {
+        panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+
+      if (u && typeof u.focus === "function") {
+        try {
+          u.focus({ preventScroll: true });
+        } catch(err) {
+          try { u.focus(); } catch(e) {}
         }
+      }
+    }
+
+    function hideFacultyLoginPanel() {
+      const panel = document.getElementById("facultyLoginPanel") || document.getElementById("facultyLoginModal");
+      if (!panel) return;
+
+      panel.classList.add("d-none");
+      panel.style.display = "none";
+
+      const loginError = document.getElementById("loginError");
+      if (loginError) loginError.classList.add("d-none");
+
+      const facultyBtn = document.getElementById("roleBtnFaculty");
+      if (facultyBtn && typeof facultyBtn.focus === "function") {
+        try { facultyBtn.focus({ preventScroll: true }); } catch(e) {}
       }
     }
 
@@ -295,19 +340,17 @@
 
     window.selectRole = selectRole;
     window.switchRole = switchRole;
+    window.showFacultyLoginPanel = showFacultyLoginPanel;
+    window.hideFacultyLoginPanel = hideFacultyLoginPanel;
+    window.handleFacultyLoginAction = handleFacultyLoginAction;
 
     document.addEventListener("DOMContentLoaded", () => {
       const loginForm = document.getElementById("facultyLoginForm");
-      const loginError = document.getElementById("loginError");
-      const modalEl = document.getElementById("facultyLoginModal");
+      const closeBtn = document.getElementById("facultyLoginCloseBtn");
 
-      if (modalEl) {
-        modalEl.addEventListener("show.bs.modal", () => {
-          if (loginError) loginError.classList.add("d-none");
-          const u = document.getElementById("facultyUsername");
-          const p = document.getElementById("facultyPassword");
-          if (u) u.value = "";
-          if (p) p.value = "";
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          hideFacultyLoginPanel();
         });
       }
 
@@ -316,6 +359,15 @@
           handleFacultyLoginAction(e);
         });
       }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" || e.keyCode === 27 || e.key === "Esc") {
+          const panel = document.getElementById("facultyLoginPanel") || document.getElementById("facultyLoginModal");
+          if (panel && !panel.classList.contains("d-none") && panel.style.display !== "none") {
+            hideFacultyLoginPanel();
+          }
+        }
+      });
 
       // Theme toggle
       const themeBtn = document.querySelector("[data-theme-toggle]");
