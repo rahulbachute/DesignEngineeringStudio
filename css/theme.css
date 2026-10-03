@@ -458,117 +458,64 @@ a {
   border-color: rgba(220, 53, 69, 0.6) !important;
 }
 
-/* ─── MEILP Launch Prerequisite Validation Modal (Google Sites & Direct) ─── */
-.meilp-launch-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
+/* ─── MEILP In-Flow Assignment Launch Validation Banner ──────────────────────── */
+.meilp-launch-validation-banner {
+  position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100%;
-  background-color: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  overflow: hidden;
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
   box-sizing: border-box;
-  opacity: 1;
-  transition: opacity 0.15s ease-in-out;
 }
 
-.meilp-launch-modal-backdrop.d-none {
+.meilp-launch-validation-banner.d-none {
   display: none !important;
 }
 
-.meilp-launch-modal-dialog {
-  position: relative;
-  z-index: 100000;
-  width: 100%;
-  max-width: 440px;
-  margin: auto;
-  pointer-events: auto;
-  box-sizing: border-box;
-  animation: meilpModalFadeIn 0.2s ease-out;
-}
-
-@keyframes meilpModalFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.meilp-launch-modal-content {
+.meilp-launch-banner-content {
   background-color: var(--meilp-surface, #ffffff);
   color: var(--meilp-text, #17212F);
-  border: 1px solid var(--meilp-border, #D9E1EA);
+  border: 2px solid var(--meilp-accent, #F28C28);
+  border-left-width: 6px;
   border-radius: 16px;
-  box-shadow: var(--meilp-shadow, 0 18px 45px rgba(11, 46, 89, 0.13));
-  overflow: hidden;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(11, 46, 89, 0.12);
   display: flex;
   flex-direction: column;
 }
 
-.meilp-launch-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem 1.25rem 0.9rem;
-  border-bottom: 1px solid var(--meilp-border, #D9E1EA);
+.meilp-launch-banner-icon {
+  font-size: 1.35rem;
+  line-height: 1;
 }
 
-.meilp-launch-modal-title {
-  font-size: 1.05rem;
-  font-weight: 600;
+.meilp-launch-banner-title {
+  font-size: 1.1rem;
+  font-weight: 700;
   color: var(--meilp-text, #17212F);
 }
 
-.meilp-launch-modal-body {
-  padding: 1.25rem 1.25rem;
+.meilp-launch-banner-text {
   font-size: 0.95rem;
   line-height: 1.55;
   color: var(--meilp-text, #17212F);
 }
 
-.meilp-launch-modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 0.75rem 1.25rem 1.25rem;
-  border-top: none;
-}
-
-.meilp-launch-modal-ok-btn {
+.meilp-launch-banner-ok-btn {
   min-width: 90px;
   box-shadow: 0 4px 12px rgba(11, 46, 89, 0.2);
 }
 
-[data-theme="dark"] .meilp-launch-modal-content {
+[data-theme="dark"] .meilp-launch-banner-content {
   background-color: var(--meilp-surface, #182231);
   color: var(--meilp-text, #EDF2F7);
-  border-color: var(--meilp-border, #2B3A4C);
+  border-color: var(--meilp-accent, #F28C28);
 }
 
-[data-theme="dark"] .meilp-launch-modal-header {
-  border-bottom-color: var(--meilp-border, #2B3A4C);
-}
-
-[data-theme="dark"] .meilp-launch-modal-title,
-[data-theme="dark"] .meilp-launch-modal-body {
+[data-theme="dark"] .meilp-launch-banner-title,
+[data-theme="dark"] .meilp-launch-banner-text {
   color: var(--meilp-text, #EDF2F7);
 }
 
-[data-theme="dark"] .meilp-launch-modal-close {
+[data-theme="dark"] .meilp-launch-banner-close {
   filter: invert(1) grayscale(100%) brightness(200%);
 }

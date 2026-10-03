@@ -1,21 +1,23 @@
 /**
- * MEILP — IN-PAGE LAUNCH VALIDATION MODAL & SCROLL-SAFE TEST SUITE
+ * MEILP — IN-FLOW LAUNCH VALIDATION BANNER & SCROLL-SAFE TEST SUITE
  * (Google Sites Embed & Direct Execution Compatible)
  * 
  * Validates:
  * 1. Test A: Initial coursework position starts at top (scroll position = 0), manual scroll restoration set, does not force to top after user scroll
- * 2. Test B: Modal while scrolled down: blocked launch, modal visible in viewport, scroll position preserved (no forced reset to top)
- * 3. Test C: Escape key dismisses modal while scrolled, focuses selector, unblocks page
- * 4. Test D: OK button dismisses modal, scrolls selector into view, and focuses selector
- * 5. Test E: Faculty validation while scrolled behaves identically for registered college with active faculties
- * 6. Test F: Valid student launch succeeds directly without modal or alert
+ * 2. Test B: In-flow banner appears when College missing while scrolled: blocked launch, banner visible in-flow, scroll position preserved
+ * 3. Test C: Escape key dismisses banner while scrolled, focuses selector, unblocks page
+ * 4. Test D: OK button dismisses banner, scrolls selector into view, and focuses selector
+ * 5. Test E: Faculty validation while scrolled: in-flow banner with exact Faculty message, OK dismissal brings faculty into view
+ * 6. Test F: Valid student launch succeeds directly without banner or alert
  * 7. Student with zero-faculty registered college -> launch permitted with UNKNOWN
  * 8. Guest -> Permitted direct launch (read-only mode intact, no college/faculty required)
  * 9. Static fallback cards in coursework.html and mirror use handleAssignmentLaunch guard
- * 10. Static modal markup in coursework.html and mirror has accessibility attributes
- * 11. Script cache-busting version tags bumped to 20261003a
- * 12. Modal styling exists in css/theme.css and mirror with fixed inset and high z-index
- * 13. Exact 1:1 file parity between root and outputs/meilp/ mirrors
+ * 10. Static banner markup in coursework.html and mirror has accessibility attributes (role="alert", aria-live="assertive", no fixed modal)
+ * 11. Script cache-busting version tags bumped to 20261003b
+ * 12. In-flow banner styling in css/theme.css and mirror with position: relative, no position: fixed
+ * 13. Repeated invalid assignment clicks do not create duplicate banners
+ * 14. Google Sites embed safety: banner in normal document flow, no parent-window code (no window.parent, window.top, postMessage)
+ * 15. Exact 1:1 file parity between root and outputs/meilp/ mirrors
  */
 
 const fs = require('fs');
@@ -23,7 +25,7 @@ const path = require('path');
 const assert = require('assert');
 
 console.log('================================================================');
-console.log('MEILP — IN-PAGE LAUNCH VALIDATION MODAL & SCROLL-SAFE TEST SUITE');
+console.log('MEILP — IN-FLOW LAUNCH VALIDATION BANNER TEST SUITE');
 console.log('(Google Sites Embed & Direct Browser Validation)');
 console.log('================================================================\n');
 
@@ -75,6 +77,7 @@ class DOMElementMock {
     this.focusOptions = null;
     this.scrolled = false;
     this.parentElement = null;
+    this.children = [];
     this.style = {};
     this.attributes = {};
     this.listeners = {};
@@ -108,10 +111,52 @@ class DOMElementMock {
       stopPropagation() {}
     }));
   }
-  getBoundingClientRect() {
-    if (this.id === 'meilpLaunchValidationModal') {
-      return { top: 0, bottom: 700, left: 0, right: 1000, width: 1000, height: 700 };
+  closest(sel) {
+    if (sel === '.assignment-card' && (this.classList.contains('assignment-card') || this.id.includes('Card'))) return this;
+    if (sel === '.col-12' && this.classList.contains('col-12')) return this;
+    if (this.parentElement && typeof this.parentElement.closest === 'function') {
+      return this.parentElement.closest(sel);
     }
+    return null;
+  }
+  insertBefore(newChild, refChild) {
+    if (newChild) {
+      if (newChild.parentElement && newChild.parentElement.children) {
+        newChild.parentElement.children = newChild.parentElement.children.filter(c => c !== newChild);
+      }
+      newChild.parentElement = this;
+      if (!this.children) this.children = [];
+      const idx = this.children.indexOf(refChild);
+      if (idx !== -1) {
+        this.children.splice(idx, 0, newChild);
+      } else {
+        this.children.push(newChild);
+      }
+    }
+    return newChild;
+  }
+  appendChild(child) {
+    if (child) {
+      if (child.parentElement && child.parentElement.children) {
+        child.parentElement.children = child.parentElement.children.filter(c => c !== child);
+      }
+      child.parentElement = this;
+      if (!this.children) this.children = [];
+      this.children.push(child);
+    }
+    return child;
+  }
+  querySelector(sel) {
+    for (const c of this.children) {
+      if (sel.includes(c.id)) return c;
+      if (typeof c.querySelector === 'function') {
+        const found = c.querySelector(sel);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+  getBoundingClientRect() {
     return { top: 240, bottom: 460, left: 280, right: 720, width: 440, height: 220 };
   }
 }
@@ -120,13 +165,18 @@ function createEnvironment(role = 'STUDENT') {
   const localStorage = new LocalStorageMock();
   if (role) localStorage.setItem('meilp:activeRole', role);
 
+  const mainContainer = new DOMElementMock('mainContainer', 'div');
+  const assignmentGrid = new DOMElementMock('assignmentGrid', 'div');
+  assignmentGrid.parentElement = mainContainer;
+  mainContainer.children.push(assignmentGrid);
+
   const elements = {
     studentCollegeSelect: new DOMElementMock('studentCollegeSelect', 'select'),
     studentFacultySelect: new DOMElementMock('studentFacultySelect', 'select'),
     btnShowAssignments: new DOMElementMock('btnShowAssignments', 'button'),
     facultyStatusBanner: new DOMElementMock('facultyStatusBanner', 'div'),
-    assignmentGrid: new DOMElementMock('assignmentGrid', 'div'),
-    meilpLaunchValidationModal: new DOMElementMock('meilpLaunchValidationModal', 'div'),
+    assignmentGrid: assignmentGrid,
+    meilpLaunchValidationBanner: new DOMElementMock('meilpLaunchValidationBanner', 'div'),
     meilpLaunchValidationTitle: new DOMElementMock('meilpLaunchValidationTitle', 'h5'),
     meilpLaunchValidationMessage: new DOMElementMock('meilpLaunchValidationMessage', 'p'),
     meilpLaunchValidationOkBtn: new DOMElementMock('meilpLaunchValidationOkBtn', 'button'),
@@ -135,8 +185,23 @@ function createEnvironment(role = 'STUDENT') {
 
   elements.studentCollegeSelect.innerHTML = '<option value="" disabled selected>Select Your College</option>';
   elements.studentFacultySelect.innerHTML = '<option value="" disabled selected>Select Your Faculty</option>';
-  elements.meilpLaunchValidationModal.classList.add('d-none');
-  elements.meilpLaunchValidationModal.style.display = 'none';
+  elements.meilpLaunchValidationBanner.classList.add('d-none');
+  elements.meilpLaunchValidationBanner.style.display = 'none';
+
+  // Attach banner children
+  elements.meilpLaunchValidationBanner.children.push(
+    elements.meilpLaunchValidationTitle,
+    elements.meilpLaunchValidationMessage,
+    elements.meilpLaunchValidationOkBtn,
+    elements.meilpLaunchValidationCloseBtn
+  );
+  elements.meilpLaunchValidationTitle.parentElement = elements.meilpLaunchValidationBanner;
+  elements.meilpLaunchValidationMessage.parentElement = elements.meilpLaunchValidationBanner;
+  elements.meilpLaunchValidationOkBtn.parentElement = elements.meilpLaunchValidationBanner;
+  elements.meilpLaunchValidationCloseBtn.parentElement = elements.meilpLaunchValidationBanner;
+
+  elements.meilpLaunchValidationBanner.parentElement = mainContainer;
+  mainContainer.children.unshift(elements.meilpLaunchValidationBanner);
 
   let redirectedTo = null;
   let nativeAlertCallCount = 0;
@@ -152,6 +217,7 @@ function createEnvironment(role = 'STUDENT') {
 
   const bodyMock = {
     scrollTop: 0,
+    children: [mainContainer],
     appendChild(el) {
       if (el) {
         el.parentElement = bodyMock;
@@ -160,7 +226,7 @@ function createEnvironment(role = 'STUDENT') {
     }
   };
 
-  elements.meilpLaunchValidationModal.parentElement = bodyMock;
+  mainContainer.parentElement = bodyMock;
 
   const docElMock = {
     scrollTop: 0
@@ -192,7 +258,7 @@ function createEnvironment(role = 'STUDENT') {
       getElementById(id) { return elements[id] || null; },
       querySelector(sel) {
         if (sel === '[data-assignment-grid]') return elements.assignmentGrid;
-        if (sel === '.meilp-launch-modal-dialog') return new DOMElementMock('dialog', 'div');
+        if (sel === '#meilpLaunchValidationBanner') return elements.meilpLaunchValidationBanner;
         return null;
       },
       querySelectorAll() { return []; },
@@ -258,6 +324,7 @@ function createEnvironment(role = 'STUDENT') {
     localStorage,
     docEl: docElMock,
     body: bodyMock,
+    mainContainer,
     getNativeAlertCallCount: () => nativeAlertCallCount,
     getLastNativeAlert: () => lastNativeAlert,
     getRedirection: () => redirectedTo
@@ -284,48 +351,43 @@ async function runTests() {
   // TEST A: Initial Coursework Position
   await test('TEST A — Initial coursework position starts at 0, sets manual restoration, and does not force scroll on user scroll', async () => {
     const env = createEnvironment('STUDENT');
-    // Simulate initial page load
     env.window.initCourseworkScroll();
     assert.strictEqual(env.window.history.scrollRestoration, 'manual', 'history.scrollRestoration must be manual');
     assert.strictEqual(env.window.scrollY, 0, 'window.scrollY must start at 0');
     assert.strictEqual(env.docEl.scrollTop, 0, 'docEl.scrollTop must be 0');
     assert.strictEqual(env.body.scrollTop, 0, 'body.scrollTop must be 0');
 
-    // User scrolls down substantially
     env.window.scrollY = 850;
     env.docEl.scrollTop = 850;
 
-    // Simulate subsequent operations: card render, dropdown change
     await env.window.MEILP.populateCollegeAndFacultyDropdowns();
     env.window.MEILP.renderAssignmentCards();
 
-    // Verify scroll position was NOT continuously forced to 0
     assert.strictEqual(env.window.scrollY, 850, 'User scroll position must be preserved after card render');
     assert.strictEqual(env.docEl.scrollTop, 850, 'docEl scroll position must be preserved');
   });
 
-  // TEST B: Modal while scrolled
-  await test('TEST B — Modal while scrolled: launch blocked, modal visible, scroll position not reset to top', async () => {
+  // TEST B: Missing College while scrolled -> in-flow banner appears
+  await test('TEST B — Missing College while scrolled: launch blocked, in-flow banner appears, exact message appears, scroll position preserved', async () => {
     const env = createEnvironment('STUDENT');
     env.window.initCourseworkScroll();
     await env.window.MEILP.populateCollegeAndFacultyDropdowns();
     env.window.MEILP.renderAssignmentCards();
 
-    // User scrolls down to card 10
     env.window.scrollY = 1200;
 
-    // Click assignment launch without selecting college
     const res = env.window.MEILP.launchAssignment('EA-01');
     assert.strictEqual(res, false, 'Launch must be blocked without college');
     assert.strictEqual(env.getNativeAlertCallCount(), 0, 'No native alert');
 
-    // Confirm modal is visible
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), false, 'Modal backdrop must be visible');
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.style.display, 'flex', 'Modal display must be flex');
-    assert.strictEqual(env.elements.meilpLaunchValidationTitle.textContent, 'College Selection Required');
+    // Confirm banner is visible
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), false, 'Banner must be visible');
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.style.display, 'block', 'Banner display must be block');
+    assert.strictEqual(env.elements.meilpLaunchValidationTitle.textContent, 'College Required');
+    assert.strictEqual(env.elements.meilpLaunchValidationMessage.textContent, 'Please select your College before starting this assignment.');
 
-    // Confirm page scroll position was NOT reset to top to show modal
-    assert.strictEqual(env.window.scrollY, 1200, 'Page must not be scrolled to top merely to show modal');
+    // Confirm page scroll position was NOT reset to top to show banner
+    assert.strictEqual(env.window.scrollY, 1200, 'Page must not be scrolled to top merely to show banner');
     assert.strictEqual(env.elements.studentCollegeSelect.scrolled, false, 'Target selector must not be scrolled prior to dismissal');
 
     // Confirm OK button received focus with preventScroll: true
@@ -334,7 +396,7 @@ async function runTests() {
   });
 
   // TEST C: Escape while scrolled
-  await test('TEST C — Escape key while scrolled closes modal, focuses selector, does not remain blocked', async () => {
+  await test('TEST C — Escape key while scrolled closes banner, focuses selector, does not remain blocked', async () => {
     const env = createEnvironment('STUDENT');
     env.window.initCourseworkScroll();
     await env.window.MEILP.populateCollegeAndFacultyDropdowns();
@@ -342,9 +404,8 @@ async function runTests() {
 
     env.window.scrollY = 900;
     env.window.MEILP.launchAssignment('EA-01');
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), false);
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), false);
 
-    // Simulate pressing Escape key
     const escEvent = {
       type: 'keydown',
       key: 'Escape',
@@ -354,17 +415,15 @@ async function runTests() {
     };
     env.window.dispatchEvent(escEvent);
 
-    // Confirm modal closes
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), true, 'Modal must be hidden after Escape');
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.style.display, 'none');
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), true, 'Banner must be hidden after Escape');
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.style.display, 'none');
 
-    // Confirm selector is scrolled into view and focused AFTER dismissal
     assert.strictEqual(env.elements.studentCollegeSelect.scrolled, true, 'College selector must be scrolled into view after Escape');
     assert.strictEqual(env.elements.studentCollegeSelect.focused, true, 'College selector must receive focus after Escape');
   });
 
   // TEST D: OK while scrolled
-  await test('TEST D — OK button while scrolled closes modal, scrolls selector into view, and focuses it', async () => {
+  await test('TEST D — OK button while scrolled closes banner, scrolls selector into view, and focuses it', async () => {
     const env = createEnvironment('STUDENT');
     env.window.initCourseworkScroll();
     await env.window.MEILP.populateCollegeAndFacultyDropdowns();
@@ -372,22 +431,19 @@ async function runTests() {
 
     env.window.scrollY = 950;
     env.window.MEILP.launchAssignment('EA-01');
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), false);
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), false);
 
-    // Click OK button
     env.elements.meilpLaunchValidationOkBtn.click();
 
-    // Confirm modal closes
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), true, 'Modal must be hidden after OK');
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.style.display, 'none');
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), true, 'Banner must be hidden after OK');
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.style.display, 'none');
 
-    // Confirm selector is scrolled into view and focused
     assert.strictEqual(env.elements.studentCollegeSelect.scrolled, true, 'College selector must be scrolled into view after OK');
     assert.strictEqual(env.elements.studentCollegeSelect.focused, true, 'College selector must receive focus after OK');
   });
 
-  // TEST E: Faculty validation while scrolled
-  await test('TEST E — Faculty validation while scrolled: launch blocked, modal visible, OK dismissal brings faculty into view', async () => {
+  // TEST E: Missing Faculty validation while scrolled
+  await test('TEST E — Missing Faculty validation while scrolled: launch blocked, banner visible, OK dismissal brings faculty into view', async () => {
     const env = createEnvironment('STUDENT');
     env.window.initCourseworkScroll();
     await env.window.MEILP.populateCollegeAndFacultyDropdowns();
@@ -400,15 +456,15 @@ async function runTests() {
     assert.strictEqual(res, false, 'Launch blocked without faculty');
     assert.strictEqual(env.getNativeAlertCallCount(), 0, 'No alert');
 
-    // Modal visible
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), false);
-    assert.strictEqual(env.elements.meilpLaunchValidationTitle.textContent, 'Faculty Selection Required');
+    // Banner visible
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), false);
+    assert.strictEqual(env.elements.meilpLaunchValidationTitle.textContent, 'Faculty Required');
     assert.strictEqual(env.elements.meilpLaunchValidationMessage.textContent, 'Please select your Faculty before starting this assignment.');
     assert.strictEqual(env.elements.studentFacultySelect.scrolled, false, 'Faculty select must NOT be scrolled before dismissal');
 
     // Dismiss with OK
     env.elements.meilpLaunchValidationOkBtn.click();
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), true);
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), true);
     assert.strictEqual(env.elements.studentFacultySelect.scrolled, true, 'Faculty select scrolled into view after OK');
     assert.strictEqual(env.elements.studentFacultySelect.focused, true, 'Faculty select focused after OK');
   });
@@ -426,7 +482,7 @@ async function runTests() {
     const res = env.window.MEILP.launchAssignment('EA-01');
     assert.strictEqual(res, true, 'Launch must succeed for valid student');
     assert.strictEqual(env.getNativeAlertCallCount(), 0, 'No alert');
-    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), true, 'Modal remains hidden');
+    assert.strictEqual(env.elements.meilpLaunchValidationBanner.classList.contains('d-none'), true, 'Banner remains hidden');
     assert.strictEqual(env.getRedirection(), 'assignment-workbench.html?assignment=EA-01');
   });
 
@@ -465,44 +521,72 @@ async function runTests() {
     assert.ok(mirrorCourseworkHtml.includes('handleAssignmentLaunch'), 'Mirror uses handleAssignmentLaunch guard');
   });
 
-  // Test 10: Static modal markup in coursework.html and mirror has accessibility attributes
-  await test('Test 10: coursework.html and mirror contain accessible in-page validation modal markup', async () => {
-    assert.ok(courseworkHtml.includes('id="meilpLaunchValidationModal"'), 'Modal id exists in coursework.html');
-    assert.ok(courseworkHtml.includes('role="alertdialog"'), 'role="alertdialog" exists in coursework.html');
-    assert.ok(courseworkHtml.includes('aria-modal="true"'), 'aria-modal="true" exists in coursework.html');
-    assert.ok(courseworkHtml.includes('tabindex="-1"'), 'tabindex="-1" exists in coursework.html');
+  // Test 10: Static banner markup in coursework.html and mirror has accessibility attributes
+  await test('Test 10: coursework.html and mirror contain accessible in-flow validation banner markup', async () => {
+    assert.ok(courseworkHtml.includes('id="meilpLaunchValidationBanner"'), 'Banner id exists in coursework.html');
+    assert.ok(courseworkHtml.includes('role="alert"'), 'role="alert" exists in coursework.html');
+    assert.ok(courseworkHtml.includes('aria-live="assertive"'), 'aria-live="assertive" exists in coursework.html');
     assert.ok(courseworkHtml.includes('id="meilpLaunchValidationTitle"'), 'Title element exists in coursework.html');
     assert.ok(courseworkHtml.includes('id="meilpLaunchValidationMessage"'), 'Message element exists in coursework.html');
     assert.ok(courseworkHtml.includes('id="meilpLaunchValidationOkBtn"'), 'OK button exists in coursework.html');
+    assert.ok(!courseworkHtml.includes('meilpLaunchValidationModal'), 'Old modal ID does not exist in coursework.html');
 
-    assert.ok(mirrorCourseworkHtml.includes('id="meilpLaunchValidationModal"'), 'Modal id exists in mirror');
-    assert.ok(mirrorCourseworkHtml.includes('role="alertdialog"'), 'role="alertdialog" exists in mirror');
-    assert.ok(mirrorCourseworkHtml.includes('aria-modal="true"'), 'aria-modal="true" exists in mirror');
-    assert.ok(mirrorCourseworkHtml.includes('tabindex="-1"'), 'tabindex="-1" exists in mirror');
+    assert.ok(mirrorCourseworkHtml.includes('id="meilpLaunchValidationBanner"'), 'Banner id exists in mirror');
+    assert.ok(mirrorCourseworkHtml.includes('role="alert"'), 'role="alert" exists in mirror');
+    assert.ok(mirrorCourseworkHtml.includes('aria-live="assertive"'), 'aria-live="assertive" exists in mirror');
+    assert.ok(!mirrorCourseworkHtml.includes('meilpLaunchValidationModal'), 'Old modal ID does not exist in mirror');
   });
 
   // Test 11: Script cache-busting version tags bumped
-  await test('Test 11: Script cache-busting version query string bumped to 20261003a', async () => {
-    assert.ok(courseworkHtml.includes('js/app.js?v=20261003a'), 'coursework.html has bumped app.js version');
-    assert.ok(mirrorCourseworkHtml.includes('js/app.js?v=20261003a'), 'outputs/meilp/coursework.html has bumped app.js version');
-    assert.ok(courseworkHtml.includes('css/theme.css?v=20261003a'), 'coursework.html has bumped theme.css version');
-    assert.ok(mirrorCourseworkHtml.includes('css/theme.css?v=20261003a'), 'outputs/meilp/coursework.html has bumped theme.css version');
+  await test('Test 11: Script cache-busting version query string bumped to 20261003b', async () => {
+    assert.ok(courseworkHtml.includes('js/app.js?v=20261003b'), 'coursework.html has bumped app.js version');
+    assert.ok(mirrorCourseworkHtml.includes('js/app.js?v=20261003b'), 'outputs/meilp/coursework.html has bumped app.js version');
+    assert.ok(courseworkHtml.includes('css/theme.css?v=20261003b'), 'coursework.html has bumped theme.css version');
+    assert.ok(mirrorCourseworkHtml.includes('css/theme.css?v=20261003b'), 'outputs/meilp/coursework.html has bumped theme.css version');
   });
 
-  // Test 12: Modal styling exists in css/theme.css and mirror
-  await test('Test 12: css/theme.css and mirror contain fixed viewport modal rules', async () => {
-    assert.ok(themeCss.includes('.meilp-launch-modal-backdrop'), 'themeCss has backdrop styles');
-    assert.ok(themeCss.includes('position: fixed'), 'themeCss backdrop has position: fixed');
-    assert.ok(themeCss.includes('z-index: 99999'), 'themeCss backdrop has high z-index');
-    assert.ok(themeCss.includes('.meilp-launch-modal-content'), 'themeCss has content styles');
-    assert.ok(mirrorThemeCss.includes('.meilp-launch-modal-backdrop'), 'mirrorThemeCss has backdrop styles');
-    assert.ok(mirrorThemeCss.includes('position: fixed'), 'mirrorThemeCss backdrop has position: fixed');
-    assert.ok(mirrorThemeCss.includes('z-index: 99999'), 'mirrorThemeCss backdrop has high z-index');
-    assert.ok(mirrorThemeCss.includes('.meilp-launch-modal-content'), 'mirrorThemeCss has content styles');
+  // Test 12: In-flow banner styling exists in css/theme.css and mirror
+  await test('Test 12: css/theme.css and mirror contain in-flow banner rules with position: relative', async () => {
+    assert.ok(themeCss.includes('.meilp-launch-validation-banner'), 'themeCss has banner styles');
+    assert.ok(themeCss.includes('position: relative'), 'themeCss banner has position: relative');
+    assert.ok(!themeCss.includes('.meilp-launch-modal-backdrop'), 'themeCss does not have old modal backdrop');
+    assert.ok(mirrorThemeCss.includes('.meilp-launch-validation-banner'), 'mirrorThemeCss has banner styles');
+    assert.ok(mirrorThemeCss.includes('position: relative'), 'mirrorThemeCss banner has position: relative');
+    assert.ok(!mirrorThemeCss.includes('.meilp-launch-modal-backdrop'), 'mirrorThemeCss does not have old modal backdrop');
   });
 
-  // Test 13: 1:1 Mirror parity between root and outputs/meilp/
-  await test('Test 13: Exact 1:1 parity between root files and outputs/meilp/ mirrors', async () => {
+  // Test 13: Repeated invalid assignment clicks do not create duplicate banners
+  await test('Test 13: Repeated invalid assignment clicks do not create duplicate banners', async () => {
+    const env = createEnvironment('STUDENT');
+    env.window.initCourseworkScroll();
+    await env.window.MEILP.populateCollegeAndFacultyDropdowns();
+    env.window.MEILP.renderAssignmentCards();
+
+    // Click assignment launch multiple times
+    env.window.MEILP.launchAssignment('EA-01');
+    env.window.MEILP.launchAssignment('EA-02');
+    env.window.MEILP.launchAssignment('EA-01');
+
+    // Only one banner exists with id meilpLaunchValidationBanner
+    const banner = env.elements.meilpLaunchValidationBanner;
+    assert.strictEqual(banner.classList.contains('d-none'), false, 'Banner remains visible');
+    assert.strictEqual(env.mainContainer.children.filter(c => c.id === 'meilpLaunchValidationBanner' || (c.children && c.children.some(sub => sub.id === 'meilpLaunchValidationBanner'))).length, 1, 'Only one validation banner exists');
+  });
+
+  // Test 14: No fixed-position modal or parent-window code
+  await test('Test 14: No fixed-position modal or parent-window code (Google Sites embed safety)', async () => {
+    assert.ok(!appJs.includes('window.parent'), 'app.js does not use window.parent');
+    assert.ok(!appJs.includes('window.top'), 'app.js does not use window.top');
+    assert.ok(!appJs.includes('postMessage'), 'app.js does not use postMessage');
+    assert.ok(!courseworkHtml.includes('window.parent'), 'coursework.html does not use window.parent');
+    assert.ok(!courseworkHtml.includes('window.top'), 'coursework.html does not use window.top');
+    assert.ok(!courseworkHtml.includes('postMessage'), 'coursework.html does not use postMessage');
+    assert.ok(!themeCss.includes('.meilp-launch-validation-banner { position: fixed'), 'theme.css banner is not fixed');
+    assert.ok(!themeCss.includes('.meilp-launch-validation-banner { position: sticky'), 'theme.css banner is not sticky');
+  });
+
+  // Test 15: 1:1 Mirror parity between root and outputs/meilp/
+  await test('Test 15: Exact 1:1 parity between root files and outputs/meilp/ mirrors', async () => {
     assert.strictEqual(courseworkHtml, mirrorCourseworkHtml, 'coursework.html matches outputs/meilp/coursework.html');
     assert.strictEqual(appJs, mirrorAppJs, 'js/app.js matches outputs/meilp/js/app.js');
     assert.strictEqual(challengeRunnerJs, mirrorChallengeRunnerJs, 'js/challenge-runner.js matches outputs/meilp/js/challenge-runner.js');
@@ -510,7 +594,7 @@ async function runTests() {
   });
 
   console.log('\n================================================================');
-  console.log(`IN-PAGE VALIDATION LAUNCH & SCROLL TESTS: ${passed}/${total} PASSED`);
+  console.log(`IN-FLOW VALIDATION BANNER TESTS: ${passed}/${total} PASSED`);
   console.log('================================================================\n');
 
   if (passed !== total) process.exit(1);

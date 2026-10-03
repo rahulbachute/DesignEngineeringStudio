@@ -774,15 +774,15 @@ async function updateFacultyDropdown(collegeId, explicitFacultyId) {
 // ─── Live assignment list (updated when JSON loads successfully) ───────────────
 let liveAssignments = ALL_ASSIGNMENTS;
 
-// ─── In-Page Validation Message Dialog (Google Sites & Direct) ────────────────
+// ─── In-Page Validation Message Banner (Google Sites & Direct) ────────────────
 function showLaunchValidationMessage(message, options) {
   options = options || {};
   let title = options.title;
   if (!title) {
     if (message && message.indexOf("College") !== -1) {
-      title = "College Selection Required";
+      title = "College Required";
     } else if (message && message.indexOf("Faculty") !== -1) {
-      title = "Faculty Selection Required";
+      title = "Faculty Required";
     } else {
       title = "Selection Required";
     }
@@ -811,43 +811,56 @@ function showLaunchValidationMessage(message, options) {
     return;
   }
 
-  let modal = document.getElementById("meilpLaunchValidationModal");
-  if (!modal) {
-    modal = document.createElement("div");
-    modal.id = "meilpLaunchValidationModal";
-    modal.className = "meilp-launch-modal-backdrop d-none";
-    modal.setAttribute("role", "alertdialog");
-    modal.setAttribute("aria-modal", "true");
-    modal.setAttribute("aria-labelledby", "meilpLaunchValidationTitle");
-    modal.setAttribute("aria-describedby", "meilpLaunchValidationMessage");
-    modal.setAttribute("tabindex", "-1");
-    modal.style.display = "none";
-    modal.innerHTML = `
-      <div class="meilp-launch-modal-dialog">
-        <div class="meilp-launch-modal-content">
-          <div class="meilp-launch-modal-header">
-            <div class="d-flex align-items-center gap-2">
-              <span class="meilp-launch-modal-icon" aria-hidden="true">
-                <i class="bi bi-exclamation-triangle-fill text-warning"></i>
-              </span>
-              <h5 class="meilp-launch-modal-title mb-0" id="meilpLaunchValidationTitle">Selection Required</h5>
-            </div>
-            <button type="button" class="btn-close meilp-launch-modal-close" id="meilpLaunchValidationCloseBtn" aria-label="Close"></button>
+  let banner = document.getElementById("meilpLaunchValidationBanner");
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "meilpLaunchValidationBanner";
+    banner.className = "meilp-launch-validation-banner col-12 d-none";
+    banner.setAttribute("role", "alert");
+    banner.setAttribute("aria-live", "assertive");
+    banner.style.display = "none";
+    banner.innerHTML = `
+      <div class="meilp-launch-banner-content">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="d-flex align-items-center gap-2">
+            <span class="meilp-launch-banner-icon text-warning" aria-hidden="true">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+            </span>
+            <h5 class="meilp-launch-banner-title mb-0" id="meilpLaunchValidationTitle">Selection Required</h5>
           </div>
-          <div class="meilp-launch-modal-body">
-            <p class="meilp-launch-modal-text mb-0" id="meilpLaunchValidationMessage"></p>
-          </div>
-          <div class="meilp-launch-modal-footer">
-            <button type="button" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold meilp-launch-modal-ok-btn" id="meilpLaunchValidationOkBtn">OK</button>
-          </div>
+          <button type="button" class="btn-close meilp-launch-banner-close" id="meilpLaunchValidationCloseBtn" aria-label="Close"></button>
+        </div>
+        <p class="meilp-launch-banner-text mb-3" id="meilpLaunchValidationMessage"></p>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold meilp-launch-banner-ok-btn" id="meilpLaunchValidationOkBtn">OK</button>
         </div>
       </div>`;
-    document.body.appendChild(modal);
-  } else {
-    // Ensure modal is attached directly to document.body to guarantee viewport-fixed containing block
-    if (modal.parentElement !== document.body && document.body) {
-      document.body.appendChild(modal);
+  }
+
+  // Determine placement: immediately above the clicked card or card list
+  let targetCardCol = null;
+  const grid = document.querySelector("[data-assignment-grid]");
+
+  if (options.event && options.event.target && typeof options.event.target.closest === "function") {
+    const card = options.event.target.closest(".assignment-card");
+    if (card) {
+      targetCardCol = (card.closest && card.closest(".col-12")) || card.parentElement;
     }
+  }
+
+  if (!targetCardCol && options.assignmentId && grid && typeof grid.querySelector === "function") {
+    const matching = grid.querySelector(`[onclick*="${options.assignmentId}"]`);
+    if (matching) {
+      targetCardCol = (matching.closest && matching.closest(".col-12")) || (matching.parentElement === grid ? matching : null);
+    }
+  }
+
+  if (targetCardCol && targetCardCol.parentElement) {
+    targetCardCol.parentElement.insertBefore(banner, targetCardCol);
+  } else if (grid && grid.parentElement) {
+    grid.parentElement.insertBefore(banner, grid);
+  } else if (document.body && banner.parentElement !== document.body) {
+    document.body.appendChild(banner);
   }
 
   const titleEl = document.getElementById("meilpLaunchValidationTitle");
@@ -856,19 +869,17 @@ function showLaunchValidationMessage(message, options) {
   const msgEl = document.getElementById("meilpLaunchValidationMessage");
   if (msgEl) msgEl.textContent = message;
 
-  modal.classList.remove("d-none");
-  modal.style.display = "flex";
-  modal.setAttribute("tabindex", "-1");
+  banner.classList.remove("d-none");
+  banner.style.display = "block";
 
   const okBtn = document.getElementById("meilpLaunchValidationOkBtn");
   const closeBtn = document.getElementById("meilpLaunchValidationCloseBtn");
 
   function cleanupAndDismiss() {
-    modal.classList.add("d-none");
-    modal.style.display = "none";
+    banner.classList.add("d-none");
+    banner.style.display = "none";
     if (okBtn) okBtn.removeEventListener("click", onOkClick);
     if (closeBtn) closeBtn.removeEventListener("click", onCloseClick);
-    modal.removeEventListener("click", onBackdropClick);
     if (typeof window !== "undefined") {
       window.removeEventListener("keydown", onKeyDown, true);
     }
@@ -905,14 +916,6 @@ function showLaunchValidationMessage(message, options) {
     cleanupAndDismiss();
   }
 
-  function onBackdropClick(e) {
-    if (e && e.target === modal) {
-      if (typeof e.preventDefault === "function") e.preventDefault();
-      if (typeof e.stopPropagation === "function") e.stopPropagation();
-      cleanupAndDismiss();
-    }
-  }
-
   function onKeyDown(e) {
     if (e.key === "Escape" || e.keyCode === 27 || e.key === "Esc") {
       if (typeof e.preventDefault === "function") e.preventDefault();
@@ -920,8 +923,6 @@ function showLaunchValidationMessage(message, options) {
       cleanupAndDismiss();
     }
   }
-
-  modal.addEventListener("click", onBackdropClick);
 
   if (okBtn) {
     okBtn.addEventListener("click", onOkClick, { once: true });
@@ -937,12 +938,8 @@ function showLaunchValidationMessage(message, options) {
     closeBtn.addEventListener("click", onCloseClick, { once: true });
   }
 
-  try {
-    if (typeof modal.focus === "function") {
-      modal.focus({ preventScroll: true });
-    }
-  } catch (err) {
-    try { modal.focus(); } catch (e) {}
+  if (typeof banner.scrollIntoView === "function") {
+    banner.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   if (typeof window !== "undefined") {
@@ -971,15 +968,19 @@ function launchAssignment(assignmentId, event) {
   if (activeRole === "STUDENT" || !activeRole) {
     if (!collegeId || !isRegistered) {
       showLaunchValidationMessage("Please select your College before starting this assignment.", {
-        title: "College Selection Required",
-        targetElementId: "studentCollegeSelect"
+        title: "College Required",
+        targetElementId: "studentCollegeSelect",
+        assignmentId: assignmentId,
+        event: event
       });
       return false;
     }
     if (hasActiveFaculties && (!facultyId || facultyId === "UNKNOWN")) {
       showLaunchValidationMessage("Please select your Faculty before starting this assignment.", {
-        title: "Faculty Selection Required",
-        targetElementId: "studentFacultySelect"
+        title: "Faculty Required",
+        targetElementId: "studentFacultySelect",
+        assignmentId: assignmentId,
+        event: event
       });
       return false;
     }
@@ -998,6 +999,11 @@ function launchAssignment(assignmentId, event) {
 function renderAssignmentCards(cards) {
   const grid = document.querySelector("[data-assignment-grid]");
   if (!grid) return;
+
+  const validationBanner = document.getElementById("meilpLaunchValidationBanner");
+  if (validationBanner && validationBanner.parentElement === grid && grid.parentElement) {
+    grid.parentElement.insertBefore(validationBanner, grid);
+  }
 
   // Update live list if a new set is passed in
   if (Array.isArray(cards) && cards.length > 0) liveAssignments = cards;
