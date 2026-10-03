@@ -219,8 +219,8 @@ async function runTests() {
     assert.strictEqual(env.elements.meilpLaunchValidationTitle.textContent, 'College Selection Required');
     assert.strictEqual(env.elements.meilpLaunchValidationMessage.textContent, 'Please select your College before starting this assignment.');
 
-    // Confirm target selector is scrolled
-    assert.strictEqual(env.elements.studentCollegeSelect.scrolled, true, 'College select must be scrolled into view');
+    // Confirm target selector is NOT scrolled before modal dismissal
+    assert.strictEqual(env.elements.studentCollegeSelect.scrolled, false, 'College select must NOT be scrolled before modal dismissal');
     assert.strictEqual(env.getRedirection(), null, 'Must NOT redirect to workbench');
   });
 
@@ -244,13 +244,13 @@ async function runTests() {
     assert.strictEqual(env.elements.meilpLaunchValidationTitle.textContent, 'Faculty Selection Required');
     assert.strictEqual(env.elements.meilpLaunchValidationMessage.textContent, 'Please select your Faculty before starting this assignment.');
 
-    // Confirm target selector is scrolled
-    assert.strictEqual(env.elements.studentFacultySelect.scrolled, true, 'Faculty select must be scrolled into view');
+    // Confirm target selector is NOT scrolled before modal dismissal
+    assert.strictEqual(env.elements.studentFacultySelect.scrolled, false, 'Faculty select must NOT be scrolled before modal dismissal');
     assert.strictEqual(env.getRedirection(), null, 'Must NOT redirect to workbench');
   });
 
-  // Test 3: Modal dismissal via OK button returns focus to target selector
-  await test('Dismissing modal via OK button hides modal and focuses selector', async () => {
+  // Test 3: Modal dismissal via OK button returns focus to target selector and scrolls it into view
+  await test('Dismissing modal via OK button hides modal, scrolls selector into view, and focuses selector', async () => {
     const env = createEnvironment('STUDENT');
     await env.window.MEILP.populateCollegeAndFacultyDropdowns();
     env.window.MEILP.renderAssignmentCards();
@@ -258,6 +258,7 @@ async function runTests() {
     // Trigger college validation modal
     env.window.MEILP.launchAssignment('EA-01');
     assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), false);
+    assert.strictEqual(env.elements.studentCollegeSelect.scrolled, false, 'College selector must NOT be scrolled before dismissal');
 
     // Click OK button
     env.elements.meilpLaunchValidationOkBtn.click();
@@ -266,8 +267,34 @@ async function runTests() {
     assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), true, 'Modal must be hidden after OK');
     assert.strictEqual(env.elements.meilpLaunchValidationModal.style.display, 'none');
 
-    // Confirm focus returned to College selector
+    // Confirm selector is scrolled into view and focused AFTER dismissal
+    assert.strictEqual(env.elements.studentCollegeSelect.scrolled, true, 'College selector must be scrolled into view after OK');
     assert.strictEqual(env.elements.studentCollegeSelect.focused, true, 'College selector must receive focus after OK');
+  });
+
+  // Test 3b: Faculty modal dismissal via OK button scrolls and focuses studentFacultySelect
+  await test('Dismissing faculty modal via OK button hides modal, scrolls faculty selector, and focuses it', async () => {
+    const env = createEnvironment('STUDENT');
+    await env.window.MEILP.populateCollegeAndFacultyDropdowns();
+    env.elements.studentCollegeSelect.value = 'COL001';
+    await env.window.MEILP.updateFacultyDropdown('COL001', '');
+    env.window.MEILP.renderAssignmentCards();
+
+    // Trigger faculty validation modal
+    env.window.MEILP.launchAssignment('EA-01');
+    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), false);
+    assert.strictEqual(env.elements.studentFacultySelect.scrolled, false, 'Faculty selector must NOT be scrolled before dismissal');
+
+    // Click OK button
+    env.elements.meilpLaunchValidationOkBtn.click();
+
+    // Confirm modal is dismissed
+    assert.strictEqual(env.elements.meilpLaunchValidationModal.classList.contains('d-none'), true, 'Modal must be hidden after OK');
+    assert.strictEqual(env.elements.meilpLaunchValidationModal.style.display, 'none');
+
+    // Confirm selector is scrolled into view and focused AFTER dismissal
+    assert.strictEqual(env.elements.studentFacultySelect.scrolled, true, 'Faculty selector must be scrolled into view after OK');
+    assert.strictEqual(env.elements.studentFacultySelect.focused, true, 'Faculty selector must receive focus after OK');
   });
 
   // Test 4: Student with valid college and faculty selection -> launch permitted

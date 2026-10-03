@@ -850,14 +850,6 @@ function showLaunchValidationMessage(message, options) {
   const msgEl = document.getElementById("meilpLaunchValidationMessage");
   if (msgEl) msgEl.textContent = message;
 
-  // Pre-scroll target element into view behind the modal
-  if (targetElementId) {
-    const targetEl = document.getElementById(targetElementId);
-    if (targetEl && typeof targetEl.scrollIntoView === "function") {
-      targetEl.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
   modal.classList.remove("d-none");
   modal.style.display = "flex";
 
@@ -909,7 +901,13 @@ function showLaunchValidationMessage(message, options) {
 
   if (okBtn) {
     okBtn.addEventListener("click", onOkClick, { once: true });
-    try { okBtn.focus(); } catch (err) {}
+    try {
+      if (typeof okBtn.focus === "function") {
+        okBtn.focus({ preventScroll: true });
+      }
+    } catch (err) {
+      try { okBtn.focus(); } catch (e) {}
+    }
   }
   if (closeBtn) {
     closeBtn.addEventListener("click", onCloseClick, { once: true });
