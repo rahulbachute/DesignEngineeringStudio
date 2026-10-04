@@ -15,24 +15,28 @@ class ChallengesEngine {
   initFacultyProfile() {
     const user = window.DESAuth?.getCurrentUser?.();
     if (user && user.facultyId && !user.isGuest) {
-      this.activeFaculty = user.facultyId;
+      this.activeFaculty = this.controlService.resolveFacultyId(user.facultyId);
     }
     const selector = document.getElementById("facultySelector");
-    if (selector && user) {
-      selector.value = user.facultyId || user.name || this.activeFaculty;
+    if (selector) {
+      if (this.activeFaculty && this.activeFaculty !== "FACULTY" && this.activeFaculty !== "UNKNOWN") {
+        selector.value = this.activeFaculty;
+      } else if (user) {
+        selector.value = this.controlService.resolveFacultyId(user.facultyId || user.name) || selector.value;
+      }
     }
   }
 
   getActiveFaculty() {
     const user = window.DESAuth?.getCurrentUser?.();
     if (user && user.facultyId && user.facultyId !== "GUEST") {
-      return user.facultyId;
+      return this.controlService.resolveFacultyId(user.facultyId);
     }
     const selector = document.getElementById("facultySelector");
     if (selector && selector.value) {
-      return selector.value;
+      return this.controlService.resolveFacultyId(selector.value);
     }
-    return this.activeFaculty || "FACULTY";
+    return this.controlService.resolveFacultyId(this.activeFaculty) || "FAC001";
   }
 
   getActiveFacultyName() {

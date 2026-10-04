@@ -269,17 +269,17 @@ async function runAllGatewayTests() {
   });
 
   // ---------------------------------------------------------------------------
-  // TEST 3: Registered college + 3 active faculties
-  // Expected: Faculty dropdown contains "Select Your Faculty", Faculty A, B, C
-  // Must NOT contain: Unassigned Faculty, UNKNOWN
+  // TEST 3: Registered college + active faculties
+  // Expected: Faculty dropdown contains "Select Your Faculty", Faculty A, B
+  // Must NOT contain: Unassigned Faculty, UNKNOWN, obsolete FAC003
   // ---------------------------------------------------------------------------
-  await test(3, 'Registered college + 3 active faculties -> Dropdown has active faculties only, NO Unassigned/UNKNOWN', async () => {
+  await test(3, 'Registered college + active faculties -> Dropdown has active faculties only, NO Unassigned/UNKNOWN', async () => {
     const client = setupClientContext();
     const faculties = client.window.MEILP.getActiveFacultiesForCollege('COL001');
 
-    assert.strictEqual(faculties.length, 3, 'COL001 must return exactly 3 active faculties');
+    assert.strictEqual(faculties.length, 2, 'COL001 must return exactly 2 active faculties');
     const facultyIds = faculties.map(f => f.facultyId);
-    assert.deepStrictEqual(facultyIds.sort(), ['FAC001', 'FAC002', 'FAC003']);
+    assert.deepStrictEqual(facultyIds.sort(), ['FAC001', 'FAC002']);
 
     // Must NOT contain UNKNOWN or inactive faculties
     assert.strictEqual(faculties.some(f => f.facultyId === 'UNKNOWN'), false, 'Must NOT contain UNKNOWN');

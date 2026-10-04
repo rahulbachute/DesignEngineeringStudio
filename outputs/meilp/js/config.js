@@ -154,17 +154,17 @@ window.MEILP.ACTIVE_COLLEGE_REGISTRY = [
 window.MEILP.ACTIVE_FACULTY_REGISTRY = [
   {
     facultyId: "FAC001",
-    facultyName: "Dr. Rahul Bachute",
+    facultyName: "Rahul Bachute",
     email: "rahul.bachute@dypic.in",
     collegeId: "COL001",
     collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
     department: "Mechanical Engineering",
-    role: "HOD",
+    role: "FACULTY",
     status: "ACTIVE"
   },
   {
     facultyId: "FAC002",
-    facultyName: "Dr. Niranjan Shegokar",
+    facultyName: "Dr Niranjan Shegokar",
     email: "niranjan.shegokar@dypic.in",
     collegeId: "COL001",
     collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
@@ -173,19 +173,9 @@ window.MEILP.ACTIVE_FACULTY_REGISTRY = [
     status: "ACTIVE"
   },
   {
-    facultyId: "FAC003",
-    facultyName: "Prof. Atul Gowardipe",
-    email: "atul.gowardipe@dypic.in",
-    collegeId: "COL001",
-    collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
-    department: "Mechanical Engineering",
-    role: "FACULTY",
-    status: "ACTIVE"
-  },
-  {
     facultyId: "FAC004",
-    facultyName: "Prof. Said Khandu",
-    email: "said.khandu@jcoe.edu.in",
+    facultyName: "Prof Khandu Said",
+    email: "saidkhandu@gmail.com",
     collegeId: "COL002",
     collegeName: "Jaihind College of Engineering",
     department: "Mechanical Engineering",
@@ -235,7 +225,7 @@ window.MEILP.getActiveFacultiesForCollege = function(collegeIdentifier) {
       seen.add(f.facultyId.toUpperCase());
       const fColId = String(f.collegeId || "").trim().toUpperCase();
       const fStatus = String(f.status || "ACTIVE").trim().toUpperCase();
-      if (fStatus === "ACTIVE" && fColId === effectiveColId && f.facultyId.toUpperCase() !== "UNKNOWN") {
+      if (fStatus === "ACTIVE" && fColId === effectiveColId && f.facultyId.toUpperCase() !== "UNKNOWN" && f.facultyId.toUpperCase() !== "FAC003") {
         result.push(f);
       }
     }

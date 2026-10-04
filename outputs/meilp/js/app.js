@@ -90,17 +90,17 @@ const ACTIVE_COLLEGE_REGISTRY = [
 const ACTIVE_FACULTY_REGISTRY = [
   {
     facultyId: "FAC001",
-    facultyName: "Dr. Rahul Bachute",
+    facultyName: "Rahul Bachute",
     email: "rahul.bachute@dypic.in",
     collegeId: "COL001",
     collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
     department: "Mechanical Engineering",
-    role: "HOD",
+    role: "FACULTY",
     status: "ACTIVE"
   },
   {
     facultyId: "FAC002",
-    facultyName: "Dr. Niranjan Shegokar",
+    facultyName: "Dr Niranjan Shegokar",
     email: "niranjan.shegokar@dypic.in",
     collegeId: "COL001",
     collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
@@ -109,19 +109,9 @@ const ACTIVE_FACULTY_REGISTRY = [
     status: "ACTIVE"
   },
   {
-    facultyId: "FAC003",
-    facultyName: "Prof. Atul Gowardipe",
-    email: "atul.gowardipe@dypic.in",
-    collegeId: "COL001",
-    collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
-    department: "Mechanical Engineering",
-    role: "FACULTY",
-    status: "ACTIVE"
-  },
-  {
     facultyId: "FAC004",
-    facultyName: "Prof. Said Khandu",
-    email: "said.khandu@jcoe.edu.in",
+    facultyName: "Prof Khandu Said",
+    email: "saidkhandu@gmail.com",
     collegeId: "COL002",
     collegeName: "Jaihind College of Engineering",
     department: "Mechanical Engineering",
@@ -166,7 +156,7 @@ async function fetchFacultyList(collegeId) {
   if (window.MEILP && typeof window.MEILP.getActiveFacultiesForCollege === "function") {
     const list = window.MEILP.getActiveFacultiesForCollege(collegeId);
     if (list && list.length > 0) {
-      return list.filter(f => f.status === "ACTIVE" && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN");
+      return list.filter(f => f.status === "ACTIVE" && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN" && f.facultyId.toUpperCase() !== "FAC003");
     }
   }
 
@@ -177,7 +167,7 @@ async function fetchFacultyList(collegeId) {
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-          return json.data.filter(f => f.status === "ACTIVE" && (!collegeId || String(f.collegeId).toUpperCase() === canonicalColId) && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN");
+          return json.data.filter(f => f.status === "ACTIVE" && (!collegeId || String(f.collegeId).toUpperCase() === canonicalColId) && f.facultyId && f.facultyId.toUpperCase() !== "UNKNOWN" && f.facultyId.toUpperCase() !== "FAC003");
         }
       }
     } catch (e) {
@@ -208,7 +198,7 @@ async function fetchFacultyList(collegeId) {
     if (f && f.facultyId && !seen.has(f.facultyId)) {
       seen.add(f.facultyId);
       const fColId = String(f.collegeId || "").trim().toUpperCase();
-      if (f.status === "ACTIVE" && fColId === canonicalColId && f.facultyId.toUpperCase() !== "UNKNOWN") {
+      if (f.status === "ACTIVE" && fColId === canonicalColId && f.facultyId.toUpperCase() !== "UNKNOWN" && f.facultyId.toUpperCase() !== "FAC003") {
         result.push(f);
       }
     }

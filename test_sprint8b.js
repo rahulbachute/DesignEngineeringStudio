@@ -188,17 +188,17 @@ async function main() {
     assert.strictEqual(elements.studentFacultySelect.value, "FAC001");
   });
 
-  // TEST 4: Valid profile collegeId = COL001, facultyId = FAC003 -> COL001 + FAC003 restored
-  await runAsyncTest("Valid profile (COL001 + FAC003) -> restored correctly without forcing FAC001", async () => {
+  // TEST 4: Valid profile collegeId = COL001, facultyId = FAC002 -> COL001 + FAC002 restored
+  await runAsyncTest("Valid profile (COL001 + FAC002) -> restored correctly without forcing FAC001", async () => {
     localStorage.clear();
     localStorage.setItem("meilp:studentProfile", JSON.stringify({
       collegeId: "COL001",
-      facultyId: "FAC003",
+      facultyId: "FAC002",
       registeredAt: "2026-08-21T09:00:00.000Z"
     }));
     await populateCollegeAndFacultyDropdowns();
     assert.strictEqual(elements.studentCollegeSelect.value, "COL001");
-    assert.strictEqual(elements.studentFacultySelect.value, "FAC003");
+    assert.strictEqual(elements.studentFacultySelect.value, "FAC002");
   });
 
   // TEST 5: Profile with UNKNOWN on registered college COL001 -> faculty cleared per Phase 2A

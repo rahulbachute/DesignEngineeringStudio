@@ -367,7 +367,7 @@ async function runTests() {
     const facultySel = elements['studentFacultySelect'];
     const btnShow = elements['btnShowAssignments'];
 
-    // Select COL001 (has 3 active faculties: FAC001, FAC002, FAC003)
+    // Select COL001 (has active faculties: FAC001, FAC002)
     collegeSel.value = 'COL001';
     await window.MEILP.updateFacultyDropdown('COL001');
     window.MEILP.renderAssignmentCards();
@@ -378,7 +378,7 @@ async function runTests() {
     assert.ok(facultySel.innerHTML.includes('Select Your Faculty'), 'Must contain placeholder Select Your Faculty');
     assert.ok(facultySel.innerHTML.includes('FAC001'), 'Must contain FAC001');
     assert.ok(facultySel.innerHTML.includes('FAC002'), 'Must contain FAC002');
-    assert.ok(facultySel.innerHTML.includes('FAC003'), 'Must contain FAC003');
+    assert.ok(!facultySel.innerHTML.includes('FAC003'), 'Must NOT contain FAC003');
 
     // Without selecting faculty, student is blocked
     facultySel.value = '';

@@ -268,7 +268,7 @@ async function main() {
 
     assert.strictEqual(env.elements.studentFacultySelect.value, '', 'Faculty selection must be reset to empty / placeholder');
     assert.ok(env.elements.studentFacultySelect.innerHTML.includes('Select Your Faculty'), 'Must have Select Your Faculty option');
-    assert.ok(env.elements.studentFacultySelect.innerHTML.includes('Dr. Rahul Bachute'), 'Must include active faculty');
+    assert.ok(env.elements.studentFacultySelect.innerHTML.includes('Rahul Bachute'), 'Must include active faculty');
     assert.ok(!env.elements.studentFacultySelect.innerHTML.includes('UNKNOWN'), 'Must NOT contain UNKNOWN');
     assert.ok(!env.elements.studentFacultySelect.innerHTML.includes('Unassigned Faculty'), 'Must NOT contain Unassigned Faculty');
     assert.ok(!env.elements.studentFacultySelect.innerHTML.includes('No Faculty'), 'Must NOT contain No Faculty');

@@ -178,7 +178,7 @@
           passwords: ["admin123", "des@admin123", "admin@123", "admin"],
           user: {
             facultyId: "ADMIN001",
-            facultyName: "Dr. Rahul Bachute",
+            facultyName: "Dr Rahul P Bachute",
             email: "bachuterahul@gmail.com",
             loginId: "bachuterahul@gmail.com",
             collegeId: "COL001",
@@ -192,11 +192,11 @@
         },
         // Faculty Account (FAC001 for DME Coursework & Evaluation)
         {
-          loginIds: ["rahul.bachute@dypic.in", "fac001", "rahul.bachute"],
+          loginIds: ["rahul.bachute@dypic.in", "fac001", "rahul.bachute", "rahul bachute"],
           passwords: ["dypic123", "admin123", "rahul123", "dypic@123"],
           user: {
             facultyId: "FAC001",
-            facultyName: "Dr. Rahul Bachute",
+            facultyName: "Rahul Bachute",
             email: "rahul.bachute@dypic.in",
             loginId: "rahul.bachute@dypic.in",
             collegeId: "COL001",
@@ -209,11 +209,11 @@
           }
         },
         {
-          loginIds: ["niranjan.shegokar@dypic.in", "fac002", "dr. niranjan shegokar"],
+          loginIds: ["niranjan.shegokar@dypic.in", "fac002", "dr. niranjan shegokar", "dr niranjan shegokar", "niranjan shegokar"],
           passwords: ["dypic123", "admin123"],
           user: {
             facultyId: "FAC002",
-            facultyName: "Dr. Niranjan Shegokar",
+            facultyName: "Dr Niranjan Shegokar",
             email: "niranjan.shegokar@dypic.in",
             loginId: "niranjan.shegokar@dypic.in",
             collegeId: "COL001",
@@ -226,24 +226,7 @@
           }
         },
         {
-          loginIds: ["atul.gowardipe@dypic.in", "fac003", "prof. atul gowardipe"],
-          passwords: ["dypic123", "admin123"],
-          user: {
-            facultyId: "FAC003",
-            facultyName: "Prof. Atul Gowardipe",
-            email: "atul.gowardipe@dypic.in",
-            loginId: "atul.gowardipe@dypic.in",
-            collegeId: "COL001",
-            collegeName: "Ajeenkya D.Y. Patil School of Engineering, Lohegaon",
-            department: "Mechanical Engineering",
-            role: "FACULTY",
-            status: "ACTIVE",
-            isAuthenticated: true,
-            isGuest: false
-          }
-        },
-        {
-          loginIds: ["saidkhandu@gmail.com", "said.khandu@jcoe.edu.in", "fac004", "prof. said khandu", "prof khandu said"],
+          loginIds: ["saidkhandu@gmail.com", "said.khandu@jcoe.edu.in", "fac004", "prof. said khandu", "prof khandu said", "khandu said"],
           passwords: ["Jaihind@123", "jaihind123", "jcoe123", "admin123"],
           user: {
             facultyId: "FAC004",

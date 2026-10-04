@@ -54,6 +54,22 @@ class AssignmentControlService {
       return trimmed.toUpperCase();
     }
 
+    const lower = trimmed.toLowerCase();
+
+    // Backward-compatibility resolver for legacy faculty name strings
+    if (lower === "dr. rahul bachute" || lower === "dr rahul bachute" || lower === "rahul bachute") {
+      return "FAC001";
+    }
+    if (lower === "dr rahul p bachute" || lower === "dr. rahul p bachute" || lower === "bachuterahul@gmail.com") {
+      return "ADMIN001";
+    }
+    if (lower === "dr niranjan shegokar" || lower === "dr. niranjan shegokar" || lower === "niranjan shegokar") {
+      return "FAC002";
+    }
+    if (lower === "prof khandu said" || lower === "prof. khandu said" || lower === "prof said khandu" || lower === "prof. said khandu" || lower === "khandu said" || lower === "saidkhandu@gmail.com") {
+      return "FAC004";
+    }
+
     // Registry lookup
     const registries = [];
     if (typeof ACTIVE_FACULTY_REGISTRY !== "undefined" && Array.isArray(ACTIVE_FACULTY_REGISTRY)) {
@@ -75,7 +91,6 @@ class AssignmentControlService {
       }
     } catch (e) { }
 
-    const lower = trimmed.toLowerCase();
     const match = registries.find(f =>
       f && (
         (f.facultyId && f.facultyId.toLowerCase() === lower) ||
@@ -91,11 +106,10 @@ class AssignmentControlService {
 
     // Default Institutional Registry (offline fallback if cloud registry is syncing)
     const DEFAULT_INSTITUTIONAL_REGISTRY = [
-      { facultyId: "ADMIN001", facultyName: "System Administrator", email: "bachuterahul@gmail.com", role: "ADMIN" },
-      { facultyId: "FAC001", facultyName: "Dr. Rahul Bachute", email: "rahul.bachute@dypic.in", role: "FACULTY" },
-      { facultyId: "FAC002", facultyName: "Dr. Niranjan Shegokar", email: "niranjan.shegokar@dypic.in", role: "FACULTY" },
-      { facultyId: "FAC003", facultyName: "Prof. Atul Gowardipe", email: "atul.gowardipe@dypic.in", role: "FACULTY" },
-      { facultyId: "FAC004", facultyName: "Prof. Said Khandu", email: "saidkhandu@gmail.com", role: "FACULTY" }
+      { facultyId: "ADMIN001", facultyName: "Dr Rahul P Bachute", email: "bachuterahul@gmail.com", role: "ADMIN" },
+      { facultyId: "FAC001", facultyName: "Rahul Bachute", email: "rahul.bachute@dypic.in", role: "FACULTY" },
+      { facultyId: "FAC002", facultyName: "Dr Niranjan Shegokar", email: "niranjan.shegokar@dypic.in", role: "FACULTY" },
+      { facultyId: "FAC004", facultyName: "Prof Khandu Said", email: "saidkhandu@gmail.com", role: "FACULTY" }
     ];
 
     const defaultMatch = DEFAULT_INSTITUTIONAL_REGISTRY.find(f =>
@@ -257,13 +271,32 @@ class AssignmentControlService {
 
     try {
       const sep = endpoint.includes("?") ? "&" : "?";
-      const res = await fetch(`${endpoint}${sep}action=getAssignmentControls&facultyId=${encodeURIComponent(canonicalId)}`, {
+      let res = await fetch(`${endpoint}${sep}action=getAssignmentControls&facultyId=${encodeURIComponent(canonicalId)}`, {
         signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined
       });
+      let json = null;
       if (res.ok) {
-        const json = await res.json();
-        if (json && json.success && Array.isArray(json.data)) {
-          const map = this.getFacultyControlsMap(canonicalId);
+        json = await res.json();
+      }
+
+      // Backward-compatibility resolver: If cloud returns empty for FAC001,
+      // query legacy identifier "Dr. Rahul Bachute" and populate canonical FAC001
+      if ((!json || !json.success || !Array.isArray(json.data) || json.data.length === 0) && canonicalId === "FAC001") {
+        try {
+          const fbRes = await fetch(`${endpoint}${sep}action=getAssignmentControls&facultyId=${encodeURIComponent("Dr. Rahul Bachute")}`, {
+            signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined
+          });
+          if (fbRes.ok) {
+            const fbJson = await fbRes.json();
+            if (fbJson && fbJson.success && Array.isArray(fbJson.data) && fbJson.data.length > 0) {
+              json = fbJson;
+            }
+          }
+        } catch (fbErr) {}
+      }
+
+      if (json && json.success && Array.isArray(json.data)) {
+        const map = this.getFacultyControlsMap(canonicalId);
           json.data.forEach((item) => {
             if (item && item.assignmentId) {
               map[item.assignmentId] = {
@@ -278,10 +311,9 @@ class AssignmentControlService {
           const canonicalKey = `${this.storageNamespace}:${canonicalId}`;
           try {
             window.localStorage.setItem(canonicalKey, JSON.stringify(map));
-          } catch { }
+          } catch (e) { }
           return json.data;
         }
-      }
     } catch (e) {
       console.warn("[AssignmentControlService] Cloud fetch failed, using cached controls:", e.message);
     }

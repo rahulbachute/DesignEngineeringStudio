@@ -198,6 +198,10 @@ function routeAction(action, payload) {
     case "updateAssignmentControl":
       return saveAssignmentControl(payload);
 
+    case "migrateFacultyCanonicalIdentity":
+    case "migrateFacultyIdentity":
+      return migrateFacultyCanonicalIdentity();
+
     case "health":
       return response(healthCheck());
 
