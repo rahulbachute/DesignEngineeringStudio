@@ -203,7 +203,7 @@ class ChallengeRunner {
       this.setAttemptModeLabel(mode);
       this.renderDashboard();
     } else {
-      if (this.assignmentSlug === "helical-gear-design" || this.assignmentSlug === "spur-gear-design" || this.assignmentSlug === "gear-comparison" || (this.config && (this.config.id === "EA-TS-01" || this.config.id === "EA-TS-02" || this.config.id === "EA-TS-03")) || (this.config && this.config.settings && this.config.settings.directStudentForm)) {
+      if (this.assignmentSlug === "helical-gear-design" || this.assignmentSlug === "spur-gear-design" || this.assignmentSlug === "gear-comparison" || this.assignmentSlug === "automotive-spur-gear-analysis" || (this.config && (this.config.id === "EA-TS-01" || this.config.id === "EA-TS-02" || this.config.id === "EA-TS-03" || this.config.id === "EA-TS-04")) || (this.config && this.config.settings && this.config.settings.directStudentForm)) {
         const mode = (this.config && this.config.settings && this.config.settings.defaultAttemptMode) || "individual";
         this.services.stateManager.update((s) => ({ settings: { ...s.settings, attemptMode: mode } }));
         this.setAttemptModeLabel(mode);

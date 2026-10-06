@@ -298,6 +298,20 @@
       "slug": "gear-comparison",
       "co": "CO1",
       "weightage": "12 Marks"
+    },
+    {
+      "id": "EA-TS-04",
+      "title": "Analysis of Spur Gears in a Car Transmission System",
+      "discipline": "Transmission System Design",
+      "summary": "Engineering challenge to analyse and verify reverse spur gears in a passenger-car manual transmission, determining kinematic parameters, tangential and radial forces, velocity factor, effective load, Lewis beam strength, Buckingham wear strength, failure diagnosis, and redesign recommendations.",
+      "status": "Ready",
+      "tasks": 12,
+      "icon": "bi-gear-wide-connected",
+      "configPath": "assignments/automotive-spur-gear-analysis/config.json",
+      "launchPath": "assignment-workbench.html?assignment=automotive-spur-gear-analysis",
+      "slug": "automotive-spur-gear-analysis",
+      "co": "CO1",
+      "weightage": "12 Marks"
     }
   ]
 }

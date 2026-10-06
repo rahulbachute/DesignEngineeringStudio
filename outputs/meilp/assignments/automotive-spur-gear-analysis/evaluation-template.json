@@ -1,0 +1,19 @@
+{
+  "assignmentId": "EA-TS-04",
+  "assignmentTitle": "Analysis of Spur Gears in a Car Transmission System",
+  "maxTotalMarks": 12.0,
+  "courseOutcome": "CO1",
+  "criteria": [
+    { "id": "ts04-act-1", "name": "Task 1: Automotive transmission requirement & torque", "category": "Charter & Setup", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS04-C01" },
+    { "id": "ts04-act-2", "name": "Task 2: Gear ratio, geometry & pitch dimensions", "category": "Kinematics", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS04-C02" },
+    { "id": "ts04-act-3", "name": "Task 3: Spur gear force analysis", "category": "Force Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS04-C03" },
+    { "id": "ts04-act-4", "name": "Task 4: Velocity factor & effective load", "category": "Dynamic Load", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS04-C04" },
+    { "id": "ts04-act-5", "name": "Task 5: Lewis form factor & weaker member", "category": "Bending Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS04-C05" },
+    { "id": "ts04-act-6", "name": "Task 6: Lewis beam strength & bending FOS", "category": "Bending Safety", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS04-C06" },
+    { "id": "ts04-act-7", "name": "Task 7: Buckingham wear strength & wear FOS", "category": "Wear Analysis", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS04-C07" },
+    { "id": "ts04-act-8", "name": "Task 8: Failure diagnosis & adequacy assessment", "category": "Failure Diagnosis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS04-C08" },
+    { "id": "ts04-act-9", "name": "Task 9: Deterministic engineering conclusion", "category": "Design Decision", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS04-C09" },
+    { "id": "ts04-act-10", "name": "Task 10: Engineering recommendation & justification", "category": "Recommendation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS04-C10" },
+    { "id": "ts04-act-11", "name": "Task 11: Professional synthesis & reflection", "category": "Synthesis", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS04-C11" }
+  ]
+}

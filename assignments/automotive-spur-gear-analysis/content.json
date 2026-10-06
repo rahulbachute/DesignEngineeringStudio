@@ -1,0 +1,535 @@
+{
+  "assignment": {
+    "id": "EA-TS-04",
+    "slug": "automotive-spur-gear-analysis",
+    "title": "Analysis of Spur Gears in a Car Transmission System"
+  },
+  "dashboard": {
+    "projectCode": "EA-TS-04",
+    "projectTitle": "Analysis of Spur Gears in a Car Transmission System",
+    "courseCode": "PCC353-MEC",
+    "courseName": "Transmission System Design",
+    "unit": "Unit I — Spur and Helical Gears",
+    "difficultyLevel": "Advanced",
+    "estimatedDuration": "75–90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO1: Apply principle of Spur & Helical gear design for industrial application.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5, L6",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "reverse-gear-asset",
+      "title": "Automotive Reverse Gear Transmission Schematic & Power Flow",
+      "path": "assignments/automotive-spur-gear-analysis/images/EA-TS-04_Final_Corrected.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "reverse-gear-asset-faculty",
+      "title": "Automotive Reverse Gear Transmission Master Schematic",
+      "path": "assignments/automotive-spur-gear-analysis/images/EA-TS-04_Automotive_Reverse_Gear_Faculty.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "activities": {
+    "project-charter": {
+      "title": "1. Engineering Problem Charter & Technical Scope",
+      "cards": [
+        {
+          "type": "info",
+          "title": "Automotive Engineering Scenario & Power Transmission Brief",
+          "body": "You act as a Mechanical Transmission Design Engineer investigating the reverse gear mechanism of a passenger-car manual transmission. The transmission kinematic arrangement is:\n• Engine / Input Shaft (N1 = 1200 rpm, P = 8.0 kW)\n  ↓\n• Reverse Driving Spur Gear (Pinion, z1 = 20 teeth)\n  ↓\n• Reverse Idler Gear (Direction Inverter, z_idler teeth)\n  ↓\n• Reverse Driven Spur Gear (Output Gear, z2 = 60 teeth, N2 = 400 rpm)\n  ↓\n• Output Shaft to Final Drive\n\nThe reverse idler changes the direction of rotation to achieve reverse vehicle motion, but does not alter the transmission speed ratio (i = N1 / N2 = 3.00). The student must verify whether the selected spur-gear pair is structurally and tribologically adequate."
+        },
+        {
+          "type": "theory",
+          "title": "Central Engineering Question & Technical Scope",
+          "body": "Central Engineering Question:\n\"Can the selected spur-gear pair safely transmit the required power and torque without bending or wear failure, and what engineering modification should be recommended if a criterion is not satisfied?\"\n\nTechnical Specifications (Frozen Dataset):\n• Transmitted Power: P = 8.0 kW\n• Input Pinion Speed: N1 = 1200 rpm\n• Output Gear Speed: N2 = 400 rpm (Ratio i = 3.00)\n• Tooth Numbers: Pinion z1 = 20, Gear z2 = 60\n• Standard Module: m = 3.0 mm, Face Width: b = 50.0 mm\n• Pressure Angle: phi = 20° Full-Depth Involute\n• Service Factor: Cs = 1.50, Load Concentration Factor: Km = 1.25\n• Target Safety Factor: [FOS] = 1.50\n• Pinion Material: Sut1 = 700 MPa, Surface Hardness = 350 BHN\n• Gear Material: Sut2 = 600 MPa, Surface Hardness = 350 BHN\n• SPPU Syllabus Boundary: Unit I — Spur and Helical Gears (No numerical on force analysis of helical)."
+        },
+        {
+          "type": "warning",
+          "title": "Engineering Responsibility & Failure Mode Implications",
+          "body": "In automotive transmission systems, reverse gear trains experience severe shock torques during vehicle maneuvering and clutch engagement. Tooth bending fatigue failure leads to instantaneous tooth shearing, immobilizing the vehicle. In contrast, surface fatigue (wear and pitting) causes progressive tooth spalling, severe whine noise, and loss of involute profile conjugate action. The design engineer must evaluate both Lewis beam strength and Buckingham wear durability against the authoritative target [FOS] = 1.50."
+        }
+      ],
+      "acceptanceText": "I confirm my technical role as Mechanical Transmission Design Engineer. I acknowledge the automotive reverse spur gear problem charter, the SPPU PCC353-MEC syllabus boundary, and will evaluate tooth beam strength, wear durability, and redesign recommendations under CO1."
+    },
+    "gearbox-visualisation": {
+      "title": "2. Automotive Gearbox Visualisation & Power Flow",
+      "figure": "Figure 1.0: Automotive Reverse Gear Transmission CAD Cutaway & Power Flow Schematic",
+      "description": "Inspect the automotive transmission assembly schematic. Locate each mechanical element along the reverse power flow path (Callouts 1–10) and identify the correct component descriptions.",
+      "image": "assignments/automotive-spur-gear-analysis/images/EA-TS-04_Final_Corrected.png",
+      "hideMarkers": true,
+      "markerStyle": "invisible",
+      "labels": [
+        {
+          "componentNumber": 1,
+          "title": "Engine Flywheel & Friction Clutch Assembly",
+          "invisible": true,
+          "correctAnswer": "Engine Flywheel & Friction Clutch Assembly",
+          "acceptedAnswers": [
+            "Engine Flywheel & Friction Clutch Assembly",
+            "Engine Flywheel & Clutch",
+            "Engine / Clutch Unit"
+          ],
+          "feedback": "Prime mover interface delivering engine torque through the friction clutch plate to the transmission input shaft."
+        },
+        {
+          "componentNumber": 2,
+          "title": "Transmission Input Shaft",
+          "invisible": true,
+          "correctAnswer": "Transmission Input Shaft (1200 rpm)",
+          "acceptedAnswers": [
+            "Transmission Input Shaft (1200 rpm)",
+            "Transmission Input Shaft",
+            "High-Speed Input Shaft"
+          ],
+          "feedback": "Primary input shaft running at N1 = 1200 rpm carrying the reverse driving pinion."
+        },
+        {
+          "componentNumber": 3,
+          "title": "Reverse Driving Spur Pinion",
+          "invisible": true,
+          "correctAnswer": "Reverse Driving Spur Pinion (z1 = 20 teeth)",
+          "acceptedAnswers": [
+            "Reverse Driving Spur Pinion (z1 = 20 teeth)",
+            "Reverse Driving Spur Pinion",
+            "Driving Spur Pinion (20T)"
+          ],
+          "feedback": "Driving spur pinion with z1 = 20 teeth, module m = 3 mm, pitch diameter d1 = 60 mm."
+        },
+        {
+          "componentNumber": 4,
+          "title": "Reverse Idler Spur Gear",
+          "invisible": true,
+          "correctAnswer": "Reverse Idler Spur Gear (Direction Inverter)",
+          "acceptedAnswers": [
+            "Reverse Idler Spur Gear (Direction Inverter)",
+            "Reverse Idler Gear",
+            "Idler Spur Gear"
+          ],
+          "feedback": "Intermediate spur idler gear that reverses shaft rotational direction without altering the overall transmission ratio."
+        },
+        {
+          "componentNumber": 5,
+          "title": "Idler Stub Shaft & Needle Roller Bearings",
+          "invisible": true,
+          "correctAnswer": "Idler Stub Shaft & Needle Roller Bearings",
+          "acceptedAnswers": [
+            "Idler Stub Shaft & Needle Roller Bearings",
+            "Idler Stub Shaft",
+            "Idler Mounting Shaft & Bearing"
+          ],
+          "feedback": "Rigid stationary stub shaft and needle roller bearings supporting the reverse idler gear under opposing meshing forces."
+        },
+        {
+          "componentNumber": 6,
+          "title": "Reverse Driven Spur Gear",
+          "invisible": true,
+          "correctAnswer": "Reverse Driven Spur Gear (z2 = 60 teeth)",
+          "acceptedAnswers": [
+            "Reverse Driven Spur Gear (z2 = 60 teeth)",
+            "Reverse Driven Spur Gear",
+            "Driven Spur Gear (60T)"
+          ],
+          "feedback": "Low-speed driven gear wheel with z2 = 60 teeth, module m = 3 mm, pitch diameter d2 = 180 mm."
+        },
+        {
+          "componentNumber": 7,
+          "title": "Transmission Output Shaft",
+          "invisible": true,
+          "correctAnswer": "Transmission Output Shaft (400 rpm)",
+          "acceptedAnswers": [
+            "Transmission Output Shaft (400 rpm)",
+            "Transmission Output Shaft",
+            "Output Shaft (400 rpm)"
+          ],
+          "feedback": "Low-speed output shaft running at N2 = 400 rpm transmitting amplified reverse torque to the vehicle differential."
+        },
+        {
+          "componentNumber": 8,
+          "title": "Transmission Housing & Deep-Groove Ball Bearings",
+          "invisible": true,
+          "correctAnswer": "Transmission Housing & Deep-Groove Ball Bearings",
+          "acceptedAnswers": [
+            "Transmission Housing & Deep-Groove Ball Bearings",
+            "Transmission Casing & Bearings",
+            "Gearbox Casing & Support Bearings"
+          ],
+          "feedback": "Rigid transmission casing with deep-groove ball bearings supporting radial gear tooth forces."
+        },
+        {
+          "componentNumber": 9,
+          "title": "Reverse Power Flow Path",
+          "invisible": true,
+          "correctAnswer": "Reverse Power Flow Path (Input → Idler → Driven Gear)",
+          "acceptedAnswers": [
+            "Reverse Power Flow Path (Input → Idler → Driven Gear)",
+            "Reverse Power Flow Path",
+            "Power Flow Path (Input to Output)"
+          ],
+          "feedback": "Active mechanical torque transmission path through the three-gear reverse train."
+        },
+        {
+          "componentNumber": 10,
+          "title": "Spur Tooth Meshing Pitch Point",
+          "invisible": true,
+          "correctAnswer": "Spur Tooth Meshing Pitch Point (20° Pressure Angle)",
+          "acceptedAnswers": [
+            "Spur Tooth Meshing Pitch Point (20° Pressure Angle)",
+            "Spur Tooth Meshing Pitch Point",
+            "Meshing Pitch Zone (20° Involute)"
+          ],
+          "feedback": "Meshing line of action along which normal contact force Pn is transmitted at phi = 20°."
+        }
+      ],
+      "options": [
+        "Engine Flywheel & Friction Clutch Assembly",
+        "Transmission Input Shaft (1200 rpm)",
+        "Reverse Driving Spur Pinion (z1 = 20 teeth)",
+        "Reverse Idler Spur Gear (Direction Inverter)",
+        "Idler Stub Shaft & Needle Roller Bearings",
+        "Reverse Driven Spur Gear (z2 = 60 teeth)",
+        "Transmission Output Shaft (400 rpm)",
+        "Transmission Housing & Deep-Groove Ball Bearings",
+        "Reverse Power Flow Path (Input → Idler → Driven Gear)",
+        "Spur Tooth Meshing Pitch Point (20° Pressure Angle)",
+        "Synchronizer Hub & Sliding Sleeve Unit",
+        "Forward Helical Gear Train Assembly",
+        "Transmission Casing Oil Sump Reservoir",
+        "Hypoid Final Drive Crown Wheel & Pinion"
+      ]
+    },
+    "transmission-kinematics": {
+      "title": "3. Transmission Kinematics & Gear Dimensions",
+      "figure": "Automotive Transmission Kinematics & Pitch Circle Geometry",
+      "description": "Calculate the kinematic gear reduction ratio, rated input torque, pitch circle diameters, and gearbox centre distance.",
+      "given": [
+        "Engine Power Delivered: P = 8.0 kW",
+        "Input Pinion Speed: N1 = 1200.0 rpm",
+        "Output Gear Speed: N2 = 400.0 rpm",
+        "Number of Pinion Teeth: z1 = 20",
+        "Number of Gear Teeth: z2 = 60",
+        "Standard Module: m = 3.0 mm"
+      ],
+      "formulas": [
+        { "name": "Transmission Speed Ratio (i)", "formula": "i = N1 / N2 = z2 / z1" },
+        { "name": "Input Torque (T1)", "formula": "T1 = (9550 * P / N1) * 10^3 [N·mm]  [or (60 * 10^6 * P) / (2 * pi * N1)]" },
+        { "name": "Pinion Pitch Diameter (d1)", "formula": "d1 = m * z1 [mm]" },
+        { "name": "Gear Pitch Diameter (d2)", "formula": "d2 = m * z2 [mm]" },
+        { "name": "Shaft Centre Distance (a)", "formula": "a = (d1 + d2) / 2 [mm]" }
+      ],
+      "fields": [
+        { "id": "gear_ratio", "label": "Transmission Speed Ratio (i)", "unit": "—", "placeholder": "3.00", "hint": "i = 1200 / 400 = 3.00" },
+        { "id": "input_torque_T1", "label": "Rated Input Pinion Torque (T1)", "unit": "N·mm", "placeholder": "63661.98", "hint": "T1 = 9550 * 8.0 / 1200 * 10^3 = 63,661.98 N·mm" },
+        { "id": "pitch_diameter_d1", "label": "Pinion Pitch Diameter (d1)", "unit": "mm", "placeholder": "60.00", "hint": "d1 = 3 * 20 = 60.00 mm" },
+        { "id": "pitch_diameter_d2", "label": "Gear Pitch Diameter (d2)", "unit": "mm", "placeholder": "180.00", "hint": "d2 = 3 * 60 = 180.00 mm" },
+        { "id": "centre_distance_a", "label": "Standard Centre Distance (a)", "unit": "mm", "placeholder": "120.00", "hint": "a = (60 + 180) / 2 = 120.00 mm" }
+      ]
+    },
+    "spur-gear-forces": {
+      "title": "4. Spur Gear Force Analysis",
+      "figure": "Spur Gear Tooth Force Resolution",
+      "description": "Calculate the transmitted tangential force and separating radial force acting at the spur gear mesh point.",
+      "given": [
+        "Rated Pinion Torque: T1 = 63,661.98 N·mm",
+        "Pinion Pitch Diameter: d1 = 60.00 mm",
+        "Pressure Angle: phi = 20.0°"
+      ],
+      "formulas": [
+        { "name": "Tangential Tooth Force (Pt)", "formula": "Pt = (2 * T1) / d1 [N]" },
+        { "name": "Radial Tooth Force (Pr)", "formula": "Pr = Pt * tan(phi) [N]" },
+        { "name": "Normal Tooth Force (Pn)", "formula": "Pn = Pt / cos(phi) [N]" }
+      ],
+      "fields": [
+        { "id": "tangential_force_Pt", "label": "Tangential Tooth Force (Pt)", "unit": "N", "placeholder": "2122.07", "hint": "Pt = 2 * 63661.98 / 60 = 2,122.07 N" },
+        { "id": "radial_force_Pr", "label": "Radial Tooth Force (Pr)", "unit": "N", "placeholder": "772.37", "hint": "Pr = 2122.07 * tan(20°) = 772.37 N" },
+        { "id": "normal_tooth_force_Pn", "label": "Normal Contact Force (Pn)", "unit": "N", "placeholder": "2258.28", "hint": "Pn = 2122.07 / cos(20°) = 2,258.28 N" }
+      ]
+    },
+    "dynamic-loading": {
+      "title": "5. Dynamic Tooth Loading & Velocity Factor",
+      "figure": "Pitch Velocity & Barth Dynamic Factor Evaluation",
+      "description": "Calculate the pitch-line velocity, Barth velocity factor, and effective dynamic tooth load.",
+      "given": [
+        "Pinion Pitch Diameter: d1 = 60.00 mm",
+        "Pinion Speed: N1 = 1200.0 rpm",
+        "Tangential Force: Pt = 2,122.07 N",
+        "Application Service Factor: Cs = 1.50 (heavy automotive shock duty)",
+        "Load Concentration Factor: Km = 1.25"
+      ],
+      "formulas": [
+        { "name": "Pitch-Line Velocity (v)", "formula": "v = (pi * d1 * N1) / (60 * 10^3) [m/s]" },
+        { "name": "Barth Velocity Factor (Cv)", "formula": "Cv = 6 / (6 + v)" },
+        { "name": "Effective Dynamic Load (Peff)", "formula": "Peff = (Cs * Km * Pt) / Cv [N]" }
+      ],
+      "fields": [
+        { "id": "pitch_line_velocity_v", "label": "Pitch-Line Velocity (v)", "unit": "m/s", "placeholder": "3.770", "hint": "v = (pi * 60 * 1200) / 60000 = 3.770 m/s" },
+        { "id": "velocity_factor_Cv", "label": "Barth Velocity Factor (Cv)", "unit": "—", "placeholder": "0.6141", "hint": "Cv = 6 / (6 + 3.770) = 0.6141" },
+        { "id": "effective_load_Peff", "label": "Effective Dynamic Tooth Load (Peff)", "unit": "N", "placeholder": "6478.87", "hint": "Peff = (1.50 * 1.25 * 2122.07) / 0.6141 = 6,478.87 N" }
+      ]
+    },
+    "lewis-beam-strength": {
+      "title": "6. Lewis Beam Strength & Bending Safety Factor",
+      "figure": "Lewis Tooth Beam Strength & Weaker Element Determination",
+      "description": "Determine permissible bending stresses, evaluate Lewis form factors, identify the weaker element, and compute Lewis beam strength and bending factor of safety.",
+      "given": [
+        "Standard Module: m = 3.0 mm, Face Width: b = 50.0 mm",
+        "Pinion Material: Sut1 = 700 MPa (350 BHN)",
+        "Gear Material: Sut2 = 600 MPa (350 BHN)",
+        "Factor of Safety on Sut: 3.00 (sigma_b = Sut / 3)",
+        "Authoritative Lewis Form Factor: Pinion Y1 = 0.320, Gear Y2 = 0.421",
+        "Effective Dynamic Load: Peff = 6,478.87 N",
+        "Target Factor of Safety: [FOS] = 1.50"
+      ],
+      "formulas": [
+        { "name": "Permissible Bending Stress (sigma_b)", "formula": "sigma_b = Sut / 3 [MPa]" },
+        { "name": "Bending Strength Index", "formula": "Strength Index = sigma_b * Y [MPa]" },
+        { "name": "Lewis Beam Strength (Sb)", "formula": "Sb = m * b * sigma_b * Y [N]" },
+        { "name": "Bending Factor of Safety (FOSb)", "formula": "FOSb = Sb / Peff" }
+      ],
+      "fields": [
+        { "id": "permissible_stress_sigma_b1", "label": "Permissible Bending Stress — Pinion (sigma_b1)", "unit": "MPa", "placeholder": "233.33", "hint": "sigma_b1 = 700 / 3 = 233.33 MPa" },
+        { "id": "permissible_stress_sigma_b2", "label": "Permissible Bending Stress — Gear (sigma_b2)", "unit": "MPa", "placeholder": "200.00", "hint": "sigma_b2 = 600 / 3 = 200.00 MPa" },
+        { "id": "lewis_form_factor_Y1", "label": "Lewis Form Factor — Pinion (Y1)", "unit": "—", "placeholder": "0.320", "hint": "Authoritative table value Y1 = 0.320" },
+        { "id": "lewis_form_factor_Y2", "label": "Lewis Form Factor — Gear (Y2)", "unit": "—", "placeholder": "0.421", "hint": "Authoritative table value Y2 = 0.421" },
+        { "id": "weaker_member", "label": "Weaker Element Governing Bending Design", "type": "select", "options": ["Pinion", "Gear"], "placeholder": "Pinion", "hint": "Pinion index = 74.67 MPa < Gear index = 84.20 MPa -> Pinion is weaker" },
+        { "id": "beam_strength_Sb1", "label": "Pinion Lewis Beam Strength (Sb1)", "unit": "N", "placeholder": "11200.00", "hint": "Sb1 = 3 * 50 * 233.333 * 0.320 = 11,200 N" },
+        { "id": "beam_strength_Sb2", "label": "Gear Lewis Beam Strength (Sb2)", "unit": "N", "placeholder": "12630.00", "hint": "Sb2 = 3 * 50 * 200.000 * 0.421 = 12,630 N" },
+        { "id": "bending_FOS", "label": "Bending Factor of Safety (FOSb)", "unit": "—", "placeholder": "1.729", "hint": "FOSb = 11200 / 6478.87 = 1.729" },
+        { "id": "bending_adequacy", "label": "Bending Safety Criterion Evaluation", "type": "select", "options": ["SAFE", "NOT SAFE"], "placeholder": "SAFE", "hint": "FOSb = 1.729 >= 1.50 -> SAFE" }
+      ]
+    },
+    "buckingham-wear-analysis": {
+      "title": "7. Buckingham Wear Strength & Wear Safety Factor",
+      "figure": "Buckingham Wear Durability & Surface Contact Fatigue",
+      "description": "Calculate ratio factor, load-stress factor, Buckingham wear strength, and actual wear factor of safety.",
+      "given": [
+        "Pinion Pitch Diameter: d1 = 60.00 mm, Face Width: b = 50.0 mm",
+        "Number of Teeth: z1 = 20, z2 = 60",
+        "Pinion Hardness: 350 BHN, Gear Hardness: 350 BHN",
+        "Effective Dynamic Load: Peff = 6,478.87 N",
+        "Target Factor of Safety: [FOS] = 1.50"
+      ],
+      "formulas": [
+        { "name": "Ratio Factor (Q)", "formula": "Q = (2 * z2) / (z1 + z2)" },
+        { "name": "Load-Stress Factor (K)", "formula": "K = 0.16 * (BHN / 100)^2 [N/mm²]" },
+        { "name": "Buckingham Wear Strength (Sw)", "formula": "Sw = b * Q * d1 * K [N]" },
+        { "name": "Wear Factor of Safety (FOSw)", "formula": "FOSw = Sw / Peff" }
+      ],
+      "fields": [
+        { "id": "ratio_factor_Q", "label": "Ratio Factor (Q)", "unit": "—", "placeholder": "1.50", "hint": "Q = (2 * 60) / (20 + 60) = 1.50" },
+        { "id": "load_stress_factor_K", "label": "Load-Stress Factor (K)", "unit": "N/mm²", "placeholder": "1.96", "hint": "K = 0.16 * (350 / 100)^2 = 1.96 N/mm²" },
+        { "id": "wear_strength_Sw", "label": "Buckingham Wear Strength (Sw)", "unit": "N", "placeholder": "8820.00", "hint": "Sw = 50 * 1.50 * 60 * 1.96 = 8,820 N" },
+        { "id": "wear_FOS", "label": "Wear Factor of Safety (FOSw)", "unit": "—", "placeholder": "1.361", "hint": "FOSw = 8820 / 6478.87 = 1.361" },
+        { "id": "wear_adequacy", "label": "Wear Safety Criterion Evaluation", "type": "select", "options": ["SAFE", "NOT SAFE"], "placeholder": "NOT SAFE", "hint": "FOSw = 1.361 < 1.50 -> NOT SAFE" }
+      ]
+    },
+    "failure-diagnosis": {
+      "title": "8. Automotive Failure Diagnosis & Governing Criterion",
+      "prompt": "Evaluate the calculated factors of safety (FOSb = 1.729 vs FOSw = 1.361 against target [FOS] = 1.50) to determine the governing failure mode.",
+      "description": "Synthesize structural and tribological results to diagnose the governing mechanical defect.",
+      "given": [
+        "Bending Factor of Safety: FOSb = 1.729 >= 1.50 (SAFE)",
+        "Wear Factor of Safety: FOSw = 1.361 < 1.50 (NOT SAFE)",
+        "Target Factor of Safety: [FOS] = 1.50"
+      ],
+      "mcq": {
+        "question": "Comparing the bending factor of safety (FOSb = 1.729) and wear factor of safety (FOSw = 1.361) against target [FOS] = 1.50, what is the governing failure diagnosis?",
+        "options": [
+          { "id": "optA", "label": "Bending strength is safe (FOSb = 1.729 >= 1.50), but wear durability is not safe (FOSw = 1.361 < 1.50). Therefore, surface wear / pitting fatigue governs the transmission design." },
+          { "id": "optB", "label": "Tooth root bending fracture governs the design because the pinion is the weaker member; surface wear is fully satisfactory." },
+          { "id": "optC", "label": "Both bending and wear durability criteria are completely satisfied; no potential failure mode exists." },
+          { "id": "optD", "label": "Both bending and wear criteria fail catastrophically under reverse operating torque." }
+        ]
+      }
+    },
+    "gear-adequacy-assessment": {
+      "title": "9. Gear Adequacy Assessment & Engineering Decision",
+      "prompt": "Make the deterministic engineering decision regarding the overall adequacy of the initial spur-gear pair for passenger car reverse transmission.",
+      "description": "Synthesize design compliance against target standards and determine whether initial design approval can be granted.",
+      "given": [
+        "Initial Gear Set: m = 3 mm, b = 50 mm, 350 BHN, a = 120 mm",
+        "Target Factor of Safety: [FOS] = 1.50",
+        "Governing Result: FOSw = 1.361 < 1.50"
+      ],
+      "mcq": {
+        "question": "What is the final deterministic engineering decision regarding the adequacy of the initial spur-gear pair in this automotive transmission?",
+        "options": [
+          { "id": "optA", "label": "The overall initial design is NOT ADEQUATE because the wear factor of safety (FOSw = 1.361) falls below the target factor of safety (1.50). An engineering modification is required." },
+          { "id": "optB", "label": "The overall initial design is ADEQUATE because bending strength is safe and reverse gear operates only intermittently." },
+          { "id": "optC", "label": "The overall initial design is CONDITIONALLY ACCEPTABLE without any engineering modification." },
+          { "id": "optD", "label": "The design cannot be assessed without performing helical force calculations." }
+        ]
+      }
+    },
+    "engineering-recommendation": {
+      "title": "10. Engineering Recommendation & Redesign Defense",
+      "figure": "Engineering Redesign Verification & Trade-Off Canvas",
+      "description": "Evaluate and defend engineering modifications to bring wear factor of safety above target [FOS] >= 1.50. You may verify the authoritative surface hardening pathway (Gear BHN = 400) or defend an alternative engineering solution.",
+      "given": [
+        "Initial Baseline: Sw = 8,820 N, Peff = 6,478.87 N, FOSw = 1.361 (UNSAFE < 1.50)",
+        "Authoritative Redesign Option: Surface Hardening to 400 BHN (K = 2.56 N/mm², Sw = 11,520 N, FOSw = 1.778 >= 1.50)",
+        "Alternative Redesign Option A: Face width enlargement to b = 60 mm (Sw = 10,584 N, FOSw = 1.633 >= 1.50)",
+        "Alternative Redesign Option B: Module modification with altered pitch diameter & centre distance",
+        "Automotive Packaging Constraint: Preserving transmission casing envelope and centre distance a = 120 mm is highly desirable"
+      ],
+      "formulas": [
+        { "name": "Load-Stress Factor (400 BHN)", "formula": "K = 0.16 * (400 / 100)^2 = 2.56 N/mm²" },
+        { "name": "Redesigned Wear Strength", "formula": "Sw = b * Q * d1 * K = 50 * 1.50 * 60 * 2.56 = 11,520 N" },
+        { "name": "Redesigned Wear FOS", "formula": "FOSw = Sw / Peff = 11,520 / 6,478.87 = 1.778" }
+      ],
+      "fields": [
+        {
+          "id": "selected_recommendation",
+          "label": "Selected Engineering Redesign Direction",
+          "type": "select",
+          "options": [
+            "Option 1: Surface Hardening to 400 BHN (K = 2.56 N/mm², Sw = 11,520 N, FOSw = 1.778 >= 1.50, preserves a = 120 mm)",
+            "Option 2: Increase Face Width to b = 60 mm (Sw = 10,584 N, FOSw = 1.633 >= 1.50, minor casing length growth)",
+            "Option 3: Module Enlargement to m = 3.5 mm (alters pitch diameter and casing centre distance)",
+            "Option 4: Combined Optimization (Surface Hardening + Synthetic High-EP Lubrication)"
+          ],
+          "placeholder": "Option 1: Surface Hardening to 400 BHN",
+          "hint": "Select your recommended engineering modification for automotive implementation."
+        },
+        { "id": "redesign_hardness_BHN", "label": "Redesign Surface Hardness (BHN)", "unit": "BHN", "placeholder": "400", "hint": "400 BHN for surface hardening pathway" },
+        { "id": "redesign_load_stress_K", "label": "Redesign Load-Stress Factor (K)", "unit": "N/mm²", "placeholder": "2.56", "hint": "K = 0.16 * (400 / 100)^2 = 2.56 N/mm²" },
+        { "id": "redesign_wear_strength_Sw", "label": "Redesign Buckingham Wear Strength (Sw)", "unit": "N", "placeholder": "11520.00", "hint": "Sw = 50 * 1.50 * 60 * 2.56 = 11,520 N" },
+        { "id": "redesign_wear_FOS", "label": "Redesign Wear Factor of Safety (FOSw)", "unit": "—", "placeholder": "1.778", "hint": "FOSw = 11520 / 6478.87 = 1.778 (Safe >= 1.50)" },
+        { "id": "redesign_casing_impact", "label": "Packaging & Casing Envelope Defense", "type": "textarea", "placeholder": "Explain how your recommendation affects gearbox casing dimensions, shaft centre distance (a = 120 mm), and transmission compartment packaging...", "hint": "Surface hardening preserves existing a = 120 mm; face width or module increases alter casting dimensions." },
+        { "id": "redesign_technical_defense", "label": "Manufacturing Feasibility & Cost Justification", "type": "textarea", "placeholder": "Defend heat treatment feasibility (induction / case carburizing to 400 BHN) vs retooling costs for module/casing changes...", "hint": "Discuss induction hardening, distortion control, and economic trade-offs." }
+      ]
+    },
+    "reflection-synthesis": {
+      "title": "11. Professional Synthesis & Design Reflection",
+      "questions": [
+        {
+          "id": "q1",
+          "label": "Synthesis of Calculated Conclusions & Automotive Reverse Duty Cycle (TS04-C11 — 0.5 Marks)",
+          "helpText": "Synthesize the calculated parameters (T1 = 63,661.98 N·mm, Pt = 2122.07 N, Peff = 6478.87 N, FOSb = 1.729, FOSw = 1.361). Discuss why reverse gear trains operate under severe shock torques despite lower cumulative operating hours.",
+          "placeholder": "Synthesize your calculated findings. Address why reverse gear in a manual transmission experiences high shock loads during vehicle engagement and maneuvering, and explain how the intermediate idler gear functions kinematically without altering the 3:1 transmission ratio..."
+        },
+        {
+          "id": "q2",
+          "label": "Root Bending Fatigue vs Flank Pitting Contact Fatigue Mechanics (TS04-C11 — 0.5 Marks)",
+          "helpText": "Compare catastrophic tooth root bending fracture (governed by Lewis equation) against progressive pitch-line contact fatigue / pitting (governed by Buckingham equation). Explain why wear durability governed this automotive design.",
+          "placeholder": "Contrast the mechanics of root bending stress (tensile cyclic bending leading to rapid tooth fracture) with Hertzian contact stress on tooth flanks (cyclic compressive shear leading to microscopic subsurface microcracks and pit formation). Explain why the initial 350 BHN gear set provided safe bending (FOS = 1.729) but unsafe wear durability (FOS = 1.361)..."
+        },
+        {
+          "id": "q3",
+          "label": "Engineering Trade-Offs in Automotive Gearbox Casing Constraints (TS04-C11 — 0.5 Marks)",
+          "helpText": "Reflect on why increasing tooth surface hardness to 400 BHN is preferred in passenger car packaging over module enlargement or large face width increases. Address manufacturing, weight, and tooling economics.",
+          "placeholder": "Reflect on automotive packaging constraints where gearbox casing volume and shaft centre distances (a = 120 mm) are strictly constrained by vehicle underbody packaging. Discuss the trade-offs of induction/case hardening to 400 BHN versus the tooling and casting re-engineering costs of enlarging gear module or gearbox width..."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission & Verification",
+      "body": "Review your completion status across all 11 activities, verify all calculated checkpoints (torque, pitch diameters, forces, velocity factor, Lewis beam strength, Buckingham wear strength, and engineering recommendation), and submit your official PCC353-MEC CO1 evaluation report."
+    }
+  }
+}

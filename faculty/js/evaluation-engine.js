@@ -157,6 +157,22 @@ class EvaluationEngine {
       ];
     }
 
+    if (name.includes('automotive-spur-gear') || name.includes('ts-04') || name.includes('ea-ts-04')) {
+      return [
+        { id: 'ts04-act-1', name: 'Task 1: Automotive transmission requirement & torque', response: 'P = 8.0 kW, N1 = 1200 rpm, i = 3.00, T1 = 63,661.98 N·mm confirmed.', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Charter & Setup' },
+        { id: 'ts04-act-2', name: 'Task 2: Gear ratio, geometry & pitch dimensions', response: 'i = 3.00, d1 = 60.00 mm, d2 = 180.00 mm, a = 120.00 mm calculated.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Kinematics' },
+        { id: 'ts04-act-3', name: 'Task 3: Spur gear force analysis', response: 'Pt = 2,122.07 N, Pr = 772.37 N (phi = 20°) calculated.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Force Analysis' },
+        { id: 'ts04-act-4', name: 'Task 4: Velocity factor & effective load', response: 'v = 3.770 m/s, Cv = 0.6141, Peff = 6,478.87 N (Cs = 1.50, Km = 1.25) calculated.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Dynamic Load' },
+        { id: 'ts04-act-5', name: 'Task 5: Lewis form factor & weaker member', response: 'Y1 = 0.320, Y2 = 0.421, sigb1 = 233.33 MPa, sigb2 = 200.00 MPa -> Pinion is weaker member.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Bending Analysis' },
+        { id: 'ts04-act-6', name: 'Task 6: Lewis beam strength & bending FOS', response: 'Sb1 = 11,200.00 N, Sb2 = 12,630.00 N, FOSb = 1.729 (Safe >= 1.50).', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Bending Safety' },
+        { id: 'ts04-act-7', name: 'Task 7: Buckingham wear strength & wear FOS', response: 'Q = 1.50, K = 1.96 N/mm² (350 BHN), Sw = 8,820.00 N, FOSw = 1.361 (Unsafe < 1.50).', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Wear Analysis' },
+        { id: 'ts04-act-8', name: 'Task 8: Failure diagnosis & adequacy assessment', response: 'Governing failure mode: Flank surface wear / contact pitting fatigue.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Failure Diagnosis' },
+        { id: 'ts04-act-9', name: 'Task 9: Deterministic engineering conclusion', response: 'Deterministic decision: Initial design is NOT ADEQUATE; redesign required.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Design Decision' },
+        { id: 'ts04-act-10', name: 'Task 10: Engineering recommendation & justification', response: 'Student defense: Recommend surface hardening to 400 BHN (K = 2.56 N/mm², Sw = 11,520 N, FOSw = 1.778 >= 1.50) preserving gearbox casing envelope and a = 120 mm.', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Recommendation' },
+        { id: 'ts04-act-11', name: 'Task 11: Professional synthesis & reflection', response: 'Student reflection: Reverse duty cycle shock torque, root bending vs flank pitting fatigue, and automotive packaging trade-offs.', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Synthesis' }
+      ];
+    }
+
     if (name.includes('shaft') || name.includes('ec-07')) {
       return [
         { id: 'ec07-act-1', name: 'Task 1: System Specifications & Given Data', response: 'Power P = 15 kW, Speed N = 720 rpm, Radial Load Fr = 3000 N, Span L = 500 mm', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },

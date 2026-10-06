@@ -1,0 +1,31 @@
+{
+  "assignment": "automotive-spur-gear-analysis",
+  "basePath": "assignments/automotive-spur-gear-analysis/images",
+  "assets": [
+    {
+      "id": "EA-TS-04",
+      "name": "Engineering Asset EA-TS-04",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/automotive-spur-gear-analysis/images/EA-TS-04_Final_Corrected.png",
+      "description": "Automotive reverse gear manual transmission CAD cutaway schematic showing Engine, Clutch, Input Shaft, Reverse Driving Pinion, Reverse Idler Gear, Reverse Driven Gear, Output Shaft, and Power Flow Path.",
+      "dimensions": { "width": 1376, "height": 768 }
+    },
+    {
+      "id": "engineeringAssetStudent",
+      "name": "Student View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/automotive-spur-gear-analysis/images/EA-TS-04_Final_Corrected.png",
+      "description": "Authoritative student engineering visualization of automotive reverse gear train."
+    },
+    {
+      "id": "engineeringAssetFaculty",
+      "name": "Faculty View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/automotive-spur-gear-analysis/images/EA-TS-04_Automotive_Reverse_Gear_Faculty.png",
+      "description": "Faculty master engineering visualization of automotive reverse gear train with labeled components."
+    }
+  ]
+}
