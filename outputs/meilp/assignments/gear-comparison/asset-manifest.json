@@ -1,0 +1,31 @@
+{
+  "assignment": "gear-comparison",
+  "basePath": "assignments/gear-comparison/images",
+  "assets": [
+    {
+      "id": "EA-TS-03",
+      "name": "Engineering Asset EA-TS-03",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/gear-comparison/images/EA-TS-03_Final_Corrected.png",
+      "description": "Side-by-side industrial parallel-shaft transmission assemblies: Spur Gear Drive (left, callouts 1–5) and Helical Gear Drive (right, callouts 6–10).",
+      "dimensions": { "width": 1024, "height": 512 }
+    },
+    {
+      "id": "engineeringAssetStudent",
+      "name": "Student View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/gear-comparison/images/EA-TS-03_Final_Corrected.png",
+      "description": "Authoritative student engineering visualization showing parallel spur and helical gear drives."
+    },
+    {
+      "id": "engineeringAssetFaculty",
+      "name": "Faculty View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/gear-comparison/images/EA-TS-03_Gear_Comparison_Faculty.png",
+      "description": "Faculty master engineering visualization showing parallel spur and helical gear drives with labeled components."
+    }
+  ]
+}

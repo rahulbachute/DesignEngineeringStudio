@@ -203,7 +203,7 @@ class ChallengeRunner {
       this.setAttemptModeLabel(mode);
       this.renderDashboard();
     } else {
-      if (this.assignmentSlug === "helical-gear-design" || this.assignmentSlug === "spur-gear-design" || (this.config && (this.config.id === "EA-TS-01" || this.config.id === "EA-TS-02")) || (this.config && this.config.settings && this.config.settings.directStudentForm)) {
+      if (this.assignmentSlug === "helical-gear-design" || this.assignmentSlug === "spur-gear-design" || this.assignmentSlug === "gear-comparison" || (this.config && (this.config.id === "EA-TS-01" || this.config.id === "EA-TS-02" || this.config.id === "EA-TS-03")) || (this.config && this.config.settings && this.config.settings.directStudentForm)) {
         const mode = (this.config && this.config.settings && this.config.settings.defaultAttemptMode) || "individual";
         this.services.stateManager.update((s) => ({ settings: { ...s.settings, attemptMode: mode } }));
         this.setAttemptModeLabel(mode);
@@ -555,7 +555,25 @@ class ChallengeRunner {
     const options = Array.isArray(mcqData.options) ? mcqData.options : (Array.isArray(activity.options) ? activity.options : []);
 
     let mcqHtml = "";
-    if (options.length) {
+    if (Array.isArray(activity.questions) && activity.questions.length > 0) {
+      mcqHtml = activity.questions.map((q, idx) => {
+        const qId = q.id || `q_${idx + 1}`;
+        const qPrompt = q.prompt || q.question || `Question ${idx + 1}`;
+        const qOpts = Array.isArray(q.options) ? q.options : [];
+        const savedAns = saved[qId] || saved[q.id];
+        return `
+          <section class="workbench-card card-information mb-3">
+            <h4 class="h6 fw-bold mb-2">${idx + 1}. ${this.escape(qPrompt)}</h4>
+            ${qOpts.map((option) => {
+              const optVal = typeof option === "object" ? (option.id || option.value || option.title || "") : option;
+              const optLabel = typeof option === "object" ? (option.title || option.label || option.text || option.value || option.id || "") : option;
+              const isChecked = savedAns === optVal || savedAns === optLabel;
+              return `<label class="form-check mb-1"><input class="form-check-input" type="radio" name="${this.escape(qId)}" value="${this.escape(optVal)}" ${isChecked ? "checked" : ""}> ${this.escape(optLabel)}</label>`;
+            }).join("")}
+          </section>
+        `;
+      }).join("");
+    } else if (options.length) {
       mcqHtml = `
         <section class="workbench-card card-information">
           <h3>${this.escape(question)}</h3>
@@ -569,12 +587,14 @@ class ChallengeRunner {
       `;
     }
 
+    const showText = !Array.isArray(activity.questions) || activity.showTextResponse;
     host.innerHTML = `
       ${this.card("theory", activity.title || step.title || "", activity.prompt || activity.description || "")}
+      ${showText ? `
       <section class="workbench-card card-student-response">
         <h3>Engineering Text Response</h3>
         <textarea class="form-control" rows="6" data-response="text">${this.escape(saved.text || "")}</textarea>
-      </section>
+      </section>` : ""}
       ${mcqHtml}
     `;
     this.bindAutosave(step.id);
@@ -737,13 +757,31 @@ class ChallengeRunner {
             const fieldPlaceholder = typeof field === "object" ? (field.placeholder || "") : "";
             const fieldUnit = typeof field === "object" && field.unit ? field.unit : "";
             const fieldHint = typeof field === "object" && field.hint ? field.hint : "";
-            return `
-              <div>
-                <label class="form-label fw-semibold">${this.escape(fieldLabel)} ${fieldUnit ? `<span class="text-muted">(${this.escape(fieldUnit)})</span>` : ""}</label>
+            let inputControlHtml = "";
+            if (field.type === "select") {
+              const opts = Array.isArray(field.options) ? field.options : [];
+              inputControlHtml = `
+                <select class="form-select" data-calc="${this.escape(fieldId)}">
+                  <option value="">-- Select Option --</option>
+                  ${opts.map(o => `<option value="${this.escape(o)}" ${saved[fieldId] === o ? "selected" : ""}>${this.escape(o)}</option>`).join("")}
+                </select>
+              `;
+            } else if (field.type === "textarea") {
+              inputControlHtml = `<textarea class="form-control" rows="4" data-calc="${this.escape(fieldId)}" placeholder="${this.escape(fieldPlaceholder)}">${this.escape(saved[fieldId] || "")}</textarea>`;
+            } else if (field.type === "text") {
+              inputControlHtml = `<input class="form-control" type="text" data-calc="${this.escape(fieldId)}" placeholder="${this.escape(fieldPlaceholder)}" value="${this.escape(saved[fieldId] || "")}">`;
+            } else {
+              inputControlHtml = `
                 <div class="input-group">
                   <input class="form-control" type="number" step="0.01" data-calc="${this.escape(fieldId)}" placeholder="${this.escape(fieldPlaceholder)}" value="${this.escape(saved[fieldId] || "")}">
                   ${fieldUnit ? `<span class="input-group-text">${this.escape(fieldUnit)}</span>` : ""}
                 </div>
+              `;
+            }
+            return `
+              <div>
+                <label class="form-label fw-semibold">${this.escape(fieldLabel)} ${fieldUnit ? `<span class="text-muted">(${this.escape(fieldUnit)})</span>` : ""}</label>
+                ${inputControlHtml}
                 ${fieldHint ? `<small class="form-text text-muted">${this.escape(fieldHint)}</small>` : ""}
               </div>
             `;
@@ -1263,7 +1301,7 @@ class ChallengeRunner {
       return;
     }
     host.querySelectorAll("[data-response]").forEach((input) => { value[input.dataset.response] = input.value.trim(); });
-    host.querySelectorAll("[name='mcq'], [name='selection'], [name='decision']").forEach((input) => { if (input.checked) value[input.name] = input.value; });
+    host.querySelectorAll("input[type='radio']:checked, [name='selection'], [name='decision']").forEach((input) => { if (input.name) value[input.name] = input.value; });
     const ranking = {};
     host.querySelectorAll("[data-rank]").forEach((input) => { ranking[input.dataset.rank] = input.type === "text" ? input.value.trim() : input.value; });
     if (Object.keys(ranking).length) value.ranking = ranking;

@@ -1,0 +1,19 @@
+{
+  "assignmentId": "EA-TS-03",
+  "assignmentTitle": "Comparison of Spur and Helical Gears in Industrial Power Transmission",
+  "maxTotalMarks": 12.0,
+  "courseOutcome": "CO1",
+  "criteria": [
+    { "id": "ts03-act-1", "name": "Task 1: Engineering Problem Charter & Technical Scope", "category": "Analysis", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS03-C01" },
+    { "id": "ts03-act-2", "name": "Task 2: Parallel Gear Assembly Visualisation & Component Callout Mapping", "category": "Visualisation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS03-C02" },
+    { "id": "ts03-act-3", "name": "Task 3: Gear-Type Identification & Geometric Architecture", "category": "Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS03-C03" },
+    { "id": "ts03-act-4", "name": "Task 4: Tooth Engagement Kinematics & Contact Line Mechanics", "category": "Kinematics", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS03-C04" },
+    { "id": "ts03-act-5", "name": "Task 5: Force Characteristics & 3D Force Vector Resolution", "category": "Force Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS03-C05" },
+    { "id": "ts03-act-6", "name": "Task 6: Bearing Consequences & Shaft Mounting Integration", "category": "Machine Elements", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS03-C06" },
+    { "id": "ts03-act-7", "name": "Task 7: Dynamic Transmission Behaviour, Noise & Velocity Limits", "category": "Dynamics", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS03-C07" },
+    { "id": "ts03-act-8", "name": "Task 8: Manufacturing Processes, Capital Cost & Maintenance", "category": "Manufacturing", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS03-C08" },
+    { "id": "ts03-act-9", "name": "Task 9: Industrial Application Requirement & Selection Matrix", "category": "Selection Matrix", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS03-C09" },
+    { "id": "ts03-act-10", "name": "Task 10: Engineering Decision Canvas: Selection & Defense", "category": "Design Decision", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS03-C10" },
+    { "id": "ts03-act-11", "name": "Task 11: Professional Reflection & Transmission Design Synthesis", "category": "Synthesis", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS03-C11" }
+  ]
+}

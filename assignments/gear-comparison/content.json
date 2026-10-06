@@ -1,0 +1,737 @@
+{
+  "assignment": {
+    "id": "EA-TS-03",
+    "slug": "gear-comparison",
+    "title": "Comparison of Spur and Helical Gears in Industrial Power Transmission"
+  },
+  "dashboard": {
+    "projectCode": "EA-TS-03",
+    "projectTitle": "Comparison of Spur and Helical Gears in Industrial Power Transmission",
+    "courseCode": "PCC353-MEC",
+    "courseName": "Transmission System Design",
+    "unit": "Unit I — Spur and Helical Gears",
+    "difficultyLevel": "Intermediate to Advanced",
+    "estimatedDuration": "75–90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO1: Apply principle of Spur & Helical gear design for industrial application.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5, L6",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "gear-comparison-asset",
+      "title": "Comparison of Spur and Helical Gears in Industrial Power Transmission",
+      "path": "assignments/gear-comparison/images/EA-TS-03_Final_Corrected.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "gear-comparison-asset",
+      "title": "Parallel Industrial Spur and Helical Gear Drive Assembly Schematic",
+      "path": "assignments/gear-comparison/images/EA-TS-03_Gear_Comparison_Faculty.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "faculty",
+        "label": "Faculty / Guide Name",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "courseCode",
+        "label": "Course Code",
+        "value": "PCC353-MEC",
+        "readonly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "activities": {
+    "project-charter": {
+      "title": "1. Engineering Problem Charter & Technical Scope",
+      "cards": [
+        {
+          "type": "info",
+          "title": "Industrial Comparative Scenario & Transmission Brief",
+          "body": "In mechanical power transmission engineering, selecting the appropriate gear technology is a decisive architectural decision. An industrial transmission design engineer must determine when to employ straight external Spur Gears and when to select inclined Helical Gears. This comparative challenge evaluates side-by-side parallel-shaft transmissions across kinematic, mechanical, tribological, manufacturing, dynamic, and economic dimensions."
+        },
+        {
+          "type": "theory",
+          "title": "Syllabus Boundary & Regulatory Scope (SPPU PCC353-MEC)",
+          "body": "In accordance with the SPPU PCC353-MEC syllabus (Unit I — Spur and Helical Gears), this assignment focuses on the comparative engineering principles of power transmission. The syllabus explicitly mandates: 'No numerical on force analysis of helical'. Consequently, helical gear force characteristics (tangential Ft, radial Fr, and axial thrust Fa) are evaluated conceptually, vectorially, and directionally. Students are not required to perform numerical helical force or thrust calculations."
+        },
+        {
+          "type": "warning",
+          "title": "Professional Decision Responsibility",
+          "body": "The choice between spur and helical gears directly dictates bearing selection, casing rigidity, acoustic emissions, vibration levels, lubrication requirements, and initial manufacturing costs. Recommending an unsuitable gear type can cause excessive noise, premature bearing failure, or unnecessary capital expenditure. The design engineer must justify their technical selection with rigorous mechanical reasoning."
+        }
+      ],
+      "acceptanceText": "I have reviewed the Transmission Comparative Charter and understand that I must evaluate tooth engagement kinematics, 3D force characteristics, bearing arrangements, dynamic behavior, manufacturing trade-offs, and industrial application requirements without numerical helical force calculations under PCC353-MEC (CO1)."
+    },
+    "gear-visualisation": {
+      "title": "2. Parallel Gear Assembly Visualisation & Component Callout Mapping",
+      "figure": "Figure 1.0: Parallel Industrial Spur and Helical Gear Drive Assemblies",
+      "description": "Inspect the side-by-side industrial gear assemblies: the Spur Gear Drive is on the left (Callouts 1–5), and the Helical Gear Drive is on the right (Callouts 6–10). Identify each numbered component accurately.",
+      "image": "assignments/gear-comparison/images/EA-TS-03_Final_Corrected.png",
+      "hideMarkers": true,
+      "markerStyle": "invisible",
+      "labels": [
+        {
+          "componentNumber": 1,
+          "title": "Spur Input Shaft",
+          "invisible": true,
+          "correctAnswer": "Input shaft — Spur drive",
+          "acceptedAnswers": [
+            "Input shaft — Spur drive",
+            "Input shaft (Spur)",
+            "High-speed input shaft — Spur"
+          ],
+          "feedback": "High-speed input shaft delivering motor torque to the driving spur pinion."
+        },
+        {
+          "componentNumber": 2,
+          "title": "Driving Spur Pinion",
+          "invisible": true,
+          "correctAnswer": "Driving spur pinion",
+          "acceptedAnswers": [
+            "Driving spur pinion",
+            "Spur pinion",
+            "High-speed spur pinion"
+          ],
+          "feedback": "Driving spur pinion with straight teeth parallel to the shaft axis."
+        },
+        {
+          "componentNumber": 3,
+          "title": "Driven Spur Gear",
+          "invisible": true,
+          "correctAnswer": "Driven spur gear",
+          "acceptedAnswers": [
+            "Driven spur gear",
+            "Spur gear wheel",
+            "Driven spur gear wheel"
+          ],
+          "feedback": "Driven spur gear wheel mounted on the low-speed output shaft."
+        },
+        {
+          "componentNumber": 4,
+          "title": "Spur Output Shaft",
+          "invisible": true,
+          "correctAnswer": "Output shaft — Spur drive",
+          "acceptedAnswers": [
+            "Output shaft — Spur drive",
+            "Output shaft (Spur)",
+            "Low-speed output shaft — Spur"
+          ],
+          "feedback": "Low-speed output shaft transmitting reduced-speed, high-torque output from the spur gear."
+        },
+        {
+          "componentNumber": 5,
+          "title": "Spur Support Bearing",
+          "invisible": true,
+          "correctAnswer": "Support bearing — Spur shaft",
+          "acceptedAnswers": [
+            "Support bearing — Spur shaft",
+            "Spur shaft support bearing",
+            "Radial ball bearing — Spur shaft"
+          ],
+          "feedback": "Bearing pedestal supporting the spur shaft under purely radial gear forces."
+        },
+        {
+          "componentNumber": 6,
+          "title": "Helical Input Shaft",
+          "invisible": true,
+          "correctAnswer": "Input shaft — Helical drive",
+          "acceptedAnswers": [
+            "Input shaft — Helical drive",
+            "Input shaft (Helical)",
+            "High-speed input shaft — Helical"
+          ],
+          "feedback": "High-speed input shaft transmitting motor torque to the driving helical pinion."
+        },
+        {
+          "componentNumber": 7,
+          "title": "Driving Helical Pinion",
+          "invisible": true,
+          "correctAnswer": "Driving helical pinion",
+          "acceptedAnswers": [
+            "Driving helical pinion",
+            "Helical pinion",
+            "High-speed helical pinion"
+          ],
+          "feedback": "Driving helical pinion with teeth inclined along a cylindrical helix at angle beta."
+        },
+        {
+          "componentNumber": 8,
+          "title": "Driven Helical Gear",
+          "invisible": true,
+          "correctAnswer": "Driven helical gear",
+          "acceptedAnswers": [
+            "Driven helical gear",
+            "Helical gear wheel",
+            "Driven helical gear wheel"
+          ],
+          "feedback": "Driven helical gear wheel mounted on the low-speed output shaft."
+        },
+        {
+          "componentNumber": 9,
+          "title": "Helical Output Shaft",
+          "invisible": true,
+          "correctAnswer": "Output shaft — Helical drive",
+          "acceptedAnswers": [
+            "Output shaft — Helical drive",
+            "Output shaft (Helical)",
+            "Low-speed output shaft — Helical"
+          ],
+          "feedback": "Low-speed output shaft transmitting high torque from the helical gear."
+        },
+        {
+          "componentNumber": 10,
+          "title": "Helical Support Bearing",
+          "invisible": true,
+          "correctAnswer": "Support bearing — Helical shaft",
+          "acceptedAnswers": [
+            "Support bearing — Helical shaft",
+            "Helical shaft support bearing",
+            "Thrust/radial bearing — Helical shaft"
+          ],
+          "feedback": "Bearing pedestal supporting the helical shaft against combined radial and axial thrust loads."
+        }
+      ],
+      "options": [
+        "Input shaft — Spur drive",
+        "Driving spur pinion",
+        "Driven spur gear",
+        "Output shaft — Spur drive",
+        "Support bearing — Spur shaft",
+        "Input shaft — Helical drive",
+        "Driving helical pinion",
+        "Driven helical gear",
+        "Output shaft — Helical drive",
+        "Support bearing — Helical shaft",
+        "Intermediate countershaft",
+        "Straight bevel gear",
+        "Worm drive shaft",
+        "Rigid shaft coupling",
+        "Planetary sun gear"
+      ]
+    },
+    "gear-type-identification": {
+      "title": "3. Gear-Type Identification & Geometric Architecture",
+      "description": "Analyze the architectural and geometric parameters distinguishing spur gears from helical gears.",
+      "questions": [
+        {
+          "id": "q3_1",
+          "prompt": "How are the tooth traces oriented relative to the shaft axis in spur versus helical gears?",
+          "options": [
+            "Spur: tooth trace is parallel to the shaft axis; Helical: tooth trace is inclined along a cylindrical helix at angle beta",
+            "Spur: tooth trace is inclined at 45°; Helical: tooth trace is strictly parallel to the axis",
+            "Both spur and helical teeth have identical tooth trace orientations parallel to the shaft axis",
+            "Spur: curved cycloidal trace; Helical: straight radial line intersecting at right angles"
+          ],
+          "correctAnswer": "Spur: tooth trace is parallel to the shaft axis; Helical: tooth trace is inclined along a cylindrical helix at angle beta",
+          "explanation": "Spur gear teeth are cut straight and parallel to the axis of rotation. Helical gear teeth wind around the pitch cylinder at a constant helix angle beta."
+        },
+        {
+          "id": "q3_2",
+          "prompt": "In standard design nomenclature (Bhandari / SPPU), what is the relationship between normal module (mn) and transverse module (mt) in helical gears?",
+          "options": [
+            "mt = mn / cos(beta)",
+            "mt = mn * cos(beta)",
+            "mt = mn / sin(beta)",
+            "mt = mn * tan(beta)"
+          ],
+          "correctAnswer": "mt = mn / cos(beta)",
+          "explanation": "Because the normal plane is inclined at helix angle beta, the circular pitch in the transverse plane is larger: pt = pn / cos(beta), which yields mt = mn / cos(beta)."
+        },
+        {
+          "id": "q3_3",
+          "prompt": "How are the pressure angles in the normal plane (alpha_n) and transverse plane (alpha_t) related for a helical gear?",
+          "options": [
+            "tan(alpha_t) = tan(alpha_n) / cos(beta)",
+            "tan(alpha_t) = tan(alpha_n) * cos(beta)",
+            "alpha_t = alpha_n * cos(beta)",
+            "alpha_t is always identical to alpha_n regardless of helix angle"
+          ],
+          "correctAnswer": "tan(alpha_t) = tan(alpha_n) / cos(beta)",
+          "explanation": "Standard cutter tools have standard normal pressure angle alpha_n (usually 20°). In the transverse plane of rotation, tan(alpha_t) = tan(alpha_n) / cos(beta)."
+        },
+        {
+          "id": "q3_4",
+          "prompt": "What is the formative (virtual) number of teeth (z') for a helical gear with actual teeth z and helix angle beta?",
+          "options": [
+            "z' = z / cos^3(beta)",
+            "z' = z * cos^3(beta)",
+            "z' = z / cos(beta)",
+            "z' = z / sin^2(beta)"
+          ],
+          "correctAnswer": "z' = z / cos^3(beta)",
+          "explanation": "The virtual number of teeth z' corresponds to an equivalent spur gear constructed in the normal plane with radius of curvature r' = r / cos^2(beta), yielding z' = z / cos^3(beta)."
+        }
+      ]
+    },
+    "tooth-engagement-kinematics": {
+      "title": "4. Tooth Engagement Kinematics & Contact Line Mechanics",
+      "description": "Examine the contact line progression and meshing kinematics of straight spur teeth versus inclined helical teeth.",
+      "questions": [
+        {
+          "id": "q4_1",
+          "prompt": "Describe the tooth engagement action of a straight spur gear pair as a pair of teeth comes into mesh:",
+          "options": [
+            "Initial contact occurs as an instantaneous line contact across the entire active face width simultaneously, producing a sudden impact",
+            "Initial contact occurs as a point contact that slowly spreads diagonally across the face",
+            "Initial contact begins at the center of the face width and radiates outward in both directions",
+            "Engagement is purely sliding without any line contact across the face width"
+          ],
+          "correctAnswer": "Initial contact occurs as an instantaneous line contact across the entire active face width simultaneously, producing a sudden impact",
+          "explanation": "Because spur teeth are straight and parallel to the axis, the entire tooth face engages all at once along a full-width line of contact, creating cyclic impact excitation."
+        },
+        {
+          "id": "q4_2",
+          "prompt": "Describe how tooth engagement progresses across the face width in a helical gear pair:",
+          "options": [
+            "Contact begins at a point at the leading edge of the tooth and extends diagonally across the face width as rotation proceeds, providing gradual and progressive load transfer",
+            "Contact occurs abruptly across the full face width exactly like a spur gear",
+            "Contact occurs only at the exact midpoint of the tooth face throughout meshing",
+            "Contact occurs along the root fillet first before reaching the tooth flank"
+          ],
+          "correctAnswer": "Contact begins at a point at the leading edge of the tooth and extends diagonally across the face width as rotation proceeds, providing gradual and progressive load transfer",
+          "explanation": "The inclined tooth trace causes engagement to commence at the leading tip and progress smoothly and diagonally across the face width, avoiding sudden shock loading."
+        },
+        {
+          "id": "q4_3",
+          "prompt": "How does the tooth contact line geometry differ between spur and helical gears during the meshing cycle?",
+          "options": [
+            "Spur: contact line is parallel to the shaft axis; Helical: contact lines are inclined diagonally across the tooth flank",
+            "Spur: contact lines are circular; Helical: contact lines are straight vertical lines",
+            "Spur: diagonal lines; Helical: lines parallel to the shaft axis",
+            "Both gear types have identical contact lines parallel to the shaft axis"
+          ],
+          "correctAnswer": "Spur: contact line is parallel to the shaft axis; Helical: contact lines are inclined diagonally across the tooth flank",
+          "explanation": "In spur gears, the line of contact is straight and parallel to the gear axis. In helical gears, the contact line is inclined at an angle across the tooth surface."
+        },
+        {
+          "id": "q4_4",
+          "prompt": "What is the primary dynamic consequence of progressive tooth engagement in helical gears compared to sudden impact in spur gears?",
+          "options": [
+            "Significantly smoother tooth meshing, reduced dynamic impact excitation, lower vibration levels, and substantially quieter operation",
+            "Higher dynamic impact excitation and increased acoustic gear chatter",
+            "Complete elimination of friction between meshing teeth",
+            "Lower load capacity because multiple teeth cannot share load"
+          ],
+          "correctAnswer": "Significantly smoother tooth meshing, reduced dynamic impact excitation, lower vibration levels, and substantially quieter operation",
+          "explanation": "Progressive load transfer prevents sudden load spikes, drastically suppressing vibration and gear whine even at elevated operating speeds."
+        }
+      ]
+    },
+    "force-characteristics": {
+      "title": "5. Force Characteristics & 3D Force Vector Resolution",
+      "description": "Analyze the 2D planar forces of spur gears and the 3D spatial forces of helical gears.",
+      "questions": [
+        {
+          "id": "q5_1",
+          "prompt": "What are the force components acting on a straight spur gear tooth in mesh?",
+          "options": [
+            "Tangential force (Ft) which transmits torque, Radial force (Fr) which tends to separate the shafts, and Zero axial force (Fa = 0)",
+            "Tangential force (Ft), Radial force (Fr), and a large Axial thrust force (Fa)",
+            "Tangential force (Ft) and Axial thrust force (Fa) only, with Zero radial force",
+            "Purely axial force (Fa) with zero tangential force"
+          ],
+          "correctAnswer": "Tangential force (Ft) which transmits torque, Radial force (Fr) which tends to separate the shafts, and Zero axial force (Fa = 0)",
+          "explanation": "Spur gear tooth forces act entirely in the 2D transverse plane perpendicular to the shaft axis: Ft = 2T/d and Fr = Ft*tan(alpha). There is zero axial component (Fa = 0)."
+        },
+        {
+          "id": "q5_2",
+          "prompt": "What are the force components acting on a helical gear tooth in 3D spatial resolution?",
+          "options": [
+            "Tangential force (Ft) transmitting torque, Radial separating force (Fr), and an Axial thrust force (Fa) acting parallel to the shaft axis",
+            "Tangential force (Ft) and Radial force (Fr) only, with zero axial thrust",
+            "Axial thrust force (Fa) only, with zero radial and tangential forces",
+            "Centrifugal force and gyroscopic precession force only"
+          ],
+          "correctAnswer": "Tangential force (Ft) transmitting torque, Radial separating force (Fr), and an Axial thrust force (Fa) acting parallel to the shaft axis",
+          "explanation": "Because the tooth surface is inclined at helix angle beta, the normal resultant force resolves into three mutually perpendicular 3D components: Ft, Fr, and Fa."
+        },
+        {
+          "id": "q5_3",
+          "prompt": "What is the physical origin and governing relationship of the axial thrust force (Fa) in helical gears?",
+          "options": [
+            "It arises from the tooth helix inclination angle beta, governed conceptually by Fa = Ft * tan(beta)",
+            "It arises from friction between tooth surfaces, governed by Fa = mu * Fr",
+            "It arises from shaft deflection under bending loads, governed by Fa = Ft / cos(beta)",
+            "It arises from centrifugal force acting on the gear rim at high rotational speeds"
+          ],
+          "correctAnswer": "It arises from the tooth helix inclination angle beta, governed conceptually by Fa = Ft * tan(beta)",
+          "explanation": "The tooth surface normal is angled by helix angle beta relative to the transverse plane. Resolving vectors along the shaft axis gives Fa = Ft * tan(beta)."
+        },
+        {
+          "id": "q5_4",
+          "prompt": "What determines the direction of the axial thrust force (Fa) on a helical gear shaft?",
+          "options": [
+            "The combination of the helix hand (Right-Hand vs Left-Hand), the role (Driving pinion vs Driven gear), and the direction of shaft rotation",
+            "Only the magnitude of transmitted motor power, independent of helix hand",
+            "Only the gear diameter ratio, independent of rotation direction",
+            "The axial thrust always acts towards the motor regardless of helix hand or rotation"
+          ],
+          "correctAnswer": "The combination of the helix hand (Right-Hand vs Left-Hand), the role (Driving pinion vs Driven gear), and the direction of shaft rotation",
+          "explanation": "Using the right-hand / left-hand rule, reversing shaft rotation or changing helix hand reverses the direction of the axial thrust vector along the shaft axis."
+        }
+      ]
+    },
+    "bearing-consequences": {
+      "title": "6. Bearing Consequences & Shaft Mounting Integration",
+      "description": "Evaluate the mechanical consequences of tooth forces on bearing selection and gearbox casing design.",
+      "questions": [
+        {
+          "id": "q6_1",
+          "prompt": "What bearing types are generally suitable and economical for supporting shafts in a spur gear drive?",
+          "options": [
+            "Standard Deep-Groove Ball Bearings or Cylindrical Roller Bearings, because the gear forces are predominantly radial (Fa = 0)",
+            "Double-row heavy spherical roller thrust bearings are mandatory because of high axial loads",
+            "Four-point contact thrust bearings at both ends of every shaft",
+            "Fluid dynamic tilting-pad thrust bearings"
+          ],
+          "correctAnswer": "Standard Deep-Groove Ball Bearings or Cylindrical Roller Bearings, because the gear forces are predominantly radial (Fa = 0)",
+          "explanation": "Spur gears produce no axial thrust (Fa = 0). Bearings only need to carry radial loads (Fr and resultant shaft bending moments), making standard radial bearings ideal."
+        },
+        {
+          "id": "q6_2",
+          "prompt": "Why do helical gear shafts require thrust-capable bearing arrangements?",
+          "options": [
+            "Because the helix angle generates a continuous axial thrust force (Fa) that must be reacted through the bearings into the gearbox housing",
+            "Because helical gears produce zero radial load and purely axial load",
+            "Because helical gears operate only at sub-zero temperatures requiring special bearing grease",
+            "Because helical gears have no keyways and rely on bearing friction to prevent spinning"
+          ],
+          "correctAnswer": "Because the helix angle generates a continuous axial thrust force (Fa) that must be reacted through the bearings into the gearbox housing",
+          "explanation": "Helical axial thrust Fa acts parallel to the shaft axis. Without thrust-capable bearings (or opposed thrust pairs), the shaft would shift axially out of mesh."
+        },
+        {
+          "id": "q6_3",
+          "prompt": "Which bearing configurations are commonly selected in industrial gearboxes to support helical gear shafts carrying combined radial and axial loads?",
+          "options": [
+            "Tapered Roller Bearings in opposed arrangements (back-to-back or face-to-face), or Angular Contact Ball Bearing pairs",
+            "Pure needle roller radial bearings with loose axial clearance",
+            "Non-locating cylindrical roller bearings at both ends of the shaft",
+            "Linear ball bushings"
+          ],
+          "correctAnswer": "Tapered Roller Bearings in opposed arrangements (back-to-back or face-to-face), or Angular Contact Ball Bearing pairs",
+          "explanation": "Tapered roller bearings and angular contact ball bearings have steep contact angles designed specifically to absorb combined heavy radial loads and unidirectional axial thrust."
+        },
+        {
+          "id": "q6_4",
+          "prompt": "What additional design and manufacturing requirements does the presence of helical axial thrust impose on the gearbox housing?",
+          "options": [
+            "Heavier housing walls and end-covers with rigid axial retention (locknuts, retaining shoulders, shims) to prevent axial deflection and parasitic friction loss",
+            "No special requirements; the housing can be made of thin, flexible sheet metal",
+            "The gearbox housing must be mounted on loose rubber springs to allow free axial sliding",
+            "Bearing retainers must be completely omitted to permit axial floating of both shafts"
+          ],
+          "correctAnswer": "Heavier housing walls and end-covers with rigid axial retention (locknuts, retaining shoulders, shims) to prevent axial deflection and parasitic friction loss",
+          "explanation": "Axial thrust loads react against the casing end-caps. Housing walls must be sufficiently rigid to avoid axial deflection that would distort tooth contact alignment."
+        }
+      ]
+    },
+    "dynamic-transmission-behaviour": {
+      "title": "7. Dynamic Transmission Behaviour, Noise & Velocity Limits",
+      "description": "Compare operating speed capability, contact ratio, and acoustic performance between the two gear systems.",
+      "questions": [
+        {
+          "id": "q7_1",
+          "prompt": "How does contact ratio differ between spur gears and helical gears?",
+          "options": [
+            "Spur gears have only transverse contact ratio (epsilon_alpha, typically 1.2 to 1.7); Helical gears have total contact ratio epsilon_gamma = epsilon_alpha + epsilon_beta (typically 2.5 to 3.5+)",
+            "Spur gears have much higher contact ratio than helical gears because their teeth are straight",
+            "Both spur and helical gears have an identical contact ratio of exactly 1.0",
+            "Helical gears have zero overlap contact ratio because of tooth inclination"
+          ],
+          "correctAnswer": "Spur gears have only transverse contact ratio (epsilon_alpha, typically 1.2 to 1.7); Helical gears have total contact ratio epsilon_gamma = epsilon_alpha + epsilon_beta (typically 2.5 to 3.5+)",
+          "explanation": "In helical gears, the face overlap ratio epsilon_beta = (b * sin(beta)) / (pi * mn) adds to the transverse contact ratio, ensuring continuous multi-tooth load sharing."
+        },
+        {
+          "id": "q7_2",
+          "prompt": "What is the typical pitch-line velocity operating domain for standard commercial spur gears versus precision helical gears?",
+          "options": [
+            "Spur gears are best suited for low-to-moderate speeds (v < 8–10 m/s); Helical gears operate smoothly and reliably at higher speeds (v > 10–30+ m/s)",
+            "Spur gears are used exclusively above 50 m/s; Helical gears are restricted to hand-cranked mechanisms below 1 m/s",
+            "Both gear types have identical dynamic limits and fail at exactly 5 m/s",
+            "Velocity has no effect on gear noise, dynamic loading, or tooth failure"
+          ],
+          "correctAnswer": "Spur gears are best suited for low-to-moderate speeds (v < 8–10 m/s); Helical gears operate smoothly and reliably at higher speeds (v > 10–30+ m/s)",
+          "explanation": "At speeds above 8–10 m/s, cyclic impact in spur gears causes severe noise and dynamic load spikes. Helical gears maintain smooth engagement at much higher velocities."
+        },
+        {
+          "id": "q7_3",
+          "prompt": "How does the Barth velocity factor (Cv) reflect the dynamic superiority of precision helical gears over commercial spur gears at elevated speeds?",
+          "options": [
+            "Precision helical gears maintain a significantly higher Cv factor (e.g., 5.6 / (5.6 + sqrt(v))), reducing dynamic load amplification compared to commercial cut spur gears (e.g., 3 / (3 + v) or 4.5 / (4.5 + v))",
+            "Commercial spur gears have a higher Cv than helical gears at all speeds",
+            "The Barth velocity factor increases to infinity as velocity increases",
+            "Cv is completely independent of pitch-line velocity for both gear types"
+          ],
+          "correctAnswer": "Precision helical gears maintain a significantly higher Cv factor (e.g., 5.6 / (5.6 + sqrt(v))), reducing dynamic load amplification compared to commercial cut spur gears (e.g., 3 / (3 + v) or 4.5 / (4.5 + v))",
+          "explanation": "Because Peff = (Ka * Km * Ft) / Cv, a higher Cv factor means lower dynamic load penalty, allowing helical gears to transmit greater power in a compact envelope."
+        },
+        {
+          "id": "q7_4",
+          "prompt": "Why are helical gears almost universally chosen over spur gears in enclosed high-speed industrial drives and passenger automotive transmissions?",
+          "options": [
+            "Because their continuous multi-tooth overlap drastically reduces gear whine, acoustic noise (< 75 dBA), and high-frequency vibration",
+            "Because helical gears require no lubrication and never wear out",
+            "Because helical gears are much cheaper to manufacture than spur gears",
+            "Because helical gears generate no heat during operation"
+          ],
+          "correctAnswer": "Because their continuous multi-tooth overlap drastically reduces gear whine, acoustic noise (< 75 dBA), and high-frequency vibration",
+          "explanation": "Acoustic comfort and vibration suppression are critical in automotive transmissions and plant environments; progressive helical meshing satisfies strict noise standards."
+        }
+      ]
+    },
+    "manufacturing-and-maintenance": {
+      "title": "8. Manufacturing Processes, Capital Cost & Maintenance",
+      "description": "Analyze tooling, capital investment, assembly tolerances, and field maintenance trade-offs.",
+      "questions": [
+        {
+          "id": "q8_1",
+          "prompt": "Why are spur gears simpler and less expensive to manufacture than helical gears?",
+          "options": [
+            "Spur teeth require simple straight-axis hobbing or shaping with standard tooling; they require no helix lead generation, workhead swiveling, or differential gear trains",
+            "Spur gears can be cut with handheld woodworking tools without machines",
+            "Spur gears do not require steel and can be made of unmachined timber",
+            "Spur gears require only 1 tooth to be cut, while helical gears require all teeth"
+          ],
+          "correctAnswer": "Spur teeth require simple straight-axis hobbing or shaping with standard tooling; they require no helix lead generation, workhead swiveling, or differential gear trains",
+          "explanation": "Cutting helical teeth requires a synchronized rotary feed and helical lead guide, complicating machine tool kinematics and increasing initial tooling costs."
+        },
+        {
+          "id": "q8_2",
+          "prompt": "How does axial alignment sensitivity compare between spur and helical gear assemblies?",
+          "options": [
+            "Spur gears are relatively forgiving of slight axial displacement; Helical gears are highly sensitive to axial position and lead alignment because axial shifts alter tooth contact across the face width",
+            "Spur gears cannot tolerate even 0.001 mm of axial position; Helical gears require zero axial alignment",
+            "Both gear types are completely insensitive to shaft misalignment and tooth runout",
+            "Helical gears automatically correct any angular misalignment by twisting the shaft"
+          ],
+          "correctAnswer": "Spur gears are relatively forgiving of slight axial displacement; Helical gears are highly sensitive to axial position and lead alignment because axial shifts alter tooth contact across the face width",
+          "explanation": "Because helical teeth are angled, any axial shift or lead error causes localized edge contact and uneven load distribution across the face width."
+        },
+        {
+          "id": "q8_3",
+          "prompt": "What is the primary maintenance and replacement advantage of an industrial spur gear drive?",
+          "options": [
+            "Lower replacement cost, readily available standard radial bearings, and straightforward field assembly without complex bearing preloading (shimming)",
+            "Spur gears never require oil changes or visual inspection",
+            "Spur gear teeth can be repaired in the field with a hammer without disassembling the casing",
+            "Spur gears have infinite fatigue life regardless of load"
+          ],
+          "correctAnswer": "Lower replacement cost, readily available standard radial bearings, and straightforward field assembly without complex bearing preloading (shimming)",
+          "explanation": "Spur gear drives utilize off-the-shelf radial bearings and standard spur gears, simplifying maintenance and minimizing downtime in remote or heavy-duty plant sites."
+        },
+        {
+          "id": "q8_4",
+          "prompt": "Under what condition is the higher capital expenditure of a helical gear drive fully economically justified?",
+          "options": [
+            "When high operating speed, strict acoustic noise limits, or high torque density make smooth continuous engagement and reduced dynamic loading essential for transmission reliability",
+            "Only when the gearbox is run backwards at zero rpm",
+            "Whenever the plant manager wants the most expensive equipment regardless of operating parameters",
+            "Only when the transmitted power is less than 0.1 kW"
+          ],
+          "correctAnswer": "When high operating speed, strict acoustic noise limits, or high torque density make smooth continuous engagement and reduced dynamic loading essential for transmission reliability",
+          "explanation": "The added cost of precision helical gear tooling, thrust bearings, and stiff casing is justified when operating demands exceed the dynamic and acoustic capabilities of spur gears."
+        }
+      ]
+    },
+    "application-requirement-matrix": {
+      "title": "9. Industrial Application Requirement & Selection Matrix",
+      "description": "Match the appropriate gear technology (Spur vs Helical) to 6 concrete industrial operating profiles based on explicit engineering criteria.",
+      "questions": [
+        {
+          "id": "q9_1",
+          "prompt": "Profile 1: Cement Clinker Low-Speed Apron Conveyor (N = 25 rpm, pitch-line velocity v = 1.2 m/s, dusty and abrasive environment, heavy shock loading, low initial capital budget, simple field maintenance required). Select gear type and primary technical justification:",
+          "options": [
+            "Spur Gear — Low pitch velocity (v = 1.2 m/s) avoids noise issues; zero axial thrust simplifies bearing arrangements; rugged and economical for field maintenance",
+            "Helical Gear — High speed requires high contact ratio",
+            "Helical Gear — Axial thrust is required to clear dust from the bearing seals",
+            "Spur Gear — Must be chosen because helical gears cannot transmit torque below 100 rpm"
+          ],
+          "correctAnswer": "Spur Gear — Low pitch velocity (v = 1.2 m/s) avoids noise issues; zero axial thrust simplifies bearing arrangements; rugged and economical for field maintenance",
+          "explanation": "At low velocity (1.2 m/s), dynamic impact is negligible. Spur gears provide lowest cost, simple radial bearings, and straightforward maintenance in harsh environments."
+        },
+        {
+          "id": "q9_2",
+          "prompt": "Profile 2: Electric Vehicle Single-Speed Reduction Gearbox (Input motor speed N1 = 12,000 rpm, pitch-line velocity v = 25 m/s, strict passenger cabin acoustic limit < 65 dBA, high power density, compact casing envelope). Select gear type and primary technical justification:",
+          "options": [
+            "Helical Gear — High pitch velocity (v = 25 m/s) and strict noise limit (< 65 dBA) mandate progressive tooth engagement and high overlap contact ratio to eliminate gear whine",
+            "Spur Gear — Simpler manufacture makes spur gears universally preferred in modern electric vehicles",
+            "Spur Gear — Low acoustic noise is naturally produced by straight teeth at 12,000 rpm",
+            "Helical Gear — Selected solely because spur gears cannot be lubricated at speeds above 1,000 rpm"
+          ],
+          "correctAnswer": "Helical Gear — High pitch velocity (v = 25 m/s) and strict noise limit (< 65 dBA) mandate progressive tooth engagement and high overlap contact ratio to eliminate gear whine",
+          "explanation": "At 25 m/s and 12,000 rpm, spur gear cyclic impact would create intolerable cabin whine. Helical gears provide quiet, continuous multi-tooth engagement."
+        },
+        {
+          "id": "q9_3",
+          "prompt": "Profile 3: Hand-Operated Workshop Overhead Crane Winch (Intermittent manual hand-crank operation, low rotational speed, zero high-speed noise concern, highly cost-sensitive, simple radial journal bushings). Select gear type and primary technical justification:",
+          "options": [
+            "Spur Gear — Hand-powered intermittent operation has negligible dynamic excitation; zero axial thrust allows economical radial journal bushings without thrust bearings",
+            "Helical Gear — Manual hand winches require high helix angles to prevent backward rotation",
+            "Helical Gear — Tapered roller thrust bearings are mandatory for manual winches",
+            "Spur Gear — Selected solely because helical gears cannot be turned by human hand"
+          ],
+          "correctAnswer": "Spur Gear — Hand-powered intermittent operation has negligible dynamic excitation; zero axial thrust allows economical radial journal bushings without thrust bearings",
+          "explanation": "Manual cranking has negligible dynamic impact. Spur gears minimize manufacturing cost and eliminate thrust forces on simple winch bushings."
+        },
+        {
+          "id": "q9_4",
+          "prompt": "Profile 4: Industrial Centrifugal Process Gas Compressor (Transmitted power P = 55 kW, motor speed N1 = 2950 rpm, pitch-line velocity v = 18 m/s, continuous 24/7 chemical plant duty, high reliability required). Select gear type and primary technical justification:",
+          "options": [
+            "Helical Gear — High pitch velocity (18 m/s) and continuous 24/7 duty require high Barth factor (Cv), multi-tooth load sharing, and low dynamic excitation for fatigue durability",
+            "Spur Gear — High velocity causes helical gear oil to foam, making spur gears superior",
+            "Spur Gear — Eliminates thrust bearings to minimize overall gearbox cost in chemical plants",
+            "Helical Gear — Selected because spur gears cannot transmit more than 10 kW"
+          ],
+          "correctAnswer": "Helical Gear — High pitch velocity (18 m/s) and continuous 24/7 duty require high Barth factor (Cv), multi-tooth load sharing, and low dynamic excitation for fatigue durability",
+          "explanation": "At 18 m/s, spur gears suffer severe dynamic load penalties. Helical gears maintain high Cv and tooth overlap, ensuring 24/7 fatigue life in critical turbomachinery."
+        },
+        {
+          "id": "q9_5",
+          "prompt": "Profile 5: Agricultural Seed Planter Ground-Wheel Metering Drive (Ground speed v < 0.5 m/s, exposed open gear drive, dirt and debris exposure, low manufacturing precision, cost-critical). Select gear type and primary technical justification:",
+          "options": [
+            "Spur Gear — Very low operating speed (v < 0.5 m/s), rugged field environment, and high tolerance to axial misalignment make simple spur gears technically and economically optimal",
+            "Helical Gear — Agricultural seed metering requires precision helical lead angles to meter seeds accurately",
+            "Helical Gear — Axial thrust is required to shake excess seeds off the gear teeth",
+            "Spur Gear — Selected because helical gears cannot be manufactured in iron"
+          ],
+          "correctAnswer": "Spur Gear — Very low operating speed (v < 0.5 m/s), rugged field environment, and high tolerance to axial misalignment make simple spur gears technically and economically optimal",
+          "explanation": "At sub-1 m/s ground speeds, dynamic shock is absent. Spur gears tolerate rough field conditions, open mounting, and axial shift without performance loss."
+        },
+        {
+          "id": "q9_6",
+          "prompt": "Profile 6: Paper Mill Continuous Drying Cylinder Drive (Operating speed v = 14 m/s, continuous web tension, paper surface extremely sensitive to cyclic tooth impact vibration marks). Select gear type and primary technical justification:",
+          "options": [
+            "Helical Gear — Smooth progressive tooth engagement eliminates cyclic impact vibration, preventing periodic chatter marks on the continuous paper web and ensuring product quality",
+            "Spur Gear — Paper web drying requires cyclic vibration pulses to shake moisture from the paper",
+            "Spur Gear — Spur teeth provide better traction on the paper drying cylinders",
+            "Helical Gear — Selected because paper drying requires non-metallic gears only"
+          ],
+          "correctAnswer": "Helical Gear — Smooth progressive tooth engagement eliminates cyclic impact vibration, preventing periodic chatter marks on the continuous paper web and ensuring product quality",
+          "explanation": "Spur tooth entry shock induces torsional vibration into drying cylinders, imprinting visible chatter lines across delicate paper sheets. Helical gears ensure ripple-free torque."
+        }
+      ]
+    },
+    "engineering-decision-canvas": {
+      "title": "10. Engineering Decision Canvas: Selection & Defense",
+      "description": "Select one industrial client application from the engineering scenario and provide a comprehensive, defensible technical decision defending your gear selection.",
+      "fields": [
+        {
+          "name": "selectedApplication",
+          "label": "Selected Client Application",
+          "type": "select",
+          "options": [
+            "Application A — Low-Speed Bucket Elevator Drive (v < 3 m/s, heavy shock, cost-sensitive)",
+            "Application B — High-Speed Centrifugal Blower Drive (v > 12 m/s, noise limit < 75 dBA, continuous)",
+            "Application C — Mining Slurry Pump Drive (v ~ 6 m/s, high torque, abrasive slurry)"
+          ],
+          "required": true
+        },
+        {
+          "name": "selectedGearType",
+          "label": "Recommended Gear Technology",
+          "type": "select",
+          "options": [
+            "Single-Stage External Spur Gear Drive",
+            "Single-Stage Parallel Helical Gear Drive"
+          ],
+          "required": true
+        },
+        {
+          "name": "decisiveTechnicalDriver",
+          "label": "Primary Decisive Engineering Parameter",
+          "type": "text",
+          "placeholder": "e.g., Pitch-line velocity limits (v), acoustic noise constraints (< 75 dBA), bearing thrust complexity, or initial capital budget",
+          "required": true
+        },
+        {
+          "name": "bearingAndCasingDefense",
+          "label": "Bearing Arrangement & Housing Defense",
+          "type": "textarea",
+          "placeholder": "Defend the specific bearing types selected (e.g., standard deep-groove ball vs preloaded tapered roller pairs) and casing stiffness requirements based on axial thrust.",
+          "required": true
+        },
+        {
+          "name": "lifecycleEconomicsDefense",
+          "label": "Manufacturing Cost vs Operational Reliability Defense",
+          "type": "textarea",
+          "placeholder": "Explain how initial tooling and manufacturing cost balance against operational reliability, maintenance simplicity, and total cost of ownership for your chosen application.",
+          "required": true
+        }
+      ]
+    },
+    "reflection-synthesis": {
+      "title": "11. Professional Reflection & Transmission Design Synthesis",
+      "description": "Synthesize the engineering trade-offs between spur and helical transmissions, formulate a junior designer's heuristic, and reflect on engineering design responsibility.",
+      "prompts": [
+        {
+          "id": "refl_1",
+          "title": "Synthesis of Fundamental Transmission Differences",
+          "prompt": "Summarize the fundamental mechanical and operational differences between spur and helical gears regarding tooth engagement, 3D force resolution, axial thrust, and dynamic velocity capability.",
+          "placeholder": "Summarize how line-of-contact progression, force vectors (2D vs 3D), and multi-tooth overlap govern the operational performance of each gear type..."
+        },
+        {
+          "id": "refl_2",
+          "title": "The Junior Designer's 3-Point Decision Heuristic",
+          "prompt": "Formulate a practical 3-point rule-of-thumb decision guide that a junior mechanical transmission engineer should follow when choosing between spur and helical gears in industrial design practice.",
+          "placeholder": "Point 1 (Velocity threshold): ...\nPoint 2 (Noise/vibration & duty cycle): ...\nPoint 3 (Bearing budget & axial thrust feasibility): ..."
+        },
+        {
+          "id": "refl_3",
+          "title": "Professional Reflection: Capital Cost vs Operational Reliability",
+          "prompt": "Reflect on the professional responsibility of the design engineer in balancing initial manufacturing capital cost against long-term operational reliability, maintenance downtime, and total lifecycle cost.",
+          "placeholder": "Discuss the ethical and engineering balance between selecting lower-cost spur gearing versus investing in precision helical gearing with thrust bearings..."
+        }
+      ]
+    }
+  }
+}

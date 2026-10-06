@@ -141,6 +141,22 @@ class EvaluationEngine {
       ];
     }
 
+    if (name.includes('gear-comparison') || name.includes('ts-03') || name.includes('ea-ts-03')) {
+      return [
+        { id: 'ts03-act-1', name: 'Task 1: Engineering Problem Charter & Technical Scope', response: 'Syllabus boundary acknowledged: zero numerical helical force analysis; scope confirmed.', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Analysis' },
+        { id: 'ts03-act-2', name: 'Task 2: Parallel Gear Assembly Visualisation & Component Callout Mapping', response: '10 callouts correctly identified: Spur input shaft, pinion, gear, output shaft, bearing (1–5); Helical input shaft, pinion, gear, output shaft, bearing (6–10).', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Visualisation' },
+        { id: 'ts03-act-3', name: 'Task 3: Gear-Type Identification & Geometric Architecture', response: 'Tooth trace orientation, mt = mn / cos(beta), tan(alpha_t) = tan(alpha_n)/cos(beta), z\' = z/cos^3(beta) identified.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Analysis' },
+        { id: 'ts03-act-4', name: 'Task 4: Tooth Engagement Kinematics & Contact Line Mechanics', response: 'Spur: full-width abrupt line contact with cyclic impact; Helical: gradual diagonal contact progression with smooth load transfer.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Kinematics' },
+        { id: 'ts03-act-5', name: 'Task 5: Force Characteristics & 3D Force Vector Resolution', response: 'Spur: Ft, Fr, Fa = 0; Helical: Ft, Fr, Fa = Ft*tan(beta) conceptually; 3D directional vector relationships established.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Force Analysis' },
+        { id: 'ts03-act-6', name: 'Task 6: Bearing Consequences & Shaft Mounting Integration', response: 'Spur: standard radial deep-groove ball/cylindrical roller bearings; Helical: opposed tapered roller or angular contact bearings with rigid housing retention.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Machine Elements' },
+        { id: 'ts03-act-7', name: 'Task 7: Dynamic Transmission Behaviour, Noise & Velocity Limits', response: 'Helical overlap ratio (eps_gamma = eps_alpha + eps_beta), higher Cv factor, and acoustic suppression (< 75 dBA) at high pitch velocities.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Dynamics' },
+        { id: 'ts03-act-8', name: 'Task 8: Manufacturing Processes, Capital Cost & Maintenance', response: 'Spur: simpler hobbing, lower cost, axial forgiveness, easy field replacement; Helical: synchronized lead generation, higher tooling, axial sensitivity.', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Manufacturing' },
+        { id: 'ts03-act-9', name: 'Task 9: Industrial Application Requirement & Selection Matrix', response: '6 profiles mapped: Cement conveyor (Spur), EV gearbox (Helical), Crane winch (Spur), Gas compressor (Helical), Seed planter (Spur), Paper mill (Helical).', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Selection Matrix' },
+        { id: 'ts03-act-10', name: 'Task 10: Engineering Decision Canvas: Selection & Defense', response: 'Student defense: Comprehensive evaluation of chosen client application (velocity, noise, bearing complexity, housing stiffness, and lifecycle economics).', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Design Decision' },
+        { id: 'ts03-act-11', name: 'Task 11: Professional Reflection & Transmission Design Synthesis', response: 'Student reflection: Fundamental transmission differences, 3-point rule-of-thumb heuristic for junior designers, and lifecycle cost vs capital expenditure trade-off.', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Synthesis' }
+      ];
+    }
+
     if (name.includes('shaft') || name.includes('ec-07')) {
       return [
         { id: 'ec07-act-1', name: 'Task 1: System Specifications & Given Data', response: 'Power P = 15 kW, Speed N = 720 rpm, Radial Load Fr = 3000 N, Span L = 500 mm', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },
