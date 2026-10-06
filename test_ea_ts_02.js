@@ -92,16 +92,16 @@ directories.forEach(dir => {
     assert.strictEqual(act.labels.length, 10, 'Must have exactly 10 callout labels');
     
     const expected = [
-      { num: 1, ans: 'Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)' },
-      { num: 2, ans: 'Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)' },
-      { num: 3, ans: 'Input Shaft & Motor Coupling (960 rpm)' },
-      { num: 4, ans: 'Output Conveyor Drive Shaft (320 rpm)' },
-      { num: 5, ans: 'Input Shaft Bearing Pedestals (Pinion Side)' },
-      { num: 6, ans: 'Output Shaft Bearing Pedestals (Gear Side)' },
-      { num: 7, ans: 'Pinion Shaft Drive Key (Parallel Sunk Key)' },
-      { num: 8, ans: 'Bulk Material Conveyor Head Pulley & Belt Drum' },
-      { num: 9, ans: 'Gear Shaft Drive Key (Output Hub Key)' },
-      { num: 10, ans: 'Heavy-Duty Cast Iron Gearbox Casing / Bed Plate' }
+      { num: 1, ans: 'Electric Drive Motor (11 kW, 960 rpm)' },
+      { num: 2, ans: 'High-Speed Input Shaft (960 rpm)' },
+      { num: 3, ans: 'Pinion Shaft Drive Key (Parallel Sunk Key)' },
+      { num: 4, ans: 'Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)' },
+      { num: 5, ans: 'Driven Spur Gear Teeth / Meshing Zone' },
+      { num: 6, ans: 'Driven Spur Gear Wheel (60 Teeth, 55C8 Plain Carbon Steel)' },
+      { num: 7, ans: 'Gear Hub / Shaft Drive Key (Output Hub Key)' },
+      { num: 8, ans: 'Low-Speed Output Conveyor Shaft (320 rpm)' },
+      { num: 9, ans: 'Conveyor Head Pulley Drum (Drive Pulley)' },
+      { num: 10, ans: 'Continuous Conveyor Belt & Bulk Material' }
     ];
 
     expected.forEach(exp => {

@@ -28,7 +28,7 @@
       "po": ["PO1", "PO2"],
       "pso": ["PSO1"],
       "type": "auto-grading",
-      "description": "Correct identification of conveyor spur gear drive components: driving pinion, driven gear, centre distance, pitch circle diameter, and line of action."
+      "description": "Correct identification of conveyor spur gear drive components: electric motor, input shaft, pinion key, driving pinion, gear teeth, driven gear wheel, gear hub key, output shaft, head pulley drum, and conveyor belt."
     },
     {
       "id": "TS02-C03",

@@ -12,7 +12,7 @@ You are a Mechanical Transmission Design Engineer in the Heavy Materials Handlin
 
 ## Learning Journey (MEILP Framework)
 1. **Engineering Problem Charter:** Review conveyor operational brief, shock factors ($K_a = 1.50, K_m = 1.25$), and target safety threshold ($[\text{FOS}] \ge 1.50$).
-2. **Conveyor Visualisation:** Inspect the industrial conveyor drive schematic and identify 10 key mechanical drive components.
+2. **Conveyor Visualisation:** Inspect the industrial conveyor drive schematic and identify the 10 numbered drive components: Electric Motor (1), Input Shaft (2), Pinion Key (3), Driving Spur Pinion (4), Gear Teeth (5), Driven Gear (6), Gear Hub Key (7), Output Shaft (8), Head Pulley Drum (9), and Conveyor Belt (10).
 3. **Transmission Requirements & Kinematic Parameters:** Calculate transmission ratio ($i = 3.00$), rated pinion torque ($T_1 = 109,419.02\text{ N}\cdot\text{mm}$), and output gear torque ($T_2 = 328,257.06\text{ N}\cdot\text{mm}$).
 4. **Spur Gear Pitch Geometry & Centre Distance:** Calculate pitch circle diameters ($d_1 = 80.00\text{ mm}, d_2 = 240.00\text{ mm}$) and standard centre distance ($a = 160.00\text{ mm}$) with module $m = 4.0\text{ mm}$.
 5. **Material Selection & Gear-Tooth Failure Evaluation:** Determine permissible bending stresses ($\sigma_b = S_{ut}/3$) and identify fundamental gear tooth failure modes.

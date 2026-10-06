@@ -167,130 +167,141 @@
       "labels": [
         {
           "componentNumber": 1,
-          "title": "Driving Spur Pinion",
+          "title": "Electric Drive Motor",
           "invisible": true,
-          "correctAnswer": "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+          "correctAnswer": "Electric Drive Motor (11 kW, 960 rpm)",
           "acceptedAnswers": [
-            "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
-            "Driving Spur Pinion (20 Teeth)"
+            "Electric Drive Motor (11 kW, 960 rpm)",
+            "Electric Drive Motor",
+            "Three-Phase Induction Motor (11 kW)"
           ],
-          "feedback": "High-speed driving pinion with z1 = 20 teeth manufactured from high-strength 40Ni2Cr1Mo28 alloy steel."
+          "feedback": "Electric drive motor delivering rated power P = 11 kW at input speed N1 = 960 rpm."
         },
         {
           "componentNumber": 2,
-          "title": "Driven Spur Gear",
+          "title": "High-Speed Input Shaft",
           "invisible": true,
-          "correctAnswer": "Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)",
+          "correctAnswer": "High-Speed Input Shaft (960 rpm)",
           "acceptedAnswers": [
-            "Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)",
-            "Driven Spur Gear (60 Teeth)"
+            "High-Speed Input Shaft (960 rpm)",
+            "High-Speed Input Shaft",
+            "Input Drive Shaft (960 rpm)"
           ],
-          "feedback": "Low-speed driven gear with z2 = 60 teeth manufactured from 55C8 plain carbon steel."
+          "feedback": "High-speed input shaft coupled to the motor transmitting 109,419 N·mm rated torque at 960 rpm."
         },
         {
           "componentNumber": 3,
-          "title": "Input Shaft & Coupling",
-          "invisible": true,
-          "correctAnswer": "Input Shaft & Motor Coupling (960 rpm)",
-          "acceptedAnswers": [
-            "Input Shaft & Motor Coupling (960 rpm)",
-            "Input Drive Shaft & Motor Coupling"
-          ],
-          "feedback": "High-speed input shaft driven by the 11 kW electric motor at 960 rpm."
-        },
-        {
-          "componentNumber": 4,
-          "title": "Output Conveyor Shaft",
-          "invisible": true,
-          "correctAnswer": "Output Conveyor Drive Shaft (320 rpm)",
-          "acceptedAnswers": [
-            "Output Conveyor Drive Shaft (320 rpm)",
-            "Conveyor Drive Shaft (320 rpm)"
-          ],
-          "feedback": "Low-speed output shaft running at 320 rpm transmitting torque directly to the conveyor head pulley drum."
-        },
-        {
-          "componentNumber": 5,
-          "title": "Input Shaft Bearings",
-          "invisible": true,
-          "correctAnswer": "Input Shaft Bearing Pedestals (Pinion Side)",
-          "acceptedAnswers": [
-            "Input Shaft Bearing Pedestals (Pinion Side)",
-            "High-Speed Input Shaft Bearings"
-          ],
-          "feedback": "Antifriction bearings supporting the high-speed pinion shaft and reacting gear meshing forces."
-        },
-        {
-          "componentNumber": 6,
-          "title": "Output Shaft Bearings",
-          "invisible": true,
-          "correctAnswer": "Output Shaft Bearing Pedestals (Gear Side)",
-          "acceptedAnswers": [
-            "Output Shaft Bearing Pedestals (Gear Side)",
-            "Low-Speed Output Shaft Bearings"
-          ],
-          "feedback": "Heavy-duty bearings supporting the low-speed shaft against conveyor belt tension and gear loads."
-        },
-        {
-          "componentNumber": 7,
           "title": "Pinion Shaft Key",
           "invisible": true,
           "correctAnswer": "Pinion Shaft Drive Key (Parallel Sunk Key)",
           "acceptedAnswers": [
             "Pinion Shaft Drive Key (Parallel Sunk Key)",
+            "Pinion Shaft Drive Key",
             "Parallel Drive Key (Pinion Shaft)"
           ],
           "feedback": "Parallel sunk key transmitting rated input torque from the input shaft to the pinion hub."
         },
         {
-          "componentNumber": 8,
-          "title": "Conveyor Head Pulley",
+          "componentNumber": 4,
+          "title": "Driving Spur Pinion",
           "invisible": true,
-          "correctAnswer": "Bulk Material Conveyor Head Pulley & Belt Drum",
+          "correctAnswer": "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
           "acceptedAnswers": [
-            "Bulk Material Conveyor Head Pulley & Belt Drum",
-            "Conveyor Head Pulley Drum"
+            "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+            "Driving Spur Pinion (20 Teeth)",
+            "Spur Pinion (20 Teeth)"
           ],
-          "feedback": "Main driving pulley drum driving the continuous industrial conveyor belt."
+          "feedback": "High-speed driving pinion with z1 = 20 teeth manufactured from high-strength 40Ni2Cr1Mo28 alloy steel."
+        },
+        {
+          "componentNumber": 5,
+          "title": "Driven Spur Gear Teeth",
+          "invisible": true,
+          "correctAnswer": "Driven Spur Gear Teeth / Meshing Zone",
+          "acceptedAnswers": [
+            "Driven Spur Gear Teeth / Meshing Zone",
+            "Driven Spur Gear Teeth (60 Teeth)",
+            "Meshing Spur Gear Teeth (20° Full-Depth Involute)"
+          ],
+          "feedback": "Spur gear teeth meshing at 20° pressure angle transmitting torque across centre distance a = 160 mm."
+        },
+        {
+          "componentNumber": 6,
+          "title": "Driven Spur Gear Wheel",
+          "invisible": true,
+          "correctAnswer": "Driven Spur Gear Wheel (60 Teeth, 55C8 Plain Carbon Steel)",
+          "acceptedAnswers": [
+            "Driven Spur Gear Wheel (60 Teeth, 55C8 Plain Carbon Steel)",
+            "Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)",
+            "Driven Spur Gear (60 Teeth)"
+          ],
+          "feedback": "Low-speed driven gear wheel with z2 = 60 teeth manufactured from 55C8 plain carbon steel."
+        },
+        {
+          "componentNumber": 7,
+          "title": "Gear Hub / Shaft Key",
+          "invisible": true,
+          "correctAnswer": "Gear Hub / Shaft Drive Key (Output Hub Key)",
+          "acceptedAnswers": [
+            "Gear Hub / Shaft Drive Key (Output Hub Key)",
+            "Gear Hub Drive Key / Clamping Assembly",
+            "Parallel Drive Key (Gear Shaft)"
+          ],
+          "feedback": "Parallel drive key and hub assembly transmitting amplified torque (328,257 N·mm) to the output shaft."
+        },
+        {
+          "componentNumber": 8,
+          "title": "Low-Speed Output Conveyor Shaft",
+          "invisible": true,
+          "correctAnswer": "Low-Speed Output Conveyor Shaft (320 rpm)",
+          "acceptedAnswers": [
+            "Low-Speed Output Conveyor Shaft (320 rpm)",
+            "Low-Speed Output Shaft (320 rpm)",
+            "Conveyor Drive Shaft (320 rpm)"
+          ],
+          "feedback": "Low-speed driven shaft running at N2 = 320 rpm driving the conveyor head pulley drum."
         },
         {
           "componentNumber": 9,
-          "title": "Gear Shaft Key",
+          "title": "Conveyor Head Pulley Drum",
           "invisible": true,
-          "correctAnswer": "Gear Shaft Drive Key (Output Hub Key)",
+          "correctAnswer": "Conveyor Head Pulley Drum (Drive Pulley)",
           "acceptedAnswers": [
-            "Gear Shaft Drive Key (Output Hub Key)",
-            "Parallel Drive Key (Gear Shaft)"
+            "Conveyor Head Pulley Drum (Drive Pulley)",
+            "Bulk Material Conveyor Head Pulley & Belt Drum",
+            "Conveyor Head Pulley Drum"
           ],
-          "feedback": "Sunk key transmitting high amplified torque (328.26 N·m) from the driven gear to the output shaft."
+          "feedback": "Main cylindrical head pulley drum driving the continuous industrial conveyor belt."
         },
         {
           "componentNumber": 10,
-          "title": "Gearbox Casing / Bed Plate",
+          "title": "Continuous Conveyor Belt",
           "invisible": true,
-          "correctAnswer": "Heavy-Duty Cast Iron Gearbox Casing / Bed Plate",
+          "correctAnswer": "Continuous Conveyor Belt & Bulk Material",
           "acceptedAnswers": [
-            "Heavy-Duty Cast Iron Gearbox Casing / Bed Plate",
-            "Gearbox Casing / Rigid Bed Plate"
+            "Continuous Conveyor Belt & Bulk Material",
+            "Continuous Conveyor Belt",
+            "Conveyor Belt & Bulk Material"
           ],
-          "feedback": "Rigid cast iron enclosure maintaining precise centre distance and bearing alignment under heavy shock loads."
+          "feedback": "Heavy-duty continuous conveyor belt transporting bulk material in the industrial processing plant."
         }
       ],
       "options": [
+        "Electric Drive Motor (11 kW, 960 rpm)",
+        "High-Speed Input Shaft (960 rpm)",
+        "Pinion Shaft Drive Key (Parallel Sunk Key)",
         "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
-        "Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)",
-        "Input Shaft & Motor Coupling (960 rpm)",
-        "Output Conveyor Drive Shaft (320 rpm)",
+        "Driven Spur Gear Teeth / Meshing Zone",
+        "Driven Spur Gear Wheel (60 Teeth, 55C8 Plain Carbon Steel)",
+        "Gear Hub / Shaft Drive Key (Output Hub Key)",
+        "Low-Speed Output Conveyor Shaft (320 rpm)",
+        "Conveyor Head Pulley Drum (Drive Pulley)",
+        "Continuous Conveyor Belt & Bulk Material",
+        "Flexible Shaft Coupling (Motor to Input Shaft)",
         "Input Shaft Bearing Pedestals (Pinion Side)",
         "Output Shaft Bearing Pedestals (Gear Side)",
-        "Pinion Shaft Drive Key (Parallel Sunk Key)",
-        "Bulk Material Conveyor Head Pulley & Belt Drum",
-        "Gear Shaft Drive Key (Output Hub Key)",
-        "Heavy-Duty Cast Iron Gearbox Casing / Bed Plate",
-        "Pitch Circle Diameter Span (d1 = 80 mm, d2 = 240 mm)",
-        "Gearbox Centre Distance Span (a = 160 mm)",
-        "Spur Tooth Face Width (b = 40 mm)",
-        "Involute Tooth Contact Line & Pressure Angle (20 deg)"
+        "Gearbox Rigid Base Frame / Support Structure",
+        "Troughing Idler Rollers (Belt Support)"
       ]
     },
     "transmission-requirements": {

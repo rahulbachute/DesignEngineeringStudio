@@ -127,7 +127,7 @@ class EvaluationEngine {
     if (name.includes('spur') || name.includes('ts-02') || name.includes('ea-ts-02')) {
       return [
         { id: 'ts02-act-1', name: 'Task 1: Kinematic Specification & Pinion Torque', response: 'T1 = 109,419.02 N·mm, i = 3.00, T2 = 328,257.06 N·mm', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Calculation' },
-        { id: 'ts02-act-2', name: 'Task 2: Spur Gear Visualisation & Tooth Terminology', response: 'Pinion (20T, 40Ni2Cr1Mo28), Gear (60T, 55C8), Conveyor Drive elements identified', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Visualisation' },
+        { id: 'ts02-act-2', name: 'Task 2: Spur Gear Visualisation & Tooth Terminology', response: 'Electric Motor (11 kW), Input Shaft, Pinion Key, Driving Pinion (20T), Driven Gear (60T), Output Shaft, Head Pulley, Conveyor Belt identified', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Visualisation' },
         { id: 'ts02-act-3', name: 'Task 3: Spur Gear Pitch Geometry & Centre Distance', response: 'd1 = 80.00 mm, d2 = 240.00 mm, a = 160.00 mm', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
         { id: 'ts02-act-4', name: 'Task 4: Material Selection & Tooth Failure Evaluation', response: 'sigma_b1 = 266.67 MPa, sigma_b2 = 200.00 MPa, Root bending & Flank pitting identified', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Analysis' },
         { id: 'ts02-act-5', name: 'Task 5: Lewis Form Factors & Weaker Element Determination', response: 'Y1 = 0.3405, Y2 = 0.4362, Pinion Index = 90.80 MPa, Gear Index = 87.24 MPa -> Gear is weaker', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
