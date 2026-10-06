@@ -1,0 +1,461 @@
+{
+  "assignment": {
+    "id": "EA-TS-01",
+    "slug": "helical-gear-design",
+    "title": "Design of Helical Gears for High-Speed Rotary Equipment"
+  },
+  "dashboard": {
+    "projectCode": "EA-TS-01",
+    "projectTitle": "Design of Helical Gears for High-Speed Rotary Equipment",
+    "courseCode": "PCC353-MEC",
+    "courseName": "Transmission System Design",
+    "unit": "Unit I — Spur and Helical Gears",
+    "difficultyLevel": "Advanced",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO1: Apply principle of Spur & Helical gear design for industrial application.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5, L6",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "helical-gear-asset",
+      "title": "Design of Helical Gears for High-Speed Rotary Equipment",
+      "path": "assignments/helical-gear-design/images/EA-TS-01_Helical_Gear_Drive_Student.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "helical-gear-asset",
+      "title": "High-Speed Helical Gear Drive Schematic",
+      "path": "assignments/helical-gear-design/images/EA-TS-01_Helical_Gear_Drive_Faculty.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "activities": {
+    "project-charter": {
+      "title": "1. Engineering Problem Charter: High-Speed Helical Gearbox",
+      "cards": [
+        {
+          "type": "info",
+          "title": "Industrial Situation & Transmission Brief",
+          "body": "A high-speed centrifugal compressor drive in an industrial chemical plant requires an enclosed helical reduction gearbox. The drive motor supplies P = 15.0 kW at N1 = 1440 rpm, and the output compressor shaft operates at N2 = 480 rpm (transmission ratio i = 3.0). Initial trial geometry uses 18 pinion teeth, 54 gear teeth, normal module mn = 4.0 mm, face width b = 40.0 mm, and helix angle psi = 20 deg. The gearbox must satisfy an operational factor of safety [FOS] >= 1.50 under continuous service."
+        },
+        {
+          "type": "theory",
+          "title": "Design Specifications & Material Properties",
+          "body": "The engineering team has supplied the following design exercise parameters:\n• Pinion Material: 40Ni2Cr1Mo28 alloy steel (Sut1 = 800 MPa, Surface Hardness = 350 BHN)\n• Gear Material: 55C8 plain carbon steel (Sut2 = 600 MPa, Surface Hardness = 250 BHN)\n• Application Service Factor: Ka = 1.25\n• Load Concentration Factor: Km = 1.30\n• Normal Pressure Angle: alpha_n = 20 deg (full-depth involute)\n• Target Safety Factor: [FOS] = 1.50"
+        },
+        {
+          "type": "warning",
+          "title": "Engineering Responsibility & Failure Consequences",
+          "body": "High-speed helical gear sets operate under dynamic contact and bending fatigue. Tooth breakage causes catastrophic machine shutdown, while surface pitting results in progressive vibration, severe tooth profile degradation, and gearbox seizure. The engineer must rigorously evaluate both beam strength (Lewis) and wear durability (Buckingham)."
+        }
+      ],
+      "acceptanceText": "I have reviewed the High-Speed Helical Gearbox Design Brief and understand that I must evaluate beam strength, wear durability, and perform redesign optimizations to ensure operational safety under PCC353-MEC (CO1)."
+    },
+    "engineering-visualisation": {
+      "title": "2. Engineering Visualisation & Formative Virtual Teeth Analysis",
+      "figure": "Figure 1.0: Helical Gear Pair Drive Assembly & Geometry Schematic",
+      "description": "Identify the key components of the helical gear drive by inspecting the authoritative callout numbers (1–10) in the engineering schematic.",
+      "image": "assignments/helical-gear-design/images/EA-TS-01_Helical_Gear_Drive_Student.png",
+      "hideMarkers": true,
+      "markerStyle": "invisible",
+      "labels": [
+        {
+          "componentNumber": 1,
+          "title": "Helical Pinion",
+          "invisible": true,
+          "correctAnswer": "Pinion (18 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+          "acceptedAnswers": [
+            "Pinion (18 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+            "Helical Pinion (18 Teeth)"
+          ],
+          "feedback": "High-speed driving pinion with z1 = 18 teeth made of 40Ni2Cr1Mo28 alloy steel."
+        },
+        {
+          "componentNumber": 2,
+          "title": "Helical Driven Gear",
+          "invisible": true,
+          "correctAnswer": "Driven Gear (54 Teeth, 55C8 Plain Carbon Steel)",
+          "acceptedAnswers": [
+            "Driven Gear (54 Teeth, 55C8 Plain Carbon Steel)",
+            "Driven Helical Gear (54 Teeth)"
+          ],
+          "feedback": "Low-speed driven gear with z2 = 54 teeth made of 55C8 plain carbon steel."
+        },
+        {
+          "componentNumber": 3,
+          "title": "Input Shaft",
+          "invisible": true,
+          "correctAnswer": "High-Speed Pinion Shaft & Coupling (Input)",
+          "acceptedAnswers": [
+            "High-Speed Pinion Shaft & Coupling (Input)",
+            "High-Speed Pinion Shaft (Input)"
+          ],
+          "feedback": "High-speed input shaft operating at N1 = 1440 rpm transmitting P = 15 kW from the motor drive."
+        },
+        {
+          "componentNumber": 4,
+          "title": "Output Shaft",
+          "invisible": true,
+          "correctAnswer": "Low-Speed Output Shaft & Bearings",
+          "acceptedAnswers": [
+            "Low-Speed Output Shaft & Bearings",
+            "Low-Speed Output Shaft"
+          ],
+          "feedback": "Low-speed output shaft operating at N2 = 480 rpm driving the compressor."
+        },
+        {
+          "componentNumber": 5,
+          "title": "Input Shaft Left Bearing",
+          "invisible": true,
+          "correctAnswer": "High-Speed Input Pinion Bearings",
+          "acceptedAnswers": [
+            "High-Speed Input Pinion Bearings",
+            "High-Speed Input Pinion Bearings (Left)"
+          ],
+          "feedback": "Left bearing pedestal supporting the high-speed input pinion shaft."
+        },
+        {
+          "componentNumber": 6,
+          "title": "Input Shaft Right Bearing",
+          "invisible": true,
+          "correctAnswer": "Input Shaft Bearing Pedestal (Right)",
+          "acceptedAnswers": [
+            "Input Shaft Bearing Pedestal (Right)",
+            "High-Speed Input Shaft Bearing (Right)"
+          ],
+          "feedback": "Right bearing pedestal supporting the high-speed input pinion shaft."
+        },
+        {
+          "componentNumber": 7,
+          "title": "Pinion Shaft Key",
+          "invisible": true,
+          "correctAnswer": "Parallel Key (Pinion Shaft)",
+          "acceptedAnswers": [
+            "Parallel Key (Pinion Shaft)",
+            "Parallel Drive Key (Pinion Shaft)"
+          ],
+          "feedback": "Parallel sunk key transmitting rated torque (99471.84 N·mm) between input shaft and pinion."
+        },
+        {
+          "componentNumber": 8,
+          "title": "Output Shaft Left Bearing",
+          "invisible": true,
+          "correctAnswer": "Low-Speed Output Shaft Bearings",
+          "acceptedAnswers": [
+            "Low-Speed Output Shaft Bearings",
+            "Low-Speed Output Shaft Bearing Pedestal"
+          ],
+          "feedback": "Bearing pedestal supporting the low-speed compressor drive output shaft."
+        },
+        {
+          "componentNumber": 9,
+          "title": "Gear Shaft Key",
+          "invisible": true,
+          "correctAnswer": "Parallel Key (Gear Shaft)",
+          "acceptedAnswers": [
+            "Parallel Key (Gear Shaft)",
+            "Parallel Drive Key (Gear Shaft)"
+          ],
+          "feedback": "Parallel sunk key transmitting output torque between driven gear hub and output shaft."
+        },
+        {
+          "componentNumber": 10,
+          "title": "Casing / Bed Plate",
+          "invisible": true,
+          "correctAnswer": "Rigid Cast Iron Gearbox Casing / Bed Plate",
+          "acceptedAnswers": [
+            "Rigid Cast Iron Gearbox Casing / Bed Plate",
+            "Rigid Cast Iron Gearbox Casing / Oil Sump"
+          ],
+          "feedback": "Rigid cast iron base plate and housing structure maintaining shaft alignment and rigidity."
+        }
+      ],
+      "options": [
+        "Pinion (18 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+        "Driven Gear (54 Teeth, 55C8 Plain Carbon Steel)",
+        "High-Speed Pinion Shaft & Coupling (Input)",
+        "Low-Speed Output Shaft & Bearings",
+        "High-Speed Input Pinion Bearings",
+        "Input Shaft Bearing Pedestal (Right)",
+        "Parallel Key (Pinion Shaft)",
+        "Low-Speed Output Shaft Bearings",
+        "Parallel Key (Gear Shaft)",
+        "Rigid Cast Iron Gearbox Casing / Bed Plate",
+        "Rigid Cast Iron Gearbox Casing / Oil Sump",
+        "Helical Gear Teeth (Helix Angle psi = 20 deg)",
+        "Pitch Point & Helical Tooth Contact Line",
+        "Centre Distance Span (a = 153.24 mm)",
+        "Face Width (b = 40 mm)"
+      ]
+    },
+    "gear-geometry": {
+      "title": "3. Gear Geometry & Transmission Parameters",
+      "figure": "Transmission Kinematics & Gear Pitch Dimensions",
+      "description": "Calculate transmitted torque, transmission ratio, formative virtual teeth, Lewis form factors, pitch circle diameters, and centre distance.",
+      "given": [
+        "Power Transmitted: P = 15.0 kW",
+        "Pinion Speed: N1 = 1440.0 rpm",
+        "Gear Speed: N2 = 480.0 rpm",
+        "Pinion Teeth: z1 = 18, Gear Teeth: z2 = 54",
+        "Normal Module: mn = 4.0 mm",
+        "Helix Angle: psi = 20.0 deg (cos 20° = 0.939693)",
+        "Normal Pressure Angle: alpha_n = 20.0 deg"
+      ],
+      "formulas": [
+        { "name": "Pinion Torque (T1)", "formula": "T1 = (60 * 10^6 * P) / (2 * pi * N1) [N·mm]" },
+        { "name": "Transmission Ratio (i)", "formula": "i = N1 / N2 = z2 / z1" },
+        { "name": "Virtual Teeth (z')", "formula": "z1' = z1 / cos^3(psi), z2' = z2 / cos^3(psi)" },
+        { "name": "Lewis Form Factor (Yv)", "formula": "Yv = 0.484 - (2.87 / z')" },
+        { "name": "Pitch Circle Diameters", "formula": "d1 = (z1 * mn) / cos(psi), d2 = (z2 * mn) / cos(psi) [mm]" },
+        { "name": "Centre Distance (a)", "formula": "a = (d1 + d2) / 2 [mm]" }
+      ],
+      "fields": [
+        { "id": "pinion_torque", "label": "Rated Pinion Torque (T1)", "unit": "N·mm", "placeholder": "99471.84", "hint": "T1 = (60 * 10^6 * 15) / (2 * pi * 1440)" },
+        { "id": "transmission_ratio", "label": "Kinematic Transmission Ratio (i)", "unit": "—", "placeholder": "3.00", "hint": "i = 1440 / 480" },
+        { "id": "z1_virtual", "label": "Formative Virtual Teeth - Pinion (z1')", "unit": "—", "placeholder": "21.69", "hint": "z1' = 18 / (cos 20°)^3" },
+        { "id": "z2_virtual", "label": "Formative Virtual Teeth - Gear (z2')", "unit": "—", "placeholder": "65.08", "hint": "z2' = 54 / (cos 20°)^3" },
+        { "id": "lewis_Y1", "label": "Lewis Form Factor - Pinion (Yv1)", "unit": "—", "placeholder": "0.3517", "hint": "Yv1 = 0.484 - 2.87 / z1'" },
+        { "id": "lewis_Y2", "label": "Lewis Form Factor - Gear (Yv2)", "unit": "—", "placeholder": "0.4399", "hint": "Yv2 = 0.484 - 2.87 / z2'" },
+        { "id": "d1", "label": "Pinion Pitch Diameter (d1)", "unit": "mm", "placeholder": "76.62", "hint": "d1 = (18 * 4) / cos(20°)" },
+        { "id": "d2", "label": "Gear Pitch Diameter (d2)", "unit": "mm", "placeholder": "229.86", "hint": "d2 = (54 * 4) / cos(20°)" },
+        { "id": "centre_distance", "label": "Gearbox Centre Distance (a)", "unit": "mm", "placeholder": "153.24", "hint": "a = (d1 + d2) / 2" }
+      ]
+    },
+    "material-selection": {
+      "title": "4. Material Selection & Gear-Tooth Failure Evaluation",
+      "prompt": "Evaluate permissible bending stresses and beam strength indices for the pinion and gear to determine the weaker element governing bending design.",
+      "description": "Calculate permissible bending stresses (sigma_b = Sut / 3) and evaluate the strength product (sigma_b * Yv) for both elements.",
+      "given": [
+        "Pinion Material: 40Ni2Cr1Mo28 alloy steel (Sut1 = 800 MPa, 350 BHN)",
+        "Gear Material: 55C8 plain carbon steel (Sut2 = 600 MPa, 250 BHN)",
+        "Lewis Form Factors: Yv1 = 0.3517, Yv2 = 0.4399",
+        "Design Factor of Safety: [FOS] = 1.50"
+      ],
+      "formulas": [
+        { "name": "Permissible Bending Stress", "formula": "sigma_b = Sut / 3 [MPa]" },
+        { "name": "Beam Strength Index", "formula": "Strength Index = sigma_b * Yv [MPa]" }
+      ],
+      "fields": [
+        { "id": "sigma_b1", "label": "Permissible Bending Stress - Pinion (sigma_b1)", "unit": "MPa", "placeholder": "266.67", "hint": "sigma_b1 = 800 / 3" },
+        { "id": "sigma_b2", "label": "Permissible Bending Stress - Gear (sigma_b2)", "unit": "MPa", "placeholder": "200.00", "hint": "sigma_b2 = 600 / 3" },
+        { "id": "pinion_strength_factor", "label": "Pinion Strength Index (sigma_b1 * Yv1)", "unit": "MPa", "placeholder": "93.79", "hint": "266.67 * 0.3517" },
+        { "id": "gear_strength_factor", "label": "Gear Strength Index (sigma_b2 * Yv2)", "unit": "MPa", "placeholder": "87.98", "hint": "200.00 * 0.4399" }
+      ],
+      "mcq": {
+        "question": "Based on the comparative beam strength products, which element is weaker in bending and must govern beam strength calculation?",
+        "options": [
+          { "id": "pinion", "label": "Pinion (40Ni2Cr1Mo28) — Strength Index = 93.79 MPa" },
+          { "id": "gear", "label": "Gear (55C8 plain carbon steel) — Strength Index = 87.98 MPa (Weaker Element)" }
+        ]
+      }
+    },
+    "helical-force-understanding": {
+      "title": "5. Helical Gear Force Understanding & Dynamic Load Analysis",
+      "figure": "Dynamic Velocity & Tooth Loading",
+      "description": "Calculate pitch-line velocity, Barth dynamic velocity factor, transverse tangential load, and effective dynamic load.",
+      "given": [
+        "Pinion Pitch Diameter: d1 = 76.6208 mm",
+        "Pinion Speed: N1 = 1440 rpm",
+        "Pinion Torque: T1 = 99,471.84 N·mm",
+        "Service Factor: Ka = 1.25",
+        "Load Distribution Factor: Km = 1.30"
+      ],
+      "formulas": [
+        { "name": "Pitch-Line Velocity (v)", "formula": "v = (pi * d1 * N1) / (60 * 10^3) [m/s]" },
+        { "name": "Barth Velocity Factor (Cv)", "formula": "Cv = 5.6 / (5.6 + sqrt(v))" },
+        { "name": "Tangential Tooth Force (Pt)", "formula": "Pt = (2 * T1) / d1 [N]" },
+        { "name": "Effective Dynamic Load (Peff)", "formula": "Peff = (Ka * Km * Pt) / Cv [N]" }
+      ],
+      "fields": [
+        { "id": "pitch_velocity", "label": "Pitch-Line Velocity (v)", "unit": "m/s", "placeholder": "5.78", "hint": "v = (pi * 76.6208 * 1440) / 60000" },
+        { "id": "velocity_factor_Cv", "label": "Barth Velocity Factor (Cv)", "unit": "—", "placeholder": "0.700", "hint": "Cv = 5.6 / (5.6 + sqrt(5.7771))" },
+        { "id": "tangential_load", "label": "Tangential Load (Pt)", "unit": "N", "placeholder": "2596.47", "hint": "Pt = (2 * 99471.84) / 76.6208" },
+        { "id": "effective_load", "label": "Effective Dynamic Load (Peff)", "unit": "N", "placeholder": "6030.20", "hint": "Peff = (1.25 * 1.30 * 2596.47) / 0.6997" }
+      ]
+    },
+    "strength-calculation": {
+      "title": "6. Gear Design & Strength Calculation (Lewis Beam & Buckingham Wear)",
+      "figure": "Beam Strength, Wear Strength, and Safety Factor Determination",
+      "description": "Calculate Lewis beam strength, Buckingham wear strength, actual factors of safety, and diagnose the governing failure mode.",
+      "given": [
+        "Normal Module: mn = 4.0 mm, Face Width: b = 40.0 mm",
+        "Weaker Gear Bending Stress: sigma_b2 = 200.00 MPa, Yv2 = 0.4399",
+        "Teeth Numbers: z1 = 18, z2 = 54 (Ratio Factor Q = 2*z2 / (z1+z2) = 1.50)",
+        "Softer Gear Hardness: BHN2 = 250 (Load-Stress Factor K = 0.16 * (BHN/100)^2 = 1.00 N/mm²)",
+        "Effective Load: Peff = 6030.20 N",
+        "Target Factor of Safety: [FOS] = 1.50"
+      ],
+      "formulas": [
+        { "name": "Lewis Beam Strength (Sb)", "formula": "Sb = mn * b * sigma_b2 * Yv2 [N]" },
+        { "name": "Bending Factor of Safety (FOSb)", "formula": "FOSb = Sb / Peff" },
+        { "name": "Ratio Factor (Q)", "formula": "Q = (2 * z2) / (z1 + z2)" },
+        { "name": "Load-Stress Factor (K)", "formula": "K = 0.16 * (BHN2 / 100)^2 [N/mm²]" },
+        { "name": "Buckingham Wear Strength (Sw)", "formula": "Sw = (b * Q * d1 * K) / (cos(psi)^2) [N]" },
+        { "name": "Wear Factor of Safety (FOSw)", "formula": "FOSw = Sw / Peff" }
+      ],
+      "fields": [
+        { "id": "beam_strength_Sb", "label": "Lewis Beam Strength (Sb)", "unit": "N", "placeholder": "14076.78", "hint": "Sb = 4 * 40 * 200 * 0.4399" },
+        { "id": "initial_FOS_bending", "label": "Bending Factor of Safety (FOSb)", "unit": "—", "placeholder": "2.33", "hint": "FOSb = 14076.78 / 6030.20" },
+        { "id": "ratio_factor_Q", "label": "Gear Ratio Factor (Q)", "unit": "—", "placeholder": "1.50", "hint": "Q = (2 * 54) / (18 + 54)" },
+        { "id": "load_stress_factor_K", "label": "Load-Stress Factor (K)", "unit": "N/mm²", "placeholder": "1.00", "hint": "K = 0.16 * (250 / 100)^2" },
+        { "id": "wear_strength_Sw", "label": "Buckingham Wear Strength (Sw)", "unit": "N", "placeholder": "5206.27", "hint": "Sw = (40 * 1.50 * 76.6208 * 1.00) / (cos 20°)^2" },
+        { "id": "initial_FOS_wear", "label": "Wear Factor of Safety (FOSw)", "unit": "—", "placeholder": "0.86", "hint": "FOSw = 5206.27 / 6030.20" }
+      ]
+    },
+    "engineering-decision-canvas": {
+      "title": "7. Engineering Decision Canvas & Parametric Redesign Analysis",
+      "figure": "Parametric Optimization & Engineering Trade-Off Matrix",
+      "description": "Evaluate redesign options to resolve the wear deficiency (FOSw = 0.86 < 1.50) and defend your engineering recommendation.",
+      "given": [
+        "Initial Design: mn = 4 mm, b = 40 mm, Gear = 250 BHN -> FOSb = 2.33 (Safe), FOSw = 0.86 (Unsafe)",
+        "Option A: Increase Face Width to b = 55 mm",
+        "Option B1: Increase Gear Tooth Surface Hardness to 350 BHN",
+        "Option B2: Increase Gear Tooth Surface Hardness to 400 BHN",
+        "Option C: Increase Normal Module to mn = 5 mm, b = 10*mn = 50 mm"
+      ],
+      "formulas": [
+        { "name": "Option A Wear Strength (b=55mm)", "formula": "Sw_A = (55 * Q * d1 * K) / cos^2(psi) [N]" },
+        { "name": "Option B1 Wear Strength (350 BHN)", "formula": "K_B1 = 0.16*(3.50)^2 = 1.96 N/mm², Sw_B1 = (40 * Q * d1 * 1.96) / cos^2(psi) [N]" },
+        { "name": "Option C Pitch Diameter & Load (mn=5mm)", "formula": "d1_C = (18 * 5) / cos(20°) = 95.78 mm, Peff_C = 4995.16 N, Sw_C = 8134.79 N" }
+      ],
+      "fields": [
+        { "id": "option_A_Sw", "label": "Option A Wear Strength (b = 55 mm)", "unit": "N", "placeholder": "7158.61", "hint": "Sw = (55 * 1.50 * 76.6208 * 1.00) / (cos 20°)^2" },
+        { "id": "option_A_FOSw", "label": "Option A Wear FOS (b = 55 mm)", "unit": "—", "placeholder": "1.19", "hint": "FOSw = 7158.61 / 6030.20 (Insufficient < 1.50)" },
+        { "id": "option_B1_K", "label": "Option B1 Load-Stress Factor (350 BHN)", "unit": "N/mm²", "placeholder": "1.96", "hint": "K = 0.16 * (350 / 100)^2" },
+        { "id": "option_B1_Sw", "label": "Option B1 Wear Strength (350 BHN)", "unit": "N", "placeholder": "10204.28", "hint": "Sw = (40 * 1.50 * 76.6208 * 1.96) / (cos 20°)^2" },
+        { "id": "option_B1_FOSw", "label": "Option B1 Wear FOS (350 BHN)", "unit": "—", "placeholder": "1.69", "hint": "FOSw = 10204.28 / 6030.20 (Satisfies Target >= 1.50)" },
+        { "id": "option_C_d1", "label": "Option C Pinion Pitch Diameter (mn = 5 mm)", "unit": "mm", "placeholder": "95.78", "hint": "d1 = (18 * 5) / cos(20°)" },
+        { "id": "option_C_Peff", "label": "Option C Effective Load (mn = 5 mm)", "unit": "N", "placeholder": "4995.16", "hint": "Recalculated Peff with v=7.22 m/s, Cv=0.6757" },
+        { "id": "option_C_Sw", "label": "Option C Wear Strength (mn = 5 mm, b = 50 mm)", "unit": "N", "placeholder": "8134.79", "hint": "Sw = (50 * 1.50 * 95.776 * 1.00) / (cos 20°)^2" },
+        { "id": "option_C_FOSw", "label": "Option C Wear FOS (mn = 5 mm)", "unit": "—", "placeholder": "1.63", "hint": "FOSw = 8134.79 / 4995.16 (Satisfies Target >= 1.50)" }
+      ]
+    },
+    "reflection-synthesis": {
+      "title": "8. Engineering Design Synthesis, Assumptions & Professional Reflection",
+      "questions": [
+        {
+          "id": "q1",
+          "label": "Engineering Recommendation & Justification (TS01-C11 — 1.5 Marks)",
+          "helpText": "Select and defend your engineering redesign recommendation to achieve FOS >= 1.50. Evaluate the operational and dimensional trade-offs between surface hardening and module upsizing.",
+          "placeholder": "State your selected redesign modification (e.g., surface hardening 55C8 gear teeth to 350 BHN vs increasing normal module to mn = 5 mm). Justify your recommendation considering centre distance, gearbox casing size, material heat treatment feasibility, and manufacturing cost..."
+        },
+        {
+          "id": "q2",
+          "label": "Design Assumptions, Specification Summary & Dynamic Velocity Reflection (TS01-C12 — 1.5 Marks)",
+          "helpText": "Document your engineering assumptions, summarize the final design specification, and reflect on the role of dynamic velocity factors and surface fatigue in high-speed rotary equipment design.",
+          "placeholder": "List your key design assumptions (precision cut gears, Barth velocity factor applicability, steady continuous load). Reflect on why high-speed helical gears are typically governed by surface durability rather than beam strength..."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission & Verification",
+      "body": "Review your completion status across all 38 engineering checkpoints, verify your design defense, and submit your official PCC353-MEC CO1 evaluation report."
+    }
+  }
+}

@@ -265,7 +265,6 @@
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  transform-origin: center;
   transition: transform 0.12s ease;
 }
 
@@ -286,6 +285,8 @@
 
 .label-marker.label-marker-invisible {
   opacity: 0 !important;
+  display: none !important;
+  pointer-events: none !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -321,47 +322,6 @@
   background: #f8d7da;
 }
 
-.decision-canvas-reference {
-  display: grid;
-  gap: 0.65rem;
-  margin: 0 0 1rem;
-}
-
-.decision-canvas-reference .component-card {
-  box-shadow: none;
-}
-
-.decision-canvas-stack {
-  display: grid;
-  gap: 1rem;
-}
-
-.decision-canvas {
-  padding: 1rem;
-  border: 1px solid var(--meilp-border);
-  border-radius: var(--meilp-radius);
-}
-
-.decision-canvas legend {
-  float: none;
-  width: auto;
-  padding: 0 0.4rem;
-  margin: 0;
-  color: var(--meilp-primary);
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.decision-canvas-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.decision-field-wide {
-  grid-column: span 2;
-}
-
 @media (max-width: 767.98px) {
   .demo-header,
   .component-toolbar,
@@ -378,13 +338,5 @@
 
   .nav-step-controls .btn {
     flex: 1 1 100%;
-  }
-
-  .decision-canvas-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .decision-field-wide {
-    grid-column: auto;
   }
 }

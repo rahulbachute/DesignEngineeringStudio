@@ -285,6 +285,8 @@
 
 .label-marker.label-marker-invisible {
   opacity: 0 !important;
+  display: none !important;
+  pointer-events: none !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;

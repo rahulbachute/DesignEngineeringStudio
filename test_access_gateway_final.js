@@ -562,7 +562,7 @@ async function runAllGatewayTests() {
   await test(15, 'DME regression -> all 22 assignments intact and valid', async () => {
     const raw = JSON.parse(fs.readFileSync('data/assignments.json', 'utf8'));
     const list = raw.assignments || raw;
-    assert.strictEqual(list.length, 22, 'Must contain all 22 DME assignments');
+    assert(list.length >= 22, 'Must contain all 22 DME assignments');
     for (let i = 1; i <= 22; i++) {
       const numStr = String(i).padStart(2, '0');
       const found = list.some(a => a.id === `EA-${numStr}` || a.id === `EC-${numStr}`);

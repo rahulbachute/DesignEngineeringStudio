@@ -252,7 +252,8 @@ runTest('TEST 8: Direct URL access to coursework.html without role state safely 
 runTest('TEST 9: DME Regression (EC-01 through EA-22 catalogue intact)', () => {
   const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'assignments.json'), 'utf8'));
   const list = data.assignments || [];
-  assert.strictEqual(list.length, 22, 'All 22 DME assignments must be registered');
+  const dmeList = list.filter(a => !a.id.startsWith('EA-TS'));
+  assert.strictEqual(dmeList.length, 22, 'All 22 DME assignments must be registered');
   const ids = list.map(a => a.id);
   assert.ok(ids.includes('EC-01'), 'EC-01 present');
   assert.ok(ids.includes('EA-22'), 'EA-22 present');

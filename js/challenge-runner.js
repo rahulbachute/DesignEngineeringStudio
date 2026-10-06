@@ -203,7 +203,14 @@ class ChallengeRunner {
       this.setAttemptModeLabel(mode);
       this.renderDashboard();
     } else {
-      this.renderAttemptMode();
+      if (this.assignmentSlug === "helical-gear-design" || this.assignmentSlug === "spur-gear-design" || (this.config && (this.config.id === "EA-TS-01" || this.config.id === "EA-TS-02")) || (this.config && this.config.settings && this.config.settings.directStudentForm)) {
+        const mode = (this.config && this.config.settings && this.config.settings.defaultAttemptMode) || "individual";
+        this.services.stateManager.update((s) => ({ settings: { ...s.settings, attemptMode: mode } }));
+        this.setAttemptModeLabel(mode);
+        this.renderStudentForm(mode);
+      } else {
+        this.renderAttemptMode();
+      }
     }
   }
 
@@ -403,6 +410,15 @@ class ChallengeRunner {
     const host = this.host();
     const savedStudent = (this.services.stateManager.getState() || {}).student || {};
     host.innerHTML = `<section class="workbench-card"><h3>${mode === "group" ? "Group Details" : "Student Details"}</h3><form data-student-form novalidate><div class="student-form-grid">${fields.map((field) => this.field(field, savedStudent[field.name])).join("")}</div><div class="component-actions"><button class="btn btn-primary" type="submit"><i class="bi bi-save" aria-hidden="true"></i> Save and Continue</button></div></form></section>`;
+    setTimeout(() => {
+      const firstInput = host.querySelector("input:not([readonly]):not([type=hidden]):not([disabled]), select:not([readonly]):not([disabled])");
+      if (firstInput) {
+        firstInput.focus();
+        if (typeof firstInput.select === "function" && firstInput.type !== "radio" && firstInput.type !== "checkbox") {
+          firstInput.select();
+        }
+      }
+    }, 50);
     host.querySelector("[data-student-form]").addEventListener("submit", (event) => {
       event.preventDefault();
       const result = this.collectFields(host, fields);

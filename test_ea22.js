@@ -135,8 +135,8 @@ const outputJson = JSON.parse(fs.readFileSync('outputs/meilp/data/assignments.js
 const dataList = dataJson.assignments || dataJson;
 const outputList = outputJson.assignments || outputJson;
 
-assert(dataList.length === 22, `data/assignments.json contains all assignments (got ${dataList.length})`);
-assert(outputList.length === 22, `outputs/meilp/data/assignments.json contains all assignments (got ${outputList.length})`);
+assert(dataList.length >= 22, `data/assignments.json contains all assignments (got ${dataList.length})`);
+assert(outputList.length >= 22, `outputs/meilp/data/assignments.json contains all assignments (got ${outputList.length})`);
 
 const expectedIds = [
   'EC-01', 'EC-02', 'EC-03', 'EC-04', 'EC-05', 'EC-06', 'EC-07', 'EC-08', 'EC-09', 'EC-10',

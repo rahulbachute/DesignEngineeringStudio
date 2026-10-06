@@ -23,7 +23,9 @@ const ALL_ASSIGNMENTS = [
   { id: "EA-19", title: "Analysis of C-Clamp Screw and Collar Friction Effects", discipline: "Design of Machine Elements", summary: "Engineering challenge to analyse the C-clamp power-screw mechanism, determine thread friction torque, collar friction torque, evaluate total tightening torque, investigate the relative contribution of collar friction, and assess operator hand force.", tasks: 11, icon: "bi-border-inner", launchPath: "assignment-workbench.html?assignment=c-clamp-friction" },
   { id: "EA-20", title: "Design of a Power Screw for a Hydraulic Press", discipline: "Design of Machine Elements", summary: "Engineering challenge to design, analyse, and verify the bed-adjustment power screw mechanism of a hydraulic press, calculating thread and collar friction torques, operating torque, efficiency, self-locking safety, and combined stress verification under heavy positioning loads.", tasks: 11, icon: "bi-gear-wide-connected", launchPath: "assignment-workbench.html?assignment=hydraulic-press" },
   { id: "EC-21", title: "Design of Automotive Steering Gear (Recirculating Ball Type)", discipline: "Design of Machine Elements", summary: "Engineering challenge to analyse and design an automotive recirculating-ball steering gear mechanism, evaluating rolling contact kinematics, ball-nut axial travel, rack-and-sector angular transformation, steering ratio, output torque, and Pitman arm linkage forces.", tasks: 11, icon: "bi-bullseye", launchPath: "assignment-workbench.html?assignment=recirculating-ball-steering" },
-  { id: "EA-22", title: "Design of a 2-Ton Mobile Scissor Lift Power Screw", discipline: "Design of Machine Elements", summary: "Engineering challenge to design, analyse, and verify the horizontal power-screw mechanism of a 2-ton mobile scissor lift, calculating scissor kinematic force transformation, thread and collar friction torques, operating torque, efficiency, self-locking safety, and combined core stresses.", tasks: 11, icon: "bi-layers-half", launchPath: "assignment-workbench.html?assignment=mobile-scissor-lift" }
+  { id: "EA-22", title: "Design of a 2-Ton Mobile Scissor Lift Power Screw", discipline: "Design of Machine Elements", summary: "Engineering challenge to design, analyse, and verify the horizontal power-screw mechanism of a 2-ton mobile scissor lift, calculating scissor kinematic force transformation, thread and collar friction torques, operating torque, efficiency, self-locking safety, and combined core stresses.", tasks: 11, icon: "bi-layers-half", launchPath: "assignment-workbench.html?assignment=mobile-scissor-lift" },
+  { id: "EA-TS-01", title: "Design of Helical Gears for High-Speed Rotary Equipment", discipline: "Transmission System Design", summary: "Engineering challenge to design, analyse, and verify a high-speed helical gear pair, calculating torque, formative teeth, Lewis form factors, pitch geometry, Barth dynamic factor, effective load, Lewis beam strength, Buckingham wear strength, safety factors, and parametric redesign.", tasks: 8, icon: "bi-gear-wide-connected", launchPath: "assignment-workbench.html?assignment=helical-gear-design", co: "CO1", weightage: "12 Marks", status: "Ready" },
+  { id: "EA-TS-02", title: "Design Parameters of Spur Gears for Industrial Conveyor Systems", discipline: "Transmission System Design", summary: "Engineering challenge to design, analyse, and verify a single-stage spur gear reduction drive for heavy bulk material conveyors, evaluating transmission ratio, torque, pitch geometry, Lewis beam strength, Barth dynamic load, Buckingham wear durability, and parametric redesign.", tasks: 12, icon: "bi-gear-wide-connected", launchPath: "assignment-workbench.html?assignment=spur-gear-design", co: "CO1", weightage: "12 Marks", status: "Ready" }
 ];
 
 // ─── College to Faculty Mapping ──────────────────────────────────────────────
@@ -979,7 +981,7 @@ function launchAssignment(assignmentId, event) {
   const allList = (typeof liveAssignments !== "undefined" && Array.isArray(liveAssignments) && liveAssignments.length > 0)
     ? liveAssignments
     : ALL_ASSIGNMENTS;
-  const found = allList.find(a => a && a.id === assignmentId);
+  const found = allList.find(a => a && (a.id === assignmentId || a.slug === assignmentId));
   const targetPath = (found && found.launchPath) ? found.launchPath : `assignment-workbench.html?assignment=${encodeURIComponent(assignmentId)}`;
   window.location.href = targetPath;
   return true;
@@ -1074,7 +1076,7 @@ function renderAssignmentCards(cards) {
     }
   }
 
-  grid.innerHTML = assignments.map(card => {
+  function renderSingleCard(card) {
     const ctrl = controls[card.id] || {};
     const enabled = typeof ctrl.enabled === "boolean" ? ctrl.enabled : true;
     const rawDue = ctrl.dueDate || null;
@@ -1082,11 +1084,14 @@ function renderAssignmentCards(cards) {
     const formatted = (rawDue && dObj) ? formatDueDate(rawDue) : null;
     const dueState = dObj ? getDueDateState(dObj) : null;
     const icon = card.icon || "bi-journal-text";
-    const launchUrl = card.launchPath || `assignment-workbench.html?assignment=${card.id}`;
 
     const deadlinePill = (dObj && formatted && dueState)
       ? `<span class="badge border due-date-badge due-${dueState}" data-due-date="${escapeHtml(dObj.toISOString())}" data-formatted-date="${escapeHtml(formatted)}"><i class="bi ${dueState === "overdue" ? "bi-clock-history" : "bi-calendar-event"} me-1"></i>${dueState === "overdue" ? "Deadline Passed: " : "Due: "}${escapeHtml(formatted)}</span>`
       : `<span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>`;
+
+    const coBadge = card.co ? `<span class="badge bg-light text-dark border">${escapeHtml(card.co)}</span>` : "";
+    const weightageBadge = card.weightage ? `<span class="badge bg-light text-dark border">${escapeHtml(card.weightage)}</span>` : "";
+    const statusLabel = card.status === "Ready" ? "Ready" : "Active";
 
     if (!enabled) {
       return `<div class="col-12 col-md-6 col-lg-4">
@@ -1106,6 +1111,8 @@ function renderAssignmentCards(cards) {
           </div>
           <div>
             <div class="d-flex flex-wrap gap-2 mb-3">
+              ${coBadge}
+              ${weightageBadge}
               <span class="badge bg-light text-dark border">${card.tasks || 0} tasks</span>
               <span class="badge bg-light text-dark border">${escapeHtml(card.discipline || "")}</span>
               ${deadlinePill}
@@ -1128,7 +1135,7 @@ function renderAssignmentCards(cards) {
             <span class="card-icon fs-3 text-primary bg-primary-subtle p-3 rounded-4"><i class="bi ${escapeHtml(icon)}"></i></span>
             <div class="text-end">
               <span class="badge bg-dark text-white rounded-pill px-3 py-1 mb-1 d-block">${escapeHtml(card.id)}</span>
-              <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Active</span>
+              <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-check-circle me-1"></i>${statusLabel}</span>
             </div>
           </div>
           <h3 class="h6 fw-bold text-dark mb-2">${escapeHtml(card.title)}</h3>
@@ -1136,6 +1143,8 @@ function renderAssignmentCards(cards) {
         </div>
         <div>
           <div class="d-flex flex-wrap gap-2 mb-3">
+            ${coBadge}
+            ${weightageBadge}
             <span class="badge bg-light text-dark border">${card.tasks || 0} tasks</span>
             <span class="badge bg-light text-dark border">${escapeHtml(card.discipline || "")}</span>
             ${deadlinePill}
@@ -1145,7 +1154,26 @@ function renderAssignmentCards(cards) {
         </div>
       </article>
     </div>`;
-  }).join("");
+  }
+
+  const dmeAssignments = assignments.filter(a => {
+    const disc = String(a.discipline || "").toLowerCase();
+    const id = String(a.id || "").toUpperCase();
+    return disc.indexOf("transmission") === -1 && !id.startsWith("EA-TS");
+  });
+
+  const tsAssignments = assignments.filter(a => {
+    const disc = String(a.discipline || "").toLowerCase();
+    const id = String(a.id || "").toUpperCase();
+    return disc.indexOf("transmission") !== -1 || id.startsWith("EA-TS");
+  });
+
+  grid.innerHTML = dmeAssignments.map(renderSingleCard).join("");
+
+  const tsGrid = document.querySelector("[data-transmission-assignment-grid]") || document.getElementById("transmissionAssignmentGrid");
+  if (tsGrid) {
+    tsGrid.innerHTML = tsAssignments.map(renderSingleCard).join("");
+  }
 
   startDueDateBadgeTicker();
 }

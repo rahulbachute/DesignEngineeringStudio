@@ -239,15 +239,7 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
 
   applyTransform() {
     const image = this.getImageElement();
-    const stage = this.getStageElement();
-    const markerLayer = stage ? stage.querySelector(".label-marker-layer") : null;
-    const transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.zoomLevel})`;
-    if (image) {
-      image.style.transform = transform;
-    }
-    if (markerLayer) {
-      markerLayer.style.transform = transform;
-    }
+    image.style.transform = `translate(${this.position.x}px, ${this.position.y}px) scale(${this.zoomLevel})`;
     this.element.querySelector("[data-image-zoom-out]").disabled = this.zoomLevel <= this.minZoom;
     this.element.querySelector("[data-image-zoom-in]").disabled = this.zoomLevel >= this.maxZoom;
     this.emit("transform-changed", this.serialize());
@@ -278,11 +270,11 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
   }
 
   getImageElement() {
-    return this.element.querySelector("[data-viewer-image]");
+    return this.element ? this.element.querySelector("[data-viewer-image]") : null;
   }
 
   getStageElement() {
-    return this.element.querySelector("[data-image-stage]");
+    return this.element ? this.element.querySelector("[data-image-stage]") : null;
   }
 
   emit(eventName, payload) {
@@ -301,6 +293,8 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
     if (image && this.boundHandlers.load) {
       image.removeEventListener("load", this.boundHandlers.load);
       image.removeEventListener("error", this.boundHandlers.error);
+    }
+    if (stage && this.boundHandlers.wheel) {
       stage.removeEventListener("wheel", this.boundHandlers.wheel);
       stage.removeEventListener("pointerdown", this.boundHandlers.pointerDown);
       stage.removeEventListener("pointermove", this.boundHandlers.pointerMove);
@@ -308,6 +302,8 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
       stage.removeEventListener("pointerleave", this.boundHandlers.pointerUp);
       stage.removeEventListener("touchstart", this.boundHandlers.touchStart);
       stage.removeEventListener("touchmove", this.boundHandlers.touchMove);
+    }
+    if (this.boundHandlers.fullscreenChange) {
       document.removeEventListener("fullscreenchange", this.boundHandlers.fullscreenChange);
     }
     super.destroy();

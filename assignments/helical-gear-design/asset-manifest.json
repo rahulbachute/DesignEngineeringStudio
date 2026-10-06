@@ -1,0 +1,31 @@
+{
+  "assignment": "helical-gear-design",
+  "basePath": "assignments/helical-gear-design/images",
+  "assets": [
+    {
+      "id": "EA-TS-01",
+      "name": "Engineering Asset EA-TS-01",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/helical-gear-design/images/EA-TS-01_Helical_Gear_Drive_Student.png",
+      "description": "High-Speed Industrial Helical Gear Pair Drive Engineering Schematic illustrating pinion, gear, helix angle psi = 20 deg, pitch diameters d1 and d2, centre distance a, and helical tooth contact lines.",
+      "dimensions": { "width": 1600, "height": 900 }
+    },
+    {
+      "id": "engineeringAssetStudent",
+      "name": "Student View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/helical-gear-design/images/EA-TS-01_Helical_Gear_Drive_Student.png",
+      "description": "Standard student edition engineering asset diagram for helical gear design and analysis."
+    },
+    {
+      "id": "engineeringAssetFaculty",
+      "name": "Faculty View Asset",
+      "type": "image",
+      "format": "png",
+      "path": "assignments/helical-gear-design/images/EA-TS-01_Helical_Gear_Drive_Faculty.png",
+      "description": "Faculty master engineering asset diagram with labeled helical gear geometry and parameters."
+    }
+  ]
+}

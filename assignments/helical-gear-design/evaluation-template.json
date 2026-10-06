@@ -1,0 +1,20 @@
+{
+  "assignmentId": "EA-TS-01",
+  "assignmentTitle": "Design of Helical Gears for High-Speed Rotary Equipment",
+  "maxTotalMarks": 12.0,
+  "courseOutcome": "CO1",
+  "criteria": [
+    { "id": "ts01-act-1", "name": "Task 1: Kinematic Specification & Pinion Torque", "category": "Calculation", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS01-C01" },
+    { "id": "ts01-act-2", "name": "Task 2: Virtual Teeth & Lewis Form Factor", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS01-C02" },
+    { "id": "ts01-act-3", "name": "Task 3: Weaker Element Comparative Evaluation", "category": "Analysis", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS01-C03" },
+    { "id": "ts01-act-4", "name": "Task 4: Gear Pitch Geometry & Centre Distance", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS01-C04" },
+    { "id": "ts01-act-5", "name": "Task 5: Pitch-Line Velocity & Barth Dynamic Factor", "category": "Calculation", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS01-C05" },
+    { "id": "ts01-act-6", "name": "Task 6: Tangential & Effective Dynamic Load", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS01-C06" },
+    { "id": "ts01-act-7", "name": "Task 7: Lewis Beam Strength & Bending FOS", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS01-C07" },
+    { "id": "ts01-act-8", "name": "Task 8: Buckingham Wear Strength & Wear FOS", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS01-C08" },
+    { "id": "ts01-act-9", "name": "Task 9: Engineering Diagnosis & Defect Identification", "category": "Analysis", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS01-C09" },
+    { "id": "ts01-act-10", "name": "Task 10: Parametric Redesign Calculations (Options A, B, C)", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS01-C10" },
+    { "id": "ts01-act-11", "name": "Task 11: Engineering Recommendation & Trade-Off Defense", "category": "Design Decision", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS01-C11" },
+    { "id": "ts01-act-12", "name": "Task 12: Engineering Design Synthesis & Reflection", "category": "Synthesis", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS01-C12" }
+  ]
+}

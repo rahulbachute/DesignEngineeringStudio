@@ -69,6 +69,9 @@ class AssignmentControlService {
     if (lower === "prof khandu said" || lower === "prof. khandu said" || lower === "prof said khandu" || lower === "prof. said khandu" || lower === "khandu said" || lower === "saidkhandu@gmail.com") {
       return "FAC004";
     }
+    if (lower === "prof atul gowardipe" || lower === "prof. atul gowardipe" || lower === "atul gowardipe") {
+      return "FAC003";
+    }
 
     // Registry lookup
     const registries = [];

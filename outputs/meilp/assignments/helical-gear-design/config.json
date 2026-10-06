@@ -1,0 +1,112 @@
+{
+  "id": "EA-TS-01",
+  "projectCode": "EA-TS-01",
+  "slug": "helical-gear-design",
+  "title": "Design of Helical Gears for High-Speed Rotary Equipment",
+  "subject": "PCC353-MEC",
+  "courseCode": "PCC353-MEC",
+  "courseName": "Transmission System Design",
+  "unit": "Unit I — Spur and Helical Gears",
+  "courseOutcome": {
+    "code": "CO1",
+    "statement": "Apply principle of Spur & Helical gear design for industrial application."
+  },
+  "programOutcomes": [
+    "PO1",
+    "PO2",
+    "PO3",
+    "PO4",
+    "PO5",
+    "PO7",
+    "PO8",
+    "PO9",
+    "PO11"
+  ],
+  "programSpecificOutcomes": [
+    "PSO1",
+    "PSO2"
+  ],
+  "bloomLevelsCovered": [
+    "L1 Understand",
+    "L2 Understand",
+    "L3 Apply",
+    "L4 Analyse",
+    "L5 Evaluate",
+    "L6 Create"
+  ],
+  "cceType": "Engineering Challenge",
+  "cceMarks": 12,
+  "facultyName": "Prof. Rahul Bachute",
+  "client": "High-Speed Industrial Turbomachinery & Rotary Drive Division",
+  "location": "Pune",
+  "priority": "High",
+  "estimatedDuration": "90 minutes",
+  "difficulty": "Advanced",
+  "submissionMode": "Individual or Group",
+  "version": "1.0.0",
+  "settings": {
+    "attemptMode": "individual",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true,
+    "initialScreen": "student-details",
+    "directStudentForm": true,
+    "defaultAttemptMode": "individual"
+  },
+  "tasks": [
+    {
+      "id": "project-charter",
+      "type": "information",
+      "title": "1. Engineering Problem Charter: High-Speed Helical Gearbox"
+    },
+    {
+      "id": "engineering-visualisation",
+      "type": "image-label",
+      "activityCode": "TS01-A02",
+      "title": "2. Engineering Visualisation & Formative Virtual Teeth Analysis"
+    },
+    {
+      "id": "gear-geometry",
+      "type": "calculation-inputs",
+      "title": "3. Gear Geometry & Transmission Parameters"
+    },
+    {
+      "id": "material-selection",
+      "type": "text-mcq",
+      "title": "4. Material Selection & Gear-Tooth Failure Evaluation"
+    },
+    {
+      "id": "helical-force-understanding",
+      "type": "calculation-inputs",
+      "title": "5. Helical Gear Force Understanding & Dynamic Load Analysis"
+    },
+    {
+      "id": "strength-calculation",
+      "type": "calculation-inputs",
+      "title": "6. Gear Design & Strength Calculation (Lewis Beam & Buckingham Wear)"
+    },
+    {
+      "id": "engineering-decision-canvas",
+      "type": "calculation-inputs",
+      "title": "7. Engineering Decision Canvas & Parametric Redesign Analysis"
+    },
+    {
+      "id": "reflection-synthesis",
+      "type": "reflection",
+      "title": "8. Engineering Design Synthesis, Assumptions & Professional Reflection"
+    },
+    {
+      "id": "submit",
+      "type": "submission",
+      "title": "Submission & Verification"
+    }
+  ],
+  "dataFiles": {
+    "workflow": "assignments/helical-gear-design/workflow.json",
+    "content": "assignments/helical-gear-design/content.json",
+    "rubric": "assignments/helical-gear-design/rubric.json",
+    "assetManifest": "assignments/helical-gear-design/asset-manifest.json",
+    "evaluationTemplate": "assignments/helical-gear-design/evaluation-template.json"
+  }
+}

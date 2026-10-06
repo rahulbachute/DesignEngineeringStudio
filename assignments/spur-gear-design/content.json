@@ -1,0 +1,522 @@
+{
+  "assignment": {
+    "id": "EA-TS-02",
+    "slug": "spur-gear-design",
+    "title": "Design Parameters of Spur Gears for Industrial Conveyor Systems"
+  },
+  "dashboard": {
+    "projectCode": "EA-TS-02",
+    "projectTitle": "Design Parameters of Spur Gears for Industrial Conveyor Systems",
+    "courseCode": "PCC353-MEC",
+    "courseName": "Transmission System Design",
+    "unit": "Unit I — Spur and Helical Gears",
+    "difficultyLevel": "Advanced",
+    "estimatedDuration": "90 minutes",
+    "attemptMode": "Individual or Group",
+    "cceMarks": "12",
+    "courseOutcome": "CO1: Apply principle of Spur & Helical gear design for industrial application.",
+    "programOutcomes": "PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11",
+    "programSpecificOutcomes": "PSO1, PSO2",
+    "bloomsLevelsCovered": "L1, L2, L3, L4, L5, L6",
+    "facultyName": "Prof. Rahul Bachute"
+  },
+  "assets": {
+    "engineeringAssetStudent": {
+      "id": "spur-gear-asset",
+      "title": "Design Parameters of Spur Gears for Industrial Conveyor Systems",
+      "path": "assignments/spur-gear-design/images/EA-TS-02_Spur_Gear_Drive_Student.png"
+    },
+    "engineeringAssetFaculty": {
+      "id": "spur-gear-asset",
+      "title": "Industrial Conveyor Spur Gear Drive Schematic",
+      "path": "assignments/spur-gear-design/images/EA-TS-02_Spur_Gear_Drive_Faculty.png"
+    }
+  },
+  "attemptMode": {
+    "individual": [
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ],
+    "group": [
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
+    ]
+  },
+  "activities": {
+    "project-charter": {
+      "title": "1. Engineering Problem Charter: Heavy Conveyor Spur Drive",
+      "cards": [
+        {
+          "type": "info",
+          "title": "Industrial Situation & Transmission Brief",
+          "body": "A heavy-duty bulk material conveyor system in an industrial processing plant requires an enclosed single-stage spur gear reduction unit. The driving electric motor delivers rated power P = 11.0 kW at N1 = 960 rpm. The driven conveyor head pulley shaft must operate at N2 = 320 rpm (transmission ratio i = 3.00). An initial trial configuration has been proposed with a 20-tooth pinion and a 60-tooth gear, using standard module m = 4.0 mm, face width b = 40.0 mm, and 20° full-depth involute teeth. The transmission must achieve a minimum operational factor of safety [FOS] >= 1.50 under continuous duty."
+        },
+        {
+          "type": "theory",
+          "title": "Design Specifications & Material Properties",
+          "body": "The engineering department has specified the following preliminary materials and service conditions:\n• Pinion Material: 40Ni2Cr1Mo28 alloy steel (Sut1 = 800 MPa, Surface Hardness = 350 BHN)\n• Gear Material: 55C8 plain carbon steel (Sut2 = 600 MPa, Surface Hardness = 250 BHN)\n• Application Service Factor: Ka = 1.50 (heavy conveyor shock duty)\n• Load Distribution Factor: Km = 1.25\n• Tooth Profile: Standard 20° full-depth involute (Y = 0.484 - 2.87/z)\n• Target Safety Factor: [FOS] = 1.50"
+        },
+        {
+          "type": "warning",
+          "title": "Engineering Responsibility & Failure Consequences",
+          "body": "Conveyor drives in heavy industry operate under severe cyclic torque spikes. Catastrophic tooth breakage stops the entire continuous processing line, causing major economic loss. Meanwhile, surface contact fatigue (wear/pitting) leads to severe noise, vibration, and tooth spalling. The design engineer must evaluate both tooth root beam strength (Lewis equation) and surface wear durability (Buckingham equation) to ensure a safe, robust transmission."
+        }
+      ],
+      "acceptanceText": "I have reviewed the Heavy Conveyor Spur Gearbox Design Brief and understand that I must evaluate beam strength, wear durability, dynamic loading, and perform redesign optimizations to ensure operational safety under PCC353-MEC (CO1)."
+    },
+    "conveyor-visualisation": {
+      "title": "2. Conveyor Visualisation & Spur Tooth Analysis",
+      "figure": "Figure 1.0: Industrial Conveyor Spur Gear Drive Assembly & Schematic",
+      "description": "Inspect the callouts in the schematic to identify the key components and mechanical elements of the conveyor spur gear drive.",
+      "image": "assignments/spur-gear-design/images/EA-TS-02_Spur_Gear_Drive_Student.png",
+      "hideMarkers": true,
+      "markerStyle": "invisible",
+      "labels": [
+        {
+          "componentNumber": 1,
+          "title": "Driving Spur Pinion",
+          "invisible": true,
+          "correctAnswer": "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+          "acceptedAnswers": [
+            "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+            "Driving Spur Pinion (20 Teeth)"
+          ],
+          "feedback": "High-speed driving pinion with z1 = 20 teeth manufactured from high-strength 40Ni2Cr1Mo28 alloy steel."
+        },
+        {
+          "componentNumber": 2,
+          "title": "Driven Spur Gear",
+          "invisible": true,
+          "correctAnswer": "Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)",
+          "acceptedAnswers": [
+            "Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)",
+            "Driven Spur Gear (60 Teeth)"
+          ],
+          "feedback": "Low-speed driven gear with z2 = 60 teeth manufactured from 55C8 plain carbon steel."
+        },
+        {
+          "componentNumber": 3,
+          "title": "Input Shaft & Coupling",
+          "invisible": true,
+          "correctAnswer": "Input Shaft & Motor Coupling (960 rpm)",
+          "acceptedAnswers": [
+            "Input Shaft & Motor Coupling (960 rpm)",
+            "Input Drive Shaft & Motor Coupling"
+          ],
+          "feedback": "High-speed input shaft driven by the 11 kW electric motor at 960 rpm."
+        },
+        {
+          "componentNumber": 4,
+          "title": "Output Conveyor Shaft",
+          "invisible": true,
+          "correctAnswer": "Output Conveyor Drive Shaft (320 rpm)",
+          "acceptedAnswers": [
+            "Output Conveyor Drive Shaft (320 rpm)",
+            "Conveyor Drive Shaft (320 rpm)"
+          ],
+          "feedback": "Low-speed output shaft running at 320 rpm transmitting torque directly to the conveyor head pulley drum."
+        },
+        {
+          "componentNumber": 5,
+          "title": "Input Shaft Bearings",
+          "invisible": true,
+          "correctAnswer": "Input Shaft Bearing Pedestals (Pinion Side)",
+          "acceptedAnswers": [
+            "Input Shaft Bearing Pedestals (Pinion Side)",
+            "High-Speed Input Shaft Bearings"
+          ],
+          "feedback": "Antifriction bearings supporting the high-speed pinion shaft and reacting gear meshing forces."
+        },
+        {
+          "componentNumber": 6,
+          "title": "Output Shaft Bearings",
+          "invisible": true,
+          "correctAnswer": "Output Shaft Bearing Pedestals (Gear Side)",
+          "acceptedAnswers": [
+            "Output Shaft Bearing Pedestals (Gear Side)",
+            "Low-Speed Output Shaft Bearings"
+          ],
+          "feedback": "Heavy-duty bearings supporting the low-speed shaft against conveyor belt tension and gear loads."
+        },
+        {
+          "componentNumber": 7,
+          "title": "Pinion Shaft Key",
+          "invisible": true,
+          "correctAnswer": "Pinion Shaft Drive Key (Parallel Sunk Key)",
+          "acceptedAnswers": [
+            "Pinion Shaft Drive Key (Parallel Sunk Key)",
+            "Parallel Drive Key (Pinion Shaft)"
+          ],
+          "feedback": "Parallel sunk key transmitting rated input torque from the input shaft to the pinion hub."
+        },
+        {
+          "componentNumber": 8,
+          "title": "Conveyor Head Pulley",
+          "invisible": true,
+          "correctAnswer": "Bulk Material Conveyor Head Pulley & Belt Drum",
+          "acceptedAnswers": [
+            "Bulk Material Conveyor Head Pulley & Belt Drum",
+            "Conveyor Head Pulley Drum"
+          ],
+          "feedback": "Main driving pulley drum driving the continuous industrial conveyor belt."
+        },
+        {
+          "componentNumber": 9,
+          "title": "Gear Shaft Key",
+          "invisible": true,
+          "correctAnswer": "Gear Shaft Drive Key (Output Hub Key)",
+          "acceptedAnswers": [
+            "Gear Shaft Drive Key (Output Hub Key)",
+            "Parallel Drive Key (Gear Shaft)"
+          ],
+          "feedback": "Sunk key transmitting high amplified torque (328.26 N·m) from the driven gear to the output shaft."
+        },
+        {
+          "componentNumber": 10,
+          "title": "Gearbox Casing / Bed Plate",
+          "invisible": true,
+          "correctAnswer": "Heavy-Duty Cast Iron Gearbox Casing / Bed Plate",
+          "acceptedAnswers": [
+            "Heavy-Duty Cast Iron Gearbox Casing / Bed Plate",
+            "Gearbox Casing / Rigid Bed Plate"
+          ],
+          "feedback": "Rigid cast iron enclosure maintaining precise centre distance and bearing alignment under heavy shock loads."
+        }
+      ],
+      "options": [
+        "Driving Spur Pinion (20 Teeth, 40Ni2Cr1Mo28 Alloy Steel)",
+        "Driven Spur Gear (60 Teeth, 55C8 Plain Carbon Steel)",
+        "Input Shaft & Motor Coupling (960 rpm)",
+        "Output Conveyor Drive Shaft (320 rpm)",
+        "Input Shaft Bearing Pedestals (Pinion Side)",
+        "Output Shaft Bearing Pedestals (Gear Side)",
+        "Pinion Shaft Drive Key (Parallel Sunk Key)",
+        "Bulk Material Conveyor Head Pulley & Belt Drum",
+        "Gear Shaft Drive Key (Output Hub Key)",
+        "Heavy-Duty Cast Iron Gearbox Casing / Bed Plate",
+        "Pitch Circle Diameter Span (d1 = 80 mm, d2 = 240 mm)",
+        "Gearbox Centre Distance Span (a = 160 mm)",
+        "Spur Tooth Face Width (b = 40 mm)",
+        "Involute Tooth Contact Line & Pressure Angle (20 deg)"
+      ]
+    },
+    "transmission-requirements": {
+      "title": "3. Transmission Requirements & Kinematic Parameters",
+      "figure": "Transmission Kinematics & Rated Torques",
+      "description": "Calculate the kinematic reduction ratio, input pinion torque, and output conveyor shaft torque.",
+      "given": [
+        "Transmitted Power: P = 11.0 kW",
+        "Motor Input Speed: N1 = 960.0 rpm",
+        "Conveyor Shaft Speed: N2 = 320.0 rpm",
+        "Pinion Teeth: z1 = 20, Gear Teeth: z2 = 60"
+      ],
+      "formulas": [
+        { "name": "Transmission Ratio (i)", "formula": "i = N1 / N2 = z2 / z1" },
+        { "name": "Rated Pinion Torque (T1)", "formula": "T1 = (60 * 10^6 * P) / (2 * pi * N1) [N·mm]" },
+        { "name": "Rated Output Torque (T2)", "formula": "T2 = T1 * i [N·mm]" }
+      ],
+      "fields": [
+        { "id": "transmission_ratio", "label": "Kinematic Transmission Ratio (i)", "unit": "—", "placeholder": "3.00", "hint": "i = 960 / 320 = 3.00" },
+        { "id": "pinion_torque", "label": "Rated Pinion Torque (T1)", "unit": "N·mm", "placeholder": "109419.02", "hint": "T1 = (60 * 10^6 * 11) / (2 * pi * 960)" },
+        { "id": "gear_torque", "label": "Rated Output Torque (T2)", "unit": "N·mm", "placeholder": "328257.06", "hint": "T2 = 109419.02 * 3.00" }
+      ]
+    },
+    "spur-gear-geometry": {
+      "title": "4. Spur Gear Pitch Geometry & Centre Distance",
+      "figure": "Spur Gear Pitch Dimensions & Centre Distance",
+      "description": "Calculate the pitch circle diameters and standard centre distance for the spur gear set.",
+      "given": [
+        "Standard Module: m = 4.0 mm",
+        "Number of Teeth on Pinion: z1 = 20",
+        "Number of Teeth on Gear: z2 = 60",
+        "Tooth System: 20° Full-Depth Involute"
+      ],
+      "formulas": [
+        { "name": "Pinion Pitch Circle Diameter (d1)", "formula": "d1 = m * z1 [mm]" },
+        { "name": "Gear Pitch Circle Diameter (d2)", "formula": "d2 = m * z2 [mm]" },
+        { "name": "Standard Centre Distance (a)", "formula": "a = (d1 + d2) / 2 [mm]" }
+      ],
+      "fields": [
+        { "id": "d1", "label": "Pinion Pitch Diameter (d1)", "unit": "mm", "placeholder": "80.00", "hint": "d1 = 4 * 20 = 80.00 mm" },
+        { "id": "d2", "label": "Gear Pitch Diameter (d2)", "unit": "mm", "placeholder": "240.00", "hint": "d2 = 4 * 60 = 240.00 mm" },
+        { "id": "centre_distance", "label": "Standard Centre Distance (a)", "unit": "mm", "placeholder": "160.00", "hint": "a = (80 + 240) / 2 = 160.00 mm" }
+      ]
+    },
+    "material-and-failure": {
+      "title": "5. Material Selection & Gear-Tooth Failure Evaluation",
+      "prompt": "Evaluate permissible bending stresses and identify the primary failure modes governing spur gear durability.",
+      "description": "Calculate permissible bending stresses (sigma_b = Sut / 3) for both materials and analyze failure mechanisms.",
+      "given": [
+        "Pinion Material: 40Ni2Cr1Mo28 alloy steel (Sut1 = 800 MPa, 350 BHN)",
+        "Gear Material: 55C8 plain carbon steel (Sut2 = 600 MPa, 250 BHN)",
+        "Design Basis: Factor of Safety on Ultimate Tensile Strength = 3.0"
+      ],
+      "formulas": [
+        { "name": "Permissible Bending Stress", "formula": "sigma_b = Sut / 3 [MPa]" }
+      ],
+      "fields": [
+        { "id": "sigma_b1", "label": "Permissible Bending Stress - Pinion (sigma_b1)", "unit": "MPa", "placeholder": "266.67", "hint": "sigma_b1 = 800 / 3 = 266.67 MPa" },
+        { "id": "sigma_b2", "label": "Permissible Bending Stress - Gear (sigma_b2)", "unit": "MPa", "placeholder": "200.00", "hint": "sigma_b2 = 600 / 3 = 200.00 MPa" }
+      ],
+      "mcq": {
+        "question": "Which pair of failure mechanisms represents the two primary design criteria evaluated in spur gear transmission rating?",
+        "options": [
+          { "id": "optA", "label": "Beam bending fatigue failure at tooth root and contact fatigue / surface pitting failure on tooth flank" },
+          { "id": "optB", "label": "Centrifugal rim bursting and shear failure of hub mounting bolts" },
+          { "id": "optC", "label": "Excessive torsional deflection of teeth and plastic yielding at the tip" },
+          { "id": "optD", "label": "High temperature creep deformation and oxidative tooth erosion" }
+        ]
+      }
+    },
+    "lewis-beam-strength": {
+      "title": "6. Lewis Form Factors & Beam Strength Calculation",
+      "figure": "Lewis Tooth Form Factor & Beam Strength Evaluation",
+      "description": "Calculate Lewis form factors, determine the weaker element governing bending strength, and compute Lewis beam strength (Sb) and bending safety factor (FOSb).",
+      "given": [
+        "20° Full-Depth Involute Lewis Formula: Y = 0.484 - 2.87 / z",
+        "Pinion Teeth: z1 = 20, Gear Teeth: z2 = 60",
+        "Module: m = 4.0 mm, Face Width: b = 40.0 mm",
+        "Permissible Stresses: sigma_b1 = 266.67 MPa, sigma_b2 = 200.00 MPa",
+        "Target Factor of Safety: [FOS] = 1.50"
+      ],
+      "formulas": [
+        { "name": "Lewis Form Factor (Y)", "formula": "Y = 0.484 - (2.87 / z)" },
+        { "name": "Bending Strength Index", "formula": "Strength Index = sigma_b * Y [MPa]" },
+        { "name": "Lewis Beam Strength (Sb)", "formula": "Sb = m * b * sigma_b * Y [N] (evaluated for the weaker element)" },
+        { "name": "Bending Factor of Safety (FOSb)", "formula": "FOSb = Sb / Peff" }
+      ],
+      "fields": [
+        { "id": "lewis_Y1", "label": "Lewis Form Factor - Pinion (Y1)", "unit": "—", "placeholder": "0.3405", "hint": "Y1 = 0.484 - 2.87 / 20 = 0.3405" },
+        { "id": "lewis_Y2", "label": "Lewis Form Factor - Gear (Y2)", "unit": "—", "placeholder": "0.4362", "hint": "Y2 = 0.484 - 2.87 / 60 = 0.4362" },
+        { "id": "pinion_strength_product", "label": "Pinion Strength Index (sigma_b1 * Y1)", "unit": "MPa", "placeholder": "90.80", "hint": "266.67 * 0.3405 = 90.80 MPa" },
+        { "id": "gear_strength_product", "label": "Gear Strength Index (sigma_b2 * Y2)", "unit": "MPa", "placeholder": "87.24", "hint": "200.00 * 0.4362 = 87.24 MPa (Weaker element: Gear)" },
+        { "id": "beam_strength_Sb", "label": "Lewis Beam Strength (Sb)", "unit": "N", "placeholder": "13957.33", "hint": "Sb = 4 * 40 * 200 * 0.4361667 = 13957.33 N" },
+        { "id": "FOS_bending", "label": "Bending Factor of Safety (FOSb)", "unit": "—", "placeholder": "2.00", "hint": "FOSb = Sb / Peff = 13957.33 / 6965.67 = 2.00 (Safe >= 1.50)" }
+      ]
+    },
+    "velocity-and-dynamic-loading": {
+      "title": "7. Pitch-Line Velocity & Dynamic Load Analysis",
+      "figure": "Pitch Velocity & Dynamic Loading Factors",
+      "description": "Calculate pitch-line velocity, Barth velocity factor, tangential tooth force, and effective dynamic load.",
+      "given": [
+        "Pinion Pitch Diameter: d1 = 80.00 mm",
+        "Pinion Speed: N1 = 960 rpm",
+        "Pinion Torque: T1 = 109,419.02 N·mm",
+        "Application Factor: Ka = 1.50 (heavy shock conveyor duty)",
+        "Load Distribution Factor: Km = 1.25"
+      ],
+      "formulas": [
+        { "name": "Pitch-Line Velocity (v)", "formula": "v = (pi * d1 * N1) / (60 * 10^3) [m/s]" },
+        { "name": "Barth Velocity Factor (Cv)", "formula": "Cv = 5.6 / (5.6 + sqrt(v))" },
+        { "name": "Tangential Load (Pt)", "formula": "Pt = (2 * T1) / d1 [N]" },
+        { "name": "Effective Dynamic Load (Peff)", "formula": "Peff = (Ka * Km * Pt) / Cv [N]" }
+      ],
+      "fields": [
+        { "id": "pitch_velocity", "label": "Pitch-Line Velocity (v)", "unit": "m/s", "placeholder": "4.02", "hint": "v = (pi * 80 * 960) / 60000 = 4.0212 m/s" },
+        { "id": "velocity_factor_Cv", "label": "Barth Velocity Factor (Cv)", "unit": "—", "placeholder": "0.7363", "hint": "Cv = 5.6 / (5.6 + sqrt(4.0212)) = 0.7363" },
+        { "id": "tangential_load", "label": "Tangential Tooth Load (Pt)", "unit": "N", "placeholder": "2735.48", "hint": "Pt = (2 * 109419.02) / 80 = 2735.48 N" },
+        { "id": "effective_load", "label": "Effective Dynamic Load (Peff)", "unit": "N", "placeholder": "6965.67", "hint": "Peff = (1.50 * 1.25 * 2735.48) / 0.7363 = 6965.67 N" }
+      ]
+    },
+    "buckingham-wear-strength": {
+      "title": "8. Buckingham Wear Strength & Wear FOS Calculation",
+      "figure": "Buckingham Wear Durability & Contact Stress",
+      "description": "Calculate ratio factor, load-stress factor, Buckingham wear strength, and actual factor of safety against surface wear / pitting.",
+      "given": [
+        "Pinion Pitch Diameter: d1 = 80.00 mm, Face Width: b = 40.0 mm",
+        "Pinion Teeth: z1 = 20, Gear Teeth: z2 = 60",
+        "Softer Gear Hardness: BHN2 = 250 (55C8 plain carbon steel)",
+        "Effective Dynamic Load: Peff = 6965.67 N",
+        "Target Factor of Safety: [FOS] = 1.50"
+      ],
+      "formulas": [
+        { "name": "Ratio Factor (Q)", "formula": "Q = (2 * z2) / (z1 + z2)" },
+        { "name": "Load-Stress Factor (K)", "formula": "K = 0.16 * (BHN / 100)^2 [N/mm²]" },
+        { "name": "Buckingham Wear Strength (Sw)", "formula": "Sw = b * Q * d1 * K [N]" },
+        { "name": "Wear Factor of Safety (FOSw)", "formula": "FOSw = Sw / Peff" }
+      ],
+      "fields": [
+        { "id": "ratio_factor_Q", "label": "Ratio Factor (Q)", "unit": "—", "placeholder": "1.50", "hint": "Q = (2 * 60) / (20 + 60) = 1.50" },
+        { "id": "load_stress_factor_K", "label": "Load-Stress Factor (K)", "unit": "N/mm²", "placeholder": "1.00", "hint": "K = 0.16 * (250 / 100)^2 = 1.00 N/mm²" },
+        { "id": "wear_strength_Sw", "label": "Buckingham Wear Strength (Sw)", "unit": "N", "placeholder": "4800.00", "hint": "Sw = 40 * 1.50 * 80 * 1.00 = 4800.00 N" },
+        { "id": "FOS_wear", "label": "Wear Factor of Safety (FOSw)", "unit": "—", "placeholder": "0.689", "hint": "FOSw = 4800 / 6965.67 = 0.689 (Unsafe < 1.50)" }
+      ]
+    },
+    "failure-diagnosis": {
+      "title": "9. Initial Failure Diagnosis & Root Cause Assessment",
+      "prompt": "Evaluate the bending and wear safety factors to identify the governing failure mode and the required design remedy.",
+      "description": "Synthesize the mechanical performance of the initial trial gear set and diagnose the governing failure mode.",
+      "given": [
+        "Bending Factor of Safety: FOSb = 2.00 (Target [FOS] = 1.50 -> SAFE)",
+        "Wear Factor of Safety: FOSw = 0.689 (Target [FOS] = 1.50 -> UNSAFE)",
+        "Governing Defect: Severe contact stress leading to surface pitting / spalling"
+      ],
+      "mcq": {
+        "question": "Based on the calculated factors of safety (FOSb = 2.00 vs FOSw = 0.689 against target [FOS] = 1.50), what is the governing failure mode and required engineering action?",
+        "options": [
+          { "id": "optA", "label": "Governing mode is Surface Wear / Pitting Fatigue (FOSw = 0.689 < 1.50, UNSAFE); beam bending strength is adequate (FOSb = 2.00 >= 1.50). Parametric redesign must enhance contact durability." },
+          { "id": "optB", "label": "Governing mode is Tooth Bending Fracture at the root; tooth wear durability is well within safe operating limits." },
+          { "id": "optC", "label": "Both bending and wear durability are fully compliant; no parametric redesign is necessary." },
+          { "id": "optD", "label": "Both bending and wear fail catastrophically; the gear transmission ratio must be completely inverted." }
+        ]
+      }
+    },
+    "parametric-redesign": {
+      "title": "10. Parametric Redesign Computations (Options A, B, C)",
+      "figure": "Parametric Redesign Exploration & Optimization",
+      "description": "Calculate wear durability for three engineering redesign proposals to determine which options achieve the target FOS >= 1.50.",
+      "given": [
+        "Initial Condition: Sw = 4800 N, Peff = 6965.67 N -> FOSw = 0.689 (Unsafe)",
+        "Option A: Increase face width to b = 60 mm (original m = 4 mm, 250 BHN)",
+        "Option B: Increase gear tooth surface hardness to 400 BHN (original m = 4 mm, b = 40 mm)",
+        "Option C: Increase module to m = 5 mm, face width b = 60 mm (gear hardness = 250 BHN)"
+      ],
+      "formulas": [
+        { "name": "Option A Wear Strength", "formula": "Sw_A = b_A * Q * d1 * K = 60 * 1.50 * 80 * 1.00 [N]" },
+        { "name": "Option B Load-Stress Factor & Wear Strength", "formula": "K_B = 0.16 * (400 / 100)^2 = 2.56 N/mm², Sw_B = 40 * 1.50 * 80 * 2.56 [N]" },
+        { "name": "Option C Pitch Diameter, Dynamic Load & Wear Strength", "formula": "d1_C = 5 * 20 = 100 mm, v_C = 5.03 m/s, Cv_C = 0.7141, Peff_C = 5745.89 N, Sw_C = 60 * 1.50 * 100 * 1.00 [N]" }
+      ],
+      "fields": [
+        { "id": "option_A_Sw", "label": "Option A Wear Strength (b = 60 mm)", "unit": "N", "placeholder": "7200.00", "hint": "Sw = 60 * 1.50 * 80 * 1.00 = 7200.00 N" },
+        { "id": "option_A_FOSw", "label": "Option A Wear FOS (b = 60 mm)", "unit": "—", "placeholder": "1.034", "hint": "FOSw = 7200 / 6965.67 = 1.034 (Insufficient < 1.50)" },
+        { "id": "option_B_K", "label": "Option B Load-Stress Factor (400 BHN)", "unit": "N/mm²", "placeholder": "2.56", "hint": "K = 0.16 * (400 / 100)^2 = 2.56 N/mm²" },
+        { "id": "option_B_Sw", "label": "Option B Wear Strength (400 BHN)", "unit": "N", "placeholder": "12288.00", "hint": "Sw = 40 * 1.50 * 80 * 2.56 = 12288.00 N" },
+        { "id": "option_B_FOSw", "label": "Option B Wear FOS (400 BHN)", "unit": "—", "placeholder": "1.764", "hint": "FOSw = 12288 / 6965.67 = 1.764 (Satisfies Target >= 1.50)" },
+        { "id": "option_C_d1", "label": "Option C Pinion Pitch Diameter (m = 5 mm)", "unit": "mm", "placeholder": "100.00", "hint": "d1 = 5 * 20 = 100.00 mm" },
+        { "id": "option_C_Peff", "label": "Option C Effective Dynamic Load (m = 5 mm)", "unit": "N", "placeholder": "5745.89", "hint": "Peff = (1.50 * 1.25 * 2188.38) / 0.7141 = 5745.89 N" },
+        { "id": "option_C_Sw", "label": "Option C Wear Strength (m = 5 mm, b = 60 mm)", "unit": "N", "placeholder": "9000.00", "hint": "Sw = 60 * 1.50 * 100 * 1.00 = 9000.00 N" },
+        { "id": "option_C_FOSw", "label": "Option C Wear FOS (m = 5 mm)", "unit": "—", "placeholder": "1.566", "hint": "FOSw = 9000 / 5745.89 = 1.566 (Satisfies Target >= 1.50)" }
+      ]
+    },
+    "engineering-decision-canvas": {
+      "title": "11. Engineering Decision Canvas & Redesign Evaluation",
+      "figure": "Engineering Decision Canvas: Redesign Evaluation Matrix",
+      "description": "Provide a rigorous engineering evaluation and trade-off defense between Option B (Surface Hardening) and Option C (Module Enlargement).",
+      "given": [
+        "Target Safety Factor: [FOS] >= 1.50",
+        "Option A (Face Width b=60mm): FOSw = 1.034 (INSUFFICIENT)",
+        "Option B (Gear 400 BHN): FOSw = 1.764 (SATISFIES TARGET, Centre Distance a = 160 mm preserved)",
+        "Option C (Module m=5mm, b=60mm): FOSw = 1.566 (SATISFIES TARGET, Centre Distance increases to a = 200 mm)"
+      ],
+      "fields": [
+        { "id": "selected_option", "label": "Recommended Engineering Solution (Option B or Option C)", "unit": "—", "placeholder": "Option B (or Option C)", "hint": "State your selected engineering option for conveyor gearbox implementation." },
+        { "id": "casing_impact", "label": "Impact on Gearbox Casing Dimensions & Centre Distance", "unit": "—", "placeholder": "Option B preserves a = 160 mm; Option C increases a to 200 mm...", "hint": "Analyze whether existing casing envelopes can be maintained." },
+        { "id": "manufacturing_feasibility", "label": "Manufacturing & Heat Treatment Feasibility", "unit": "—", "placeholder": "Surface hardening 55C8 plain carbon steel vs re-tooling for m = 5 mm...", "hint": "Discuss induction hardening / flame hardening vs new hobbing tooling." }
+      ]
+    },
+    "reflection-synthesis": {
+      "title": "12. Engineering Design Synthesis, Assumptions & Professional Reflection",
+      "questions": [
+        {
+          "id": "q1",
+          "label": "Engineering Recommendation & Trade-Off Defense (TS02-C11 — 1.5 Marks)",
+          "helpText": "Select and defend your engineering redesign recommendation to achieve FOS >= 1.50. Evaluate the operational, dimensional, and economic trade-offs between surface hardening and module upsizing.",
+          "placeholder": "Present your detailed engineering recommendation. Defend whether Option B (surface hardening 55C8 gear teeth to 400 BHN) or Option C (upsizing module to m = 5 mm with b = 60 mm) is more appropriate for heavy conveyor service. Consider centre distance constraints, casing modifications, manufacturing costs, and long-term tooth wear durability..."
+        },
+        {
+          "id": "q2",
+          "label": "Design Assumptions, Specification Summary & Dynamic Velocity Reflection (TS02-C12 — 1.5 Marks)",
+          "helpText": "Document your key engineering assumptions, summarize the final transmission specification, and reflect on the role of dynamic velocity factors and surface fatigue in industrial spur gear design.",
+          "placeholder": "Document key design assumptions (rigid shaft mounting, accurately generated teeth, steady conveyor operation). Explain why wear durability governed this design rather than beam bending strength, and reflect on how dynamic load factors influence transmission reliability..."
+        }
+      ]
+    },
+    "submit": {
+      "title": "Submission & Verification",
+      "body": "Review your completion status across all 38 engineering checkpoints, verify your design defense, and submit your official PCC353-MEC CO1 evaluation report."
+    }
+  }
+}

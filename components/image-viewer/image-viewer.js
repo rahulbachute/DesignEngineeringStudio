@@ -270,11 +270,11 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
   }
 
   getImageElement() {
-    return this.element.querySelector("[data-viewer-image]");
+    return this.element ? this.element.querySelector("[data-viewer-image]") : null;
   }
 
   getStageElement() {
-    return this.element.querySelector("[data-image-stage]");
+    return this.element ? this.element.querySelector("[data-image-stage]") : null;
   }
 
   emit(eventName, payload) {
@@ -293,6 +293,8 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
     if (image && this.boundHandlers.load) {
       image.removeEventListener("load", this.boundHandlers.load);
       image.removeEventListener("error", this.boundHandlers.error);
+    }
+    if (stage && this.boundHandlers.wheel) {
       stage.removeEventListener("wheel", this.boundHandlers.wheel);
       stage.removeEventListener("pointerdown", this.boundHandlers.pointerDown);
       stage.removeEventListener("pointermove", this.boundHandlers.pointerMove);
@@ -300,6 +302,8 @@ class ImageViewerComponent extends window.MEILP.BaseComponent {
       stage.removeEventListener("pointerleave", this.boundHandlers.pointerUp);
       stage.removeEventListener("touchstart", this.boundHandlers.touchStart);
       stage.removeEventListener("touchmove", this.boundHandlers.touchMove);
+    }
+    if (this.boundHandlers.fullscreenChange) {
       document.removeEventListener("fullscreenchange", this.boundHandlers.fullscreenChange);
     }
     super.destroy();

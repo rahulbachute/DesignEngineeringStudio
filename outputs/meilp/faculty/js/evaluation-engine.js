@@ -107,6 +107,40 @@ class EvaluationEngine {
   getStepwiseActivitiesForChallenge(challengeName) {
     const name = String(challengeName || '').toLowerCase();
     
+    if (name.includes('helical') || name.includes('ts-01') || name.includes('ea-ts-01')) {
+      return [
+        { id: 'ts01-act-1', name: 'Task 1: Kinematic Specification & Pinion Torque', response: 'T1 = 99,471.84 N·mm, i = 3.00', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Calculation' },
+        { id: 'ts01-act-2', name: 'Task 2: Virtual Teeth & Lewis Form Factor', response: 'z1\' = 21.69, z2\' = 65.08, Yv1 = 0.3517, Yv2 = 0.4399', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts01-act-3', name: 'Task 3: Weaker Element Comparative Evaluation', response: 'Pinion Index = 93.79 MPa, Gear Index = 87.98 MPa -> Gear is weaker', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Analysis' },
+        { id: 'ts01-act-4', name: 'Task 4: Gear Pitch Geometry & Centre Distance', response: 'd1 = 76.62 mm, d2 = 229.86 mm, a = 153.24 mm', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts01-act-5', name: 'Task 5: Pitch-Line Velocity & Barth Dynamic Factor', response: 'v = 5.78 m/s, Cv = 0.700', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Calculation' },
+        { id: 'ts01-act-6', name: 'Task 6: Tangential & Effective Dynamic Load', response: 'Pt = 2596.47 N, Peff = 6030.20 N', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts01-act-7', name: 'Task 7: Lewis Beam Strength & Bending FOS', response: 'Sb = 14,076.78 N, FOSb = 2.33 (Safe)', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts01-act-8', name: 'Task 8: Buckingham Wear Strength & Wear FOS', response: 'Q = 1.50, K = 1.00 N/mm², Sw = 5206.27 N, FOSw = 0.86 (Unsafe)', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts01-act-9', name: 'Task 9: Engineering Diagnosis & Defect Identification', response: 'Governing failure mode: Surface Wear / Pitting Failure', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Analysis' },
+        { id: 'ts01-act-10', name: 'Task 10: Parametric Redesign Calculations (Options A, B, C)', response: 'Opt A: FOSw=1.19 (Insufficient); Opt B1 (350 BHN): FOSw=1.69 (Safe); Opt C: FOSw=1.63 (Safe)', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Calculation' },
+        { id: 'ts01-act-11', name: 'Task 11: Engineering Recommendation & Trade-Off Defense', response: 'Student defense: Increase gear tooth surface hardness to 350 BHN to maintain compact gearbox casing envelope without centre distance expansion.', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Design Decision' },
+        { id: 'ts01-act-12', name: 'Task 12: Engineering Design Synthesis & Reflection', response: 'Student reflection on dynamic velocity factor and surface durability in high-speed rotary drives.', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Synthesis' }
+      ];
+    }
+
+    if (name.includes('spur') || name.includes('ts-02') || name.includes('ea-ts-02')) {
+      return [
+        { id: 'ts02-act-1', name: 'Task 1: Kinematic Specification & Pinion Torque', response: 'T1 = 109,419.02 N·mm, i = 3.00, T2 = 328,257.06 N·mm', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Calculation' },
+        { id: 'ts02-act-2', name: 'Task 2: Spur Gear Visualisation & Tooth Terminology', response: 'Pinion (20T, 40Ni2Cr1Mo28), Gear (60T, 55C8), Conveyor Drive elements identified', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Visualisation' },
+        { id: 'ts02-act-3', name: 'Task 3: Spur Gear Pitch Geometry & Centre Distance', response: 'd1 = 80.00 mm, d2 = 240.00 mm, a = 160.00 mm', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts02-act-4', name: 'Task 4: Material Selection & Tooth Failure Evaluation', response: 'sigma_b1 = 266.67 MPa, sigma_b2 = 200.00 MPa, Root bending & Flank pitting identified', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Analysis' },
+        { id: 'ts02-act-5', name: 'Task 5: Lewis Form Factors & Weaker Element Determination', response: 'Y1 = 0.3405, Y2 = 0.4362, Pinion Index = 90.80 MPa, Gear Index = 87.24 MPa -> Gear is weaker', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts02-act-6', name: 'Task 6: Pitch-Line Velocity & Effective Dynamic Load', response: 'v = 4.02 m/s, Cv = 0.7363, Pt = 2735.48 N, Peff = 6965.67 N', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts02-act-7', name: 'Task 7: Lewis Beam Strength & Bending Safety Factor', response: 'Sb = 13,957.33 N, FOSb = 2.00 (Safe >= 1.50)', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts02-act-8', name: 'Task 8: Buckingham Wear Strength & Wear Safety Factor', response: 'Q = 1.50, K = 1.00 N/mm², Sw = 4800.00 N, FOSw = 0.689 (Unsafe < 1.50)', maxMarks: 1.0, systemSuggestedMarks: 1.0, category: 'Calculation' },
+        { id: 'ts02-act-9', name: 'Task 9: Initial Failure Diagnosis & Root Cause Assessment', response: 'Governing failure mode: Surface Wear / Pitting Fatigue', maxMarks: 0.5, systemSuggestedMarks: 0.5, category: 'Analysis' },
+        { id: 'ts02-act-10', name: 'Task 10: Parametric Redesign Computations (Options A, B, C)', response: 'Opt A: FOSw=1.034 (Insufficient); Opt B (400 BHN): FOSw=1.764 (Safe); Opt C: FOSw=1.566 (Safe)', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Calculation' },
+        { id: 'ts02-act-11', name: 'Task 11: Engineering Redesign Trade-Off Defense & Selection', response: 'Student defense: Compare surface hardening (Option B) vs module upsizing (Option C) regarding casing size and heat-treatment feasibility.', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Design Decision' },
+        { id: 'ts02-act-12', name: 'Task 12: Professional Reflection & Engineering Synthesis', response: 'Student reflection on dynamic load factor, shock loading in conveyors, and contact fatigue durability.', maxMarks: 1.5, systemSuggestedMarks: 1.5, category: 'Synthesis' }
+      ];
+    }
+
     if (name.includes('shaft') || name.includes('ec-07')) {
       return [
         { id: 'ec07-act-1', name: 'Task 1: System Specifications & Given Data', response: 'Power P = 15 kW, Speed N = 720 rpm, Radial Load Fr = 3000 N, Span L = 500 mm', maxMarks: 1, systemSuggestedMarks: 1, category: 'Identification' },

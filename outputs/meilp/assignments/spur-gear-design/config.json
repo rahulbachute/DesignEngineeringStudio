@@ -1,0 +1,132 @@
+{
+  "id": "EA-TS-02",
+  "projectCode": "EA-TS-02",
+  "slug": "spur-gear-design",
+  "title": "Design Parameters of Spur Gears for Industrial Conveyor Systems",
+  "subject": "PCC353-MEC",
+  "courseCode": "PCC353-MEC",
+  "courseName": "Transmission System Design",
+  "unit": "Unit I — Spur and Helical Gears",
+  "courseOutcome": {
+    "code": "CO1",
+    "statement": "Apply principle of Spur & Helical gear design for industrial application."
+  },
+  "programOutcomes": [
+    "PO1",
+    "PO2",
+    "PO3",
+    "PO4",
+    "PO5",
+    "PO7",
+    "PO8",
+    "PO9",
+    "PO11"
+  ],
+  "programSpecificOutcomes": [
+    "PSO1",
+    "PSO2"
+  ],
+  "bloomLevelsCovered": [
+    "L1 Understand",
+    "L2 Understand",
+    "L3 Apply",
+    "L4 Analyse",
+    "L5 Evaluate",
+    "L6 Create"
+  ],
+  "cceType": "Engineering Challenge",
+  "cceMarks": 12,
+  "facultyName": "Prof. Rahul Bachute",
+  "client": "Heavy Materials Handling & Conveyor Drive Division",
+  "location": "Pune",
+  "priority": "High",
+  "estimatedDuration": "90 minutes",
+  "difficulty": "Advanced",
+  "submissionMode": "Individual or Group",
+  "version": "1.0.0",
+  "settings": {
+    "attemptMode": "individual",
+    "allowIndividual": true,
+    "allowGroup": true,
+    "maxGroupMembers": 4,
+    "requireProjectAcceptance": true,
+    "initialScreen": "student-details",
+    "directStudentForm": true,
+    "defaultAttemptMode": "individual"
+  },
+  "tasks": [
+    {
+      "id": "project-charter",
+      "type": "information",
+      "title": "1. Engineering Problem Charter: Heavy Conveyor Spur Drive"
+    },
+    {
+      "id": "conveyor-visualisation",
+      "type": "image-label",
+      "activityCode": "TS02-A02",
+      "title": "2. Conveyor Visualisation & Spur Tooth Analysis"
+    },
+    {
+      "id": "transmission-requirements",
+      "type": "calculation-inputs",
+      "title": "3. Transmission Requirements & Kinematic Parameters"
+    },
+    {
+      "id": "spur-gear-geometry",
+      "type": "calculation-inputs",
+      "title": "4. Spur Gear Pitch Geometry & Centre Distance"
+    },
+    {
+      "id": "material-and-failure",
+      "type": "text-mcq",
+      "title": "5. Material Selection & Gear-Tooth Failure Evaluation"
+    },
+    {
+      "id": "lewis-beam-strength",
+      "type": "calculation-inputs",
+      "title": "6. Lewis Form Factors & Beam Strength Calculation"
+    },
+    {
+      "id": "velocity-and-dynamic-loading",
+      "type": "calculation-inputs",
+      "title": "7. Pitch-Line Velocity & Dynamic Load Analysis"
+    },
+    {
+      "id": "buckingham-wear-strength",
+      "type": "calculation-inputs",
+      "title": "8. Buckingham Wear Strength & Wear FOS Calculation"
+    },
+    {
+      "id": "failure-diagnosis",
+      "type": "text-mcq",
+      "title": "9. Initial Failure Diagnosis & Root Cause Assessment"
+    },
+    {
+      "id": "parametric-redesign",
+      "type": "calculation-inputs",
+      "title": "10. Parametric Redesign Computations (Options A, B, C)"
+    },
+    {
+      "id": "engineering-decision-canvas",
+      "type": "calculation-inputs",
+      "title": "11. Engineering Decision Canvas & Redesign Evaluation"
+    },
+    {
+      "id": "reflection-synthesis",
+      "type": "reflection",
+      "title": "12. Engineering Design Synthesis, Assumptions & Professional Reflection"
+    },
+    {
+      "id": "submit",
+      "type": "submission",
+      "title": "Submission & Verification"
+    }
+  ],
+  "dataFiles": {
+    "workflow": "assignments/spur-gear-design/workflow.json",
+    "content": "assignments/spur-gear-design/content.json",
+    "rubric": "assignments/spur-gear-design/rubric.json",
+    "assetManifest": "assignments/spur-gear-design/asset-manifest.json",
+    "evaluationTemplate": "assignments/spur-gear-design/evaluation-template.json"
+  }
+}

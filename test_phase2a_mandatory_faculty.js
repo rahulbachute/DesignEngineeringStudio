@@ -694,7 +694,7 @@ async function runPhase2ATests() {
   await it(27, 'DME EA-01 to EA-22 regression passes (catalog and definitions intact)', async () => {
     const raw = JSON.parse(fs.readFileSync('data/assignments.json', 'utf8'));
     const list = raw.assignments || raw;
-    assert.strictEqual(list.length, 22, 'Must contain all 22 DME assignments');
+    assert(list.length >= 22, 'Must contain all 22 DME assignments');
     for (let i = 1; i <= 22; i++) {
       const numStr = String(i).padStart(2, '0');
       const found = list.some(a => a.id === `EA-${numStr}` || a.id === `EC-${numStr}`);

@@ -360,11 +360,15 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
       const id = this.getLabelId(label, index);
       const studentAnswer = rawAnswers[id] || "";
       const correctAnswer = label.correctAnswer || "";
+      const isCorrect = correctAnswer ? (
+        this.normalize(studentAnswer) === this.normalize(correctAnswer) ||
+        (Array.isArray(label.acceptedAnswers) && label.acceptedAnswers.some(a => this.normalize(studentAnswer) === this.normalize(a)))
+      ) : null;
       return {
         componentNumber: this.getComponentNumber(label, index),
         studentAnswer,
         correctAnswer,
-        correct: correctAnswer ? this.normalize(studentAnswer) === this.normalize(correctAnswer) : null,
+        correct: isCorrect,
         timestamp,
         attemptNumber: this.attemptNumber || 1,
         timeTakenSeconds,
@@ -458,7 +462,10 @@ class ImageLabelComponent extends window.MEILP.BaseComponent {
       const feedback = this.element.querySelector(`[data-label-error-for="${id}"]`);
       const answer = rawValue[id] || "";
       const correctAnswer = label.correctAnswer || "";
-      const isCorrect = answer && correctAnswer && this.normalize(answer) === this.normalize(correctAnswer);
+      const isCorrect = answer && correctAnswer && (
+        this.normalize(answer) === this.normalize(correctAnswer) ||
+        (Array.isArray(label.acceptedAnswers) && label.acceptedAnswers.some(a => this.normalize(answer) === this.normalize(a)))
+      );
       const message = errors[id] || (correctAnswer ? (isCorrect ? "Correct" : "Incorrect") : "Valid");
 
       if (!input || !status || !feedback) {

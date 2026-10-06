@@ -1,0 +1,20 @@
+{
+  "assignmentId": "EA-TS-02",
+  "assignmentTitle": "Design Parameters of Spur Gears for Industrial Conveyor Systems",
+  "maxTotalMarks": 12.0,
+  "courseOutcome": "CO1",
+  "criteria": [
+    { "id": "ts02-act-1", "name": "Task 1: Kinematic Specification & Pinion Torque", "category": "Calculation", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS02-C01" },
+    { "id": "ts02-act-2", "name": "Task 2: Spur Gear Visualisation & Tooth Terminology", "category": "Visualisation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS02-C02" },
+    { "id": "ts02-act-3", "name": "Task 3: Spur Gear Pitch Geometry & Centre Distance", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS02-C03" },
+    { "id": "ts02-act-4", "name": "Task 4: Material Selection & Tooth Failure Evaluation", "category": "Analysis", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS02-C04" },
+    { "id": "ts02-act-5", "name": "Task 5: Lewis Form Factors & Weaker Element Determination", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS02-C05" },
+    { "id": "ts02-act-6", "name": "Task 6: Pitch-Line Velocity & Effective Dynamic Load", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS02-C06" },
+    { "id": "ts02-act-7", "name": "Task 7: Lewis Beam Strength & Bending Safety Factor", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS02-C07" },
+    { "id": "ts02-act-8", "name": "Task 8: Buckingham Wear Strength & Wear Safety Factor", "category": "Calculation", "maxMarks": 1.0, "systemSuggestedMarks": 1.0, "co": "CO1", "rubricRef": "TS02-C08" },
+    { "id": "ts02-act-9", "name": "Task 9: Initial Failure Diagnosis & Root Cause Assessment", "category": "Analysis", "maxMarks": 0.5, "systemSuggestedMarks": 0.5, "co": "CO1", "rubricRef": "TS02-C09" },
+    { "id": "ts02-act-10", "name": "Task 10: Parametric Redesign Computations (Options A, B, C)", "category": "Calculation", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS02-C10" },
+    { "id": "ts02-act-11", "name": "Task 11: Engineering Redesign Trade-Off Defense & Selection", "category": "Design Decision", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS02-C11" },
+    { "id": "ts02-act-12", "name": "Task 12: Professional Reflection & Engineering Synthesis", "category": "Synthesis", "maxMarks": 1.5, "systemSuggestedMarks": 1.5, "co": "CO1", "rubricRef": "TS02-C12" }
+  ]
+}

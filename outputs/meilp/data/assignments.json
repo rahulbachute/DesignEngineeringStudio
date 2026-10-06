@@ -256,6 +256,34 @@
       "slug": "mobile-scissor-lift",
       "co": "CO2",
       "weightage": "12 Marks"
+    },
+    {
+      "id": "EA-TS-01",
+      "title": "Design of Helical Gears for High-Speed Rotary Equipment",
+      "discipline": "Transmission System Design",
+      "summary": "Engineering challenge to design, analyse, and verify a high-speed helical gear pair, calculating torque, formative teeth, Lewis form factors, pitch geometry, Barth dynamic factor, effective load, Lewis beam strength, Buckingham wear strength, safety factors, and parametric redesign.",
+      "status": "Ready",
+      "tasks": 8,
+      "icon": "bi-gear-wide-connected",
+      "configPath": "assignments/helical-gear-design/config.json",
+      "launchPath": "assignment-workbench.html?assignment=helical-gear-design",
+      "slug": "helical-gear-design",
+      "co": "CO1",
+      "weightage": "12 Marks"
+    },
+    {
+      "id": "EA-TS-02",
+      "title": "Design Parameters of Spur Gears for Industrial Conveyor Systems",
+      "discipline": "Transmission System Design",
+      "summary": "Engineering challenge to design, analyse, and verify a single-stage spur gear reduction drive for heavy bulk material conveyors, evaluating transmission ratio, torque, pitch geometry, Lewis beam strength, Barth dynamic load, Buckingham wear durability, and parametric redesign.",
+      "status": "Ready",
+      "tasks": 12,
+      "icon": "bi-gear-wide-connected",
+      "configPath": "assignments/spur-gear-design/config.json",
+      "launchPath": "assignment-workbench.html?assignment=spur-gear-design",
+      "slug": "spur-gear-design",
+      "co": "CO1",
+      "weightage": "12 Marks"
     }
   ]
 }
