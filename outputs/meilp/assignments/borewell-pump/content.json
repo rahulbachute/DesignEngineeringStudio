@@ -186,6 +186,88 @@
         "Bush",
         "Fasteners"
       ],
+      "labels": [
+        {
+          "id": "1",
+          "componentNumber": 1,
+          "x": 85,
+          "y": 55,
+          "top": "55%",
+          "left": "85%",
+          "correctAnswer": "Handle Grip",
+          "feedback": "Ergonomic operator handle grip for applying human effort."
+        },
+        {
+          "id": "2",
+          "componentNumber": 2,
+          "x": 60,
+          "y": 30,
+          "top": "30%",
+          "left": "60%",
+          "correctAnswer": "Lever Arm",
+          "feedback": "First-class lever arm transmitting operator force to the pump rod."
+        },
+        {
+          "id": "3",
+          "componentNumber": 3,
+          "x": 34,
+          "y": 18,
+          "top": "18%",
+          "left": "34%",
+          "correctAnswer": "Fulcrum",
+          "feedback": "Fixed pivot point supporting the lever arm and reacting operating forces."
+        },
+        {
+          "id": "4",
+          "componentNumber": 4,
+          "x": 47,
+          "y": 19,
+          "top": "19%",
+          "left": "47%",
+          "correctAnswer": "Pivot Pin",
+          "feedback": "Cylindrical pin connecting the lever arm to the supporting fulcrum bracket."
+        },
+        {
+          "id": "5",
+          "componentNumber": 5,
+          "x": 47,
+          "y": 40,
+          "top": "40%",
+          "left": "47%",
+          "correctAnswer": "Connecting Rod",
+          "feedback": "Intermediate link transmitting oscillating motion from the lever to the pump rod."
+        },
+        {
+          "id": "6",
+          "componentNumber": 6,
+          "x": 47,
+          "y": 60,
+          "top": "60%",
+          "left": "47%",
+          "correctAnswer": "Pump Rod",
+          "feedback": "Vertical reciprocating rod driving the downhole piston/plunger."
+        },
+        {
+          "id": "7",
+          "componentNumber": 7,
+          "x": 38,
+          "y": 9,
+          "top": "9%",
+          "left": "38%",
+          "correctAnswer": "Bush",
+          "feedback": "Low-friction bearing bush guiding pin rotation and minimizing wear."
+        },
+        {
+          "id": "8",
+          "componentNumber": 8,
+          "x": 30,
+          "y": 75,
+          "top": "75%",
+          "left": "30%",
+          "correctAnswer": "Fasteners",
+          "feedback": "Structural bolts securing the fulcrum bracket to the pump casing."
+        }
+      ],
       "callouts": [
         {
           "id": "1",
@@ -357,6 +439,48 @@
         "Pump Resistance",
         "Fulcrum Reaction",
         "Moment"
+      ],
+      "labels": [
+        {
+          "id": "1",
+          "componentNumber": 1,
+          "x": 81,
+          "y": 57,
+          "top": "57%",
+          "left": "81%",
+          "correctAnswer": "Applied Force",
+          "feedback": "Downward operator effort applied at the handle grip."
+        },
+        {
+          "id": "2",
+          "componentNumber": 2,
+          "x": 47,
+          "y": 68,
+          "top": "68%",
+          "left": "47%",
+          "correctAnswer": "Pump Resistance",
+          "feedback": "Resisting force exerted by the water column and piston plunger."
+        },
+        {
+          "id": "3",
+          "componentNumber": 3,
+          "x": 38,
+          "y": 15,
+          "top": "15%",
+          "left": "38%",
+          "correctAnswer": "Fulcrum Reaction",
+          "feedback": "Vertical pin reaction force maintaining static equilibrium at the pivot."
+        },
+        {
+          "id": "4",
+          "componentNumber": 4,
+          "x": 60,
+          "y": 33,
+          "top": "33%",
+          "left": "60%",
+          "correctAnswer": "Moment",
+          "feedback": "Bending moment induced along the lever arm under applied effort."
+        }
       ],
       "callouts": [
         {
