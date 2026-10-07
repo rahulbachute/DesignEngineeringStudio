@@ -14,12 +14,11 @@
       { "name": "email", "label": "Email Address", "required": true, "type": "email" },
       { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
       { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
-      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
       { "name": "division", "label": "Division / Section", "required": true },
       { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
       { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
-      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
+      { "name": "student3", "label": "Student 3", "required": false, "groupOnly": true },
+      { "name": "student4", "label": "Student 4", "required": false, "groupOnly": true },
       { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
     ]
   },
