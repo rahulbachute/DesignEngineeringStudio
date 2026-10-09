@@ -206,16 +206,19 @@ class SubmissionEngine {
           submittedCount += 1;
           this.emit("submission:submitted", { payload: nextItem.payload, result });
         } else {
+          const ambiguous = this.isAmbiguousSubmissionResult(result || {});
           remaining.push({
             ...nextItem,
-            blocked: nextItem.attempts >= this.config.maxRetryAttempts,
+            blocked: ambiguous || nextItem.attempts >= this.config.maxRetryAttempts,
+            requiresVerification: Boolean(nextItem.requiresVerification || ambiguous),
             lastError: result ? result.message : "Retry failed."
           });
         }
       } catch (error) {
         remaining.push({
           ...nextItem,
-          blocked: nextItem.attempts >= this.config.maxRetryAttempts,
+          blocked: true,
+          requiresVerification: true,
           lastError: this.errorMessage(error) || "Retry failed."
         });
       }
@@ -288,13 +291,15 @@ class SubmissionEngine {
   queueSubmission(payload, message, result = {}) {
     const identity = this.queueIdentity({ payload });
     const queue = this.getQueue().filter((item) => this.queueIdentity(item) !== identity);
+    const ambiguous = this.isAmbiguousSubmissionResult(result);
     queue.push({
       id: payload.submission.submissionId,
       payload,
       attempts: 0,
       queuedAt: this.now().toISOString(),
       lastError: result.message || message,
-      blocked: false
+      blocked: ambiguous,
+      requiresVerification: ambiguous
     });
     this.setQueue(queue);
 
@@ -302,6 +307,14 @@ class SubmissionEngine {
     this.setStatus(status);
     this.emit("submission:queued", { payload, result });
     return status;
+  }
+
+  /**
+   * Returns true when the POST outcome is unknown and retrying could duplicate a server write.
+   */
+  isAmbiguousSubmissionResult(result = {}) {
+    const code = String(result.code || "").toUpperCase();
+    return code === "UNVERIFIED_RESPONSE" || code === "INVALID_RESPONSE" || code === "NETWORK_ERROR";
   }
 
   /**
@@ -536,7 +549,8 @@ class SubmissionEngine {
       id: item.id || submission.submissionId,
       payload,
       attempts: Number.isFinite(Number(item.attempts)) ? Math.max(0, Number(item.attempts)) : 0,
-      blocked: Boolean(item.blocked)
+      blocked: Boolean(item.blocked),
+      requiresVerification: Boolean(item.requiresVerification)
     };
   }
 

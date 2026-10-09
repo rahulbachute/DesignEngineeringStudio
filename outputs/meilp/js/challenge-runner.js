@@ -426,12 +426,17 @@ class ChallengeRunner {
         return;
       }
       this.services.stateManager.update((state) => {
+        const selectedCollege = this.resolveCollegeSelection(result.value.collegeId || result.value.collegeName);
+        const resolvedCollegeId = selectedCollege.collegeId || result.value.collegeId || (state.student && state.student.collegeId) || "";
+        const resolvedCollegeName = selectedCollege.collegeName || result.value.collegeName || (state.student && state.student.collegeName) || "";
         const resolvedName = result.value.name || result.value.fullName || result.value.student1 || (state.student && (state.student.name || state.student.fullName)) || "";
         const resolvedRoll = result.value.rollNumber || result.value.rollNo || result.value.groupNumber || (state.student && (state.student.rollNumber || state.student.rollNo)) || "";
         return {
           student: {
             ...state.student,
             ...result.value,
+            collegeId: resolvedCollegeId,
+            collegeName: resolvedCollegeName,
             name: resolvedName,
             fullName: resolvedName,
             rollNumber: resolvedRoll,
@@ -1745,6 +1750,34 @@ class ChallengeRunner {
       }
     });
     return { valid: Object.keys(errors).length === 0, value };
+  }
+
+  resolveCollegeSelection(identifier) {
+    const key = String(identifier || "").trim().toUpperCase();
+    if (!key || typeof window === "undefined" || !window.MEILP) {
+      return {};
+    }
+
+    const registries = [
+      window.MEILP.ACTIVE_COLLEGE_REGISTRY,
+      window.MEILP.currentLoadedColleges
+    ].filter(Array.isArray);
+
+    for (const registry of registries) {
+      const match = registry.find((college) => {
+        const collegeId = String(college.collegeId || "").trim().toUpperCase();
+        const collegeName = String(college.collegeName || "").trim().toUpperCase();
+        return (collegeId && collegeId === key) || (collegeName && collegeName === key);
+      });
+      if (match) {
+        return {
+          collegeId: String(match.collegeId || "").trim(),
+          collegeName: String(match.collegeName || "").trim()
+        };
+      }
+    }
+
+    return {};
   }
 
   /**

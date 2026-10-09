@@ -30,7 +30,6 @@ class GoogleSheetsService {
 
       const response = await fetch(this.requestUrl("submit"), {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
@@ -40,17 +39,12 @@ class GoogleSheetsService {
         })
       });
 
-      // In no-cors mode, Google Apps Script redirects result in an opaque response.
-      // If we reach here without a network error, the POST request was successfully sent.
       if (response.type === "opaque" || response.status === 0) {
-        return {
-          ok: true,
-          queued: false,
-          code: "SUBMITTED",
-          message: "Submission successful.",
-          submittedAt: this.now().toISOString(),
-          data: {}
-        };
+        return this.failure(
+          "Submission could not be verified by Google Sheets. Please retry when the backend returns a readable confirmation.",
+          "UNVERIFIED_RESPONSE",
+          response.status
+        );
       }
 
       if (!response.ok) {
@@ -63,14 +57,29 @@ class GoogleSheetsService {
 
       const text = await response.text();
 
-      let data = {};
+      let data = null;
 
       if (text) {
         try {
           data = JSON.parse(text);
         } catch {
-          data = { raw: text };
+          return this.failure(
+            "Google Sheets returned a response that could not be verified.",
+            "INVALID_RESPONSE",
+            response.status
+          );
         }
+      }
+
+      if (!data) {
+        return {
+          ok: false,
+          queued: false,
+          code: "UNVERIFIED_RESPONSE",
+          message: "Google Sheets did not confirm that the submission was saved.",
+          status: response.status,
+          data
+        };
       }
 
       if (data.ok === false || data.success === false) {
@@ -80,6 +89,17 @@ class GoogleSheetsService {
           code: data.code || "SERVER_REJECTED",
           message: data.message || data.error || "Submission rejected.",
           status: data.statusCode || response.status,
+          data
+        };
+      }
+
+      if (data.success !== true && data.ok !== true) {
+        return {
+          ok: false,
+          queued: false,
+          code: "UNVERIFIED_RESPONSE",
+          message: "Google Sheets did not confirm that the submission was saved.",
+          status: response.status,
           data
         };
       }
