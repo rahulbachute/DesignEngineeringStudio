@@ -37,68 +37,20 @@ class SubmissionsBrowser {
   }
 
   async loadData() {
+    this.showLoadingState();
     try {
       const items = await DESSubmissionService.getSubmissions();
-      let normalized = (items || []).map((item) => (item instanceof SubmissionModel ? item : new SubmissionModel(item)));
-      this.data = this.ensureAllAssignmentsRepresented(normalized);
+      const normalized = (items || []).map((item) => (item instanceof SubmissionModel ? item : new SubmissionModel(item)));
+      this.data = normalized;
       this.populateFilters();
       this.applyFilters();
     } catch (error) {
-      console.warn('Using full assignment mock submissions suite:', error);
-      this.data = this.ensureAllAssignmentsRepresented([]);
-      this.populateFilters();
-      this.applyFilters();
+      console.error('Failed to load submissions:', error);
+      this.data = [];
+      this.filteredData = [];
+      const message = error?.message || 'Failed to load submissions from server.';
+      this.showError(`Error loading submissions: ${message}`);
     }
-  }
-
-  ensureAllAssignmentsRepresented(items = []) {
-    const existingChallenges = new Set((items || []).map((item) => String(item.challenge || '').toLowerCase()));
-
-    const allAssignments = [
-      { id: 'EC-01', title: 'Safety Verification of Elevator Suspension Cables', student: 'Riya Kulkarni', prn: '2026001', branch: 'B.E. Mechanical', div: 'A', score: 10, status: 'Evaluated' },
-      { id: 'EC-02', title: 'Determine factor of safety of motorcycle stand and verify whether design is safe', student: 'Aditi Joshi', prn: '2026002', branch: 'B.E. Mechanical', div: 'A', score: 9.5, status: 'Evaluated' },
-      { id: 'EC-03', title: 'Engineering Materials Selection in Two-Wheeler Components', student: 'Amit Sharma', prn: '2026003', branch: 'B.E. Mechanical', div: 'B', score: 10.5, status: 'Evaluated' },
-      { id: 'EC-04', title: 'Ergonomic Design and Safety Verification of a Borewell Pump Hand Lever', student: 'Priya Verma', prn: '2026004', branch: 'B.E. Mechanical', div: 'A', score: null, status: 'Submitted' },
-      { id: 'EC-05', title: 'Failure Analysis and Material Selection of a Failed Mechanical Component', student: 'Siddharth Patil', prn: '2026005', branch: 'B.E. Mechanical', div: 'B', score: 10, status: 'Evaluated' },
-      { id: 'EC-06', title: 'Stress Concentration Analysis of a Plate with a Central Hole', student: 'Neha Deshmukh', prn: '2026006', branch: 'B.E. Mechanical', div: 'A', score: null, status: 'Submitted' },
-      { id: 'EC-07', title: 'Design of Shaft for a Real-World Engineering Application', student: 'Rahul Bachute', prn: '2026007', branch: 'B.E. Mechanical', div: 'A', score: 11, status: 'Evaluated' },
-      { id: 'EC-08', title: 'Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission', student: 'Vikram Shinde', prn: '2026008', branch: 'B.E. Mechanical', div: 'B', score: null, status: 'Submitted' },
-      { id: 'EC-09', title: 'Identification and Selection of Couplings Used in Mechanical Power Transmission', student: 'Aniket More', prn: '2026009', branch: 'B.E. Mechanical', div: 'A', score: null, status: 'Submitted' }
-    ];
-
-    const result = [...items];
-    let nextId = 500 + result.length;
-
-    allAssignments.forEach((req) => {
-      const titleLower = req.title.toLowerCase();
-      const isPresent = Array.from(existingChallenges).some((c) => c.includes(req.id.toLowerCase()) || c.includes(titleLower) || titleLower.includes(c));
-      if (!isPresent) {
-        const activities = this.getStepwiseActivitiesForChallenge(req.title || req.id, req);
-        const totalMax = this.totalMaxMarks(activities) || 12;
-        const totalSuggested = this.totalSuggestedMarks(activities) || totalMax;
-        const facultyScore = req.score !== null ? (req.score > totalMax ? Number(((req.score / 100) * totalMax).toFixed(1)) : req.score) : null;
-        const systemScore = req.score !== null ? facultyScore : totalSuggested;
-        nextId += 1;
-        result.push(new SubmissionModel({
-          id: `SUB-${nextId}`,
-          studentName: req.student,
-          prn: req.prn,
-          branch: req.branch,
-          division: req.div,
-          challenge: req.title,
-          challengeId: req.id,
-          attempt: 1,
-          submittedOn: new Date().toISOString().slice(0, 10),
-          submissionStatus: req.status,
-          systemScore: systemScore,
-          facultyScore: facultyScore,
-          timeTaken: '24 mins',
-          activities: activities
-        }));
-      }
-    });
-
-    return result;
   }
 
   bindEvents() {
@@ -309,6 +261,10 @@ class SubmissionsBrowser {
   }
 
   renderSummary() {
+    if (!this.data || this.data.length === 0) {
+      this.elements.summary.textContent = 'No student submissions yet.';
+      return;
+    }
     const total = this.filteredData.length;
     const from = total === 0 ? 0 : (this.currentPage - 1) * this.pageSize + 1;
     const to = Math.min(this.currentPage * this.pageSize, total);
@@ -332,15 +288,23 @@ class SubmissionsBrowser {
 
   showError(message) {
     this.elements.summary.textContent = message;
-    this.elements.tableBody.innerHTML = `<tr><td colspan="11" class="text-center text-muted py-4">${this.escapeHtml(message)}</td></tr>`;
+    this.elements.tableBody.innerHTML = `<tr><td colspan="11" class="text-center text-danger py-4">${this.escapeHtml(message)}</td></tr>`;
+    if (this.elements.pagination) {
+      this.elements.pagination.innerHTML = '';
+    }
   }
 
   renderTable() {
+    if (!this.data || this.data.length === 0) {
+      this.elements.tableBody.innerHTML = '<tr><td colspan="11" class="text-center text-muted py-4">No student submissions yet.</td></tr>';
+      return;
+    }
+
     const start = (this.currentPage - 1) * this.pageSize;
     const pageItems = this.filteredData.slice(start, start + this.pageSize);
 
     if (!pageItems.length) {
-      this.elements.tableBody.innerHTML = '<tr><td colspan="11" class="text-center text-muted py-4">No submissions available for the selected view.</td></tr>';
+      this.elements.tableBody.innerHTML = '<tr><td colspan="11" class="text-center text-muted py-4">No submissions match the current filters.</td></tr>';
       return;
     }
 
@@ -368,6 +332,11 @@ class SubmissionsBrowser {
   }
 
   renderPagination() {
+    if (!this.filteredData || this.filteredData.length === 0) {
+      this.elements.pagination.innerHTML = '';
+      return;
+    }
+
     const totalPages = Math.max(1, Math.ceil(this.filteredData.length / this.pageSize));
     const items = [];
 
@@ -560,12 +529,13 @@ class SubmissionsBrowser {
     const totalMarks = marksInputs.reduce((sum, input) => sum + Number(input.value || 0), 0);
     const maxMarks = this.totalMaxMarks(activities);
     const percentage = maxMarks ? Number(((totalMarks / maxMarks) * 100).toFixed(2)) : 0;
-    const currentUser = window.DESAuth?.getCurrentUser?.() || {};
+    const currentUser = (window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()) || {};
+    const facultyId = currentUser.facultyId || (window.DESAuth && window.DESAuth.getFacultyId && window.DESAuth.getFacultyId()) || '';
 
     return {
       submissionId: record.id,
-      facultyId: currentUser.facultyId || '',
-      authFacultyId: currentUser.facultyId || '',
+      facultyId: facultyId,
+      authFacultyId: facultyId,
       facultyName: currentUser.name || 'Faculty',
       facultyEmail: currentUser.email || '',
       evaluation: {
