@@ -277,7 +277,8 @@ function getFacultyList(payload) {
       filterCollegeId = String(filterCollegeId).trim().toUpperCase();
     }
 
-    var sheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+    var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+    var sheet = getSheetSafe_(facSheetName);
     if (!sheet || sheet.getLastRow() <= 1) {
       return response(DEFAULT_FACULTY_REGISTRY.filter(function (f) {
         if (f.status !== "ACTIVE" || f.facultyId === "FAC003" || f.role === "ADMIN") return false;
@@ -371,7 +372,8 @@ function getFaculty(payload) {
     }
     searchId = String(searchId).trim().toLowerCase();
 
-    var sheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+    var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+    var sheet = getSheetSafe_(facSheetName);
     if (sheet && sheet.getLastRow() > 1) {
       var data = sheet.getDataRange().getValues();
       var headerMap = getHeaderMap(data[0]);
@@ -466,7 +468,8 @@ function facultyLogin(payload) {
 
     loginId = String(loginId).trim().toLowerCase();
 
-    var sheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+    var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+    var sheet = getSheetSafe_(facSheetName);
     var matchedRowIndex = -1;
     var matchedRow = null;
     var headerMap = null;
@@ -777,7 +780,8 @@ function createAssignmentFacultySelection(payload) {
       lockAcquired = true;
     }
 
-    var selSheet = getSheet(CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION);
+    var selSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || "Assignment_Faculty_Selection";
+    var selSheet = getSheetSafe_(selSheetName) || getSheet(selSheetName);
     if (!selSheet) {
       return response(null, false, "Assignment_Faculty_Selection sheet not found.", 500);
     }
@@ -823,22 +827,38 @@ function createAssignmentFacultySelection(payload) {
     }
 
     // 3. Validate College and Faculty consistency for NEW attempt
-    var collegeSheet = getSheet(CONFIG.SHEETS.COLLEGE_REGISTRY);
+    var colSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.COLLEGE_REGISTRY) || "College_Registry";
+    var collegeSheet = getSheetSafe_(colSheetName);
     var foundCollegeInRegistry = false;
     var isCollegeActive = false;
+    var hasCollegeRegistryRows = false;
     if (collegeSheet) {
       var cData = collegeSheet.getDataRange().getValues();
       if (cData.length > 1) {
+        hasCollegeRegistryRows = true;
         var cMap = getHeaderMap(cData[0]);
         for (var ci = 1; ci < cData.length; ci++) {
           if (String(cData[ci][cMap["College_ID"]] || "").trim().toUpperCase() === collegeId) {
             foundCollegeInRegistry = true;
             var cStatus = String(cData[ci][cMap["Status"]] || "").trim().toUpperCase();
-            if (cStatus === "ACTIVE") {
+            if (cStatus === "ACTIVE" || !cStatus) {
               isCollegeActive = true;
             }
             break;
           }
+        }
+      }
+    }
+
+    // Fallback to DEFAULT_COLLEGES only when College_Registry has no data rows,
+    // matching getColleges(). A populated registry remains authoritative.
+    if (!foundCollegeInRegistry && !hasCollegeRegistryRows && typeof DEFAULT_COLLEGES !== "undefined" && Array.isArray(DEFAULT_COLLEGES)) {
+      for (var dci = 0; dci < DEFAULT_COLLEGES.length; dci++) {
+        var dColId = "COL" + ("000" + (dci + 1)).slice(-3);
+        if (dColId.toUpperCase() === collegeId) {
+          foundCollegeInRegistry = true;
+          isCollegeActive = true;
+          break;
         }
       }
     }
@@ -858,7 +878,8 @@ function createAssignmentFacultySelection(payload) {
     // Query active registered faculties belonging to this College_ID
     var activeFacultyCount = 0;
     var matchedFacultyRow = null;
-    var facultySheet = getSheet(CONFIG.SHEETS.FACULTY_REGISTRY);
+    var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+    var facultySheet = getSheetSafe_(facSheetName);
     if (facultySheet) {
       var fData = facultySheet.getDataRange().getValues();
       if (fData.length > 1) {
@@ -873,6 +894,20 @@ function createAssignmentFacultySelection(payload) {
               matchedFacultyRow = fData[fi];
               facultyId = rowFId; // Canonical case
             }
+          }
+        }
+      }
+    }
+
+    // Fallback to DEFAULT_FACULTY_REGISTRY if Faculty_Registry sheet is empty or has only headers
+    if (activeFacultyCount === 0 && (!facultySheet || facultySheet.getLastRow() <= 1) && typeof DEFAULT_FACULTY_REGISTRY !== "undefined") {
+      for (var dfi = 0; dfi < DEFAULT_FACULTY_REGISTRY.length; dfi++) {
+        var df = DEFAULT_FACULTY_REGISTRY[dfi];
+        if (df.collegeId.toUpperCase() === collegeId && (df.status === "ACTIVE" || !df.status)) {
+          activeFacultyCount++;
+          if (df.facultyId.toUpperCase() === facultyId.toUpperCase()) {
+            matchedFacultyRow = [df.facultyId, df.loginId, "", df.facultyName, df.email, df.collegeId, df.collegeName, df.department, df.role, df.status];
+            facultyId = df.facultyId;
           }
         }
       }
@@ -914,7 +949,8 @@ function createAssignmentFacultySelection(payload) {
 
     // 4. Check Assignment_Controls enforcement for NEW attempt
     if (facultyId !== "UNKNOWN") {
-      var ctrlSheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_CONTROLS);
+      var ctrlSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_CONTROLS) || "Assignment_Controls";
+      var ctrlSheet = getSheetSafe_(ctrlSheetName);
       if (ctrlSheet) {
         var ctrlData = ctrlSheet.getDataRange().getValues();
         if (ctrlData.length > 1) {
@@ -1015,7 +1051,8 @@ function getAssignmentFacultySelection(payload) {
     }
     searchId = String(searchId).trim();
 
-    var sheet = getSheet(CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION);
+    var selSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || "Assignment_Faculty_Selection";
+    var sheet = getSheetSafe_(selSheetName) || getSheet(selSheetName);
     if (!sheet) {
       return response(null, false, "Assignment_Faculty_Selection sheet not found.", 500);
     }
@@ -1064,7 +1101,8 @@ function getAssignmentFacultySelection(payload) {
  */
 function updateAssignmentSelectionOnSubmitSafe_(payload, submissionId) {
   try {
-    var sheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION);
+    var selSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || "Assignment_Faculty_Selection";
+    var sheet = getSheetSafe_(selSheetName);
     if (!sheet) return;
 
     var data = sheet.getDataRange().getValues();
@@ -1233,7 +1271,8 @@ function saveAssignmentControl(payload) {
     var authNorm = normalizeKey(authFacultyId);
     if (String(authFacultyId).trim().toUpperCase() !== facultyId.toUpperCase() && authNorm !== normTarget) {
       var isAuthorizedAdmin = false;
-      var facSheetAdmin = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+      var facSheetNameAdmin = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+      var facSheetAdmin = getSheetSafe_(facSheetNameAdmin);
       if (facSheetAdmin) {
         var faData = facSheetAdmin.getDataRange().getValues();
         if (faData.length > 1) {
@@ -1257,7 +1296,8 @@ function saveAssignmentControl(payload) {
     }
 
     // 3. Validate facultyId exists and is ACTIVE (matching Faculty_ID, Faculty_Name, or Email)
-    var facSheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+    var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+    var facSheet = getSheetSafe_(facSheetName);
     var isFacultyActive = false;
 
     if (facSheet && facSheet.getLastRow() > 1) {
@@ -1421,7 +1461,8 @@ function migrateFacultyCanonicalIdentity() {
 
   // 1. Migrate Faculty_Registry
   try {
-    var facSheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+    var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+    var facSheet = getSheetSafe_(facSheetName);
     if (facSheet && facSheet.getLastRow() > 1) {
       var fData = facSheet.getDataRange().getValues();
       var fMap = getHeaderMap(fData[0]);
@@ -1472,7 +1513,8 @@ function migrateFacultyCanonicalIdentity() {
 
   // 2. Migrate Assignment_Controls
   try {
-    var ctrlSheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_CONTROLS);
+    var ctrlSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_CONTROLS) || "Assignment_Controls";
+    var ctrlSheet = getSheetSafe_(ctrlSheetName);
     if (ctrlSheet && ctrlSheet.getLastRow() > 1) {
       var cData = ctrlSheet.getDataRange().getValues();
       var cMap = getHeaderMap(cData[0]);

@@ -220,6 +220,12 @@ function debugLog(message, object) {
  * @throws {Error} If the active spreadsheet has no sheet with this name.
  */
 function getSheet(sheetName) {
+  if (!sheetName || typeof sheetName !== 'string') {
+    throw new Error(
+      'Required sheet name is undefined or invalid. Check CONFIG.SHEETS definition.'
+    );
+  }
+
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
 
   if (!sheet) {
@@ -244,6 +250,9 @@ function getSheet(sheetName) {
  * @return {Sheet|null} The Sheet object, or null if it does not exist.
  */
 function getSheetSafe_(sheetName) {
+  if (!sheetName || typeof sheetName !== 'string') {
+    return null;
+  }
   try {
     return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   } catch (lookupError) {
@@ -362,14 +371,24 @@ function getUserEmail() {
 function ensureSheets() {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheetNames = CONFIG.SHEETS;
+    var canonicalSheets = {
+      SUBMISSIONS: "Student_Submissions",
+      EVALUATION: "Faculty_Evaluation",
+      ANALYTICS: "Analytics",
+      LOGS: "Logs",
+      FACULTY_REGISTRY: "Faculty_Registry",
+      COLLEGE_REGISTRY: "College_Registry",
+      ASSIGNMENT_FACULTY_SELECTION: "Assignment_Faculty_Selection",
+      ASSIGNMENT_CONTROLS: "Assignment_Controls"
+    };
 
-    for (var key in sheetNames) {
-      if (!sheetNames.hasOwnProperty(key)) {
+    var sheetNames = (CONFIG && CONFIG.SHEETS) || {};
+    for (var key in canonicalSheets) {
+      if (!canonicalSheets.hasOwnProperty(key)) {
         continue;
       }
-      var name = sheetNames[key];
-      if (!ss.getSheetByName(name)) {
+      var name = sheetNames[key] || canonicalSheets[key];
+      if (name && !ss.getSheetByName(name) && typeof ss.insertSheet === "function") {
         ss.insertSheet(name);
       }
     }

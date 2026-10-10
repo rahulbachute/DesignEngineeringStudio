@@ -247,7 +247,8 @@ function saveEvaluation(payload) {
     }
     evalFacultyId = String(evalFacultyId).trim();
 
-    var selSheet = getSheetSafe_(CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION);
+    var selSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || "Assignment_Faculty_Selection";
+    var selSheet = getSheetSafe_(selSheetName);
     if (selSheet) {
       var selData = selSheet.getDataRange().getValues();
       if (selData.length > 1) {
@@ -282,7 +283,8 @@ function saveEvaluation(payload) {
           if (!matchedSelection) {
             // Check if evaluator is an ADMIN
             var isEvaluatorAdmin = false;
-            var facRegSheet = getSheetSafe_(CONFIG.SHEETS.FACULTY_REGISTRY);
+            var facRegSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+            var facRegSheet = getSheetSafe_(facRegSheetName);
             if (facRegSheet) {
               var fRegData = facRegSheet.getDataRange().getValues();
               if (fRegData.length > 1) {

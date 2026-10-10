@@ -143,7 +143,7 @@ function routeAction(action, payload) {
 
     case "submissions":
     case "getSubmissions":
-      return getSubmissions();
+      return getSubmissions(payload);
 
     case "submission":
     case "getSubmission":

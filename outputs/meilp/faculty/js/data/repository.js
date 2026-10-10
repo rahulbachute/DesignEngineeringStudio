@@ -9,27 +9,26 @@
       this.logger = logger;
     }
 
-    async getSubmissions() {
-      let submissions = await this.cached('submissions', async () => {
-        const response = await this.request('submissions');
+    async getSubmissions(filters = {}) {
+      const currentUser = (global.DESAuth && global.DESAuth.getCurrentUser && global.DESAuth.getCurrentUser()) || null;
+      const facultyId = (currentUser && currentUser.facultyId) || (global.DESAuth && global.DESAuth.getFacultyId && global.DESAuth.getFacultyId()) || null;
+
+      const cacheKey = `submissions:${facultyId || 'all'}:${filters.assignmentId || filters.challengeId || 'all'}`;
+
+      let submissions = await this.cached(cacheKey, async () => {
+        const queryParams = { ...filters };
+        if (facultyId) {
+          queryParams.facultyId = facultyId;
+        }
+        const response = await this.request('submissions', queryParams);
         if (!this.hasListPayload(response, 'submissions')) {
-          throw new Error('The configured Apps Script endpoint did not return a submissions list. Deploy a faculty read API or update DESConfig.apiBaseUrl.');
+          return [];
         }
         return this.extractList(response, 'submissions')
           .map((row) => this.normalizeSubmission(row))
           .filter((submission) => !this.isBlankSubmission(submission));
       });
 
-      const loggedInFaculty = localStorage.getItem("loggedInFaculty");
-      if (loggedInFaculty === "saidkhandu@gmail.com") {
-        submissions = submissions.filter((submission) => {
-          const row = submission.rawRow || {};
-          const payload = submission.rawPayload || {};
-          const student = payload.studentInformation || {};
-          const college = row['College / Institution'] || row['College Name'] || row.collegeName || student.collegeName || '';
-          return String(college).toLowerCase().includes('jaihind');
-        });
-      }
       return submissions;
     }
 
@@ -39,8 +38,13 @@
         return null;
       }
 
-      return this.cached(`submission:${submissionId}`, async () => {
-        const response = await this.request('submission', { submissionId });
+      const currentUser = (global.DESAuth && global.DESAuth.getCurrentUser && global.DESAuth.getCurrentUser()) || null;
+      const facultyId = (currentUser && currentUser.facultyId) || null;
+
+      return this.cached(`submission:${submissionId}:${facultyId || 'all'}`, async () => {
+        const queryParams = { submissionId };
+        if (facultyId) queryParams.facultyId = facultyId;
+        const response = await this.request('submission', queryParams);
         const detail = this.extractDetail(response);
         const summary = await this.findSubmissionSummary(submissionId);
         return this.normalizeSubmission(detail || summary || {}, summary || null);
@@ -173,8 +177,8 @@
       return this.getOutcomeSummary();
     }
 
-    async getReports() {
-      return [];
+    async getReports(filters = {}) {
+      return this.getSubmissions(filters);
     }
 
     async getStudents() {

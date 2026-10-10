@@ -62,11 +62,11 @@
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
               <div>
                 <h2 class="h3 mb-1">Reports & Accreditation Center</h2>
-                <p class="text-muted mb-0">Generate professional academic and accreditation reports with reusable templates and mock exports.</p>
+                <p class="text-muted mb-0">Generate professional academic and accreditation reports with verified backend submissions and accreditation exports.</p>
               </div>
               <div class="d-flex gap-2 flex-wrap">
                 <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-3 py-2">RAC</span>
-                <span class="badge bg-success-subtle text-success-emphasis rounded-pill px-3 py-2">Mock Data</span>
+                <span class="badge bg-success-subtle text-success-emphasis rounded-pill px-3 py-2" id="reportDataSourceBadge">Verified Submissions</span>
               </div>
             </div>
 
@@ -77,32 +77,32 @@
                     <div class="row g-3 align-items-end">
                       <div class="col-md-3">
                         <label class="form-label small text-muted fw-bold" for="facultyFilter"><i class="bi bi-person-badge me-1"></i>Faculty / Evaluator</label>
-                        <input type="text" class="form-control bg-light fw-semibold" id="facultyFilter" value="Dr. Rahul Bachute" readonly />
+                        <input type="text" class="form-control bg-light fw-semibold" id="facultyFilter" value="" placeholder="Authenticated Faculty" readonly />
                       </div>
                       <div class="col-md-3">
                         <label class="form-label small text-muted fw-bold" for="institutionFilter"><i class="bi bi-building me-1"></i>Institution</label>
-                        <input type="text" class="form-control bg-light fw-semibold" id="institutionFilter" value="Ajeenkya DY Patil School of Engineering, Pune" readonly />
+                        <input type="text" class="form-control bg-light fw-semibold" id="institutionFilter" value="" placeholder="Institution" readonly />
                       </div>
                       <div class="col-md-2">
                         <label class="form-label small text-muted fw-bold" for="classFilter"><i class="bi bi-people me-1"></i>Class / Division</label>
-                        <select class="form-select" id="classFilter">
-                          <option value="A" selected>TE Mechanical — Div A</option>
-                          <option value="B">TE Mechanical — Div B</option>
-                          <option value="C">TE Mechanical — Div C</option>
-                          <option value="D">TE Mechanical — Div D</option>
+                        <select class="form-select" id="classFilter" autocomplete="off">
+                          <option value="A" selected>TE Mechanical — Division A</option>
+                          <option value="B">TE Mechanical — Division B</option>
+                          <option value="C">TE Mechanical — Division C</option>
+                          <option value="D">TE Mechanical — Division D</option>
                           <option value="All">All Divisions</option>
                         </select>
                       </div>
                       <div class="col-md-2">
                         <label class="form-label small text-muted fw-bold" for="academicYearFilter"><i class="bi bi-calendar3 me-1"></i>Academic Year</label>
-                        <select class="form-select" id="academicYearFilter">
+                        <select class="form-select" id="academicYearFilter" autocomplete="off">
                           <option selected>2026-27</option>
                           <option>2025-26</option>
                         </select>
                       </div>
                       <div class="col-md-2">
                         <label class="form-label small text-muted fw-bold" for="assignmentFilter"><i class="bi bi-journal-check me-1"></i>Assignment</label>
-                        <select class="form-select" id="assignmentFilter">
+                        <select class="form-select" id="assignmentFilter" autocomplete="off">
                           <option value="All" selected>All Assignments</option>
                           <option value="EA-TS-01">EA-TS-01 Helical Gear Design</option>
                           <option value="EA-TS-02">EA-TS-02 Spur Gear Design</option>

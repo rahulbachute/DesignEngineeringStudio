@@ -177,8 +177,8 @@
       return this.getOutcomeSummary();
     }
 
-    async getReports() {
-      return [];
+    async getReports(filters = {}) {
+      return this.getSubmissions(filters);
     }
 
     async getStudents() {
