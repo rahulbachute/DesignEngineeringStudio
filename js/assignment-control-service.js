@@ -33,6 +33,25 @@ class AssignmentControlService {
   }
 
   /**
+   * Safely parse a value into a boolean with a fail-closed default.
+   * Handles: true, false, "true", "false", "TRUE", "FALSE", 1, 0, "1", "0", "yes", "no".
+   * The strings "false" and "0" strictly return false.
+   * Empty, null, missing, malformed or unknown values fail closed to fallback (default: false).
+   */
+  parseBoolean(val, fallback = false) {
+    const defaultVal = typeof fallback === "boolean" ? fallback : false;
+    if (val === true || val === 1) return true;
+    if (val === false || val === 0) return false;
+    if (typeof val === "string") {
+      const s = String(val).trim().toLowerCase();
+      if (s === "true" || s === "1" || s === "yes") return true;
+      if (s === "false" || s === "0" || s === "no") return false;
+      return defaultVal;
+    }
+    return defaultVal;
+  }
+
+  /**
    * Resolves any faculty identifier (email, display name, legacy key, or ID) to a canonical uppercase Faculty_ID.
    * Faculty_ID is the authoritative identifier; Faculty_Name is for display only.
    */
@@ -247,7 +266,7 @@ class AssignmentControlService {
       enabled: typeof existing.enabled === "boolean" ? existing.enabled : true,
       dueDate: existing.dueDate || null,
       releaseDate: existing.releaseDate || null,
-      allowLate: Boolean(existing.allowLate),
+      allowLate: this.parseBoolean(existing.allowLate, false),
       note: existing.note || "",
       updatedAt: existing.updatedAt || null
     };
@@ -306,7 +325,7 @@ class AssignmentControlService {
                 enabled: typeof item.enabled === "boolean" ? item.enabled : true,
                 dueDate: item.dueDate || null,
                 releaseDate: item.releaseDate || null,
-                allowLate: Boolean(item.allowLate),
+                allowLate: this.parseBoolean(item.allowLate, false),
                 updatedAt: item.updatedAt || new Date().toISOString()
               };
             }
@@ -324,9 +343,64 @@ class AssignmentControlService {
   }
 
   /**
-   * Saves assignment control record to Google Sheets backend.
+   * Reads raw assignment controls directly from the cloud backend.
+   *
+   * @param {string} facultyIdentifier - Faculty ID or name.
+   * @param {Object} [options={}] - { fetchFn, timeoutMs }
+   * @return {Promise<Array>} Array of control objects from Google Sheets backend.
    */
-  async saveCloudControl(assignmentId, facultyIdentifier, controls = {}) {
+  async readCloudControls(facultyIdentifier, options = {}) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (!canonicalId || canonicalId === "UNKNOWN") return [];
+    const endpoint = this.getEndpoint();
+    if (!endpoint) return [];
+
+    const fetchImpl = options.fetchFn || (typeof fetch !== "undefined" ? fetch : null);
+    if (!fetchImpl) throw new Error("No fetch implementation available");
+
+    const sep = endpoint.includes("?") ? "&" : "?";
+    const cacheBuster = `_cb=${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const url = `${endpoint}${sep}action=getAssignmentControls&facultyId=${encodeURIComponent(canonicalId)}&${cacheBuster}`;
+
+    const timeoutMs = options.timeoutMs || 8000;
+    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    let timer = null;
+    if (controller && timeoutMs > 0) {
+      timer = setTimeout(() => controller.abort(), timeoutMs);
+    }
+
+    try {
+      const res = await fetchImpl(url, {
+        method: "GET",
+        signal: controller ? controller.signal : undefined
+      });
+      if (timer) clearTimeout(timer);
+
+      if (!res.ok) {
+        throw new Error(`HTTP error ${res.status} from backend`);
+      }
+
+      const json = await res.json();
+      if (!json || json.success === false) {
+        throw new Error((json && json.message) || "Failed to retrieve controls from backend");
+      }
+
+      return Array.isArray(json.data) ? json.data : [];
+    } catch (err) {
+      if (timer) clearTimeout(timer);
+      if (err.name === "AbortError") {
+        throw new Error(`Read request timed out after ${timeoutMs}ms`);
+      }
+      throw err;
+    }
+  }
+
+  /**
+   * Saves assignment control record to Google Sheets backend.
+   * NOTE: An opaque no-cors response cannot confirm whether the sheet write succeeded.
+   * Use saveCloudControlWithVerification() for reliable save/read-back verification.
+   */
+  async saveCloudControl(assignmentId, facultyIdentifier, controls = {}, options = {}) {
     const canonicalId = this.resolveFacultyId(facultyIdentifier);
     if (!canonicalId || canonicalId === "UNKNOWN") {
       return null;
@@ -334,7 +408,9 @@ class AssignmentControlService {
     const endpoint = this.getEndpoint();
     if (!endpoint) return null;
 
-    const authFacultyId = (window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()?.facultyId) || canonicalId;
+    const authFacultyId = (typeof window !== "undefined" && window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()?.facultyId) || canonicalId;
+    const fetchImpl = options.fetchFn || (typeof fetch !== "undefined" ? fetch : null);
+    if (!fetchImpl) return null;
 
     try {
       const payload = {
@@ -344,14 +420,14 @@ class AssignmentControlService {
         enabled: typeof controls.enabled === "boolean" ? controls.enabled : true,
         dueDate: controls.dueDate || "",
         releaseDate: controls.releaseDate || "",
-        allowLate: Boolean(controls.allowLate),
+        allowLate: this.parseBoolean(controls.allowLate, false),
         authFacultyId
       };
 
       const sep = endpoint.includes("?") ? "&" : "?";
       const postUrl = `${endpoint}${sep}action=saveAssignmentControl`;
 
-      await fetch(postUrl, {
+      await fetchImpl(postUrl, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -362,6 +438,269 @@ class AssignmentControlService {
       console.warn("[AssignmentControlService] Cloud save failed:", e.message);
       return null;
     }
+  }
+
+  /**
+   * Saves assignment control record to Google Sheets backend with read-back verification.
+   * NOTE: An opaque no-cors response (status 0 / type 'opaque') is NEVER treated as proof of success.
+   * The setting is only considered SYNCED after reading back from the cloud and confirming
+   * that the persisted values match the expected values.
+   *
+   * @param {string} assignmentId
+   * @param {string} facultyIdentifier
+   * @param {Object} controls - { enabled, dueDate, allowLate, releaseDate, note }
+   * @param {Object} [options={}] - { timeoutMs = 8000, maxRetries = 2, retryDelayMs = 300, fetchFn = null }
+   * @return {Promise<{ success: boolean, status: string, error?: string, controls?: Object, expected?: boolean, actual?: boolean }>}
+   */
+  async saveCloudControlWithVerification(assignmentId, facultyIdentifier, controls = {}, options = {}) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (!canonicalId || canonicalId === "UNKNOWN") {
+      return { success: false, status: "INVALID_FACULTY", error: "Cannot save controls for UNKNOWN faculty" };
+    }
+    const endpoint = this.getEndpoint();
+    if (!endpoint) {
+      return { success: false, status: "NO_ENDPOINT", error: "Backend API endpoint is not configured" };
+    }
+
+    const fetchImpl = options.fetchFn || (typeof fetch !== "undefined" ? fetch : null);
+    if (!fetchImpl) {
+      return { success: false, status: "NO_FETCH", error: "Fetch API is not available" };
+    }
+
+    const authFacultyId = (typeof window !== "undefined" && window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()?.facultyId) || canonicalId;
+    const expectedAllowLate = this.parseBoolean(controls.allowLate, false);
+    const expectedEnabled = controls.enabled !== undefined ? Boolean(controls.enabled) : true;
+
+    const payload = {
+      action: "saveAssignmentControl",
+      facultyId: canonicalId,
+      assignmentId,
+      enabled: expectedEnabled,
+      dueDate: controls.dueDate || "",
+      releaseDate: controls.releaseDate || "",
+      allowLate: expectedAllowLate,
+      authFacultyId
+    };
+
+    const sep = endpoint.includes("?") ? "&" : "?";
+    const postUrl = `${endpoint}${sep}action=saveAssignmentControl`;
+    const timeoutMs = options.timeoutMs || 8000;
+    const maxRetries = options.maxRetries !== undefined ? options.maxRetries : 2;
+    const retryDelayMs = options.retryDelayMs !== undefined ? options.retryDelayMs : 300;
+
+    // STEP 1: Execute Write
+    let writeController = typeof AbortController !== "undefined" ? new AbortController() : null;
+    let writeTimer = null;
+    if (writeController && timeoutMs > 0) {
+      writeTimer = setTimeout(() => writeController.abort(), timeoutMs);
+    }
+
+    try {
+      await fetchImpl(postUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+        signal: writeController ? writeController.signal : undefined
+      });
+      if (writeTimer) clearTimeout(writeTimer);
+
+      // CRITICAL REQUIREMENT: An opaque response (status 0 / type 'opaque') is NEVER treated as proof of success!
+      // We do not return success here. We must proceed to read-back verification.
+    } catch (writeErr) {
+      if (writeTimer) clearTimeout(writeTimer);
+      const isTimeout = writeErr.name === "AbortError" || /timeout/i.test(writeErr.message);
+      return {
+        success: false,
+        status: isTimeout ? "TIMEOUT" : "WRITE_FAILED",
+        error: isTimeout ? `Write timed out after ${timeoutMs}ms` : (writeErr.message || "Write network failure")
+      };
+    }
+
+    // STEP 2: Read-back Verification with Retry Loop
+    let attempt = 0;
+    let lastError = null;
+
+    while (attempt <= maxRetries) {
+      attempt++;
+      if (attempt > 1 && retryDelayMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+      }
+
+      try {
+        const cloudData = await this.readCloudControls(canonicalId, { fetchFn: fetchImpl, timeoutMs });
+        const matched = cloudData.find((item) => item && String(item.assignmentId).trim() === String(assignmentId).trim());
+
+        if (!matched) {
+          lastError = `Assignment "${assignmentId}" not found in cloud records after write (attempt ${attempt})`;
+          continue;
+        }
+
+        const cloudAllowLate = this.parseBoolean(matched.allowLate, false);
+        const cloudEnabled = matched.enabled === true || String(matched.enabled).toLowerCase() === "true";
+
+        if (cloudAllowLate === expectedAllowLate) {
+          // Read-back confirmed! Update local cached map
+          const map = this.getFacultyControlsMap(canonicalId);
+          map[assignmentId] = {
+            enabled: cloudEnabled,
+            dueDate: matched.dueDate || null,
+            releaseDate: matched.releaseDate || null,
+            allowLate: cloudAllowLate,
+            updatedAt: matched.updatedAt || new Date().toISOString()
+          };
+          const canonicalKey = `${this.storageNamespace}:${canonicalId}`;
+          try {
+            if (typeof window !== "undefined" && window.localStorage) {
+              window.localStorage.setItem(canonicalKey, JSON.stringify(map));
+            }
+          } catch (e) { }
+
+          return {
+            success: true,
+            status: "SYNCED",
+            controls: map[assignmentId],
+            message: "Persisted and verified in Google Sheets"
+          };
+        } else {
+          lastError = `Read-back mismatch: expected allowLate=${expectedAllowLate}, but cloud returned allowLate=${cloudAllowLate}`;
+        }
+      } catch (readErr) {
+        const isTimeout = readErr.name === "AbortError" || /timeout/i.test(readErr.message);
+        lastError = isTimeout ? `Read-back timed out after ${timeoutMs}ms` : (readErr.message || "Read-back request failed");
+      }
+    }
+
+    // If retry loop finishes without confirming SYNCED:
+    const isMismatch = lastError && lastError.includes("mismatch");
+    const isTimeout = lastError && /timeout/i.test(lastError);
+    return {
+      success: false,
+      status: isMismatch ? "MISMATCH" : (isTimeout ? "TIMEOUT" : "READ_FAILED"),
+      error: lastError || "Failed to confirm save with cloud backend",
+      expected: expectedAllowLate
+    };
+  }
+
+  /**
+   * Bulk updates multiple assignments with read-back verification.
+   * Reports mixed outcomes explicitly so partial failures are never concealed.
+   *
+   * @param {Array<string>} assignmentIds
+   * @param {string} facultyIdentifier
+   * @param {Object} controlsUpdate - { allowLate: boolean, enabled?: boolean }
+   * @param {Object} [options={}] - { timeoutMs, maxRetries, retryDelayMs, fetchFn }
+   * @return {Promise<{ total: number, synced: Array<string>, failed: Array<string>, isMixed: boolean, allSynced: boolean, allFailed: boolean, results: Object, error?: string }>}
+   */
+  async bulkSaveCloudControlsWithVerification(assignmentIds, facultyIdentifier, controlsUpdate = {}, options = {}) {
+    const canonicalId = this.resolveFacultyId(facultyIdentifier);
+    if (!canonicalId || canonicalId === "UNKNOWN") {
+      return { total: 0, synced: [], failed: assignmentIds, isMixed: false, allSynced: false, allFailed: true, error: "Invalid faculty ID", results: {} };
+    }
+
+    const fetchImpl = options.fetchFn || (typeof fetch !== "undefined" ? fetch : null);
+    const timeoutMs = options.timeoutMs || 10000;
+    const maxRetries = options.maxRetries !== undefined ? options.maxRetries : 2;
+    const retryDelayMs = options.retryDelayMs !== undefined ? options.retryDelayMs : 300;
+    const expectedAllowLate = this.parseBoolean(controlsUpdate.allowLate, false);
+
+    // 1. Dispatch writes for each assignment
+    const writePromises = assignmentIds.map((id) => {
+      const current = this.getControls(id, canonicalId);
+      const updated = { ...current, ...controlsUpdate, allowLate: expectedAllowLate };
+      return this.saveCloudControl(id, canonicalId, updated, { fetchFn: fetchImpl }).catch((err) => ({ error: err.message }));
+    });
+    await Promise.allSettled(writePromises);
+
+    // 2. Read back cloud controls for the entire faculty cohort
+    let attempt = 0;
+    let cloudData = null;
+    let readError = null;
+
+    while (attempt <= maxRetries) {
+      attempt++;
+      if (attempt > 1 && retryDelayMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+      }
+      try {
+        cloudData = await this.readCloudControls(canonicalId, { fetchFn: fetchImpl, timeoutMs });
+        if (Array.isArray(cloudData)) break;
+      } catch (err) {
+        readError = err.message;
+      }
+    }
+
+    if (!Array.isArray(cloudData)) {
+      return {
+        total: assignmentIds.length,
+        synced: [],
+        failed: [...assignmentIds],
+        isMixed: false,
+        allSynced: false,
+        allFailed: true,
+        error: `Failed to read back cloud records: ${readError || "Unknown read error"}`,
+        results: assignmentIds.reduce((acc, id) => {
+          acc[id] = { success: false, status: "READ_FAILED", error: readError };
+          return acc;
+        }, {})
+      };
+    }
+
+    // 3. Verify each assignment in cloudData
+    const synced = [];
+    const failed = [];
+    const results = {};
+    const map = this.getFacultyControlsMap(canonicalId);
+
+    assignmentIds.forEach((id) => {
+      const matched = cloudData.find((item) => item && String(item.assignmentId).trim() === String(id).trim());
+      if (matched) {
+        const cloudAllowLate = this.parseBoolean(matched.allowLate, false);
+        if (cloudAllowLate === expectedAllowLate) {
+          synced.push(id);
+          results[id] = { success: true, status: "SYNCED", message: "Confirmed in Google Sheets" };
+          map[id] = {
+            enabled: matched.enabled === true || String(matched.enabled).toLowerCase() === "true",
+            dueDate: matched.dueDate || null,
+            releaseDate: matched.releaseDate || null,
+            allowLate: cloudAllowLate,
+            updatedAt: matched.updatedAt || new Date().toISOString()
+          };
+        } else {
+          failed.push(id);
+          results[id] = {
+            success: false,
+            status: "MISMATCH",
+            error: `Read-back mismatch: expected allowLate=${expectedAllowLate}, got ${cloudAllowLate}`
+          };
+        }
+      } else {
+        failed.push(id);
+        results[id] = {
+          success: false,
+          status: "NOT_FOUND",
+          error: "Assignment not present in cloud records"
+        };
+      }
+    });
+
+    // Update local cache for synced items
+    const canonicalKey = `${this.storageNamespace}:${canonicalId}`;
+    try {
+      if (typeof window !== "undefined" && window.localStorage) {
+        window.localStorage.setItem(canonicalKey, JSON.stringify(map));
+      }
+    } catch (e) { }
+
+    return {
+      total: assignmentIds.length,
+      synced,
+      failed,
+      isMixed: synced.length > 0 && failed.length > 0,
+      allSynced: failed.length === 0 && synced.length > 0,
+      allFailed: synced.length === 0,
+      results
+    };
   }
 
   /**
@@ -382,7 +721,7 @@ class AssignmentControlService {
       enabled: typeof controls.enabled === "boolean" ? controls.enabled : true,
       dueDate: controls.dueDate || null,
       releaseDate: controls.releaseDate || null,
-      allowLate: Boolean(controls.allowLate),
+      allowLate: this.parseBoolean(controls.allowLate, false),
       note: controls.note || "",
       updatedAt: new Date().toISOString()
     };
@@ -456,7 +795,7 @@ class AssignmentControlService {
       }
     }
 
-    const allowLate = Boolean(ctrl.allowLate);
+    const allowLate = this.parseBoolean(ctrl.allowLate, false);
     const canSubmit = ctrl.enabled && !isUnreleased && (!parsedDue || !isPastDue || allowLate);
 
     return {

@@ -451,7 +451,17 @@ function saveStudentSubmission(payload) {
 
               // C. Due Date and Allow Late check
               var dueDateStr = cRow[ctrlMap["Due_Date"]];
-              var allowLate = cRow[ctrlMap["Allow_Late"]] === true || String(cRow[ctrlMap["Allow_Late"]]).toLowerCase() === "true";
+              var allowLate = (typeof parseBooleanSafe === "function")
+                ? parseBooleanSafe(cRow[ctrlMap["Allow_Late"]], false)
+                : (function(val) {
+                    if (val === true || val === 1) return true;
+                    if (val === false || val === 0) return false;
+                    if (typeof val === "string") {
+                      var s = String(val).trim().toLowerCase();
+                      return s === "true" || s === "1" || s === "yes";
+                    }
+                    return false;
+                  })(cRow[ctrlMap["Allow_Late"]]);
 
               if (dueDateStr) {
                 var parsedDueDate = new Date(dueDateStr);
@@ -463,14 +473,35 @@ function saveStudentSubmission(payload) {
                       "Submission deadline (" + dueDateStr + ") has passed. Late submissions are not permitted by your faculty.",
                       403
                     );
+                  } else {
+                    if (!payload.submission) payload.submission = {};
+                    payload.submission.isLate = true;
+                    payload.submission.submittedLate = true;
                   }
+                } else {
+                  if (!payload.submission) payload.submission = {};
+                  payload.submission.isLate = false;
+                  payload.submission.submittedLate = false;
                 }
+              } else {
+                if (!payload.submission) payload.submission = {};
+                payload.submission.isLate = false;
+                payload.submission.submittedLate = false;
               }
               break;
             }
           }
         }
       }
+    }
+
+    // Prospective Late Stamping: ensure accepted submissions explicitly persist isLate & submittedLate
+    if (!payload.submission) {
+      payload.submission = {};
+    }
+    if (payload.submission.isLate === undefined) {
+      payload.submission.isLate = false;
+      payload.submission.submittedLate = false;
     }
 
     // -------------------------------------------------------------------
@@ -764,7 +795,10 @@ function getSubmissions(payload) {
     var selSheet = getSheetSafe_(selSheetName);
     var permittedAttempts = {};
     var permittedStudentChallenges = {};
-    var hasAnySelection = false;
+    var permittedCollegesByAttempt = {};
+    var permittedCollegesByStuAsg = {};
+    var otherFacultyAttempts = {};
+    var otherFacultyStudentChallenges = {};
 
     if (selSheet) {
       var selData = selSheet.getDataRange().getValues();
@@ -776,13 +810,28 @@ function getSubmissions(payload) {
           var sAssignmentId = String(sRow[selMap['Assignment_ID']] || '').trim();
           var sAttemptId = String(sRow[selMap['Attempt_ID']] || '').trim();
           var sStudentId = String(sRow[selMap['Student_ID']] || '').trim();
+          var sColId = (selMap['College_ID'] !== undefined) ? String(sRow[selMap['College_ID']] || '').trim() : '';
+          if (sStudentId.endsWith('.0')) {
+            sStudentId = sStudentId.slice(0, -2);
+          }
 
           if (sFacultyId === targetFacultyId) {
             if (!reqAssignmentId || sAssignmentId.toUpperCase() === reqAssignmentId.toUpperCase()) {
-              hasAnySelection = true;
-              if (sAttemptId) permittedAttempts[sAttemptId] = true;
+              if (sAttemptId) {
+                permittedAttempts[sAttemptId] = true;
+                if (sColId) permittedCollegesByAttempt[sAttemptId] = sColId;
+              }
               if (sStudentId && sAssignmentId) {
-                permittedStudentChallenges[sStudentId + '___' + sAssignmentId] = true;
+                var stuAsgKey = sStudentId + '___' + sAssignmentId.toUpperCase();
+                permittedStudentChallenges[stuAsgKey] = true;
+                if (sColId) permittedCollegesByStuAsg[stuAsgKey] = sColId;
+              }
+            }
+          } else if (sFacultyId && sFacultyId !== 'UNKNOWN') {
+            if (!reqAssignmentId || sAssignmentId.toUpperCase() === reqAssignmentId.toUpperCase()) {
+              if (sAttemptId) otherFacultyAttempts[sAttemptId] = true;
+              if (sStudentId && sAssignmentId) {
+                otherFacultyStudentChallenges[sStudentId + '___' + sAssignmentId.toUpperCase()] = true;
               }
             }
           }
@@ -790,35 +839,114 @@ function getSubmissions(payload) {
       }
     }
 
-    // If no routing records exist for this faculty + assignment, return empty list
-    if (!hasAnySelection) {
-      return response([]);
-    }
+    var facultyProfile = verifyActiveFacultyMember_(targetFacultyId);
+    var targetFacultyName = facultyProfile ? facultyProfile.facultyName : targetFacultyId;
+    var targetCollegeId = (facultyProfile && facultyProfile.collegeId) ? facultyProfile.collegeId : 'COL001';
+    var targetCollegeName = (facultyProfile && facultyProfile.collegeName) ? facultyProfile.collegeName : 'Ajeenkya D.Y. Patil School of Engineering, Lohegaon';
 
     var submissions = [];
+    var payloadIndex = subMap['Full JSON Payload'];
+
     for (var i = 1; i < subData.length; i++) {
       var row = subData[i];
       var sId = String(row[subMap['Submission ID']] || '').trim();
       var roll = String(row[subMap['Roll Number']] || '').trim();
+      if (roll.endsWith('.0')) {
+        roll = roll.slice(0, -2);
+      }
       var chId = String(row[subMap['Challenge ID']] || '').trim();
       var statusVal = String(row[subMap['Status']] || '').trim();
 
-      // Match attempt
-      var isPermitted = permittedAttempts[sId] || permittedStudentChallenges[roll + '___' + chId];
+      if (!chId) continue;
+      if (reqAssignmentId && chId.toUpperCase() !== reqAssignmentId.toUpperCase()) continue;
+      if (reqStatus && statusVal.toLowerCase() !== String(reqStatus).trim().toLowerCase()) continue;
+
+      var rawPayload = (payloadIndex !== undefined) ? String(row[payloadIndex] || '').trim() : '';
+      var parsedPayload = null;
+      var payloadAttemptId = '';
+      var payloadFaculty = '';
+
+      var storedIsLate = null;
+      var storedSubmittedLate = null;
+      if (rawPayload) {
+        parsedPayload = safeJsonParse(rawPayload, null);
+        if (parsedPayload) {
+          var pStu = parsedPayload.studentInformation || {};
+          var pSub = parsedPayload.submission || {};
+          payloadAttemptId = String(pSub.attemptId || parsedPayload.attemptId || (typeof pStu === 'object' ? pStu.attemptId : '') || '').trim();
+          var fRaw = (typeof pStu === 'object' ? (pStu.facultyId || pStu.selectedFacultyId) : '') || parsedPayload.facultyId || (typeof pSub === 'object' ? pSub.facultyId : '') || '';
+          payloadFaculty = String(fRaw).trim().toUpperCase();
+
+          if (typeof pSub.isLate === 'boolean') {
+            storedIsLate = pSub.isLate;
+          } else if (pSub.isLate === 'true' || pSub.isLate === 'TRUE' || pSub.isLate === 1) {
+            storedIsLate = true;
+          } else if (pSub.isLate === 'false' || pSub.isLate === 'FALSE' || pSub.isLate === 0) {
+            storedIsLate = false;
+          }
+
+          if (typeof pSub.submittedLate === 'boolean') {
+            storedSubmittedLate = pSub.submittedLate;
+          } else if (pSub.submittedLate === 'true' || pSub.submittedLate === 'TRUE' || pSub.submittedLate === 1) {
+            storedSubmittedLate = true;
+          } else if (pSub.submittedLate === 'false' || pSub.submittedLate === 'FALSE' || pSub.submittedLate === 0) {
+            storedSubmittedLate = false;
+          }
+        }
+      }
+
+      // Check cross-faculty conflict from AFS
+      var isOtherFaculty = (
+        otherFacultyAttempts[sId] ||
+        (payloadAttemptId && otherFacultyAttempts[payloadAttemptId]) ||
+        otherFacultyStudentChallenges[roll + '___' + chId.toUpperCase()]
+      );
+      if (isOtherFaculty) continue;
+
+      // Check permitted from AFS
+      var isPermitted = (
+        permittedAttempts[sId] ||
+        (payloadAttemptId && permittedAttempts[payloadAttemptId]) ||
+        permittedStudentChallenges[roll + '___' + chId.toUpperCase()]
+      );
+
+      // Fallback: Trusted payload association for legacy or direct submissions without an AFS entry
+      if (!isPermitted) {
+        if (payloadFaculty && payloadFaculty === targetFacultyId) {
+          isPermitted = true;
+        }
+      }
 
       if (isPermitted) {
-        if (!reqStatus || statusVal.toLowerCase() === String(reqStatus).trim().toLowerCase()) {
-          submissions.push({
-            submissionId: sId,
-            studentName: row[subMap['Student Name']],
-            rollNumber: roll,
-            challengeId: chId,
-            challengeTitle: row[subMap['Challenge Title']],
-            completionPercent: row[subMap['Completion %']],
-            status: statusVal,
-            timestamp: row[subMap['Timestamp']]
-          });
-        }
+        var resolvedCollegeId = permittedCollegesByAttempt[sId] ||
+          (payloadAttemptId && permittedCollegesByAttempt[payloadAttemptId]) ||
+          permittedCollegesByStuAsg[roll + '___' + chId.toUpperCase()] ||
+          targetCollegeId;
+
+        submissions.push({
+          submissionId: sId,
+          studentName: row[subMap['Student Name']],
+          rollNumber: roll,
+          division: (subMap['Division'] !== undefined) ? row[subMap['Division']] : '',
+          challengeId: chId,
+          challengeTitle: row[subMap['Challenge Title']],
+          attemptNumber: (subMap['Attempt Number'] !== undefined && row[subMap['Attempt Number']])
+            ? row[subMap['Attempt Number']]
+            : ((subMap['Attempt No'] !== undefined && row[subMap['Attempt No']])
+              ? row[subMap['Attempt No']]
+              : 1),
+          completionPercent: row[subMap['Completion %']],
+          status: statusVal,
+          timestamp: row[subMap['Timestamp']],
+          facultyId: targetFacultyId,
+          facultyName: targetFacultyName,
+          allocationStatus: 'Allocated',
+          isAllocated: true,
+          collegeId: resolvedCollegeId,
+          collegeName: targetCollegeName,
+          isLate: (storedIsLate !== null) ? storedIsLate : (storedSubmittedLate !== null ? storedSubmittedLate : null),
+          submittedLate: (storedSubmittedLate !== null) ? storedSubmittedLate : (storedIsLate !== null ? storedIsLate : null)
+        });
       }
     }
 
@@ -848,13 +976,16 @@ function getSubmissions(payload) {
  */
 function getSubmission(payload) {
   try {
-    var submissionId = payload && payload.submissionId;
+    var submissionId = payload && (payload.submissionId || payload.id);
     if (!submissionId) {
       return response(null, false, 'Missing submissionId', 400);
     }
     submissionId = String(submissionId).trim();
 
-    var reqFacultyId = payload && (payload.facultyId || payload.faculty_id || payload.Faculty_ID);
+    var reqFacultyId = payload && (payload.authFacultyId || payload.facultyId || payload.faculty_id || payload.Faculty_ID);
+    var isAuthorized = false;
+    var selSheet = null;
+
     if (reqFacultyId) {
       reqFacultyId = String(reqFacultyId).trim();
       // If UNKNOWN faculty, forbid access
@@ -864,12 +995,11 @@ function getSubmission(payload) {
 
       // Check Assignment_Faculty_Selection to confirm faculty authorization for this submission
       var selSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || "Assignment_Faculty_Selection";
-      var selSheet = getSheetSafe_(selSheetName);
+      selSheet = getSheetSafe_(selSheetName);
       if (selSheet) {
         var selData = selSheet.getDataRange().getValues();
         if (selData.length > 1) {
           var selMap = getHeaderMap(selData[0]);
-          var isAuthorized = false;
           for (var si = 1; si < selData.length; si++) {
             var sRow = selData[si];
             var sFacultyId = String(sRow[selMap["Faculty_ID"]] || "").trim();
@@ -937,10 +1067,668 @@ function getSubmission(payload) {
       return response(null, false, 'Stored payload is corrupt or invalid JSON', 500);
     }
 
+    if (reqFacultyId && reqFacultyId.toUpperCase() !== "ADMIN001") {
+      var pStu = fullPayload.studentInformation || {};
+      var pSub = fullPayload.submission || {};
+      var pAttId = String(pSub.attemptId || fullPayload.attemptId || (typeof pStu === 'object' ? pStu.attemptId : '') || '').trim();
+      var pFac = (typeof pStu === 'object' ? (pStu.facultyId || pStu.selectedFacultyId) : '') || fullPayload.facultyId || (typeof pSub === 'object' ? pSub.facultyId : '') || '';
+      pFac = String(pFac).trim().toUpperCase();
+
+      if (selSheet && pAttId) {
+        var selData2 = selSheet.getDataRange().getValues();
+        if (selData2.length > 1) {
+          var selMap2 = getHeaderMap(selData2[0]);
+          for (var si2 = 1; si2 < selData2.length; si2++) {
+            var sRow2 = selData2[si2];
+            var sFac2 = String(sRow2[selMap2["Faculty_ID"]] || "").trim().toUpperCase();
+            var sAtt2 = String(sRow2[selMap2["Attempt_ID"]] || "").trim();
+            if (sAtt2 === pAttId && sFac2 !== reqFacultyId.toUpperCase() && sFac2 !== "UNKNOWN") {
+              return response(null, false, "Unauthorized access to submission.", 403);
+            }
+          }
+        }
+      }
+
+      if (pFac && pFac !== reqFacultyId.toUpperCase() && !isAuthorized) {
+        return response(null, false, "Unauthorized access to submission.", 403);
+      }
+    }
+
     return response(fullPayload);
 
   } catch (error) {
     logError(error, payload);
     return response(null, false, 'Failed to retrieve submission.', 500);
+  }
+}
+
+/**
+ * Validates that an identity corresponds to an active, registered faculty member.
+ * Checks Faculty_Registry sheet (and DEFAULT_FACULTY_REGISTRY fallback).
+ *
+ * @param {string} facultyId - Faculty identifier, email, or login ID.
+ * @return {Object|null} Verified faculty profile object or null if invalid/inactive.
+ */
+function verifyActiveFacultyMember_(facultyId) {
+  if (!facultyId) return null;
+  var normTarget = String(facultyId).trim().toUpperCase();
+  if (normTarget === 'UNKNOWN' || normTarget === 'GUEST' || normTarget === 'STUDENT') {
+    return null;
+  }
+
+  // 1. Check Faculty_Registry sheet if available
+  var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+  var facSheet = getSheetSafe_(facSheetName);
+  if (facSheet) {
+    var data = (typeof facSheet.getDataRange === 'function') ? facSheet.getDataRange().getValues() : [];
+    if (data && data.length > 1) {
+      var fMap = getHeaderMap(data[0]);
+      for (var fi = 1; fi < data.length; fi++) {
+        var row = data[fi];
+        var rowFacId = String(row[fMap["Faculty_ID"]] || "").trim().toUpperCase();
+        var rowEmail = String(row[fMap["Email"]] || "").trim().toUpperCase();
+        var rowLogin = String(row[fMap["Login_ID"]] || "").trim().toUpperCase();
+
+        if (rowFacId === normTarget || rowEmail === normTarget || rowLogin === normTarget) {
+          var statusVal = String(row[fMap["Status"]] || "").trim().toUpperCase();
+          if (!statusVal || statusVal === "ACTIVE") {
+            return {
+              facultyId: String(row[fMap["Faculty_ID"]] || "").trim(),
+              facultyName: String(row[fMap["Faculty_Name"]] || "").trim(),
+              collegeId: String(row[fMap["College_ID"]] || "").trim(),
+              collegeName: String(row[fMap["College_Name"]] || "").trim(),
+              role: String(row[fMap["Role"]] || "FACULTY").trim().toUpperCase()
+            };
+          }
+          return null; // found but inactive
+        }
+      }
+    }
+  }
+
+  // 2. Fallback to DEFAULT_FACULTY_REGISTRY if sheet not populated or in test harness
+  if (typeof DEFAULT_FACULTY_REGISTRY !== "undefined" && Array.isArray(DEFAULT_FACULTY_REGISTRY)) {
+    for (var d = 0; d < DEFAULT_FACULTY_REGISTRY.length; d++) {
+      var df = DEFAULT_FACULTY_REGISTRY[d];
+      var dfId = String(df.facultyId || '').trim().toUpperCase();
+      var dfEmail = String(df.email || '').trim().toUpperCase();
+      if (dfId === normTarget || dfEmail === normTarget) {
+        var dfStatus = String(df.status || 'ACTIVE').trim().toUpperCase();
+        if (dfStatus === 'ACTIVE') {
+          return {
+            facultyId: df.facultyId,
+            facultyName: df.facultyName,
+            collegeId: df.collegeId,
+            collegeName: df.collegeName,
+            role: df.role || "FACULTY"
+          };
+        }
+        return null;
+      }
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Authoritatively verifies that a request originates from an active Administrator.
+ * Queries Faculty_Registry (and DEFAULT_FACULTY_REGISTRY fallback).
+ *
+ * Security & Anti-Spoofing Rules:
+ * 1. Must supply an explicit authenticated identity (authFacultyId or authenticatedFacultyId).
+ *    Client-supplied target facultyId, role, localStorage, or browser flags are NEVER trusted.
+ * 2. Unauthenticated, student, guest, or unknown callers are rejected.
+ * 3. Verified database record must be ACTIVE and have role === "ADMIN".
+ *
+ * @param {Object} payload - Request payload containing authFacultyId or authenticatedFacultyId.
+ * @return {Object|null} Verified admin profile object or null if unauthorized.
+ */
+function verifyActiveAdminMember_(payload) {
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+
+  var authFacultyId = payload.authFacultyId || payload.authenticatedFacultyId;
+  if (!authFacultyId) {
+    return null;
+  }
+
+  var normAuth = String(authFacultyId).trim().toUpperCase();
+  if (!normAuth || normAuth === 'UNKNOWN' || normAuth === 'GUEST' || normAuth === 'STUDENT') {
+    return null;
+  }
+
+  var reqRole = String(payload.role || payload.authRole || payload.userRole || '').trim().toUpperCase();
+  if (reqRole === 'GUEST' || reqRole === 'STUDENT') {
+    return null;
+  }
+
+  var verifiedCaller = verifyActiveFacultyMember_(normAuth);
+  if (!verifiedCaller) {
+    return null;
+  }
+
+  if (verifiedCaller.role === 'ADMIN') {
+    return verifiedCaller;
+  }
+
+  return null;
+}
+
+/**
+ * ACTION: getInstituteSubmissions / instituteSubmissions
+ * -----------------------------------------------------------------------
+ * Explicit, read-only viewing path allowing authenticated, server-verified
+ * administrators to view student submissions across all colleges and assignments.
+ *
+ * Security & Authorization Rules:
+ * 1. Restricted exclusively to authenticated, server-verified Admin accounts.
+ * 2. Ordinary active faculty members are denied with HTTP 403.
+ * 3. Unauthenticated requests, students, guests, and unknown identities are denied with HTTP 403.
+ * 4. Client-supplied role and target facultyId parameters are never trusted for authorization.
+ * 5. Strictly READ-ONLY: grants no evaluation, marks-awarding, or assignment-control privileges.
+ * 6. Preserves data integrity: malformed or blank rows are omitted; unallocated/UNKNOWN records
+ *    are explicitly marked as Unallocated / UNKNOWN and distinguished from verified faculty allocations.
+ * 7. Legitimate legacy submissions are included where stored data supports retrieval.
+ *
+ * @param {Object} payload - { authFacultyId, collegeId?, assignmentId?, division?, status?, dateFrom?, dateTo? }
+ * @return {TextOutput} Uniform JSON response containing array of submission summary objects with institute metadata.
+ */
+function getInstituteSubmissions(payload) {
+  try {
+    // 1. Defensive payload normalization
+    if (typeof payload === 'string') {
+      try {
+        payload = JSON.parse(payload);
+      } catch (pe) {
+        payload = {};
+      }
+    }
+
+    // 2. Authoritative Admin verification
+    var verifiedAdmin = verifyActiveAdminMember_(payload);
+    if (!verifiedAdmin) {
+      return response(null, false, 'Unauthorized: Access restricted to verified administrators.', 403);
+    }
+
+    // Optional query filters
+    var filterCollege = payload && (payload.collegeId || payload.college || payload.collegeName);
+    var filterAssignment = payload && (payload.assignmentId || payload.assignment_id || payload.Assignment_ID || payload.challengeId);
+    var filterDivision = payload && payload.division;
+    var filterStatus = payload && payload.status;
+    var filterDateFrom = payload && (payload.dateFrom || payload.startDate);
+    var filterDateTo = payload && (payload.dateTo || payload.endDate);
+
+    if (filterCollege) filterCollege = String(filterCollege).trim().toLowerCase();
+    if (filterAssignment) filterAssignment = String(filterAssignment).trim().toUpperCase();
+    if (filterDivision) filterDivision = String(filterDivision).trim().toUpperCase();
+    if (filterStatus) filterStatus = String(filterStatus).trim().toLowerCase();
+
+    // 3. Open Student_Submissions sheet
+    var subSheet = getSheet(CONFIG.SHEETS.SUBMISSIONS);
+    if (!subSheet) {
+      return response(null, false, 'Student_Submissions sheet not found.', 500);
+    }
+
+    var subData = subSheet.getDataRange().getValues();
+    if (subData.length <= 1) {
+      return response([]);
+    }
+
+    var subMap = getHeaderMap(subData[0]);
+    var payloadIndex = subMap['Full JSON Payload'];
+
+    // 4. Preload reference mappings for enrichment and verification
+    // A. Assignment_Faculty_Selection (AFS)
+    var selSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || "Assignment_Faculty_Selection";
+    var selSheet = getSheetSafe_(selSheetName);
+    var afsAttemptMap = {};
+    var afsStudentChallengeMap = {};
+
+    if (selSheet) {
+      var selData = selSheet.getDataRange().getValues();
+      if (selData.length > 1) {
+        var selMap = getHeaderMap(selData[0]);
+        for (var si = 1; si < selData.length; si++) {
+          var sRow = selData[si];
+          var sAttId = String(sRow[selMap['Attempt_ID']] || '').trim();
+          var sStuId = String(sRow[selMap['Student_ID']] || '').trim();
+          if (sStuId.endsWith('.0')) sStuId = sStuId.slice(0, -2);
+          var sAsgId = String(sRow[selMap['Assignment_ID']] || '').trim().toUpperCase();
+          var sColId = String(sRow[selMap['College_ID']] || '').trim();
+          var sFacId = String(sRow[selMap['Faculty_ID']] || '').trim();
+
+          var rec = { collegeId: sColId, facultyId: sFacId, assignmentId: sAsgId, studentId: sStuId };
+          if (sAttId) afsAttemptMap[sAttId] = rec;
+          if (sStuId && sAsgId) afsStudentChallengeMap[sStuId + '___' + sAsgId] = rec;
+        }
+      }
+    }
+
+    // B. College_Registry
+    var colSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.COLLEGE_REGISTRY) || "College_Registry";
+    var colSheet = getSheetSafe_(colSheetName);
+    var collegeNameById = {};
+    var collegeIdByName = {};
+
+    if (colSheet && colSheet.getLastRow() > 1) {
+      var colData = colSheet.getDataRange().getValues();
+      var colMap = getHeaderMap(colData[0]);
+      for (var ci = 1; ci < colData.length; ci++) {
+        var cId = String(colData[ci][colMap['College_ID']] || '').trim();
+        var cName = String(colData[ci][colMap['College_Name']] || '').trim();
+        if (cId) collegeNameById[cId.toUpperCase()] = cName;
+        if (cName) collegeIdByName[cName.toLowerCase()] = cId;
+      }
+    }
+
+    // Fallback to DEFAULT_COLLEGES
+    if (typeof DEFAULT_COLLEGES !== 'undefined' && Array.isArray(DEFAULT_COLLEGES)) {
+      for (var dci = 0; dci < DEFAULT_COLLEGES.length; dci++) {
+        var dfcName = DEFAULT_COLLEGES[dci];
+        var dfcId = 'COL' + ('00' + (dci + 1)).slice(-3);
+        if (!collegeNameById[dfcId]) collegeNameById[dfcId] = dfcName;
+        if (!collegeIdByName[dfcName.toLowerCase()]) collegeIdByName[dfcName.toLowerCase()] = dfcId;
+      }
+    }
+
+    // C. Faculty_Registry
+    var facSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || "Faculty_Registry";
+    var facSheet = getSheetSafe_(facSheetName);
+    var facultyNameById = {};
+    var facultyCollegeById = {};
+
+    if (facSheet && facSheet.getLastRow() > 1) {
+      var fData = facSheet.getDataRange().getValues();
+      var fMap = getHeaderMap(fData[0]);
+      for (var fi = 1; fi < fData.length; fi++) {
+        var fId = String(fData[fi][fMap['Faculty_ID']] || '').trim().toUpperCase();
+        var fName = String(fData[fi][fMap['Faculty_Name']] || '').trim();
+        var fCId = String(fData[fi][fMap['College_ID']] || '').trim();
+        if (fId) {
+          facultyNameById[fId] = fName;
+          facultyCollegeById[fId] = fCId;
+        }
+      }
+    }
+
+    if (typeof DEFAULT_FACULTY_REGISTRY !== 'undefined' && Array.isArray(DEFAULT_FACULTY_REGISTRY)) {
+      for (var dfi = 0; dfi < DEFAULT_FACULTY_REGISTRY.length; dfi++) {
+        var dfObj = DEFAULT_FACULTY_REGISTRY[dfi];
+        var dfId = dfObj.facultyId.toUpperCase();
+        if (!facultyNameById[dfId]) facultyNameById[dfId] = dfObj.facultyName;
+        if (!facultyCollegeById[dfId]) facultyCollegeById[dfId] = dfObj.collegeId;
+      }
+    }
+
+    // D. Faculty_Evaluation
+    var evalSheet = getSheetSafe_(CONFIG.SHEETS.EVALUATION);
+    var evalMapBySubId = {};
+    if (evalSheet && evalSheet.getLastRow() > 1) {
+      var evalData = evalSheet.getDataRange().getValues();
+      var eMap = getHeaderMap(evalData[0]);
+      for (var ei = 1; ei < evalData.length; ei++) {
+        var eSubId = String(evalData[ei][eMap['Submission ID']] || '').trim();
+        if (eSubId) {
+          evalMapBySubId[eSubId] = {
+            marks: evalData[ei][eMap['Marks']],
+            maxMarks: evalData[ei][eMap['Max Marks']],
+            percentage: evalData[ei][eMap['Percentage']],
+            facultyName: evalData[ei][eMap['Faculty Name']],
+            facultyEmail: evalData[ei][eMap['Faculty Email']],
+            evaluatedAt: evalData[ei][eMap['Timestamp']]
+          };
+        }
+      }
+    }
+
+    // 5. Iterate and enrich legitimate submissions
+    var submissions = [];
+
+    for (var i = 1; i < subData.length; i++) {
+      var row = subData[i];
+      var sId = String(row[subMap['Submission ID']] || '').trim();
+      var roll = String(row[subMap['Roll Number']] || '').trim();
+      if (roll.endsWith('.0')) roll = roll.slice(0, -2);
+      var chId = String(row[subMap['Challenge ID']] || '').trim();
+      var studentName = String(row[subMap['Student Name']] || '').trim();
+      var divisionVal = (subMap['Division'] !== undefined) ? String(row[subMap['Division']] || '').trim() : '';
+      var statusVal = String(row[subMap['Status']] || '').trim();
+      var rawTimestamp = row[subMap['Timestamp']];
+
+      // Integrity Guard: skip malformed, empty or corrupted rows
+      if (!sId || !chId || !roll) continue;
+
+      // Parse payload defensively
+      var rawPayload = (payloadIndex !== undefined) ? String(row[payloadIndex] || '').trim() : '';
+      var parsedPayload = null;
+      var payloadAttemptId = '';
+      var payloadFaculty = '';
+      var payloadCollegeId = '';
+      var payloadCollegeName = '';
+      var payloadBranch = '';
+      var payloadDivision = '';
+
+      var instIsLate = null;
+      var instSubmittedLate = null;
+      if (rawPayload) {
+        parsedPayload = safeJsonParse(rawPayload, null);
+        if (parsedPayload) {
+          var pStu = parsedPayload.studentInformation || {};
+          var pSub = parsedPayload.submission || {};
+          payloadAttemptId = String(pSub.attemptId || parsedPayload.attemptId || (typeof pStu === 'object' ? pStu.attemptId : '') || '').trim();
+          var fRaw = (typeof pStu === 'object' ? (pStu.facultyId || pStu.selectedFacultyId) : '') || parsedPayload.facultyId || (typeof pSub === 'object' ? pSub.facultyId : '') || '';
+          payloadFaculty = String(fRaw).trim().toUpperCase();
+          payloadCollegeId = String((typeof pStu === 'object' ? (pStu.collegeId || pStu.selectedCollegeId) : '') || parsedPayload.collegeId || '').trim();
+          payloadCollegeName = String((typeof pStu === 'object' ? (pStu.college || pStu.collegeName) : '') || parsedPayload.collegeName || '').trim();
+          payloadBranch = String((typeof pStu === 'object' ? (pStu.branch || pStu.department) : '') || '').trim();
+          payloadDivision = String((typeof pStu === 'object' ? pStu.division : '') || '').trim();
+
+          if (typeof pSub.isLate === 'boolean') {
+            instIsLate = pSub.isLate;
+          } else if (pSub.isLate === 'true' || pSub.isLate === 'TRUE' || pSub.isLate === 1) {
+            instIsLate = true;
+          } else if (pSub.isLate === 'false' || pSub.isLate === 'FALSE' || pSub.isLate === 0) {
+            instIsLate = false;
+          }
+
+          if (typeof pSub.submittedLate === 'boolean') {
+            instSubmittedLate = pSub.submittedLate;
+          } else if (pSub.submittedLate === 'true' || pSub.submittedLate === 'TRUE' || pSub.submittedLate === 1) {
+            instSubmittedLate = true;
+          } else if (pSub.submittedLate === 'false' || pSub.submittedLate === 'FALSE' || pSub.submittedLate === 0) {
+            instSubmittedLate = false;
+          }
+        }
+      }
+
+      // Resolve AFS association
+      var afsMatch = afsAttemptMap[sId] || (payloadAttemptId && afsAttemptMap[payloadAttemptId]) || afsStudentChallengeMap[roll + '___' + chId.toUpperCase()];
+
+      // Resolve College
+      var resolvedCollegeId = '';
+      var resolvedCollegeName = '';
+
+      if (afsMatch && afsMatch.collegeId) {
+        resolvedCollegeId = afsMatch.collegeId;
+      } else if (payloadCollegeId) {
+        resolvedCollegeId = payloadCollegeId;
+      } else if (afsMatch && afsMatch.facultyId && facultyCollegeById[afsMatch.facultyId.toUpperCase()]) {
+        resolvedCollegeId = facultyCollegeById[afsMatch.facultyId.toUpperCase()];
+      } else if (payloadFaculty && facultyCollegeById[payloadFaculty]) {
+        resolvedCollegeId = facultyCollegeById[payloadFaculty];
+      } else if (payloadCollegeName && collegeIdByName[payloadCollegeName.toLowerCase()]) {
+        resolvedCollegeId = collegeIdByName[payloadCollegeName.toLowerCase()];
+      } else {
+        resolvedCollegeId = 'COL001'; // Default canonical institute
+      }
+
+      resolvedCollegeName = collegeNameById[resolvedCollegeId.toUpperCase()] || payloadCollegeName || 'Ajeenkya D.Y. Patil School of Engineering, Lohegaon';
+
+      // Resolve Faculty Allocation
+      var resolvedFacultyId = '';
+      var resolvedFacultyName = '';
+      var allocationStatus = 'Unallocated';
+
+      if (afsMatch && afsMatch.facultyId && afsMatch.facultyId.toUpperCase() !== 'UNKNOWN') {
+        resolvedFacultyId = afsMatch.facultyId.toUpperCase();
+        resolvedFacultyName = facultyNameById[resolvedFacultyId] || resolvedFacultyId;
+        allocationStatus = 'Allocated';
+      } else if (payloadFaculty && payloadFaculty !== 'UNKNOWN') {
+        resolvedFacultyId = payloadFaculty;
+        resolvedFacultyName = facultyNameById[resolvedFacultyId] || resolvedFacultyId;
+        allocationStatus = 'Allocated';
+      } else {
+        resolvedFacultyId = 'UNKNOWN';
+        resolvedFacultyName = 'Unallocated';
+        allocationStatus = 'Unallocated';
+      }
+
+      // Resolve Evaluation Status & Scores
+      var evalRec = evalMapBySubId[sId] || (payloadAttemptId && evalMapBySubId[payloadAttemptId]);
+      var isEvaluated = Boolean(evalRec) || (statusVal.toLowerCase() === 'evaluated');
+      var finalStatus = isEvaluated ? 'Evaluated' : (statusVal || 'Submitted');
+      var facultyScore = evalRec ? evalRec.marks : null;
+
+      // Effective division & branch
+      var finalDivision = divisionVal || payloadDivision || '';
+      var finalBranch = payloadBranch || 'Mechanical Engineering';
+
+      // 6. Apply Filters
+      if (filterCollege) {
+        var matchCol = (resolvedCollegeId.toLowerCase() === filterCollege || resolvedCollegeName.toLowerCase().indexOf(filterCollege) !== -1);
+        if (!matchCol) continue;
+      }
+
+      if (filterAssignment) {
+        if (chId.toUpperCase() !== filterAssignment && String(row[subMap['Challenge Title']] || '').toUpperCase().indexOf(filterAssignment) === -1) {
+          continue;
+        }
+      }
+
+      if (filterDivision) {
+        if (finalDivision.toUpperCase() !== filterDivision) continue;
+      }
+
+      if (filterStatus) {
+        if (finalStatus.toLowerCase() !== filterStatus) continue;
+      }
+
+      if (filterDateFrom) {
+        if (new Date(rawTimestamp) < new Date(filterDateFrom)) continue;
+      }
+
+      if (filterDateTo) {
+        if (new Date(rawTimestamp) > new Date(filterDateTo)) continue;
+      }
+
+      // Attempt number
+      var attemptNumberVal = (subMap['Attempt Number'] !== undefined && row[subMap['Attempt Number']])
+        ? row[subMap['Attempt Number']]
+        : ((subMap['Attempt No'] !== undefined && row[subMap['Attempt No']])
+          ? row[subMap['Attempt No']]
+          : 1);
+
+      submissions.push({
+        id: sId,
+        submissionId: sId,
+        studentName: studentName || 'Unknown Student',
+        rollNumber: roll,
+        prn: roll,
+        collegeId: resolvedCollegeId,
+        collegeName: resolvedCollegeName,
+        branch: finalBranch,
+        division: finalDivision,
+        challengeId: chId,
+        challengeTitle: row[subMap['Challenge Title']] || chId,
+        attemptNumber: Number(attemptNumberVal) || 1,
+        completionPercent: row[subMap['Completion %']] || 0,
+        status: finalStatus,
+        timestamp: rawTimestamp,
+        facultyId: resolvedFacultyId,
+        facultyName: resolvedFacultyName,
+        allocationStatus: allocationStatus,
+        isAllocated: (allocationStatus === 'Allocated'),
+        facultyScore: facultyScore,
+        evaluatorName: evalRec ? evalRec.facultyName : null,
+        isLate: (instIsLate !== null) ? instIsLate : (instSubmittedLate !== null ? instSubmittedLate : null),
+        submittedLate: (instSubmittedLate !== null) ? instSubmittedLate : (instIsLate !== null ? instIsLate : null),
+        readOnly: true
+      });
+    }
+
+    // Sort descending by timestamp (newest first)
+    submissions.sort(function (a, b) {
+      return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+
+    return response(submissions);
+
+  } catch (error) {
+    logError(error, 'getInstituteSubmissions');
+    return response(null, false, 'Failed to retrieve institute submissions.', 500);
+  }
+}
+
+/**
+ * ACTION: getInstituteSubmissionDetail / instituteSubmissionDetail
+ * -----------------------------------------------------------------------
+ * Explicit, read-only viewing path allowing authenticated, server-verified
+ * administrators to view the stored payload of any legitimate submission.
+ *
+ * Security & Authorization Rules:
+ * 1. Restricted exclusively to authenticated, server-verified Admin accounts.
+ * 2. Ordinary active faculty members are denied with HTTP 403.
+ * 3. Unauthenticated, student, guest, unknown, or spoofed requests are denied with HTTP 403.
+ * 4. Returns readOnly: true and viewPermission: 'INSTITUTE_READ_ONLY' metadata.
+ * 5. Write/evaluation endpoints continue to strictly verify ownership.
+ *
+ * @param {Object} payload - { submissionId: string, authFacultyId: string }
+ * @return {TextOutput} Uniform JSON response with full stored submission payload marked readOnly.
+ */
+function getInstituteSubmissionDetail(payload) {
+  try {
+    if (typeof payload === 'string') {
+      try { payload = JSON.parse(payload); } catch (e) { payload = {}; }
+    }
+
+    var submissionId = payload && (payload.submissionId || payload.id);
+    if (!submissionId) {
+      return response(null, false, 'Missing submissionId', 400);
+    }
+    submissionId = String(submissionId).trim();
+
+    // Authoritative Admin verification
+    var verifiedAdmin = verifyActiveAdminMember_(payload);
+    if (!verifiedAdmin) {
+      return response(null, false, 'Unauthorized: Access restricted to verified administrators.', 403);
+    }
+
+    var sheet = getSheet(CONFIG.SHEETS.SUBMISSIONS);
+    if (!sheet) {
+      return response(null, false, 'Student_Submissions sheet not found.', 500);
+    }
+
+    var lastRow = sheet.getLastRow();
+    if (lastRow <= 1) {
+      return response(null, false, 'Submission not found', 404);
+    }
+    var lastCol = sheet.getLastColumn();
+
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var headerMap = getHeaderMap(headers);
+    var idIndex = headerMap['Submission ID'];
+    var payloadIndex = headerMap['Full JSON Payload'];
+
+    if (idIndex === undefined || payloadIndex === undefined) {
+      return response(null, false, 'Failed to retrieve submission.', 500);
+    }
+
+    var idColumnValues = sheet.getRange(2, idIndex + 1, lastRow - 1, 1).getValues();
+    var rowIndex = -1;
+    for (var i = 0; i < idColumnValues.length; i++) {
+      if (String(idColumnValues[i][0]) === String(submissionId)) {
+        rowIndex = i + 2;
+        break;
+      }
+    }
+
+    if (rowIndex === -1) {
+      return response(null, false, 'Submission not found', 404);
+    }
+
+    var jsonString = sheet.getRange(rowIndex, payloadIndex + 1).getValue();
+    var fullPayload = safeJsonParse(jsonString, null);
+
+    if (fullPayload === null) {
+      return response(null, false, 'Stored payload is corrupt or invalid JSON', 500);
+    }
+
+    var rowValues = sheet.getRange(rowIndex, 1, 1, lastCol).getValues()[0];
+    var studentName = (headerMap['Student Name'] !== undefined) ? rowValues[headerMap['Student Name']] : '';
+    var rollNumber = (headerMap['Roll Number'] !== undefined) ? rowValues[headerMap['Roll Number']] : '';
+    var division = (headerMap['Division'] !== undefined) ? rowValues[headerMap['Division']] : '';
+    var challengeId = (headerMap['Challenge ID'] !== undefined) ? rowValues[headerMap['Challenge ID']] : '';
+    var challengeTitle = (headerMap['Challenge Title'] !== undefined) ? rowValues[headerMap['Challenge Title']] : '';
+    var attemptNumber = (headerMap['Attempt Number'] !== undefined) ? rowValues[headerMap['Attempt Number']] : 1;
+    var status = (headerMap['Status'] !== undefined) ? rowValues[headerMap['Status']] : 'Submitted';
+    var timestamp = (headerMap['Timestamp'] !== undefined) ? rowValues[headerMap['Timestamp']] : '';
+
+    var selSheet = getSheetSafe_((CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || 'Assignment_Faculty_Selection');
+    var allocatedFacultyId = 'UNKNOWN';
+    var allocatedCollegeId = 'COL001';
+    if (selSheet) {
+      var selData = selSheet.getDataRange().getValues();
+      if (selData.length > 1) {
+        var selMap = getHeaderMap(selData[0]);
+        for (var s = 1; s < selData.length; s++) {
+          var sRow = selData[s];
+          if (String(sRow[selMap['Attempt_ID']] || '').trim() === String(submissionId).trim() ||
+              (String(sRow[selMap['Student_ID']] || '').trim() === String(rollNumber).trim() && String(sRow[selMap['Assignment_ID']] || '').trim() === String(challengeId).trim())) {
+            allocatedFacultyId = String(sRow[selMap['Faculty_ID']] || 'UNKNOWN').trim();
+            allocatedCollegeId = String(sRow[selMap['College_ID']] || 'COL001').trim();
+            break;
+          }
+        }
+      }
+    }
+
+    var facSheet = getSheetSafe_((CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.FACULTY_REGISTRY) || 'Faculty_Registry');
+    var facultyName = allocatedFacultyId === 'UNKNOWN' ? 'Unallocated' : allocatedFacultyId;
+    if (facSheet && allocatedFacultyId !== 'UNKNOWN') {
+      var facData = facSheet.getDataRange().getValues();
+      if (facData.length > 1) {
+        var facMap = getHeaderMap(facData[0]);
+        for (var f = 1; f < facData.length; f++) {
+          if (String(facData[f][facMap['Faculty_ID']] || '').trim().toUpperCase() === allocatedFacultyId.toUpperCase()) {
+            facultyName = facData[f][facMap['Faculty_Name']] || allocatedFacultyId;
+            if (facMap['College_ID']) allocatedCollegeId = facData[f][facMap['College_ID']] || allocatedCollegeId;
+            break;
+          }
+        }
+      }
+    }
+
+    var colSheet = getSheetSafe_((CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.COLLEGE_REGISTRY) || 'College_Registry');
+    var collegeName = allocatedCollegeId;
+    if (colSheet) {
+      var colData = colSheet.getDataRange().getValues();
+      if (colData.length > 1) {
+        var colMap = getHeaderMap(colData[0]);
+        for (var c = 1; c < colData.length; c++) {
+          if (String(colData[c][colMap['College_ID']] || '').trim().toUpperCase() === allocatedCollegeId.toUpperCase()) {
+            collegeName = colData[c][colMap['College_Name']] || allocatedCollegeId;
+            break;
+          }
+        }
+      }
+    }
+
+    fullPayload.id = submissionId;
+    fullPayload.submissionId = submissionId;
+    fullPayload.studentName = fullPayload.studentName || studentName;
+    fullPayload.prn = fullPayload.prn || rollNumber;
+    fullPayload.rollNumber = fullPayload.rollNumber || rollNumber;
+    fullPayload.division = fullPayload.division || division;
+    fullPayload.challenge = fullPayload.challenge || challengeTitle || challengeId;
+    fullPayload.challengeId = fullPayload.challengeId || challengeId;
+    fullPayload.attempt = fullPayload.attempt || attemptNumber;
+    fullPayload.submittedOn = fullPayload.submittedOn || timestamp;
+    fullPayload.submissionStatus = fullPayload.submissionStatus || status;
+    fullPayload.collegeId = allocatedCollegeId;
+    fullPayload.collegeName = collegeName;
+    fullPayload.facultyId = allocatedFacultyId;
+    fullPayload.facultyName = facultyName;
+    fullPayload.allocationStatus = (allocatedFacultyId === 'UNKNOWN' ? 'Unallocated' : 'Allocated');
+    fullPayload.isAllocated = (allocatedFacultyId !== 'UNKNOWN');
+    fullPayload.readOnly = true;
+    fullPayload.viewPermission = 'INSTITUTE_READ_ONLY';
+
+    return response(fullPayload);
+
+  } catch (error) {
+    logError(error, 'getInstituteSubmissionDetail');
+    return response(null, false, 'Failed to retrieve submission detail.', 500);
   }
 }

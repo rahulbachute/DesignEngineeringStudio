@@ -658,3 +658,26 @@ function sheetInformation() {
 
   return info;
 }
+
+/**
+ * Safely parse a value into a boolean with a fail-closed default.
+ * Handles: true, false, "true", "false", "TRUE", "FALSE", 1, 0, "1", "0", "yes", "no".
+ * The strings "false" and "0" strictly return false.
+ * Empty, null, missing, malformed or unknown values fail closed to fallback (default: false).
+ *
+ * @param {*} val - Input value to parse.
+ * @param {boolean} [fallback=false] - Fail-closed fallback default.
+ * @return {boolean}
+ */
+function parseBooleanSafe(val, fallback) {
+  var defaultVal = typeof fallback === "boolean" ? fallback : false;
+  if (val === true || val === 1) return true;
+  if (val === false || val === 0) return false;
+  if (typeof val === "string") {
+    var s = String(val).trim().toLowerCase();
+    if (s === "true" || s === "1" || s === "yes") return true;
+    if (s === "false" || s === "0" || s === "no") return false;
+    return defaultVal;
+  }
+  return defaultVal;
+}

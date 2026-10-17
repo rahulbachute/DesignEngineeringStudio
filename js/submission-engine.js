@@ -146,10 +146,26 @@ class SubmissionEngine {
         return status;
       }
       if (access.isPastDue) {
-        const status = this.status(false, false, "DEADLINE_PASSED", `The submission deadline (${access.formattedDueDate}) set by ${facultyName} has passed.`, [`Deadline passed: ${access.formattedDueDate}`]);
-        this.setStatus(status);
-        return status;
+        if (!access.allowLate) {
+          const status = this.status(false, false, "DEADLINE_PASSED", `The submission deadline (${access.formattedDueDate}) set by ${facultyName} has passed. Late submissions are not permitted by your faculty.`, [`Deadline passed: ${access.formattedDueDate}`]);
+          this.setStatus(status);
+          return status;
+        }
+        if (payload && payload.submission) {
+          payload.submission.isLate = true;
+          payload.submission.submittedLate = true;
+        }
+      } else {
+        if (payload && payload.submission) {
+          payload.submission.isLate = false;
+          payload.submission.submittedLate = false;
+        }
       }
+    }
+
+    if (payload && payload.submission && payload.submission.isLate === undefined) {
+      payload.submission.isLate = false;
+      payload.submission.submittedLate = false;
     }
 
     const identity = this.queueIdentity({ payload });

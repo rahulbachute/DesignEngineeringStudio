@@ -145,9 +145,18 @@ function routeAction(action, payload) {
     case "getSubmissions":
       return getSubmissions(payload);
 
+    case "instituteSubmissions":
+    case "getInstituteSubmissions":
+    case "getInstituteWideSubmissions":
+      return getInstituteSubmissions(payload);
+
     case "submission":
     case "getSubmission":
       return getSubmission(payload);
+
+    case "instituteSubmissionDetail":
+    case "getInstituteSubmissionDetail":
+      return getInstituteSubmissionDetail(payload);
 
     case "saveEvaluation":
     case "evaluate":

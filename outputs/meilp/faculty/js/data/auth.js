@@ -76,6 +76,15 @@
     },
 
     /**
+     * Helper to check if current user has Administrator role.
+     * @returns {boolean}
+     */
+    isAdmin() {
+      const user = this.getCurrentUser();
+      return Boolean(user && user.isAuthenticated && !user.isGuest && String(user.role || '').toUpperCase() === 'ADMIN');
+    },
+
+    /**
      * Authenticate faculty or admin against backend Faculty_Registry in Google Sheets.
      * @param {string} loginId - Login ID or Email
      * @param {string} password - Raw Password
@@ -104,6 +113,7 @@
         };
         localStorage.setItem("DES_FACULTY_SESSION", JSON.stringify(guestUser));
         localStorage.setItem("loggedInFaculty", "Guest");
+        localStorage.setItem("loggedInRole", "GUEST");
         return { success: true, user: guestUser };
       }
 
@@ -131,6 +141,7 @@
               user.isGuest = false;
               localStorage.setItem("DES_FACULTY_SESSION", JSON.stringify(user));
               localStorage.setItem("loggedInFaculty", user.facultyName || user.facultyId);
+              localStorage.setItem("loggedInRole", user.role);
               return { success: true, user };
             } else if (json && json.statusCode === 403) {
               return { success: false, error: json.error || 'Account is inactive. Please contact administrator.' };
@@ -164,6 +175,7 @@
               matched.isGuest = false;
               localStorage.setItem("DES_FACULTY_SESSION", JSON.stringify(matched));
               localStorage.setItem("loggedInFaculty", matched.facultyName || matched.facultyId);
+              localStorage.setItem("loggedInRole", matched.role);
               return { success: true, user: matched };
             }
           }
@@ -253,6 +265,7 @@
         if (defaultMatch.passwords.includes(password) || password.length >= 4) {
           localStorage.setItem("DES_FACULTY_SESSION", JSON.stringify(defaultMatch.user));
           localStorage.setItem("loggedInFaculty", defaultMatch.user.facultyName);
+          localStorage.setItem("loggedInRole", defaultMatch.user.role);
           return { success: true, user: defaultMatch.user };
         }
       }
@@ -269,6 +282,7 @@
     login(role, name) {
       if (String(role).toUpperCase() === 'GUEST') {
         localStorage.setItem("loggedInFaculty", "Guest");
+        localStorage.setItem("loggedInRole", "GUEST");
         localStorage.removeItem("DES_FACULTY_SESSION");
       }
       return this.getCurrentUser();
@@ -280,6 +294,7 @@
     logout() {
       localStorage.removeItem("DES_FACULTY_SESSION");
       localStorage.removeItem("loggedInFaculty");
+      localStorage.removeItem("loggedInRole");
       const target = window.location.pathname.includes('/faculty/') ? '../index.html' : 'index.html';
       window.location.href = target;
     },

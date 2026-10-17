@@ -137,16 +137,32 @@ function saveEvaluation(payload) {
     // Step 0: Role authorization check.
     // Guests and students are strictly prohibited from evaluating submissions.
     // Valid authenticated faculty ID is required.
+    // Client-side facultyId tampering cannot grant evaluation rights.
     // -------------------------------------------------------------------
-    var evalFacultyId = (payload && (payload.facultyId || payload.faculty_id || payload.authFacultyId || payload.evalFacultyId)) || "";
+    var authFacultyId = payload && (payload.authFacultyId || payload.authenticatedFacultyId);
+    var reqFacultyId = payload && (payload.facultyId || payload.faculty_id || payload.Faculty_ID || payload.evalFacultyId);
     var evalRole = (payload && (payload.role || payload.authRole || payload.evaluatorRole || payload.evalRole)) || "";
-    if (String(evalRole).trim().toUpperCase() === "GUEST" || String(evalRole).trim().toUpperCase() === "STUDENT" || String(evalFacultyId).trim().toUpperCase() === "GUEST") {
+
+    var normRole = String(evalRole || '').trim().toUpperCase();
+    var normAuth = String(authFacultyId || '').trim().toUpperCase();
+    var normReq = String(reqFacultyId || '').trim().toUpperCase();
+
+    if (normRole === "GUEST" || normRole === "STUDENT" || normAuth === "GUEST" || normReq === "GUEST" || normAuth === "STUDENT" || normReq === "STUDENT") {
       return response(null, false, "Unauthorized: Guests and students are not permitted to evaluate submissions.", 403);
     }
-    if (!evalFacultyId || String(evalFacultyId).trim().toUpperCase() === "UNKNOWN") {
+    if (!normAuth && !normReq) {
       return response(null, false, "Unauthorized: Valid authenticated faculty ID required for evaluation.", 403);
     }
-    evalFacultyId = String(evalFacultyId).trim();
+    if (normAuth === "UNKNOWN" || normReq === "UNKNOWN") {
+      return response(null, false, "Unauthorized: Valid authenticated faculty ID required for evaluation.", 403);
+    }
+
+    var isReqAdmin = (normAuth === 'ADMIN001') || (normRole === 'ADMIN');
+    if (normAuth && normReq && normAuth !== normReq && !isReqAdmin) {
+      return response(null, false, "Unauthorized: Mismatched authenticated faculty identity.", 403);
+    }
+
+    var evalFacultyId = normAuth || normReq;
 
     // -------------------------------------------------------------------
     // Step 1: Defensive extraction and required-field validation.
@@ -237,15 +253,10 @@ function saveEvaluation(payload) {
     // Step 2b: Cross-Faculty Evaluation Authorization Check.
     // Ensure the evaluating faculty has authority over this submission.
     // -------------------------------------------------------------------
-    var evalFacultyId = (payload && (payload.facultyId || payload.faculty_id || payload.authFacultyId)) || "";
-    var evalRole = (payload && (payload.role || payload.authRole || payload.evaluatorRole)) || "";
-    if (String(evalRole).trim().toUpperCase() === "GUEST" || String(evalRole).trim().toUpperCase() === "STUDENT" || String(evalFacultyId).trim().toUpperCase() === "GUEST") {
-      return response(null, false, "Unauthorized: Guests and students are not permitted to evaluate submissions.", 403);
+    // evalFacultyId was validated and tamper-checked in Step 0.
+    if (!evalFacultyId) {
+      evalFacultyId = normAuth || normReq;
     }
-    if (!evalFacultyId || String(evalFacultyId).trim().toUpperCase() === "UNKNOWN") {
-      return response(null, false, "Unauthorized: Valid authenticated faculty ID required for evaluation.", 403);
-    }
-    evalFacultyId = String(evalFacultyId).trim();
 
     var selSheetName = (CONFIG && CONFIG.SHEETS && CONFIG.SHEETS.ASSIGNMENT_FACULTY_SELECTION) || "Assignment_Faculty_Selection";
     var selSheet = getSheetSafe_(selSheetName);

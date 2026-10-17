@@ -4,12 +4,44 @@ class ChallengesEngine {
     this.filteredChallenges = [];
     this.controlService = window.MEILP?.assignmentControlService || new window.MEILP.AssignmentControlService();
     this.activeFaculty = "FACULTY";
+    this.syncStates = {};
+  }
+
+  getAssignmentSyncState(id) {
+    return this.syncStates[id] || { status: "SYNCED", message: "In sync with Google Sheets" };
+  }
+
+  setAssignmentSyncState(id, status, message = "", meta = {}) {
+    this.syncStates[id] = { status, message, timestamp: Date.now(), ...meta };
+  }
+
+  async retrySync(id) {
+    const faculty = this.getActiveFaculty();
+    const current = this.controlService.getControls(id, faculty);
+    const syncState = this.getAssignmentSyncState(id);
+    const targetLate = syncState.expected !== undefined ? syncState.expected : current.allowLate;
+    await this.toggleLateSubmission(id, targetLate);
   }
 
   async init() {
     this.initFacultyProfile();
     this.bindEvents();
     await this.loadChallenges();
+    this.initHashTab();
+  }
+
+  initHashTab() {
+    const activateLate = () => {
+      if (window.location.hash === "#late-submissions") {
+        const lateBtn = document.getElementById("tabLateSubmissionsBtn");
+        if (lateBtn && window.bootstrap && bootstrap.Tab) {
+          const tab = new bootstrap.Tab(lateBtn);
+          tab.show();
+        }
+      }
+    };
+    activateLate();
+    window.addEventListener("hashchange", activateLate);
   }
 
   initFacultyProfile() {
@@ -80,9 +112,16 @@ class ChallengesEngine {
       await this.controlService.fetchCloudControls(facultyId).catch(() => []);
     }
 
+    this.challenges.forEach((c) => {
+      if (!this.syncStates[c.id]) {
+        this.setAssignmentSyncState(c.id, "SYNCED", "In sync with Google Sheets");
+      }
+    });
+
     this.filteredChallenges = [...this.challenges];
     this.renderKpis();
     this.renderGrid();
+    this.renderLateSubmissionsTable();
   }
 
   // ─── Custom assignment storage ────────────────────────────────────────────
@@ -152,6 +191,51 @@ class ChallengesEngine {
       settingsForm.addEventListener("submit", (e) => {
         e.preventDefault();
         this.saveSettingsModal();
+      });
+    }
+
+    // Late Submission filter and action events
+    const lateSearch = document.getElementById("lateSearchInput");
+    if (lateSearch) {
+      lateSearch.addEventListener("input", () => this.renderLateSubmissionsTable());
+    }
+
+    const lateRadios = document.querySelectorAll('input[name="lateFilterRadio"]');
+    lateRadios.forEach((r) => {
+      r.addEventListener("change", () => this.renderLateSubmissionsTable());
+    });
+
+    const btnAllowLateAll = document.getElementById("btnBulkAllowLate");
+    if (btnAllowLateAll) {
+      btnAllowLateAll.addEventListener("click", () => this.bulkToggleLate(true));
+    }
+
+    const btnDisallowLateAll = document.getElementById("btnBulkDisallowLate");
+    if (btnDisallowLateAll) {
+      btnDisallowLateAll.addEventListener("click", () => this.bulkToggleLate(false));
+    }
+
+    // Tab switching header updates
+    const tabChallengesBtn = document.getElementById("tabChallengesBtn");
+    const tabLateBtn = document.getElementById("tabLateSubmissionsBtn");
+    const mainHeading = document.getElementById("pageMainHeading");
+    const subHeading = document.getElementById("pageSubHeading");
+    const scopeBadge = document.getElementById("pageScopeBadge");
+
+    if (tabChallengesBtn) {
+      tabChallengesBtn.addEventListener("shown.bs.tab", () => {
+        if (mainHeading) mainHeading.textContent = "Challenge Library";
+        if (subHeading) subHeading.textContent = "Review and manage challenge modules, deadlines, and late submission policies.";
+        if (scopeBadge) scopeBadge.textContent = "Challenge View";
+      });
+    }
+
+    if (tabLateBtn) {
+      tabLateBtn.addEventListener("shown.bs.tab", () => {
+        if (mainHeading) mainHeading.textContent = "Late Submission Management";
+        if (subHeading) subHeading.textContent = "Control late submission permissions past the scheduled deadline for your active class.";
+        if (scopeBadge) scopeBadge.textContent = "Late Submissions View";
+        this.renderLateSubmissionsTable();
       });
     }
 
@@ -317,10 +401,14 @@ class ChallengesEngine {
 
       let deadlineBadge = `<span class="badge bg-light text-muted border"><i class="bi bi-clock me-1"></i>No Deadline</span>`;
       if (access.dueDate) {
+        const latePill = access.allowLate
+          ? `<span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle ms-1"><i class="bi bi-clock-history me-1"></i>Late Allowed</span>`
+          : `<span class="badge bg-secondary-subtle text-secondary-emphasis border ms-1"><i class="bi bi-lock me-1"></i>Late Blocked</span>`;
+
         if (access.isPastDue) {
-          deadlineBadge = `<span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle"><i class="bi bi-exclamation-triangle me-1"></i>Past Due: ${access.formattedDueDate}</span>`;
+          deadlineBadge = `<span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle"><i class="bi bi-exclamation-triangle me-1"></i>Past Due: ${access.formattedDueDate}</span>${latePill}`;
         } else {
-          deadlineBadge = `<span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle"><i class="bi bi-calendar-event me-1"></i>Due: ${access.formattedDueDate}</span>`;
+          deadlineBadge = `<span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle"><i class="bi bi-calendar-event me-1"></i>Due: ${access.formattedDueDate}</span>${latePill}`;
         }
       }
 
@@ -402,12 +490,14 @@ class ChallengesEngine {
     const inputId = document.getElementById("settingAssignmentId");
     const inputEnable = document.getElementById("settingEnableSwitch");
     const inputDue = document.getElementById("settingDueDate");
+    const inputAllowLate = document.getElementById("settingAllowLateSwitch");
     const inputNote = document.getElementById("settingNote");
     const facultyLabel = document.getElementById("modalFacultyLabel");
 
     if (inputId) inputId.value = id;
     if (inputEnable) inputEnable.checked = ctrl.enabled;
     if (inputDue) inputDue.value = ctrl.dueDate || "";
+    if (inputAllowLate) inputAllowLate.checked = this.controlService.parseBoolean(ctrl.allowLate, false);
     if (inputNote) inputNote.value = ctrl.note || "";
     if (facultyLabel) facultyLabel.textContent = this.getActiveFacultyName();
 
@@ -447,31 +537,240 @@ class ChallengesEngine {
     inputDue.value = localISOTime;
   }
 
-  saveSettingsModal() {
+  async saveSettingsModal() {
     const inputId = document.getElementById("settingAssignmentId");
     const inputEnable = document.getElementById("settingEnableSwitch");
     const inputDue = document.getElementById("settingDueDate");
+    const inputAllowLate = document.getElementById("settingAllowLateSwitch");
     const inputNote = document.getElementById("settingNote");
+    const saveBtn = document.getElementById("btnSaveAssignmentSettings") || document.querySelector("#assignmentSettingsModal button[type='submit']");
 
     if (!inputId || !inputId.value) return;
 
     const id = inputId.value;
     const faculty = this.getActiveFaculty();
-
-    this.controlService.setControls(id, faculty, {
+    const parsedLate = inputAllowLate ? inputAllowLate.checked : false;
+    const newControls = {
       enabled: inputEnable ? inputEnable.checked : true,
       dueDate: inputDue ? inputDue.value : null,
+      allowLate: parsedLate,
       note: inputNote ? inputNote.value : ""
+    };
+
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span>Saving & Verifying...';
+    }
+
+    this.setAssignmentSyncState(id, "PENDING", "Saving to Google Sheets and verifying persistence...");
+    this.renderLateSubmissionsTable();
+
+    const res = await this.controlService.saveCloudControlWithVerification(id, faculty, newControls);
+
+    if (saveBtn) {
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = '<i class="bi bi-check2-circle me-1"></i>Save Settings';
+    }
+
+    if (res.success) {
+      this.controlService.setControls(id, faculty, newControls);
+      this.setAssignmentSyncState(id, "SYNCED", "Confirmed in Google Sheets");
+
+      const modalEl = document.getElementById("assignmentSettingsModal");
+      if (modalEl && window.bootstrap && bootstrap.Modal) {
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+      }
+
+      this.renderKpis();
+      this.renderGrid();
+      this.renderLateSubmissionsTable();
+      this.showToast(`Settings for "${id}" saved and confirmed in cloud.`, "success");
+    } else {
+      this.setAssignmentSyncState(id, "FAILED", res.error || "Cloud confirmation failed", { expected: parsedLate });
+      this.renderKpis();
+      this.renderGrid();
+      this.renderLateSubmissionsTable();
+      this.showToast(`Warning: Cloud save could not be confirmed for "${id}" (${res.error || 'Server did not confirm change'}). Changes remain unconfirmed.`, "danger");
+    }
+  }
+
+  async toggleLateSubmission(id, allowLate) {
+    const faculty = this.getActiveFaculty();
+    const current = this.controlService.getControls(id, faculty);
+    const parsedLate = this.controlService.parseBoolean(allowLate, false);
+
+    // 1. Immediately indicate in-flight verification in UI (never premature success)
+    this.setAssignmentSyncState(id, "PENDING", "Saving to Google Sheets and verifying persistence...");
+    this.renderLateSubmissionsTable();
+
+    // 2. Perform write + read-back verification
+    const res = await this.controlService.saveCloudControlWithVerification(id, faculty, {
+      ...current,
+      allowLate: parsedLate
     });
 
-    const modalEl = document.getElementById("assignmentSettingsModal");
-    if (modalEl) {
-      const modal = bootstrap.Modal.getInstance(modalEl);
-      if (modal) modal.hide();
+    if (res.success) {
+      // Confirmed by cloud read-back! Now update local state and announce success
+      this.controlService.setControls(id, faculty, { ...current, allowLate: parsedLate });
+      this.setAssignmentSyncState(id, "SYNCED", "Confirmed in Google Sheets");
+      this.renderKpis();
+      this.renderGrid();
+      this.renderLateSubmissionsTable();
+      this.showToast(`Late submissions for "${id}" are now ${parsedLate ? "PERMITTED" : "BLOCKED"} (Confirmed in cloud).`, parsedLate ? "warning" : "info");
+    } else {
+      // Verification failed, timed out, or mismatched. Never report success!
+      this.setAssignmentSyncState(id, "FAILED", res.error || "Cloud confirmation failed", { expected: parsedLate });
+      this.renderKpis();
+      this.renderGrid();
+      this.renderLateSubmissionsTable();
+      this.showToast(`Cloud confirmation failed for "${id}": ${res.error || 'Server did not confirm change'}. Setting remains unconfirmed.`, "danger");
     }
+  }
+
+  async bulkToggleLate(allowLate) {
+    const faculty = this.getActiveFaculty();
+    const parsedLate = this.controlService.parseBoolean(allowLate, false);
+    const btnAllow = document.getElementById("btnBulkAllowLate");
+    const btnDisallow = document.getElementById("btnBulkDisallowLate");
+
+    if (btnAllow) btnAllow.disabled = true;
+    if (btnDisallow) btnDisallow.disabled = true;
+
+    // Set all to PENDING during bulk verification
+    this.challenges.forEach((c) => {
+      this.setAssignmentSyncState(c.id, "PENDING", "Bulk saving to Google Sheets and verifying persistence...");
+    });
+    this.renderLateSubmissionsTable();
+
+    const ids = this.challenges.map((c) => c.id);
+    const bulkRes = await this.controlService.bulkSaveCloudControlsWithVerification(ids, faculty, {
+      allowLate: parsedLate
+    });
+
+    if (btnAllow) btnAllow.disabled = false;
+    if (btnDisallow) btnDisallow.disabled = false;
+
+    this.challenges.forEach((c) => {
+      if (bulkRes.synced && bulkRes.synced.includes(c.id)) {
+        const current = this.controlService.getControls(c.id, faculty);
+        this.controlService.setControls(c.id, faculty, { ...current, allowLate: parsedLate });
+        this.setAssignmentSyncState(c.id, "SYNCED", "Confirmed in Google Sheets");
+      } else {
+        const err = (bulkRes.results && bulkRes.results[c.id] && bulkRes.results[c.id].error) || bulkRes.error || "Cloud confirmation failed";
+        this.setAssignmentSyncState(c.id, "FAILED", err, { expected: parsedLate });
+      }
+    });
 
     this.renderKpis();
     this.renderGrid();
+    this.renderLateSubmissionsTable();
+
+    // Explicit outcome reporting: allSynced, allFailed, or mixed
+    if (bulkRes.allSynced) {
+      this.showToast(`Late submissions ${parsedLate ? "PERMITTED" : "BLOCKED"} for all ${bulkRes.synced.length} assignments and confirmed in cloud.`, "success");
+    } else if (bulkRes.allFailed) {
+      this.showToast(`Failed to update late submission settings in cloud for all assignments.`, "danger");
+    } else {
+      this.showToast(`Bulk update completed with mixed outcomes: ${bulkRes.synced.length} Synced, ${bulkRes.failed.length} Failed/Unconfirmed. Please review the highlighted assignments.`, "warning");
+    }
+  }
+
+  renderLateSubmissionsTable() {
+    const tbody = document.getElementById("lateSubmissionsTableBody");
+    if (!tbody) return;
+
+    const faculty = this.getActiveFaculty();
+    const searchInput = document.getElementById("lateSearchInput");
+    const searchTerm = (searchInput ? searchInput.value : "").toLowerCase().trim();
+    const filterRadio = document.querySelector('input[name="lateFilterRadio"]:checked');
+    const filterVal = filterRadio ? filterRadio.value : "all";
+
+    const filtered = this.challenges.filter((c) => {
+      const access = this.controlService.evaluateAccess(c.id, faculty);
+      const matchesSearch = !searchTerm || c.id.toLowerCase().includes(searchTerm) || c.title.toLowerCase().includes(searchTerm);
+      if (!matchesSearch) return false;
+
+      if (filterVal === "allowed") return access.allowLate;
+      if (filterVal === "blocked") return !access.allowLate;
+      if (filterVal === "pastDue") return access.isPastDue;
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted p-4">No assignments match the selected late submission filter.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map((c) => {
+      const access = this.controlService.evaluateAccess(c.id, faculty);
+      const isEnabled = access.enabled;
+      const isLateAllowed = access.allowLate;
+      const syncState = this.getAssignmentSyncState(c.id);
+
+      let deadlineStatusBadge = `<span class="badge bg-light text-muted border">No Deadline</span>`;
+      if (access.dueDate) {
+        if (access.isPastDue) {
+          deadlineStatusBadge = `<span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle"><i class="bi bi-exclamation-triangle me-1"></i>Past Due</span>`;
+        } else {
+          deadlineStatusBadge = `<span class="badge bg-success-subtle text-success-emphasis border border-success-subtle"><i class="bi bi-clock me-1"></i>Active</span>`;
+        }
+      }
+
+      let syncBadge = "";
+      if (syncState.status === "PENDING") {
+        syncBadge = `<span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle d-inline-flex align-items-center gap-1" id="sync-status-${c.id}" title="${this.escapeHtml(syncState.message || 'Verifying persistence with Google Sheets...')}"><span class="spinner-border spinner-border-sm" style="width: 0.7rem; height: 0.7rem;" role="status"></span><span>Pending</span></span>`;
+      } else if (syncState.status === "SYNCED") {
+        syncBadge = `<span class="badge bg-success-subtle text-success-emphasis border border-success-subtle d-inline-flex align-items-center gap-1" id="sync-status-${c.id}" title="${this.escapeHtml(syncState.message || 'Confirmed in Google Sheets')}"><i class="bi bi-cloud-check"></i><span>Synced</span></span>`;
+      } else {
+        syncBadge = `<div class="d-inline-flex align-items-center gap-1"><span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle d-inline-flex align-items-center gap-1" id="sync-status-${c.id}" title="${this.escapeHtml(syncState.message || 'Cloud confirmation failed')}"><i class="bi bi-cloud-slash"></i><span>Unconfirmed</span></span><button type="button" class="btn btn-xs btn-outline-danger p-0 px-1" title="Retry cloud verification" onclick="window.challengesEngine.retrySync('${c.id}')"><i class="bi bi-arrow-clockwise"></i></button></div>`;
+      }
+
+      const isPending = syncState.status === "PENDING";
+
+      return `
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-dark text-white rounded-pill px-2 py-1">${this.escapeHtml(c.id)}</span>
+              <span class="fw-semibold text-dark">${this.escapeHtml(c.title)}</span>
+            </div>
+            <div class="text-muted small">${this.escapeHtml(c.discipline)}</div>
+          </td>
+          <td>
+            ${isEnabled
+              ? `<span class="badge bg-success-subtle text-success-emphasis rounded-pill"><i class="bi bi-check-circle me-1"></i>Enabled</span>`
+              : `<span class="badge bg-danger-subtle text-danger-emphasis rounded-pill"><i class="bi bi-slash-circle me-1"></i>Disabled</span>`}
+          </td>
+          <td>
+            ${access.formattedDueDate || `<span class="text-muted fst-italic">None set</span>`}
+          </td>
+          <td>
+            ${deadlineStatusBadge}
+          </td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <div class="form-check form-switch m-0">
+                <input class="form-check-input cursor-pointer" type="checkbox" role="switch" id="late-toggle-${c.id}" ${isLateAllowed ? "checked" : ""} ${isPending ? "disabled" : ""} onchange="window.challengesEngine.toggleLateSubmission('${c.id}', this.checked)" />
+              </div>
+              <label class="form-check-label small fw-bold mb-0 cursor-pointer" for="late-toggle-${c.id}">
+                ${isLateAllowed
+                  ? `<span class="badge bg-warning text-dark"><i class="bi bi-check-circle me-1"></i>Permitted</span>`
+                  : `<span class="badge bg-secondary-subtle text-secondary-emphasis border"><i class="bi bi-lock me-1"></i>Blocked</span>`}
+              </label>
+            </div>
+          </td>
+          <td>
+            ${syncBadge}
+          </td>
+          <td class="text-end">
+            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="window.challengesEngine.openSettingsModal('${c.id}')">
+              <i class="bi bi-sliders me-1"></i>Configure
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
   }
 
   openDetailsModal(id) {

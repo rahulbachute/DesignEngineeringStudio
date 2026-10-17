@@ -1197,7 +1197,17 @@ function getAssignmentControls(payload) {
           enabled: row[map["Enabled"]] === true || String(row[map["Enabled"]]).toLowerCase() === "true",
           releaseDate: row[map["Release_Date"]] || null,
           dueDate: row[map["Due_Date"]] || null,
-          allowLate: row[map["Allow_Late"]] === true || String(row[map["Allow_Late"]]).toLowerCase() === "true",
+          allowLate: (typeof parseBooleanSafe === "function")
+            ? parseBooleanSafe(row[map["Allow_Late"]], false)
+            : (function(val) {
+                if (val === true || val === 1) return true;
+                if (val === false || val === 0) return false;
+                if (typeof val === "string") {
+                  var s = String(val).trim().toLowerCase();
+                  return s === "true" || s === "1" || s === "yes";
+                }
+                return false;
+              })(row[map["Allow_Late"]]),
           updatedAt: row[map["Updated_At"]] || null
         });
       }
@@ -1349,7 +1359,17 @@ function saveAssignmentControl(payload) {
     var enabled = payload.enabled !== undefined ? Boolean(payload.enabled) : true;
     var releaseDate = payload.releaseDate ? String(payload.releaseDate).trim() : "";
     var dueDate = payload.dueDate ? String(payload.dueDate).trim() : "";
-    var allowLate = payload.allowLate !== undefined ? Boolean(payload.allowLate) : false;
+    var allowLate = (typeof parseBooleanSafe === "function")
+      ? parseBooleanSafe(payload && payload.allowLate, false)
+      : (function(val) {
+          if (val === true || val === 1) return true;
+          if (val === false || val === 0) return false;
+          if (typeof val === "string") {
+            var s = String(val).trim().toLowerCase();
+            return s === "true" || s === "1" || s === "yes";
+          }
+          return false;
+        })(payload && payload.allowLate);
     var now = new Date();
 
     // 5. Acquire Script Lock

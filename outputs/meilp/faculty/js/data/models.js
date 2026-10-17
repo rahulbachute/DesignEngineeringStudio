@@ -54,8 +54,32 @@ class SubmissionModel {
     this.completionPercent = data.completionPercent ?? null;
     this.email = data.email || '';
     this.submissionHash = data.submissionHash || '';
+    this.collegeId = data.collegeId || '';
+    this.collegeName = data.collegeName || '';
+    this.facultyId = data.facultyId || '';
+    this.facultyName = data.facultyName || '';
+    this.allocationStatus = data.allocationStatus || (data.facultyId && data.facultyId !== 'UNKNOWN' ? 'Allocated' : 'Unallocated');
+    this.isAllocated = data.isAllocated ?? (this.allocationStatus === 'Allocated');
+    this.readOnly = Boolean(data.readOnly);
     this.rawPayload = data.rawPayload || {};
     this.rawRow = data.rawRow || {};
+
+    const rawLate = data.isLate !== undefined
+      ? data.isLate
+      : (data.submittedLate !== undefined
+        ? data.submittedLate
+        : (data.rawPayload && data.rawPayload.submission && data.rawPayload.submission.isLate !== undefined
+          ? data.rawPayload.submission.isLate
+          : (data.rawPayload && data.rawPayload.submission && data.rawPayload.submission.submittedLate !== undefined
+            ? data.rawPayload.submission.submittedLate
+            : null)));
+    if (rawLate === true || rawLate === 'true' || rawLate === 'TRUE' || rawLate === 1) {
+      this.isLate = true;
+    } else if (rawLate === false || rawLate === 'false' || rawLate === 'FALSE' || rawLate === 0) {
+      this.isLate = false;
+    } else {
+      this.isLate = null;
+    }
   }
 }
 

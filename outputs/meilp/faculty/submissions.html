@@ -24,6 +24,7 @@
           <ul class="nav nav-pills flex-column gap-1">
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="index.html"><i class="bi bi-house-door me-2"></i>Dashboard</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="challenges.html"><i class="bi bi-journals me-2"></i>Challenges</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="challenges.html#late-submissions" id="sidebarLateSubmissionsLink"><i class="bi bi-clock-history me-2"></i>Late Submissions</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="submissions.html"><i class="bi bi-file-earmark-text me-2"></i>Student Submissions</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="evaluation.html"><i class="bi bi-clipboard-check me-2"></i>Evaluation</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="outcomes.html"><i class="bi bi-bar-chart-line me-2"></i>CO–PO–PSO–WK</a></li>
@@ -70,10 +71,42 @@
 
             <div class="card border-0 shadow-sm rounded-4 mb-4">
               <div class="card-body p-4">
-                <h3 class="h5 mb-3">Filter Panel</h3>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+                  <div>
+                    <h3 class="h5 mb-1"><i class="bi bi-funnel me-2"></i>Filter &amp; Report Controls</h3>
+                    <p class="text-muted small mb-0">Switch between institute-wide submitted students report and your assigned evaluation queue.</p>
+                  </div>
+                  <div class="d-flex flex-wrap gap-2">
+                    <div class="btn-group" role="group" aria-label="Submission Scope">
+                      <input type="radio" class="btn-check" name="submissionScope" id="scopeInstituteWide" value="institute" checked autocomplete="off">
+                      <label class="btn btn-outline-primary btn-sm" for="scopeInstituteWide">
+                        <i class="bi bi-buildings me-1"></i>Institute-Wide Submissions
+                      </label>
+                      <input type="radio" class="btn-check" name="submissionScope" id="scopeMyQueue" value="my" autocomplete="off">
+                      <label class="btn btn-outline-primary btn-sm" for="scopeMyQueue">
+                        <i class="bi bi-person-check me-1"></i>My Evaluation Queue
+                      </label>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="View Mode">
+                      <input type="radio" class="btn-check" name="viewMode" id="viewModeDetails" value="details" checked autocomplete="off">
+                      <label class="btn btn-outline-secondary btn-sm" for="viewModeDetails">
+                        <i class="bi bi-list-check me-1"></i>Submission-Details View
+                      </label>
+                      <input type="radio" class="btn-check" name="viewMode" id="viewModeUnique" value="unique" autocomplete="off">
+                      <label class="btn btn-outline-secondary btn-sm" for="viewModeUnique">
+                        <i class="bi bi-people me-1"></i>Unique-Student View
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
                 <form id="submissionFilters" class="row g-3">
+                  <div class="col-lg-3 col-md-6" id="collegeFilterContainer">
+                    <label for="collegeFilter" class="form-label">College / Institution</label>
+                    <select class="form-select" id="collegeFilter" name="college"></select>
+                  </div>
                   <div class="col-lg-3 col-md-6">
-                    <label for="challengeFilter" class="form-label">Challenge</label>
+                    <label for="challengeFilter" class="form-label">Assignment / Challenge</label>
                     <select class="form-select" id="challengeFilter" name="challenge"></select>
                   </div>
                   <div class="col-lg-3 col-md-6">
@@ -81,7 +114,7 @@
                     <select class="form-select" id="branchFilter" name="branch"></select>
                   </div>
                   <div class="col-lg-3 col-md-6">
-                    <label for="divisionFilter" class="form-label">Division</label>
+                    <label for="divisionFilter" class="form-label">Division / Batch</label>
                     <select class="form-select" id="divisionFilter" name="division"></select>
                   </div>
                   <div class="col-lg-3 col-md-6">
@@ -89,8 +122,8 @@
                     <input type="text" class="form-control" id="studentNameFilter" name="studentName" placeholder="Search by name" />
                   </div>
                   <div class="col-lg-3 col-md-6">
-                    <label for="prnFilter" class="form-label">PRN</label>
-                    <input type="text" class="form-control" id="prnFilter" name="prn" placeholder="Enter PRN" />
+                    <label for="prnFilter" class="form-label">Roll Number / PRN</label>
+                    <input type="text" class="form-control" id="prnFilter" name="prn" placeholder="Enter Roll No or PRN" />
                   </div>
                   <div class="col-lg-3 col-md-6">
                     <label for="statusFilter" class="form-label">Submission Status</label>
@@ -102,7 +135,7 @@
                       <option value="Returned">Returned</option>
                     </select>
                   </div>
-                  <div class="col-lg-3 col-md-6">
+                  <div class="col-lg-3 col-md-6" id="attemptFilterContainer">
                     <label for="attemptFilter" class="form-label">Attempt Number</label>
                     <select class="form-select" id="attemptFilter" name="attempt">
                       <option value="">All Attempts</option>
@@ -112,16 +145,17 @@
                     </select>
                   </div>
                   <div class="col-lg-3 col-md-6">
-                    <label for="dateFromFilter" class="form-label">Submission Date From</label>
+                    <label for="dateFromFilter" class="form-label">Date From</label>
                     <input type="date" class="form-control" id="dateFromFilter" name="dateFrom" />
                   </div>
                   <div class="col-lg-3 col-md-6">
-                    <label for="dateToFilter" class="form-label">Submission Date To</label>
+                    <label for="dateToFilter" class="form-label">Date To</label>
                     <input type="date" class="form-control" id="dateToFilter" name="dateTo" />
                   </div>
-                  <div class="col-12 d-flex flex-wrap gap-2">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                    <button class="btn btn-outline-secondary" type="button" id="resetFilters">Reset</button>
+                  <div class="col-12 d-flex flex-wrap gap-2 pt-2">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search me-1"></i>Search</button>
+                    <button class="btn btn-outline-secondary" type="button" id="resetFilters"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset</button>
+                    <button class="btn btn-outline-success" type="button" id="exportReportCsvBtn"><i class="bi bi-file-earmark-excel me-1"></i>Export CSV</button>
                   </div>
                 </form>
               </div>
@@ -131,26 +165,29 @@
               <div class="card-body p-4">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
                   <div>
-                    <h3 class="h5 mb-1">Submission Table</h3>
+                    <h3 class="h5 mb-1" id="tableHeading">Submitted Students Report</h3>
                     <p class="text-muted mb-0" id="submissionSummary">Loading submissions…</p>
                   </div>
-                  <div class="text-muted small">Sorted by latest submission</div>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-info-subtle text-info-emphasis rounded-pill px-3 py-1" id="scopeBadge">Institute-Wide (Read-Only)</span>
+                    <span class="text-muted small">Sorted by latest submission</span>
+                  </div>
                 </div>
 
                 <div class="table-responsive">
                   <table class="table table-hover align-middle">
-                    <thead class="table-light">
+                    <thead class="table-light" id="submissionTableHead">
                       <tr>
+                        <th><button class="btn btn-link p-0 text-decoration-none" type="button" data-sort="collegeName">College</button></th>
                         <th><button class="btn btn-link p-0 text-decoration-none" type="button" data-sort="studentName">Student Name</button></th>
-                        <th>PRN</th>
+                        <th><button class="btn btn-link p-0 text-decoration-none" type="button" data-sort="prn">Roll No / PRN</button></th>
                         <th>Branch</th>
                         <th>Division</th>
                         <th><button class="btn btn-link p-0 text-decoration-none" type="button" data-sort="challenge">Challenge</button></th>
                         <th><button class="btn btn-link p-0 text-decoration-none" type="button" data-sort="attempt">Attempt</button></th>
                         <th><button class="btn btn-link p-0 text-decoration-none" type="button" data-sort="submittedOn">Submitted On</button></th>
                         <th><button class="btn btn-link p-0 text-decoration-none" type="button" data-sort="submissionStatus">Evaluation Status</button></th>
-                        <th>System Score</th>
-                        <th>Faculty Score</th>
+                        <th>Allocated Faculty</th>
                         <th>Action</th>
                       </tr>
                     </thead>

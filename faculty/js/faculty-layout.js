@@ -23,20 +23,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const links = document.querySelectorAll('[data-nav-link]');
+  function updateActiveLinks() {
+    const links = document.querySelectorAll('[data-nav-link]');
+    const hash = window.location.hash;
 
-  links.forEach((link) => {
-    const href = link.getAttribute('href') || '';
-    const isMatch = href === `${page}.html` || (page === 'index' && href === 'index.html');
+    links.forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      let isMatch = false;
 
-    if (isMatch) {
-      link.classList.add('active', 'text-white');
-      link.classList.remove('text-white-50');
-    } else {
-      link.classList.remove('active', 'text-white');
-      link.classList.add('text-white-50');
-    }
-  });
+      if (page === 'challenges' && hash === '#late-submissions') {
+        isMatch = (href === 'challenges.html#late-submissions');
+      } else if (page === 'challenges') {
+        isMatch = (href === 'challenges.html');
+      } else {
+        isMatch = href === `${page}.html` || (page === 'index' && href === 'index.html');
+      }
+
+      if (isMatch) {
+        link.classList.add('active', 'text-white');
+        link.classList.remove('text-white-50');
+      } else {
+        link.classList.remove('active', 'text-white');
+        link.classList.add('text-white-50');
+      }
+    });
+  }
+
+  updateActiveLinks();
+  window.addEventListener('hashchange', updateActiveLinks);
 
   // Wire up all logout buttons
   document.querySelectorAll('#facultyLogoutBtn, .faculty-logout-btn').forEach(btn => {

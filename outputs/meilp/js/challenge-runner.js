@@ -194,7 +194,11 @@ class ChallengeRunner {
     }
 
     if (access.isPastDue) {
-      this.renderPastDueBanner(access.formattedDueDate, effectiveFaculty);
+      if (access.allowLate) {
+        this.renderLateAllowedBanner(access.formattedDueDate, effectiveFaculty);
+      } else {
+        this.renderPastDueBanner(access.formattedDueDate, effectiveFaculty);
+      }
     }
 
     if (state.student.saved) {
@@ -262,6 +266,23 @@ class ChallengeRunner {
           </div>
         </div>
       `;
+    }
+  }
+
+  renderLateAllowedBanner(formattedDueDate, facultyName) {
+    const existing = document.getElementById("pastDueHeaderBanner");
+    if (existing) return;
+
+    const banner = document.createElement("div");
+    banner.id = "pastDueHeaderBanner";
+    banner.className = "alert alert-warning border-0 rounded-0 m-0 py-2 px-4 d-flex justify-content-between align-items-center bg-warning-subtle text-warning-emphasis";
+    banner.innerHTML = `
+      <span><i class="bi bi-clock-history me-2"></i><strong>Submission Deadline Passed:</strong> The original deadline set by <strong>${window.MEILP.escapeHtml(facultyName)}</strong> was ${formattedDueDate}. <strong>Late submissions are currently permitted</strong> by your faculty.</span>
+      <span class="badge bg-warning text-dark"><i class="bi bi-pencil-square me-1"></i>Late Submission Open</span>
+    `;
+    const header = document.querySelector(".workbench-header");
+    if (header && header.parentNode) {
+      header.parentNode.insertBefore(banner, header.nextSibling);
     }
   }
 

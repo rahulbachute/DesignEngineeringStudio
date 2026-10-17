@@ -120,6 +120,7 @@ class ReportEngine {
   getDefaultCatalog() {
     return [
       { id: 'student-eval', title: 'Student Evaluation Report', category: 'Assessment Reports', description: 'Comprehensive student-wise marks sheet, rubrics breakdown, and faculty remarks for the class.', tags: ['assessment', 'student', 'evaluation'] },
+      { id: 'submitted-students', title: 'Submitted Students Report', category: 'Student Reports', description: 'Institute-wide student submissions across all colleges and assignments with college, batch, date filters, unique student counts, and CSV export.', tags: ['student', 'submissions', 'institute'] },
       { id: 'challenge-marks', title: 'Challenge-wise Marks Report', category: 'Assessment Reports', description: 'Challenge-level attainment and spread of marks across assignments.', tags: ['assessment', 'challenge'] },
       { id: 'batch-performance', title: 'Batch Performance Report', category: 'Assessment Reports', description: 'Batch comparator for academic strength, pass percentages, and progress.', tags: ['assessment', 'batch'] },
       { id: 'co-attainment', title: 'Course Outcome Attainment Report', category: 'Outcome Reports', description: 'CO target vs actual attainment with continuous quality improvement actions.', tags: ['outcome', 'co'] },
@@ -144,7 +145,8 @@ class ReportEngine {
     const filters = this.getFilterValues();
 
     try {
-      const data = await (window.DESReportService?.getReports?.(filters)
+      const data = await ((this.state.activeReport?.id === 'submitted-students' && window.DESReportService?.getInstituteSubmissions?.(filters))
+        || window.DESReportService?.getReports?.(filters)
         || window.DESReportService?.getSubmissions?.(filters)
         || window.DESRepository?.getSubmissions?.(filters)
         || []);

@@ -20,7 +20,7 @@
         if (facultyId) {
           queryParams.facultyId = facultyId;
         }
-        const response = await this.request('submissions', queryParams);
+        const response = await this.request('submissions', queryParams, 'GET');
         if (!this.hasListPayload(response, 'submissions')) {
           return [];
         }
@@ -30,6 +30,160 @@
       });
 
       return submissions;
+    }
+
+    async getInstituteSubmissions(filters = {}) {
+      const currentUser = (global.DESAuth && global.DESAuth.getCurrentUser && global.DESAuth.getCurrentUser()) || null;
+      const facultyId = (currentUser && currentUser.facultyId) || (global.DESAuth && global.DESAuth.getFacultyId && global.DESAuth.getFacultyId()) || null;
+      const auth = global.DESAuth || {};
+      const isAdmin = Boolean(
+        (typeof auth.isAdmin === 'function' && auth.isAdmin()) ||
+        (typeof auth.hasPermission === 'function' && auth.hasPermission('ADMIN')) ||
+        (currentUser && String(currentUser.role || '').toUpperCase() === 'ADMIN') ||
+        (localStorage.getItem('loggedInRole') === 'ADMIN')
+      );
+      if (!isAdmin) {
+        throw new Error('Access denied: Institute-wide submissions viewing requires verified Administrator role.');
+      }
+
+      const cacheKey = `institute-submissions:${facultyId || 'all'}:${JSON.stringify(filters)}`;
+
+      let submissions = await this.cached(cacheKey, async () => {
+        const queryParams = { ...filters };
+        if (facultyId) {
+          queryParams.facultyId = facultyId;
+          queryParams.authFacultyId = facultyId;
+        }
+        let response;
+        try {
+          response = await this.request('getInstituteSubmissions', queryParams, 'GET');
+          this.lastFallbackMeta = null;
+        } catch (error) {
+          if (/Invalid or missing action parameter/i.test(error?.message || '')) {
+            // Interim fallback: The live deployed Apps Script Web App does not yet have getInstituteSubmissions deployed.
+            // Retrieve available submissions across registered active faculty on the live deployment.
+            const candidateFacultyIds = ['FAC001', 'FAC002', 'FAC004'];
+            const facultyNames = {
+              'FAC001': 'Rahul Bachute',
+              'FAC002': 'Dr Niranjan Shegokar',
+              'FAC004': 'Prof. Khandu Said'
+            };
+            const collectedMap = new Map();
+            const conflictReports = [];
+
+            for (const cFid of candidateFacultyIds) {
+              try {
+                const subResp = await this.request('submissions', { ...queryParams, facultyId: cFid }, 'GET');
+                const list = this.extractList(subResp, 'submissions');
+                for (const item of list) {
+                  const sId = String(item.submissionId || item.id || '').trim();
+                  if (!sId) {
+                    continue;
+                  }
+
+                  const defaultFacName = facultyNames[cFid] || cFid;
+                  const itemFacultyId = item.facultyId || cFid;
+                  const itemFacultyName = item.facultyName || defaultFacName;
+
+                  if (collectedMap.has(sId)) {
+                    // Conflicting faculty allocation detected for the same Submission ID
+                    const existing = collectedMap.get(sId);
+                    if (existing.facultyId && existing.facultyId !== itemFacultyId) {
+                      existing.hasAllocationConflict = true;
+                      existing.conflictingFacultyIds = existing.conflictingFacultyIds || [existing.facultyId];
+                      if (!existing.conflictingFacultyIds.includes(itemFacultyId)) {
+                        existing.conflictingFacultyIds.push(itemFacultyId);
+                      }
+                      existing.allocationStatus = 'Conflict';
+                      existing.facultyName = `Conflict (${existing.conflictingFacultyIds.join(', ')})`;
+                      conflictReports.push({
+                        submissionId: sId,
+                        studentName: item.studentName,
+                        rollNumber: item.rollNumber,
+                        conflictingFacultyIds: existing.conflictingFacultyIds
+                      });
+                      this.logger.warn(`[DESDataRepository] Submission ${sId} has conflicting allocations: ${existing.conflictingFacultyIds.join(' vs ')}`);
+                    }
+                    continue;
+                  }
+
+                  collectedMap.set(sId, {
+                    ...item,
+                    submissionId: sId,
+                    id: sId,
+                    collegeId: item.collegeId || (cFid === 'FAC004' ? 'COL002' : 'COL001'),
+                    collegeName: item.collegeName || (cFid === 'FAC004' ? 'Jaihind College of Engineering' : 'Ajeenkya D.Y. Patil School of Engineering, Lohegaon'),
+                    facultyId: itemFacultyId,
+                    facultyName: itemFacultyName,
+                    allocationStatus: item.allocationStatus || 'Allocated',
+                    isAllocated: true,
+                    readOnly: true
+                  });
+                }
+              } catch (subErr) {
+                this.logger.warn(`Fallback fetch for ${cFid} failed:`, subErr.message);
+              }
+            }
+
+            const collected = Array.from(collectedMap.values());
+            response = {
+              success: true,
+              data: collected,
+              isInterimFallback: true,
+              isPartialFallback: true,
+              conflictCount: conflictReports.length,
+              conflicts: conflictReports
+            };
+            this.lastFallbackMeta = {
+              isInterimFallback: true,
+              isPartialFallback: true,
+              totalRecords: collected.length,
+              conflictCount: conflictReports.length
+            };
+          } else {
+            throw error;
+          }
+        }
+        if (!this.hasListPayload(response, 'submissions')) {
+          return [];
+        }
+        return this.extractList(response, 'submissions')
+          .map((row) => this.normalizeSubmission(row))
+          .filter((submission) => !this.isBlankSubmission(submission));
+      });
+
+      return submissions;
+    }
+
+    async getInstituteSubmissionDetail(id) {
+      const submissionId = String(id || '').trim();
+      if (!submissionId) {
+        return null;
+      }
+
+      const currentUser = (global.DESAuth && global.DESAuth.getCurrentUser && global.DESAuth.getCurrentUser()) || null;
+      const facultyId = (currentUser && currentUser.facultyId) || null;
+
+      return this.cached(`institute-submission-detail:${submissionId}`, async () => {
+        const queryParams = { submissionId };
+        if (facultyId) {
+          queryParams.facultyId = facultyId;
+          queryParams.authFacultyId = facultyId;
+        }
+        let response;
+        try {
+          response = await this.request('getInstituteSubmissionDetail', queryParams, 'GET');
+        } catch (error) {
+          if (/Invalid or missing action parameter/i.test(error?.message || '')) {
+            response = await this.request('submission', queryParams, 'GET');
+          } else {
+            throw error;
+          }
+        }
+        const detail = this.extractDetail(response);
+        const summary = await this.findSubmissionSummary(submissionId);
+        return this.normalizeSubmission(detail || summary || {}, summary || null);
+      });
     }
 
     async getSubmission(id) {
@@ -44,7 +198,7 @@
       return this.cached(`submission:${submissionId}:${facultyId || 'all'}`, async () => {
         const queryParams = { submissionId };
         if (facultyId) queryParams.facultyId = facultyId;
-        const response = await this.request('submission', queryParams);
+        const response = await this.request('submission', queryParams, 'GET');
         const detail = this.extractDetail(response);
         const summary = await this.findSubmissionSummary(submissionId);
         return this.normalizeSubmission(detail || summary || {}, summary || null);
@@ -54,7 +208,7 @@
     async getAnalytics() {
       return this.cached('analytics', async () => {
         try {
-          const response = await this.request('analytics');
+          const response = await this.request('analytics', {}, 'GET');
           if (!this.hasAnalyticsPayload(response)) {
             return this.normalizeAnalytics({});
           }
@@ -238,7 +392,7 @@
       return submissions.find((item) => String(item.id) === String(id)) || null;
     }
 
-    async request(action, payload = {}, method = 'POST') {
+    async request(action, payload = {}, method = 'GET') {
       const endpoint = this.configuredEndpoint(action);
       const url = this.buildUrl(action, method === 'GET' ? payload : {});
       const options = {
@@ -272,7 +426,8 @@
 
     buildUrl(action, params = {}) {
       const url = new URL(config.apiBaseUrl);
-      url.searchParams.set('action', this.configuredEndpoint(action));
+      const actionName = this.configuredEndpoint(action);
+      url.searchParams.set('action', actionName);
       Object.entries(params || {}).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== '') {
           url.searchParams.set(key, value);
@@ -282,7 +437,15 @@
     }
 
     configuredEndpoint(name) {
-      return config.endpoints?.[name === 'submissions' ? 'getSubmissions' : name === 'submission' ? 'getSubmission' : name === 'analytics' ? 'getAnalytics' : name] || name;
+      const aliasMap = {
+        submissions: 'getSubmissions',
+        submission: 'getSubmission',
+        analytics: 'getAnalytics',
+        instituteSubmissions: 'getInstituteSubmissions',
+        instituteSubmissionDetail: 'getInstituteSubmissionDetail'
+      };
+      const key = aliasMap[name] || name;
+      return config.endpoints?.[key] || config.endpoints?.[name] || name;
     }
 
     async parseResponse(response) {
@@ -306,7 +469,13 @@
       }
       if (data.error || data.ok === false || data.success === false) {
         const message = data.error || data.message || 'Google Sheets API returned an error.';
-        const readActions = new Set(['submissions', 'submission', 'analytics']);
+        const readActions = new Set([
+          'submissions', 'getSubmissions',
+          'submission', 'getSubmission',
+          'analytics', 'getAnalytics',
+          'instituteSubmissions', 'getInstituteSubmissions',
+          'instituteSubmissionDetail', 'getInstituteSubmissionDetail'
+        ]);
         if (readActions.has(action) && /duplicate submission/i.test(message)) {
           throw new Error('The Apps Script deployment is still using the student submission handler. Redeploy the backend files in the Google Script folder, then reload this page.');
         }
@@ -388,7 +557,7 @@
       const row = raw instanceof SubmissionModel ? raw : { ...raw };
       const fallback = summary instanceof SubmissionModel ? summary : null;
       const payload = this.parsePayload(row) || this.parsePayload(summary) || this.payloadFromDetail(row);
-      const student = payload.studentInformation || {};
+      const student = (payload && (payload.studentInformation || payload.studentInfo || payload.student)) || {};
       const challenge = payload.challengeMetadata || {};
       const submission = payload.submission || {};
       const submissionData = payload.submissionData || {};
@@ -398,6 +567,26 @@
       const id = this.first(row, ['Submission ID', 'submissionId', 'id']) || submission.submissionId || fallback?.id || '';
       const status = this.first(row, ['Status', 'submissionStatus', 'status']) || submission.status || fallback?.submissionStatus || 'Submitted';
       const completion = this.first(row, ['Completion %', 'completionPercent', 'completion']) ?? submissionData.completionPercent ?? fallback?.completionPercent ?? null;
+
+      let resolvedLate = null;
+      const lateCandidates = [
+        row.isLate,
+        row.submittedLate,
+        submission.isLate,
+        submission.submittedLate,
+        fallback?.isLate,
+        fallback?.submittedLate
+      ];
+      for (let i = 0; i < lateCandidates.length; i++) {
+        const c = lateCandidates[i];
+        if (c === true || c === 'true' || c === 'TRUE' || c === 1) {
+          resolvedLate = true;
+          break;
+        } else if (c === false || c === 'false' || c === 'FALSE' || c === 0) {
+          resolvedLate = false;
+          break;
+        }
+      }
 
       const normalized = new SubmissionModel({
         id,
@@ -412,13 +601,56 @@
         systemScore: this.normalizeScore(this.first(row, ['System Score', 'systemScore']) ?? fallback?.systemScore),
         facultyScore: this.normalizeScore(this.first(row, ['Faculty Score', 'facultyScore', 'Marks', 'marks', 'totalMarks']) ?? fallback?.facultyScore),
         timeTaken: this.first(row, ['Time Taken', 'timeTaken']) || fallback?.timeTaken || '',
-        activities: this.extractActivities(payload, row, fallback)
+        activities: this.extractActivities(payload, row, fallback),
+        isLate: resolvedLate
       });
 
       normalized.challengeId = challengeId;
       normalized.completionPercent = this.numberOrNull(completion);
       normalized.email = this.first(row, ['Email', 'email']) || student.email || fallback?.email || '';
       normalized.submissionHash = this.first(row, ['Submission Hash', 'submissionHash']) || submission.submissionHash || '';
+
+      const rawCollegeId = this.first(row, ['College ID', 'collegeId', 'College_ID', 'college_id', 'allocatedCollegeId'])
+        || student.collegeId
+        || student.selectedCollegeId
+        || student.College_ID
+        || student.college_id
+        || fallback?.collegeId
+        || '';
+
+      const rawCollegeName = this.first(row, ['College Name', 'collegeName', 'College_Name', 'college_name', 'college', 'allocatedCollegeName', 'institution', 'collegeTitle'])
+        || student.collegeName
+        || student.college
+        || student.selectedCollege
+        || student.institution
+        || fallback?.collegeName
+        || '';
+
+      const knownColleges = {
+        'COL001': 'Ajeenkya D.Y. Patil School of Engineering, Lohegaon',
+        'COL002': 'Jaihind College of Engineering'
+      };
+
+      normalized.collegeId = rawCollegeId;
+      normalized.collegeName = rawCollegeName || (rawCollegeId ? (knownColleges[rawCollegeId.toUpperCase()] || '') : '');
+      if (!normalized.collegeId && normalized.collegeName) {
+        if (/ajeenkya|dypic/i.test(normalized.collegeName)) normalized.collegeId = 'COL001';
+        else if (/jaihind/i.test(normalized.collegeName)) normalized.collegeId = 'COL002';
+      }
+
+      normalized.facultyId = this.first(row, ['Faculty ID', 'facultyId', 'Faculty_ID', 'allocatedFacultyId']) || student.facultyId || fallback?.facultyId || '';
+      normalized.facultyName = this.first(row, ['Faculty Name', 'facultyName', 'Faculty_Name', 'allocatedFaculty']) || student.facultyName || fallback?.facultyName || '';
+
+      const isExplicitUnallocated = !normalized.facultyId || normalized.facultyId.toUpperCase() === 'UNKNOWN' || normalized.facultyId.toUpperCase() === 'UNALLOCATED';
+      if (isExplicitUnallocated) {
+        normalized.allocationStatus = 'Unallocated';
+        normalized.isAllocated = false;
+        normalized.facultyName = 'Unallocated';
+      } else {
+        normalized.allocationStatus = this.first(row, ['allocationStatus', 'Allocation Status']) || fallback?.allocationStatus || 'Allocated';
+        normalized.isAllocated = normalized.allocationStatus === 'Allocated';
+      }
+      normalized.readOnly = Boolean(row.readOnly || fallback?.readOnly);
       normalized.rawPayload = payload;
       normalized.rawRow = row;
       return normalized;

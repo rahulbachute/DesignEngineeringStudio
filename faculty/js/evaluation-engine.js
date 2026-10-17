@@ -317,6 +317,11 @@ class EvaluationEngine {
       timeTaken: submission.timeTaken,
       submissionStatus: submission.submissionStatus,
       submissionId: submission.id,
+      isLate: (submission && submission.isLate !== undefined && submission.isLate !== null)
+        ? submission.isLate
+        : ((submission && submission.rawPayload && submission.rawPayload.submission && submission.rawPayload.submission.isLate !== undefined)
+          ? submission.rawPayload.submission.isLate
+          : null),
       activities: sourceActivities.map((activity) => {
         const isCalc = this.isCalculationActivity(activity);
         return {
@@ -542,7 +547,10 @@ class EvaluationEngine {
         <div class="col-lg-3 col-md-6">
           <div class="border rounded-4 p-3 h-100">
             <p class="text-muted small mb-1">Submission Status</p>
-            <span class="badge bg-warning-subtle text-warning-emphasis">${this.escapeHtml(this.currentEvaluation.submissionStatus)}</span>
+            <div class="d-flex flex-wrap align-items-center gap-1">
+              <span class="badge bg-warning-subtle text-warning-emphasis">${this.escapeHtml(this.currentEvaluation.submissionStatus)}</span>
+              ${this.lateStatusBadge(this.currentEvaluation.isLate)}
+            </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6">
@@ -560,7 +568,8 @@ class EvaluationEngine {
         <div class="col-lg-3 col-md-6">
           <div class="border rounded-4 p-3 h-100">
             <p class="text-muted small mb-1">Submission Date</p>
-            <h5 class="mb-0">${this.escapeHtml(this.currentEvaluation.submissionDate)}</h5>
+            <h5 class="mb-1">${this.escapeHtml(this.currentEvaluation.submissionDate)}</h5>
+            <div>${this.lateStatusBadge(this.currentEvaluation.isLate)}</div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6">
@@ -792,6 +801,16 @@ class EvaluationEngine {
     toast.innerHTML = `<div class="d-flex"><div class="toast-body">${this.escapeHtml(message)}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div>`;
     document.body.appendChild(toast);
     window.setTimeout(() => toast.remove(), 2600);
+  }
+
+  lateStatusBadge(isLate) {
+    if (isLate === true) {
+      return '<span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle d-inline-flex align-items-center gap-1"><i class="bi bi-clock-history"></i>LATE</span>';
+    }
+    if (isLate === false) {
+      return '<span class="badge bg-success-subtle text-success-emphasis border border-success-subtle d-inline-flex align-items-center gap-1"><i class="bi bi-check-circle"></i>ON TIME</span>';
+    }
+    return '<span class="badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle d-inline-flex align-items-center gap-1"><i class="bi bi-dash-circle"></i>STATUS UNAVAILABLE</span>';
   }
 
   escapeHtml(value) {

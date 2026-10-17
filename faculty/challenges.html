@@ -23,6 +23,7 @@
           <ul class="nav nav-pills flex-column gap-1">
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="index.html"><i class="bi bi-house-door me-2"></i>Dashboard</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="challenges.html"><i class="bi bi-journals me-2"></i>Challenges</a></li>
+            <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="challenges.html#late-submissions" id="sidebarLateSubmissionsLink"><i class="bi bi-clock-history me-2"></i>Late Submissions</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="submissions.html"><i class="bi bi-file-earmark-text me-2"></i>Student Submissions</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="evaluation.html"><i class="bi bi-clipboard-check me-2"></i>Evaluation</a></li>
             <li class="nav-item"><a class="nav-link sidebar-link text-white-50" data-nav-link href="outcomes.html"><i class="bi bi-bar-chart-line me-2"></i>CO–PO–PSO–WK</a></li>
@@ -59,46 +60,135 @@
 
         <main class="flex-grow-1 p-4">
           <div class="container-fluid">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
               <div>
-                <h2 class="h3 mb-1">Challenge Library</h2>
-                <p class="text-muted mb-0">Review and manage challenge modules aligned with DES learning outcomes.</p>
+                <h2 class="h3 mb-1" id="pageMainHeading">Challenge Library</h2>
+                <p class="text-muted mb-0" id="pageSubHeading">Review and manage challenge modules, deadlines, and late submission policies.</p>
               </div>
-              <span class="badge bg-info-subtle text-info-emphasis rounded-pill px-3 py-2">Challenge View</span>
+              <span class="badge bg-info-subtle text-info-emphasis rounded-pill px-3 py-2" id="pageScopeBadge">Challenge View</span>
             </div>
+
+            <!-- View Navigation Tabs -->
+            <ul class="nav nav-pills mb-4 gap-2" id="challengeViewTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active rounded-pill px-4" id="tabChallengesBtn" data-bs-toggle="pill" data-bs-target="#tabChallengesPane" type="button" role="tab" aria-controls="tabChallengesPane" aria-selected="true">
+                  <i class="bi bi-grid-3x3-gap me-2"></i>All Challenges & Deadlines
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-pill px-4" id="tabLateSubmissionsBtn" data-bs-toggle="pill" data-bs-target="#tabLateSubmissionsPane" type="button" role="tab" aria-controls="tabLateSubmissionsPane" aria-selected="false">
+                  <i class="bi bi-clock-history me-2"></i>Late Submission Management
+                </button>
+              </li>
+            </ul>
 
             <div id="challengeKpiSummary"></div>
 
-            <div class="card border-0 shadow-sm rounded-4 mb-4">
-              <div class="card-body p-3">
-                <div class="row g-3 align-items-center">
-                  <div class="col-md-5">
-                    <div class="input-group">
-                      <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                      <input type="search" class="form-control border-start-0" id="challengeSearch" placeholder="Search by challenge title, code (e.g. EC-08), or topic..." />
+            <div class="tab-content" id="challengeTabContent">
+              <!-- Tab 1: Challenges Library -->
+              <div class="tab-pane fade show active" id="tabChallengesPane" role="tabpanel" aria-labelledby="tabChallengesBtn">
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                  <div class="card-body p-3">
+                    <div class="row g-3 align-items-center">
+                      <div class="col-md-5">
+                        <div class="input-group">
+                          <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                          <input type="search" class="form-control border-start-0" id="challengeSearch" placeholder="Search by challenge title, code (e.g. EC-08), or topic..." />
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="d-flex align-items-center gap-2">
+                          <label for="facultySelector" class="form-label small fw-bold mb-0 text-nowrap"><i class="bi bi-person-badge me-1"></i>Faculty Profile:</label>
+                          <select id="facultySelector" class="form-select form-select-sm border-primary-subtle shadow-sm rounded-pill">
+                            <option value="FAC001">Rahul Bachute</option>
+                            <option value="FAC002">Dr. Niranjan Shegokar</option>
+                            <option value="FAC004">Prof. Khandu Said</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 text-md-end d-flex flex-wrap gap-1 justify-content-md-end">
+                        <button id="btnBulkEnable" class="btn btn-sm btn-outline-success rounded-pill" title="Enable all for my class"><i class="bi bi-check-circle me-1"></i>Enable All</button>
+                        <button id="btnBulkDisable" class="btn btn-sm btn-outline-danger rounded-pill" title="Disable all for my class"><i class="bi bi-slash-circle me-1"></i>Disable All</button>
+                        <button id="btnAddAssignment" class="btn btn-sm btn-primary rounded-pill" title="Add a new assignment" data-bs-toggle="modal" data-bs-target="#addAssignmentModal"><i class="bi bi-plus-circle me-1"></i>Add Assignment</button>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="d-flex align-items-center gap-2">
-                      <label for="facultySelector" class="form-label small fw-bold mb-0 text-nowrap"><i class="bi bi-person-badge me-1"></i>Faculty Profile:</label>
-                      <select id="facultySelector" class="form-select form-select-sm border-primary-subtle shadow-sm rounded-pill">
-                        <option value="FAC001">Rahul Bachute</option>
-                        <option value="FAC002">Dr. Niranjan Shegokar</option>
-                        <option value="FAC004">Prof. Khandu Said</option>
-                      </select>
+                </div>
+
+                <div class="row g-4" id="challengeGrid">
+                  <div class="col-12 text-muted p-4"><i class="bi bi-hourglass-split me-2"></i>Loading challenge library...</div>
+                </div>
+              </div>
+
+              <!-- Tab 2: Late Submission Management -->
+              <div class="tab-pane fade" id="tabLateSubmissionsPane" role="tabpanel" aria-labelledby="tabLateSubmissionsBtn">
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                  <div class="card-body p-4">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+                      <div>
+                        <h3 class="h5 mb-1"><i class="bi bi-clock-history text-warning me-2"></i>Late Submission Policies</h3>
+                        <p class="text-muted small mb-0">Control which assignments allow students in your class to submit after the deadline has passed.</p>
+                      </div>
+                      <div class="d-flex flex-wrap gap-2">
+                        <button id="btnBulkAllowLate" class="btn btn-sm btn-outline-warning rounded-pill" title="Allow late submissions for all assignments"><i class="bi bi-check-all me-1"></i>Allow Late for All</button>
+                        <button id="btnBulkDisallowLate" class="btn btn-sm btn-outline-secondary rounded-pill" title="Disallow late submissions for all assignments"><i class="bi bi-x-circle me-1"></i>Disallow Late for All</button>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-3 text-md-end d-flex flex-wrap gap-1 justify-content-md-end">
-                    <button id="btnBulkEnable" class="btn btn-sm btn-outline-success rounded-pill" title="Enable all for my class"><i class="bi bi-check-circle me-1"></i>Enable All</button>
-                    <button id="btnBulkDisable" class="btn btn-sm btn-outline-danger rounded-pill" title="Disable all for my class"><i class="bi bi-slash-circle me-1"></i>Disable All</button>
-                    <button id="btnAddAssignment" class="btn btn-sm btn-primary rounded-pill" title="Add a new assignment" data-bs-toggle="modal" data-bs-target="#addAssignmentModal"><i class="bi bi-plus-circle me-1"></i>Add Assignment</button>
+
+                    <div class="row g-3 align-items-center mb-3">
+                      <div class="col-md-6">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                          <input type="search" class="form-control border-start-0" id="lateSearchInput" placeholder="Filter late assignments by ID or title..." />
+                        </div>
+                      </div>
+                      <div class="col-md-6 text-md-end">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Late Filter">
+                          <input type="radio" class="btn-check" name="lateFilterRadio" id="lateFilterAll" value="all" checked autocomplete="off">
+                          <label class="btn btn-outline-secondary" for="lateFilterAll">All</label>
+
+                          <input type="radio" class="btn-check" name="lateFilterRadio" id="lateFilterAllowed" value="allowed" autocomplete="off">
+                          <label class="btn btn-outline-warning" for="lateFilterAllowed"><i class="bi bi-check-circle me-1"></i>Late Allowed</label>
+
+                          <input type="radio" class="btn-check" name="lateFilterRadio" id="lateFilterBlocked" value="blocked" autocomplete="off">
+                          <label class="btn btn-outline-secondary" for="lateFilterBlocked"><i class="bi bi-lock me-1"></i>Late Blocked</label>
+
+                          <input type="radio" class="btn-check" name="lateFilterRadio" id="lateFilterPastDue" value="pastDue" autocomplete="off">
+                          <label class="btn btn-outline-danger" for="lateFilterPastDue"><i class="bi bi-exclamation-triangle me-1"></i>Past Due</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="table-responsive">
+                      <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Assignment</th>
+                            <th>Class Status</th>
+                            <th>Scheduled Deadline</th>
+                            <th>Deadline Status</th>
+                            <th>Late Submission Policy</th>
+                            <th>Cloud Sync</th>
+                            <th class="text-end">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="lateSubmissionsTableBody">
+                          <tr>
+                            <td colspan="7" class="text-center text-muted p-4"><i class="bi bi-hourglass-split me-2"></i>Loading late submission policies...</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="alert alert-info py-2 px-3 small rounded-3 mt-3 d-flex align-items-center gap-2">
+                      <i class="bi bi-info-circle-fill text-info fs-5"></i>
+                      <div>
+                        When <strong>Allow Late Submissions</strong> is enabled, students submitting after the scheduled deadline will be accepted and clearly flagged as late in evaluation queues and report exports.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="row g-4" id="challengeGrid">
-              <div class="col-12 text-muted p-4"><i class="bi bi-hourglass-split me-2"></i>Loading challenge library...</div>
             </div>
           </div>
         </main>
@@ -164,13 +254,24 @@
                   </div>
 
                   <div class="mb-3">
+                    <label class="form-label fw-semibold">Late Submissions Policy</label>
+                    <div class="form-check form-switch p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center m-0">
+                      <label class="form-check-label fw-bold mb-0 cursor-pointer" for="settingAllowLateSwitch">
+                        Allow Late Submissions
+                        <small class="d-block text-muted fw-normal">When enabled, students in your class can still submit after the deadline has passed. Late submissions will be accepted and flagged as late.</small>
+                      </label>
+                      <input class="form-check-input ms-3 cursor-pointer" type="checkbox" role="switch" id="settingAllowLateSwitch" style="width: 2.5em; height: 1.3em;">
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
                     <label for="settingNote" class="form-label fw-semibold">Class Instructions / Deadline Note</label>
                     <textarea class="form-control" id="settingNote" rows="2" placeholder="e.g. Please complete all calculations prior to lab session."></textarea>
                   </div>
 
                   <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top">
                     <button type="button" class="btn btn-light rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4"><i class="bi bi-check2-circle me-1"></i>Save Settings</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4" id="btnSaveAssignmentSettings"><i class="bi bi-check2-circle me-1"></i>Save Settings</button>
                   </div>
                 </form>
               </div>

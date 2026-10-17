@@ -6,11 +6,16 @@ class SubmissionsBrowser {
     this.pageSize = 10;
     this.sortField = 'submittedOn';
     this.sortDirection = 'desc';
+    this.currentScope = 'institute';
+    this.viewMode = 'details';
+    this.totalMatchingSubmissions = 0;
+    this.totalMatchingUniqueStudents = 0;
     this.elements = {
       form: document.getElementById('submissionFilters'),
       tableBody: document.getElementById('submissionTableBody'),
       pagination: document.getElementById('paginationControls'),
       summary: document.getElementById('submissionSummary'),
+      collegeFilter: document.getElementById('collegeFilter'),
       challengeFilter: document.getElementById('challengeFilter'),
       branchFilter: document.getElementById('branchFilter'),
       divisionFilter: document.getElementById('divisionFilter'),
@@ -18,9 +23,14 @@ class SubmissionsBrowser {
       prnFilter: document.getElementById('prnFilter'),
       statusFilter: document.getElementById('statusFilter'),
       attemptFilter: document.getElementById('attemptFilter'),
+      attemptFilterContainer: document.getElementById('attemptFilterContainer'),
       dateFromFilter: document.getElementById('dateFromFilter'),
       dateToFilter: document.getElementById('dateToFilter'),
       resetButton: document.getElementById('resetFilters'),
+      exportReportCsvBtn: document.getElementById('exportReportCsvBtn'),
+      tableHeading: document.getElementById('tableHeading'),
+      scopeBadge: document.getElementById('scopeBadge'),
+      tableHead: document.getElementById('submissionTableHead'),
       detailsModal: document.getElementById('submissionDetailsModal'),
       detailsContent: document.getElementById('submissionDetailsContent'),
       launchEvaluationButton: document.getElementById('launchEvaluationButton'),
@@ -31,29 +41,146 @@ class SubmissionsBrowser {
   }
 
   init() {
+    const currentUser = (window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()) || {};
+    const isAdmin = Boolean(
+      (window.DESAuth && typeof window.DESAuth.isAdmin === 'function' && window.DESAuth.isAdmin()) ||
+      (window.DESAuth && typeof window.DESAuth.hasPermission === 'function' && window.DESAuth.hasPermission('ADMIN')) ||
+      (currentUser && String(currentUser.role || '').toUpperCase() === 'ADMIN')
+    );
+
+    const instScopeRadio = document.getElementById('scopeInstituteWide');
+    const instScopeLabel = document.querySelector('label[for="scopeInstituteWide"]');
+    const myScopeRadio = document.getElementById('scopeMyQueue');
+
+    if (!isAdmin) {
+      if (instScopeRadio) {
+        instScopeRadio.disabled = true;
+        instScopeRadio.style.display = 'none';
+      }
+      if (instScopeLabel) {
+        instScopeLabel.style.display = 'none';
+      }
+      if (myScopeRadio) {
+        myScopeRadio.checked = true;
+      }
+      this.currentScope = 'my';
+    } else {
+      const checkedScope = document.querySelector('input[name="submissionScope"]:checked');
+      if (checkedScope) {
+        this.currentScope = checkedScope.value;
+      }
+    }
+
+    const checkedView = document.querySelector('input[name="viewMode"]:checked');
+    if (checkedView) {
+      this.viewMode = checkedView.value;
+    }
+    this.updateScopeUI();
+    this.updateViewModeUI();
     this.bindEvents();
     this.showLoadingState();
     this.loadData();
   }
 
+  updateScopeUI() {
+    if (this.elements.tableHeading) {
+      this.elements.tableHeading.textContent = this.currentScope === 'institute'
+        ? 'Submitted Students Report'
+        : 'My Evaluation Queue';
+    }
+    if (this.elements.scopeBadge) {
+      if (this.currentScope === 'institute') {
+        this.elements.scopeBadge.textContent = 'Institute-Wide (Read-Only)';
+        this.elements.scopeBadge.className = 'badge bg-info-subtle text-info-emphasis rounded-pill px-3 py-1';
+      } else {
+        this.elements.scopeBadge.textContent = 'My Queue';
+        this.elements.scopeBadge.className = 'badge bg-success-subtle text-success-emphasis rounded-pill px-3 py-1';
+      }
+    }
+  }
+
+  updateViewModeUI() {
+    if (this.elements.attemptFilterContainer) {
+      this.elements.attemptFilterContainer.style.display = this.viewMode === 'unique' ? 'none' : '';
+    }
+  }
+
+  canEvaluateRecord(record) {
+    if (!record) return false;
+    if (window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest") {
+      return false;
+    }
+    if (this.currentScope === 'my') {
+      return true;
+    }
+
+    const currentUser = (window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()) || {};
+    const currentFacultyId = (currentUser.facultyId || (window.DESAuth && window.DESAuth.getFacultyId && window.DESAuth.getFacultyId()) || localStorage.getItem("loggedInFacultyId") || localStorage.getItem("loggedInFaculty") || '').trim().toUpperCase();
+
+    if (!record.isAllocated || !record.facultyId || record.facultyId.toUpperCase() === 'UNKNOWN' || record.facultyId.toUpperCase() === 'UNALLOCATED') {
+      return false;
+    }
+
+    const recordFacultyId = String(record.facultyId || record.allocatedFacultyId || '').trim().toUpperCase();
+    return Boolean(currentFacultyId && recordFacultyId && currentFacultyId === recordFacultyId);
+  }
+
   async loadData() {
     this.showLoadingState();
+    this.lastLoadError = null;
     try {
-      const items = await DESSubmissionService.getSubmissions();
+      let items;
+      if (this.currentScope === 'institute') {
+        items = await DESSubmissionService.getInstituteSubmissions();
+      } else {
+        items = await DESSubmissionService.getSubmissions();
+      }
       const normalized = (items || []).map((item) => (item instanceof SubmissionModel ? item : new SubmissionModel(item)));
       this.data = normalized;
       this.populateFilters();
       this.applyFilters();
+      if (this.currentScope === 'institute') {
+        const repo = window.DESRepository || (typeof DESDataRepository !== 'undefined' && DESDataRepository.getInstance && DESDataRepository.getInstance());
+        if (repo && repo.lastFallbackMeta && repo.lastFallbackMeta.isInterimFallback) {
+          const meta = repo.lastFallbackMeta;
+          this.showPlaceholderNotice(`Resilience Mode: Primary institute endpoint unavailable. Displaying aggregated submissions (${meta.totalRecords} records${meta.conflictCount ? `, ${meta.conflictCount} conflicts flagged` : ''}).`);
+        }
+      }
     } catch (error) {
       console.error('Failed to load submissions:', error);
       this.data = [];
       this.filteredData = [];
+      this.lastLoadError = error;
       const message = error?.message || 'Failed to load submissions from server.';
       this.showError(`Error loading submissions: ${message}`);
     }
   }
 
   bindEvents() {
+    document.querySelectorAll('input[name="submissionScope"]').forEach((radio) => {
+      radio.addEventListener('change', (event) => {
+        this.currentScope = event.target.value;
+        this.updateScopeUI();
+        this.currentPage = 1;
+        this.loadData();
+      });
+    });
+
+    document.querySelectorAll('input[name="viewMode"]').forEach((radio) => {
+      radio.addEventListener('change', (event) => {
+        this.viewMode = event.target.value;
+        this.updateViewModeUI();
+        this.currentPage = 1;
+        this.applyFilters();
+      });
+    });
+
+    if (this.elements.exportReportCsvBtn) {
+      this.elements.exportReportCsvBtn.addEventListener('click', () => {
+        this.exportReportCsv();
+      });
+    }
+
     this.elements.form.addEventListener('submit', (event) => {
       event.preventDefault();
       this.currentPage = 1;
@@ -66,22 +193,24 @@ class SubmissionsBrowser {
       this.applyFilters();
     });
 
-    document.querySelectorAll('[data-sort]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const field = button.dataset.sort;
-        if (this.sortField === field) {
-          this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-          this.sortField = field;
-          this.sortDirection = 'desc';
-        }
-        this.applyFilters();
-      });
-    });
-
     this.elements.tableBody.addEventListener('click', (event) => {
       const actionButton = event.target.closest('[data-action]');
       if (!actionButton) {
+        return;
+      }
+
+      const action = actionButton.dataset.action;
+      if (action === 'view-student') {
+        const prn = actionButton.dataset.prn;
+        if (this.elements.prnFilter) {
+          this.elements.prnFilter.value = prn;
+        }
+        this.viewMode = 'details';
+        const detailsRadio = document.getElementById('viewModeDetails');
+        if (detailsRadio) detailsRadio.checked = true;
+        this.updateViewModeUI();
+        this.currentPage = 1;
+        this.applyFilters();
         return;
       }
 
@@ -90,10 +219,13 @@ class SubmissionsBrowser {
         return;
       }
 
-      const action = actionButton.dataset.action;
       if (action === 'view') {
         this.openDetailsModal(record);
       } else if (action === 'evaluate') {
+        if (!this.canEvaluateRecord(record)) {
+          this.showPlaceholderNotice(`Evaluation restricted: This submission is allocated to ${record.facultyName || record.facultyId || 'another faculty member'}. Institute-wide view is read-only.`);
+          return;
+        }
         this.openEvaluationModal(record);
       } else if (action === 'export') {
         this.exportSubmissionPdf(record);
@@ -103,6 +235,10 @@ class SubmissionsBrowser {
     this.elements.launchEvaluationButton.addEventListener('click', () => {
       const record = this.currentDetailsRecord;
       if (record) {
+        if (!this.canEvaluateRecord(record)) {
+          this.showPlaceholderNotice(`Evaluation restricted: This submission is allocated to ${record.facultyName || record.facultyId || 'another faculty member'}. Institute-wide view is read-only.`);
+          return;
+        }
         this.openEvaluationModal(record);
       }
     });
@@ -115,6 +251,11 @@ class SubmissionsBrowser {
 
       if (!this.currentDetailsRecord) {
         this.showPlaceholderNotice('Select a submission before saving evaluation.');
+        return;
+      }
+
+      if (!this.canEvaluateRecord(this.currentDetailsRecord)) {
+        this.showPlaceholderNotice('Permission denied: You cannot evaluate submissions allocated to another faculty member.');
         return;
       }
 
@@ -153,6 +294,69 @@ class SubmissionsBrowser {
     });
   }
 
+  exportReportCsv() {
+    if (!this.filteredData || this.filteredData.length === 0) {
+      this.showPlaceholderNotice('No data available to export.');
+      return;
+    }
+    let headers = [];
+    let rows = [];
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+
+    if (this.viewMode === 'unique') {
+      headers = ['College', 'Student Name', 'Roll No / PRN', 'Branch', 'Division', 'Assignments Attempted Count', 'Assignments List', 'Total Attempts', 'Latest Submission Date', 'Latest Status', 'Allocation Status', 'Allocated Faculty'];
+      rows = this.filteredData.map((item) => [
+        item.collegeName || item.collegeId || '',
+        item.studentName || '',
+        item.prn || '',
+        item.branch || '',
+        item.division || '',
+        item.challenges ? item.challenges.size : 0,
+        item.challenges ? Array.from(item.challenges).join('; ') : '',
+        item.attemptsCount || 0,
+        item.latestSubmissionDate || '',
+        item.latestStatus || '',
+        item.allocationStatus || '',
+        item.allocatedFaculty || ''
+      ]);
+    } else {
+      headers = ['Submission ID', 'College', 'Student Name', 'Roll No / PRN', 'Branch', 'Division', 'Assignment / Challenge', 'Attempt', 'Submitted On', 'Evaluation Status', 'System Score', 'Faculty Score', 'Allocation Status', 'Allocated Faculty'];
+      rows = this.filteredData.map((item) => [
+        item.id || item.submissionId || '',
+        item.collegeName || item.collegeId || '',
+        item.studentName || '',
+        item.prn || '',
+        item.branch || '',
+        item.division || '',
+        item.challenge || '',
+        item.attempt || 1,
+        item.submittedOn || '',
+        item.submissionStatus || '',
+        item.systemScore !== null && item.systemScore !== undefined ? item.systemScore : '',
+        item.facultyScore !== null && item.facultyScore !== undefined ? item.facultyScore : '',
+        item.allocationStatus || (item.isAllocated ? 'Allocated' : 'Unallocated'),
+        item.facultyName || (item.facultyId === 'UNKNOWN' ? 'Unallocated' : (item.facultyId || 'Unallocated'))
+      ]);
+    }
+
+    const csvContent = [
+      headers.map((h) => `"${String(h).replace(/"/g, '""')}"`).join(','),
+      ...rows.map((row) => row.map((cell) => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(','))
+    ].join('\r\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    const filename = `submitted_students_${this.viewMode}_${this.currentScope}_${timestamp}.csv`;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    this.showPlaceholderNotice(`Report exported successfully as ${filename}`);
+  }
+
   populateFilters() {
     const knownChallenges = [
       'Safety Verification of Elevator Suspension Cables',
@@ -165,13 +369,14 @@ class SubmissionsBrowser {
       'Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission',
       'Identification and Selection of Couplings Used in Mechanical Power Transmission',
       'Design of a Cotter Joint for a Bicycle',
-      'Design and Analysis of a Knuckle Joint for a Tractor–Trailer',
+      'Design and Analysis of Knuckle Joint for a Tractor–Trailer',
       'Design of a Helical Compression Spring for Motorcycle Suspension',
       'Construction and Design Verification of a Leaf Spring',
       'Comparative Study and Selection of Springs for Engineering Applications',
       'Analysis of an Automobile Suspension System',
       'Fatigue Design of an Automotive Propeller Shaft',
-      'Fatigue Analysis of a Connecting Rod'
+      'Fatigue Analysis of a Connecting Rod',
+      'Design and Analysis of a C-Clamp'
     ];
     const loadedChallenges = this.data.map((item) => item.challenge).filter(Boolean);
     const combined = Array.from(new Set([...knownChallenges, ...loadedChallenges])).sort();
@@ -179,12 +384,59 @@ class SubmissionsBrowser {
     const branches = [...new Set(this.data.map((item) => item.branch).filter(Boolean))].sort();
     const divisions = [...new Set(this.data.map((item) => item.division).filter(Boolean))].sort();
 
+    // Dynamically build distinct colleges from legitimate records in this.data
+    const collegeMap = new Map();
+    (this.data || []).forEach((item) => {
+      const cId = String(item.collegeId || '').trim();
+      const cName = String(item.collegeName || item.college || '').trim();
+      if (!cId && !cName) return;
+
+      // Key by collegeId if available to preserve distinct colleges even with similar names.
+      // If collegeId is absent, key by lowercased collegeName.
+      const key = cId ? `ID:${cId.toUpperCase()}` : `NAME:${cName.toLowerCase()}`;
+      if (!collegeMap.has(key)) {
+        collegeMap.set(key, {
+          id: cId,
+          name: cName || cId,
+          value: cId || cName
+        });
+      } else {
+        const existing = collegeMap.get(key);
+        if ((!existing.name || existing.name === existing.id) && cName) {
+          existing.name = cName;
+        }
+        if (!existing.id && cId) {
+          existing.id = cId;
+          existing.value = cId;
+        }
+      }
+    });
+
+    // Check for duplicate display names across different IDs to disambiguate
+    const nameCounts = {};
+    collegeMap.forEach((entry) => {
+      const nm = entry.name.toLowerCase();
+      nameCounts[nm] = (nameCounts[nm] || 0) + 1;
+    });
+
+    const colleges = Array.from(collegeMap.values()).map((entry) => {
+      const hasDuplicateName = entry.id && nameCounts[entry.name.toLowerCase()] > 1;
+      const label = hasDuplicateName ? `${entry.name} (${entry.id})` : entry.name;
+      return {
+        value: entry.value,
+        label: label,
+        id: entry.id,
+        name: entry.name
+      };
+    }).sort((a, b) => a.label.localeCompare(b.label));
+
+    this.populateSelect(this.elements.collegeFilter, colleges, 'All Colleges / Institutions');
     this.populateSelect(this.elements.challengeFilter, combined, 'All Challenges');
-    this.populateSelect(this.elements.branchFilter, branches.length ? branches : ['B.E. Mechanical'], 'All Branches');
-    this.populateSelect(this.elements.divisionFilter, divisions.length ? divisions : ['A', 'B'], 'All Divisions');
+    this.populateSelect(this.elements.branchFilter, branches, 'All Branches');
+    this.populateSelect(this.elements.divisionFilter, divisions, 'All Divisions');
   }
 
-  populateSelect(selectElement, values, placeholder) {
+  populateSelect(selectElement, items, placeholder) {
     if (!selectElement) return;
     const fragment = document.createDocumentFragment();
     const placeholderOption = document.createElement('option');
@@ -192,10 +444,15 @@ class SubmissionsBrowser {
     placeholderOption.textContent = placeholder;
     fragment.appendChild(placeholderOption);
 
-    values.forEach((value) => {
+    (items || []).forEach((item) => {
       const option = document.createElement('option');
-      option.value = value;
-      option.textContent = value;
+      if (typeof item === 'object' && item !== null) {
+        option.value = item.value !== undefined ? item.value : (item.id || item.name || '');
+        option.textContent = item.label || item.name || item.value || '';
+      } else {
+        option.value = item;
+        option.textContent = item;
+      }
       fragment.appendChild(option);
     });
 
@@ -206,12 +463,32 @@ class SubmissionsBrowser {
   applyFilters() {
     const filters = this.getFilters();
 
-    this.filteredData = this.data.filter((item) => {
+    const matchingRecords = this.data.filter((item) => {
+      const selCollege = (filters.college || '').trim().toLowerCase();
+      const itemCollegeName = String(item.collegeName || '').trim().toLowerCase();
+      const itemCollegeId = String(item.collegeId || '').trim().toLowerCase();
+      const itemCollege = String(item.college || '').trim().toLowerCase();
+
+      let collegeMatch = true;
+      if (selCollege) {
+        collegeMatch = (
+          itemCollegeId === selCollege ||
+          itemCollegeName === selCollege ||
+          itemCollege === selCollege ||
+          itemCollegeName.includes(selCollege) ||
+          itemCollege.includes(selCollege) ||
+          (itemCollegeId && selCollege.includes(itemCollegeId))
+        );
+      }
+
       const selChall = (filters.challenge || '').toLowerCase();
       const itemChall = String(item.challenge || '').toLowerCase();
-      const challengeMatch = !selChall || itemChall === selChall || itemChall.includes(selChall) || selChall.includes(itemChall);
-      const branchMatch = !filters.branch || item.branch === filters.branch;
-      const divisionMatch = !filters.division || item.division === filters.division;
+      const itemChallId = String(item.challengeId || '').toLowerCase();
+      const challengeMatch = !selChall || itemChall === selChall || itemChall.includes(selChall) || selChall.includes(itemChall) || itemChallId === selChall || itemChallId.includes(selChall);
+
+      // Robust optional legacy metadata matching: absent branch/division never disqualifies legitimate records unless explicitly filtered
+      const branchMatch = !filters.branch || (item.branch && item.branch.toLowerCase() === filters.branch.toLowerCase());
+      const divisionMatch = !filters.division || (item.division && item.division.toLowerCase() === filters.division.toLowerCase());
       const studentMatch = !filters.studentName || item.studentName.toLowerCase().includes(filters.studentName.toLowerCase());
       const prnMatch = !filters.prn || item.prn.toLowerCase().includes(filters.prn.toLowerCase());
       const statusMatch = !filters.status || item.submissionStatus === filters.status;
@@ -219,27 +496,60 @@ class SubmissionsBrowser {
       const dateFromMatch = !filters.dateFrom || new Date(item.submittedOn) >= new Date(filters.dateFrom);
       const dateToMatch = !filters.dateTo || new Date(item.submittedOn) <= new Date(filters.dateTo);
 
-      return challengeMatch && branchMatch && divisionMatch && studentMatch && prnMatch && statusMatch && attemptMatch && dateFromMatch && dateToMatch;
+      return collegeMatch && challengeMatch && branchMatch && divisionMatch && studentMatch && prnMatch && statusMatch && attemptMatch && dateFromMatch && dateToMatch;
     });
 
-    this.filteredData.sort((left, right) => {
-      const leftValue = left[this.sortField];
-      const rightValue = right[this.sortField];
-      if (this.sortField === 'submittedOn') {
-        const leftDate = new Date(leftValue);
-        const rightDate = new Date(rightValue);
-        return this.sortDirection === 'asc' ? leftDate - rightDate : rightDate - leftDate;
-      }
+    this.totalMatchingSubmissions = matchingRecords.length;
+    const uniqueKeys = new Set(matchingRecords.map((item) => (item.collegeId || item.collegeName || item.college || 'INST') + '___' + (item.prn || item.studentName)));
+    this.totalMatchingUniqueStudents = uniqueKeys.size;
 
-      if (typeof leftValue === 'number' && typeof rightValue === 'number') {
-        return this.sortDirection === 'asc' ? leftValue - rightValue : rightValue - leftValue;
-      }
+    if (this.viewMode === 'unique') {
+      const studentMap = new Map();
+      matchingRecords.forEach((item) => {
+        const studentKey = (item.collegeId || item.collegeName || item.college || 'INST') + '___' + (item.prn || item.studentName);
+        if (!studentMap.has(studentKey)) {
+          studentMap.set(studentKey, {
+            id: studentKey,
+            isUniqueSummary: true,
+            studentName: item.studentName,
+            prn: item.prn,
+            collegeId: item.collegeId,
+            collegeName: item.collegeName || item.college || item.collegeId || '—',
+            branch: item.branch,
+            division: item.division,
+            attemptsCount: 0,
+            challenges: new Set(),
+            latestSubmissionDate: item.submittedOn,
+            latestStatus: item.submissionStatus,
+            latestRecord: item,
+            allocatedFaculty: item.facultyName || (item.facultyId === 'UNKNOWN' ? 'Unallocated' : (item.facultyId || 'Unallocated')),
+            allocationStatus: item.allocationStatus || (item.isAllocated ? 'Allocated' : 'Unallocated'),
+            submissions: []
+          });
+        }
+        const studentSummary = studentMap.get(studentKey);
+        studentSummary.attemptsCount += 1;
+        if (item.challenge) {
+          studentSummary.challenges.add(item.challenge);
+        }
+        studentSummary.submissions.push(item);
+        if (new Date(item.submittedOn) >= new Date(studentSummary.latestSubmissionDate || 0)) {
+          studentSummary.latestSubmissionDate = item.submittedOn;
+          studentSummary.latestStatus = item.submissionStatus;
+          studentSummary.latestRecord = item;
+          studentSummary.allocatedFaculty = item.facultyName || (item.facultyId === 'UNKNOWN' ? 'Unallocated' : (item.facultyId || 'Unallocated'));
+          studentSummary.allocationStatus = item.allocationStatus || (item.isAllocated ? 'Allocated' : 'Unallocated');
+        }
+      });
+      this.filteredData = Array.from(studentMap.values());
+    } else {
+      this.filteredData = matchingRecords;
+    }
 
-      const comparison = String(leftValue).localeCompare(String(rightValue));
-      return this.sortDirection === 'asc' ? comparison : -comparison;
-    });
+    this.sortData();
 
     this.currentPage = Math.min(this.currentPage, Math.max(1, Math.ceil(this.filteredData.length / this.pageSize) || 1));
+    this.renderTableHead();
     this.renderSummary();
     this.renderTable();
     this.renderPagination();
@@ -248,6 +558,7 @@ class SubmissionsBrowser {
   getFilters() {
     const formData = new FormData(this.elements.form);
     return {
+      college: formData.get('college') || '',
       challenge: formData.get('challenge') || '',
       branch: formData.get('branch') || '',
       division: formData.get('division') || '',
@@ -260,15 +571,122 @@ class SubmissionsBrowser {
     };
   }
 
+  sortData() {
+    this.filteredData.sort((left, right) => {
+      let leftValue;
+      let rightValue;
+
+      if (this.viewMode === 'unique') {
+        if (this.sortField === 'submittedOn' || this.sortField === 'latestSubmissionDate') {
+          leftValue = left.latestSubmissionDate;
+          rightValue = right.latestSubmissionDate;
+        } else if (this.sortField === 'submissionStatus' || this.sortField === 'latestStatus') {
+          leftValue = left.latestStatus;
+          rightValue = right.latestStatus;
+        } else if (this.sortField === 'attempt' || this.sortField === 'attemptsCount') {
+          leftValue = left.attemptsCount;
+          rightValue = right.attemptsCount;
+        } else {
+          leftValue = left[this.sortField];
+          rightValue = right[this.sortField];
+        }
+      } else {
+        leftValue = left[this.sortField];
+        rightValue = right[this.sortField];
+      }
+
+      if (this.sortField === 'submittedOn' || this.sortField === 'latestSubmissionDate') {
+        const leftDate = new Date(leftValue || 0);
+        const rightDate = new Date(rightValue || 0);
+        return this.sortDirection === 'asc' ? leftDate - rightDate : rightDate - leftDate;
+      }
+
+      if (typeof leftValue === 'number' && typeof rightValue === 'number') {
+        return this.sortDirection === 'asc' ? leftValue - rightValue : rightValue - leftValue;
+      }
+
+      const comparison = String(leftValue || '').localeCompare(String(rightValue || ''));
+      return this.sortDirection === 'asc' ? comparison : -comparison;
+    });
+  }
+
+  renderTableHead() {
+    if (!this.elements.tableHead) return;
+    if (this.viewMode === 'unique') {
+      this.elements.tableHead.innerHTML = `
+        <tr>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="collegeName">College</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="studentName">Student Name</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="prn">Roll No / PRN</button></th>
+          <th>Branch</th>
+          <th>Division</th>
+          <th>Assignments Attempted</th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="attemptsCount">Total Attempts</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="latestSubmissionDate">Latest Submission</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="latestStatus">Latest Status</button></th>
+          <th>Allocated Faculty</th>
+          <th>Action</th>
+        </tr>
+      `;
+    } else {
+      this.elements.tableHead.innerHTML = `
+        <tr>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="collegeName">College</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="studentName">Student Name</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="prn">Roll No / PRN</button></th>
+          <th>Branch</th>
+          <th>Division</th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="challenge">Challenge</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="attempt">Attempt</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="submittedOn">Submitted On</button></th>
+          <th><button class="btn btn-link p-0 text-decoration-none fw-bold text-dark" type="button" data-sort="submissionStatus">Evaluation Status</button></th>
+          <th>Allocated Faculty</th>
+          <th>Action</th>
+        </tr>
+      `;
+    }
+
+    this.elements.tableHead.querySelectorAll('[data-sort]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const field = button.dataset.sort;
+        if (this.sortField === field) {
+          this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+          this.sortField = field;
+          this.sortDirection = 'desc';
+        }
+        this.applyFilters();
+      });
+    });
+  }
+
   renderSummary() {
     if (!this.data || this.data.length === 0) {
-      this.elements.summary.textContent = 'No student submissions yet.';
+      if (this.lastLoadError) {
+        this.elements.summary.textContent = `Error loading submissions: ${this.lastLoadError.message || 'Server request failed'}`;
+      } else {
+        this.elements.summary.textContent = this.currentScope === 'institute'
+          ? 'No student submissions found across the institute.'
+          : 'No student submissions found in your evaluation queue.';
+      }
       return;
     }
     const total = this.filteredData.length;
-    const from = total === 0 ? 0 : (this.currentPage - 1) * this.pageSize + 1;
+    if (total === 0) {
+      this.elements.summary.textContent = 'No submissions match the current filter criteria.';
+      return;
+    }
+    const from = (this.currentPage - 1) * this.pageSize + 1;
     const to = Math.min(this.currentPage * this.pageSize, total);
-    this.elements.summary.textContent = total === 0 ? 'No submissions match the current filters.' : `Showing ${from}-${to} of ${total} submissions`;
+
+    const studentLabel = this.totalMatchingUniqueStudents === 1 ? '1 unique student' : `${this.totalMatchingUniqueStudents} unique students`;
+    const attemptLabel = this.totalMatchingSubmissions === 1 ? '1 submission attempt' : `${this.totalMatchingSubmissions} submission attempts`;
+
+    if (this.viewMode === 'unique') {
+      this.elements.summary.textContent = `Showing ${from}-${to} of ${total} students (${attemptLabel} total across institute)`;
+    } else {
+      this.elements.summary.textContent = `Showing ${from}-${to} of ${total} submission attempts (${studentLabel})`;
+    }
   }
 
   showLoadingState() {
@@ -283,12 +701,18 @@ class SubmissionsBrowser {
         </td>
       </tr>
     `;
-    this.elements.pagination.innerHTML = '';
+    if (this.elements.pagination) {
+      this.elements.pagination.innerHTML = '';
+    }
   }
 
   showError(message) {
-    this.elements.summary.textContent = message;
-    this.elements.tableBody.innerHTML = `<tr><td colspan="11" class="text-center text-danger py-4">${this.escapeHtml(message)}</td></tr>`;
+    if (this.elements.summary) {
+      this.elements.summary.textContent = message;
+    }
+    if (this.elements.tableBody) {
+      this.elements.tableBody.innerHTML = `<tr><td colspan="11" class="text-center text-danger py-4"><div class="alert alert-danger d-inline-block text-start mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i><strong>Backend Request Diagnostic:</strong><br>${this.escapeHtml(message)}</div></td></tr>`;
+    }
     if (this.elements.pagination) {
       this.elements.pagination.innerHTML = '';
     }
@@ -296,7 +720,14 @@ class SubmissionsBrowser {
 
   renderTable() {
     if (!this.data || this.data.length === 0) {
-      this.elements.tableBody.innerHTML = '<tr><td colspan="11" class="text-center text-muted py-4">No student submissions yet.</td></tr>';
+      if (this.lastLoadError) {
+        this.elements.tableBody.innerHTML = `<tr><td colspan="11" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle me-2"></i>Failed to load submissions: ${this.escapeHtml(this.lastLoadError.message || 'Server error')}</td></tr>`;
+      } else {
+        const emptyMsg = this.currentScope === 'institute'
+          ? 'No student submissions found across the institute.'
+          : 'No student submissions found in your evaluation queue.';
+        this.elements.tableBody.innerHTML = `<tr><td colspan="11" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>${emptyMsg}</td></tr>`;
+      }
       return;
     }
 
@@ -304,31 +735,87 @@ class SubmissionsBrowser {
     const pageItems = this.filteredData.slice(start, start + this.pageSize);
 
     if (!pageItems.length) {
-      this.elements.tableBody.innerHTML = '<tr><td colspan="11" class="text-center text-muted py-4">No submissions match the current filters.</td></tr>';
+      this.elements.tableBody.innerHTML = '<tr><td colspan="11" class="text-center text-muted py-4"><i class="bi bi-funnel me-2"></i>No submissions match the current filter criteria. Try resetting filters.</td></tr>';
       return;
     }
 
-    this.elements.tableBody.innerHTML = pageItems.map((item) => `
-      <tr>
-        <td>${this.escapeHtml(item.studentName)}</td>
-        <td>${this.escapeHtml(item.prn)}</td>
-        <td>${this.escapeHtml(item.branch)}</td>
-        <td>${this.escapeHtml(item.division)}</td>
-        <td>${this.escapeHtml(item.challenge)}</td>
-        <td>${item.attempt}</td>
-        <td>${this.escapeHtml(item.submittedOn)}</td>
-        <td><span class="badge ${this.statusBadgeClass(item.submissionStatus)}">${this.escapeHtml(item.submissionStatus)}</span></td>
-        <td>${this.formatScore(item.systemScore)}</td>
-        <td>${this.formatScore(item.facultyScore)}</td>
-        <td>
-          <div class="d-flex flex-wrap gap-2">
-            <button type="button" class="btn btn-outline-primary btn-sm" data-action="view" data-id="${item.id}">View Submission</button>
-            <button type="button" class="btn btn-outline-info btn-sm" data-action="evaluate" data-id="${item.id}">Start Evaluation</button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" data-action="export" data-id="${item.id}">Export PDF</button>
-          </div>
-        </td>
-      </tr>
-    `).join('');
+    if (this.viewMode === 'unique') {
+      this.elements.tableBody.innerHTML = pageItems.map((item) => {
+        const isUnallocated = item.allocationStatus === 'Unallocated' || !item.allocatedFaculty || item.allocatedFaculty === 'Unallocated' || item.allocatedFaculty === 'UNKNOWN';
+        const facultyBadge = isUnallocated
+          ? `<span class="badge bg-warning-subtle text-warning-emphasis"><i class="bi bi-question-circle me-1"></i>Unallocated</span>`
+          : `<span class="badge bg-light text-dark border"><i class="bi bi-person me-1"></i>${this.escapeHtml(item.allocatedFaculty)}</span>`;
+
+        return `
+          <tr>
+            <td><span class="badge bg-light text-dark border">${this.escapeHtml(item.collegeName || item.collegeId || '—')}</span></td>
+            <td class="fw-medium">${this.escapeHtml(item.studentName || '—')}</td>
+            <td><code>${this.escapeHtml(item.prn || '—')}</code></td>
+            <td>${this.escapeHtml(item.branch || '—')}</td>
+            <td>${this.escapeHtml(item.division || '—')}</td>
+            <td>
+              <span class="badge bg-primary-subtle text-primary-emphasis">${item.challenges.size} assignment${item.challenges.size === 1 ? '' : 's'}</span>
+              <div class="small text-muted mt-1 text-truncate" style="max-width: 220px;" title="${this.escapeHtml(Array.from(item.challenges).join(', '))}">
+                ${this.escapeHtml(Array.from(item.challenges).join(', '))}
+              </div>
+            </td>
+            <td><span class="badge bg-secondary-subtle text-secondary-emphasis">${item.attemptsCount} attempt${item.attemptsCount === 1 ? '' : 's'}</span></td>
+            <td>
+              <div>${this.escapeHtml(item.latestSubmissionDate || '—')}</div>
+              <div class="mt-1">${this.lateStatusBadge(item.latestRecord ? item.latestRecord.isLate : null)}</div>
+            </td>
+            <td><span class="badge ${this.statusBadgeClass(item.latestStatus)}">${this.escapeHtml(item.latestStatus)}</span></td>
+            <td>${facultyBadge}</td>
+            <td>
+              <button type="button" class="btn btn-outline-primary btn-sm" data-action="view-student" data-prn="${this.escapeHtml(item.prn)}">
+                <i class="bi bi-journal-text me-1"></i>View Attempts (${item.attemptsCount})
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      return;
+    }
+
+    this.elements.tableBody.innerHTML = pageItems.map((item) => {
+      const canEval = this.canEvaluateRecord(item);
+      const isConflict = item.allocationStatus === 'Conflict';
+      const isUnallocated = !isConflict && (!item.isAllocated || item.allocationStatus === 'Unallocated' || !item.facultyId || item.facultyId === 'UNKNOWN' || item.facultyId === 'UNALLOCATED');
+      const facultyBadge = isConflict
+        ? `<span class="badge bg-danger-subtle text-danger-emphasis"><i class="bi bi-exclamation-triangle me-1"></i>${this.escapeHtml(item.facultyName || 'Conflict')}</span>`
+        : (isUnallocated
+          ? `<span class="badge bg-warning-subtle text-warning-emphasis"><i class="bi bi-question-circle me-1"></i>Unallocated</span>`
+          : `<span class="badge bg-light text-dark border"><i class="bi bi-person me-1"></i>${this.escapeHtml(item.facultyName || item.facultyId)}</span>`);
+
+      const evalButton = canEval
+        ? `<button type="button" class="btn btn-outline-info btn-sm" data-action="evaluate" data-id="${item.id}">Start Evaluation</button>`
+        : `<button type="button" class="btn btn-outline-secondary btn-sm" disabled title="Evaluation restricted to assigned faculty (${this.escapeHtml(item.facultyName || item.facultyId || 'Unallocated')})">Evaluation Restricted</button>`;
+
+      return `
+        <tr>
+          <td><span class="badge bg-light text-dark border">${this.escapeHtml(item.collegeName || item.collegeId || '—')}</span></td>
+          <td class="fw-medium">${this.escapeHtml(item.studentName || '—')}</td>
+          <td><code>${this.escapeHtml(item.prn || '—')}</code></td>
+          <td>${this.escapeHtml(item.branch || '—')}</td>
+          <td>${this.escapeHtml(item.division || '—')}</td>
+          <td>${this.escapeHtml(item.challenge || '—')}</td>
+          <td><span class="badge bg-light text-dark border">${item.attempt || 1}</span></td>
+          <td>
+            <div>${this.escapeHtml(item.submittedOn || '—')}</div>
+            <div class="mt-1">${this.lateStatusBadge(item.isLate)}</div>
+          </td>
+          <td><span class="badge ${this.statusBadgeClass(item.submissionStatus)}">${this.escapeHtml(item.submissionStatus)}</span></td>
+          <td>${facultyBadge}</td>
+          <td>
+            <div class="d-flex flex-wrap gap-2">
+              <button type="button" class="btn btn-outline-primary btn-sm" data-action="view" data-id="${item.id}">View Submission</button>
+              ${evalButton}
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-action="export" data-id="${item.id}">Export PDF</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
   }
 
   renderPagination() {
@@ -371,30 +858,55 @@ class SubmissionsBrowser {
 
     const detailRecord = await this.loadSubmissionDetail(record);
     this.currentDetailsRecord = detailRecord;
+    const isUnallocated = !detailRecord.isAllocated || detailRecord.allocationStatus === 'Unallocated' || !detailRecord.facultyId || detailRecord.facultyId === 'UNKNOWN' || detailRecord.facultyId === 'UNALLOCATED';
+    const canEval = this.canEvaluateRecord(detailRecord);
+
+    if (this.elements.launchEvaluationButton) {
+      if (canEval) {
+        this.elements.launchEvaluationButton.disabled = false;
+        this.elements.launchEvaluationButton.textContent = 'Start Evaluation';
+        this.elements.launchEvaluationButton.title = '';
+      } else {
+        this.elements.launchEvaluationButton.disabled = true;
+        this.elements.launchEvaluationButton.textContent = 'Evaluation Restricted';
+        this.elements.launchEvaluationButton.title = `Evaluation restricted to assigned faculty (${detailRecord.facultyName || detailRecord.facultyId || 'Unallocated'}). Broad institute view is read-only.`;
+      }
+    }
+
     this.elements.detailsContent.innerHTML = `
       <div class="row g-4">
+        ${!canEval ? `
+        <div class="col-12">
+          <div class="alert alert-info border-0 shadow-sm mb-0 d-flex align-items-center gap-2">
+            <i class="bi bi-info-circle-fill text-info fs-5"></i>
+            <span><strong>Read-Only Mode:</strong> This submission is allocated to <strong>${this.escapeHtml(detailRecord.facultyName || detailRecord.facultyId || 'Unallocated')}</strong>. As an institute faculty member you have read-only viewing permissions. Only the allocated faculty member can evaluate or award marks.</span>
+          </div>
+        </div>` : ''}
         <div class="col-lg-6">
           <div class="border rounded-4 p-3 h-100">
             <h4 class="h6 text-uppercase text-muted">Student Information</h4>
             <p class="mb-1"><strong>Name:</strong> ${this.escapeHtml(detailRecord.studentName)}</p>
             <p class="mb-1"><strong>PRN:</strong> ${this.escapeHtml(detailRecord.prn)}</p>
+            <p class="mb-1"><strong>College:</strong> ${this.escapeHtml(detailRecord.collegeName || detailRecord.collegeId || '—')}</p>
             <p class="mb-1"><strong>Branch:</strong> ${this.escapeHtml(detailRecord.branch)}</p>
             <p class="mb-0"><strong>Division:</strong> ${this.escapeHtml(detailRecord.division)}</p>
           </div>
         </div>
         <div class="col-lg-6">
           <div class="border rounded-4 p-3 h-100">
-            <h4 class="h6 text-uppercase text-muted">Challenge Information</h4>
+            <h4 class="h6 text-uppercase text-muted">Challenge & Allocation</h4>
             <p class="mb-1"><strong>Challenge:</strong> ${this.escapeHtml(detailRecord.challenge)}</p>
             <p class="mb-1"><strong>Submission Date:</strong> ${this.escapeHtml(detailRecord.submittedOn)}</p>
+            <p class="mb-1"><strong>Submission Timing:</strong> ${this.lateStatusBadge(detailRecord.isLate)}</p>
             <p class="mb-1"><strong>Attempt Number:</strong> ${detailRecord.attempt}</p>
-            <p class="mb-0"><strong>Time Taken:</strong> ${this.escapeHtml(detailRecord.timeTaken)}</p>
+            <p class="mb-1"><strong>Time Taken:</strong> ${this.escapeHtml(detailRecord.timeTaken)}</p>
+            <p class="mb-0"><strong>Allocated Faculty:</strong> ${isUnallocated ? '<span class="badge bg-warning-subtle text-warning-emphasis">Unallocated</span>' : this.escapeHtml(detailRecord.facultyName || detailRecord.facultyId)}</p>
           </div>
         </div>
         <div class="col-12">
           <div class="border rounded-4 p-3">
             <h4 class="h6 text-uppercase text-muted">Activity Summary</h4>
-            <p class="mb-2"><strong>Submission Status:</strong> <span class="badge ${this.statusBadgeClass(detailRecord.submissionStatus)}">${this.escapeHtml(detailRecord.submissionStatus)}</span></p>
+            <p class="mb-2"><strong>Submission Status:</strong> <span class="badge ${this.statusBadgeClass(detailRecord.submissionStatus)}">${this.escapeHtml(detailRecord.submissionStatus)}</span> <span class="ms-1">${this.lateStatusBadge(detailRecord.isLate)}</span></p>
             <ul class="list-group list-group-flush">${this.renderActivityList(detailRecord.activities)}</ul>
           </div>
         </div>
@@ -403,6 +915,11 @@ class SubmissionsBrowser {
   }
 
   async openEvaluationModal(record) {
+    if (!this.canEvaluateRecord(record)) {
+      this.showPlaceholderNotice(`Access Denied: Evaluation restricted. This submission is allocated to ${record.facultyName || record.facultyId || 'another faculty member'}. Institute-wide view is read-only.`);
+      return;
+    }
+
     this.currentDetailsRecord = record;
     this.elements.evaluationContent.innerHTML = this.loadingMarkup('Loading full submission for evaluation...');
     const modal = new bootstrap.Modal(this.elements.evaluationModal);
@@ -1038,10 +1555,14 @@ class SubmissionsBrowser {
     }
 
     try {
-      const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(record), 600));
-      const fetchPromise = DESSubmissionService.getSubmission(record.id)
-        .then((detail) => (detail ? (detail instanceof SubmissionModel ? detail : new SubmissionModel(detail)) : record))
-        .catch(() => record);
+      const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(record), 800));
+      const fetchPromise = (this.currentScope === 'institute' && DESSubmissionService.getInstituteSubmissionDetail)
+        ? DESSubmissionService.getInstituteSubmissionDetail(record.id)
+            .then((detail) => (detail ? (detail instanceof SubmissionModel ? detail : new SubmissionModel(detail)) : record))
+            .catch(() => record)
+        : DESSubmissionService.getSubmission(record.id)
+            .then((detail) => (detail ? (detail instanceof SubmissionModel ? detail : new SubmissionModel(detail)) : record))
+            .catch(() => record);
 
       return await Promise.race([fetchPromise, timeoutPromise]);
     } catch (error) {
@@ -1094,6 +1615,16 @@ class SubmissionsBrowser {
       Returned: 'bg-warning-subtle text-warning-emphasis'
     };
     return classes[status] || 'bg-secondary-subtle text-secondary-emphasis';
+  }
+
+  lateStatusBadge(isLate) {
+    if (isLate === true) {
+      return '<span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle d-inline-flex align-items-center gap-1"><i class="bi bi-clock-history"></i>LATE</span>';
+    }
+    if (isLate === false) {
+      return '<span class="badge bg-success-subtle text-success-emphasis border border-success-subtle d-inline-flex align-items-center gap-1"><i class="bi bi-check-circle"></i>ON TIME</span>';
+    }
+    return '<span class="badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle d-inline-flex align-items-center gap-1"><i class="bi bi-dash-circle"></i>STATUS UNAVAILABLE</span>';
   }
 
   escapeHtml(value) {
