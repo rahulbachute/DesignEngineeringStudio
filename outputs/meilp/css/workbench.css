@@ -561,6 +561,13 @@ body.workbench-body {
 }
 
 @media print {
+  body.printing-student-report {
+    background: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
   body.printing-student-report * {
     visibility: hidden;
   }
@@ -570,22 +577,48 @@ body.workbench-body {
     visibility: visible;
   }
 
-  body.printing-student-report .student-report-printable {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-
-  body.printing-student-report .student-report-printable .no-print,
+  body.printing-student-report .workbench-shell,
+  body.printing-student-report .workbench-header,
+  body.printing-student-report .workbench-grid,
+  body.printing-student-report .site-footer,
+  body.printing-student-report .workbench-mobile-nav,
   body.printing-student-report .modal-header,
   body.printing-student-report .modal-footer,
-  body.printing-student-report .modal-backdrop {
+  body.printing-student-report .modal-backdrop,
+  body.printing-student-report .no-print,
+  body.printing-student-report [data-print-notice] {
     display: none !important;
+  }
+
+  body.printing-student-report #studentReportModal,
+  body.printing-student-report #studentReportModal .modal-dialog,
+  body.printing-student-report #studentReportModal .modal-content {
+    position: static !important;
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    transform: none !important;
+  }
+
+  body.printing-student-report .student-report-printable {
+    position: static !important;
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
   }
 
   body.printing-student-report .student-report-doc {
@@ -593,6 +626,8 @@ body.workbench-body {
     color: #000000 !important;
     box-shadow: none !important;
     border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   body.printing-student-report .table {
@@ -613,8 +648,20 @@ body.workbench-body {
     background: transparent !important;
   }
 
+  body.printing-student-report .student-report-table tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  body.printing-student-report .student-report-signoff {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    background: #ffffff !important;
+  }
+
   @page {
-    size: A4;
+    size: A4 portrait;
     margin: 15mm;
   }
 }
+

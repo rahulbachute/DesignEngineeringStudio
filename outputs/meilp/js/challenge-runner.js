@@ -1249,12 +1249,18 @@ class ChallengeRunner {
       `;
 
       // Bind modal actions
+      let isPrinting = false;
       const printBtns = existingModal.querySelectorAll("[data-print-student-report]");
       printBtns.forEach((b) => {
-        b.addEventListener("click", () => {
-          document.body.classList.add("printing-student-report");
-          window.print();
-          document.body.classList.remove("printing-student-report");
+        b.addEventListener("click", (evt) => {
+          if (evt) evt.preventDefault();
+          if (isPrinting) return;
+          isPrinting = true;
+          try {
+            this.handlePrintStudentReport(existingModal, config, student);
+          } finally {
+            setTimeout(() => { isPrinting = false; }, 1000);
+          }
         });
       });
 
@@ -1292,6 +1298,383 @@ class ChallengeRunner {
       alert("Unable to generate submission report preview: " + err.message);
     }
   }
+
+  /**
+   * Handles printing or downloading the student submission report.
+   * Works reliably in standalone mode and within Google Sites embedded iframes.
+   */
+  handlePrintStudentReport(existingModal, config = {}, student = {}) {
+    const reportDoc = existingModal.querySelector(".student-report-doc");
+    if (!reportDoc) {
+      console.error("[MEILP] Missing .student-report-doc in report modal");
+      return;
+    }
+
+    const isEmbedded = (function () {
+      try {
+        return window.self !== window.top;
+      } catch (e) {
+        // Cross-origin access to window.top throws SecurityError, confirming iframe context
+        return true;
+      }
+    })();
+
+    // 1. In standalone top-level window, trigger native browser print directly
+    if (!isEmbedded) {
+      try {
+        document.body.classList.add("printing-student-report");
+        const cleanup = () => {
+          document.body.classList.remove("printing-student-report");
+          window.removeEventListener("afterprint", cleanup);
+        };
+        window.addEventListener("afterprint", cleanup, { once: true });
+        setTimeout(cleanup, 2500);
+        window.print();
+        return;
+      } catch (printErr) {
+        console.warn("[MEILP] In-page window.print() failed, falling back to printable view:", printErr);
+      }
+    }
+
+    // 2. Embedded context (Google Sites iframe) or standalone print fallback:
+    // Generate self-contained printable document
+    const title = `Submission Report - ${config.id || "Assignment"} - ${student.rollNumber || student.fullName || "Student"}`;
+    const printableHtml = this.buildPrintableReportHtml(reportDoc.innerHTML, title);
+
+    // Attempt to open in a new tab first (preserves native print dialog directly initiated from user click)
+    let printWin = null;
+    try {
+      printWin = window.open("", "_blank");
+    } catch (popupErr) {
+      printWin = null;
+    }
+
+    if (printWin) {
+      try {
+        printWin.document.open();
+        printWin.document.write(printableHtml);
+        printWin.document.close();
+        if (printWin.focus) {
+          printWin.focus();
+        }
+        return;
+      } catch (writeErr) {
+        console.warn("[MEILP] Writing to popup window failed, proceeding to direct download:", writeErr);
+      }
+    }
+
+    // 3. Fallback when popup window is blocked or restricted:
+    // Download the self-contained printable HTML directly via Blob
+    try {
+      const blob = new Blob([printableHtml], { type: "text/html;charset=utf-8" });
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const filename = `Report_${config.id || "EA"}_${student.rollNumber || "Submission"}_Printable.html`;
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        a.remove();
+        URL.revokeObjectURL(blobUrl);
+      }, 1000);
+
+      this.showModalNotice(
+        existingModal,
+        "Print dialog is restricted in this embedded view. A printable copy of your report has been saved to your downloads. Open the downloaded file to print or save as PDF.",
+        "info"
+      );
+    } catch (downloadErr) {
+      console.error("[MEILP] Failed to download printable summary fallback:", downloadErr);
+      this.showModalNotice(
+        existingModal,
+        "Unable to launch print dialog or download report. Please click 'Copy Summary' to save your submission details.",
+        "danger"
+      );
+    }
+  }
+
+  /**
+   * Displays an alert notice within the student report modal.
+   */
+  showModalNotice(modal, message, type = "info") {
+    let notice = modal.querySelector("[data-print-notice]");
+    if (!notice) {
+      notice = document.createElement("div");
+      notice.setAttribute("data-print-notice", "");
+      const modalBody = modal.querySelector(".modal-body");
+      if (modalBody) {
+        modalBody.insertBefore(notice, modalBody.firstChild);
+      }
+    }
+    notice.className = `alert alert-${type} alert-dismissible fade show mb-3 shadow-sm`;
+    notice.innerHTML = `
+      <div class="d-flex align-items-center">
+        <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+        <div class="small flex-grow-1">${this.escape(message)}</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    `;
+  }
+
+  /**
+   * Generates a self-contained, printable HTML document for A4 print and PDF export.
+   */
+  buildPrintableReportHtml(reportDocHtml, title = "Student Submission Report") {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${this.escape(title)}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f8fafc;
+      color: #0f172a;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .print-actions-bar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .print-actions-bar .btn-action {
+      background: #eab308;
+      color: #0f172a;
+      border: none;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .print-actions-bar .btn-action:hover {
+      background: #ca8a04;
+    }
+    .print-actions-bar .btn-close-win {
+      background: #334155;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .print-actions-bar .btn-close-win:hover {
+      background: #475569;
+    }
+    .print-actions-bar .tip {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .report-wrapper {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    .student-report-doc {
+      background: #ffffff;
+      padding: 32px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    .student-report-header {
+      border-bottom: 2px solid #0b2e59;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .d-flex { display: flex; }
+    .justify-content-between { justify-content: space-between; }
+    .align-items-center { align-items: center; }
+    .align-items-end { align-items: flex-end; }
+    .flex-wrap { flex-wrap: wrap; }
+    .gap-1 { gap: 4px; }
+    .gap-2 { gap: 8px; }
+    .gap-3 { gap: 12px; }
+    .gap-4 { gap: 24px; }
+    .text-center { text-align: center; }
+    .text-start { text-align: left; }
+    .text-end { text-align: right; }
+    .text-muted { color: #64748b !important; }
+    .text-secondary { color: #475569 !important; }
+    .text-primary { color: #0284c7 !important; }
+    .text-dark { color: #0f172a !important; }
+    .text-success { color: #16a34a !important; }
+    .text-white { color: #ffffff !important; }
+    .text-white-50 { color: rgba(255, 255, 255, 0.5) !important; }
+    .fw-bold { font-weight: 700 !important; }
+    .fw-semibold { font-weight: 600 !important; }
+    .fst-italic { font-style: italic !important; }
+    .small { font-size: 12px !important; }
+    .fs-6 { font-size: 14px !important; }
+    .fs-5 { font-size: 16px !important; }
+    .h3, .h4, .h5 { margin: 0; font-weight: 700; }
+    .h3 { font-size: 16px; }
+    .h4 { font-size: 18px; }
+    .h5 { font-size: 16px; }
+    .mb-0 { margin-bottom: 0 !important; }
+    .mb-1 { margin-bottom: 4px !important; }
+    .mb-2 { margin-bottom: 8px !important; }
+    .mb-3 { margin-bottom: 12px !important; }
+    .mb-4 { margin-bottom: 16px !important; }
+    .mt-1 { margin-top: 4px !important; }
+    .mt-4 { margin-top: 16px !important; }
+    .p-2 { padding: 8px !important; }
+    .p-3 { padding: 12px !important; }
+    .p-4 { padding: 16px !important; }
+    .pt-2 { padding-top: 8px !important; }
+    .pt-3 { padding-top: 12px !important; }
+    .pb-3 { padding-bottom: 12px !important; }
+    .px-1 { padding-left: 4px; padding-right: 4px; }
+    .px-2 { padding-left: 8px; padding-right: 8px; }
+    .px-3 { padding-left: 12px; padding-right: 12px; }
+    .py-1 { padding-top: 4px; padding-bottom: 4px; }
+    .py-2 { padding-top: 8px; padding-bottom: 8px; }
+    .rounded { border-radius: 4px; }
+    .rounded-3 { border-radius: 8px; }
+    .rounded-pill { border-radius: 9999px; }
+    .d-inline-block { display: inline-block; }
+    .d-block { display: block; }
+    .border { border: 1px solid #e2e8f0 !important; }
+    .border-top { border-top: 1px solid #cbd5e1 !important; }
+    .border-bottom { border-bottom: 1px solid #cbd5e1 !important; }
+    .border-dark { border-color: #0f172a !important; }
+    .bg-light { background-color: #f8fafc !important; }
+    .bg-white { background-color: #ffffff !important; }
+    .bg-dark { background-color: #0f172a !important; color: #fff !important; }
+    .bg-primary { background-color: #0284c7 !important; color: #fff !important; }
+    .bg-primary-subtle { background-color: #e0f2fe !important; }
+    .bg-success-subtle { background-color: #dcfce7 !important; }
+    .bg-warning-subtle { background-color: #fef9c3 !important; }
+    .bg-secondary-subtle { background-color: #f1f5f9 !important; }
+    .text-primary-emphasis { color: #0369a1 !important; }
+    .text-success-emphasis { color: #15803d !important; }
+    .text-warning-emphasis { color: #a16207 !important; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      line-height: 1.2;
+    }
+    .badge.bg-dark { background: #0f172a; color: #fff; }
+    .badge.bg-primary { background: #0284c7; color: #fff; }
+    .card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      background: #f8fafc;
+    }
+    .card-header {
+      padding: 10px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      font-weight: 700;
+    }
+    .card-body { padding: 14px; }
+    .row { display: flex; flex-wrap: wrap; margin-left: -6px; margin-right: -6px; }
+    .col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; padding: 6px; }
+    .col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; padding: 6px; }
+    .col-sm-6 { flex: 0 0 50%; max-width: 50%; padding: 6px; }
+    @media (max-width: 768px) {
+      .col-sm-6, .col-md-4 { flex: 0 0 100%; max-width: 100%; }
+    }
+    .table-responsive { width: 100%; overflow-x: auto; }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+    .table th, .table td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    .table th {
+      background-color: #f1f5f9;
+      color: #0b2e59;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+    .student-report-signoff {
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 16px;
+      margin-top: 16px;
+    }
+    code {
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      html, body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+      .report-wrapper { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .student-report-doc { border: none !important; box-shadow: none !important; padding: 0 !important; }
+      .table th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .student-report-table tr { page-break-inside: avoid; break-inside: avoid; }
+      .student-report-signoff { background: #ffffff !important; page-break-inside: avoid; break-inside: avoid; }
+      @page { size: A4 portrait; margin: 15mm; }
+    }
+  </style>
+</head>
+<body>
+  <div class="print-actions-bar no-print">
+    <div class="d-flex align-items-center gap-3">
+      <button type="button" class="btn-action" onclick="window.print()">
+        <i class="bi bi-printer-fill"></i> Print / Save as PDF
+      </button>
+      <span class="tip">Destination in print dialog: select <strong>Save as PDF</strong> (Paper size: A4)</span>
+    </div>
+    <button type="button" class="btn-close-win" onclick="window.close()">Close Window</button>
+  </div>
+  <div class="report-wrapper">
+    <div class="student-report-doc">
+      ${reportDocHtml}
+    </div>
+  </div>
+  <script>
+    window.addEventListener("load", function() {
+      setTimeout(function() {
+        try { window.print(); } catch (e) {}
+      }, 350);
+    });
+  <\/script>
+</body>
+</html>`;
+  }
+
 
   /**
    * Appends assignment navigation controls.
