@@ -1,16 +1,18 @@
 {
+  "assignmentId": "EC-05",
+  "totalMarks": 12,
   "maxMarks": {
-    "component-identification": 1,
-    "working-principle": 1,
-    "engineering-assumptions": 0.5,
-    "failure-observation": 1,
-    "free-body-diagram": 1,
-    "engineering-calculations": 6,
-    "material-selection": 1,
-    "stress-concentration": 1,
-    "engineering-investigation": 1,
-    "design-improvement": 1,
-    "engineering-decision": 1,
-    "engineering-report": 1
+    "component-identification": 0.8,
+    "working-principle": 0.8,
+    "engineering-assumptions": 0.4,
+    "failure-observation": 0.8,
+    "free-body-diagram": 0.8,
+    "engineering-calculations": 3.6,
+    "material-selection": 0.8,
+    "stress-concentration": 0.8,
+    "engineering-investigation": 0.8,
+    "design-improvement": 0.8,
+    "engineering-decision": 0.8,
+    "engineering-report": 0.8
   }
 }

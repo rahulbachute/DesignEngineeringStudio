@@ -13,8 +13,14 @@
       "marks": 0,
       "bloomLevel": "L1 Understand",
       "co": "CO1",
-      "po": ["PO1", "PO8", "PO11"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO1",
+        "PO8",
+        "PO11"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "5 minutes"
     },
     {
@@ -25,11 +31,16 @@
       "title": "Component Identification",
       "component": "image-label",
       "statusGroup": "analysis",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L2 Understand",
       "co": "CO1",
-      "po": ["PO1", "PO2"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO1",
+        "PO2"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "10 minutes"
     },
     {
@@ -38,11 +49,17 @@
       "title": "Working Principle",
       "component": "text-mcq",
       "statusGroup": "concept",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L2 Understand",
       "co": "CO1",
-      "po": ["PO1", "PO2", "PO3"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO1",
+        "PO2",
+        "PO3"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "10 minutes"
     },
     {
@@ -51,11 +68,16 @@
       "title": "Engineering Assumptions",
       "component": "reflection",
       "statusGroup": "concept",
-      "marks": 0.5,
+      "marks": 0.4,
       "bloomLevel": "L2 Understand",
       "co": "CO1",
-      "po": ["PO1", "PO2"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO1",
+        "PO2"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "5 minutes"
     },
     {
@@ -64,11 +86,16 @@
       "title": "Failure Observation",
       "component": "selection-cards",
       "statusGroup": "analysis",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L4 Analyse",
       "co": "CO1",
-      "po": ["PO2", "PO3"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO2",
+        "PO3"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "10 minutes"
     },
     {
@@ -77,11 +104,17 @@
       "title": "Free Body Diagram",
       "component": "image-label",
       "statusGroup": "analysis",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L3 Apply",
       "co": "CO1",
-      "po": ["PO1", "PO2", "PO3"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO1",
+        "PO2",
+        "PO3"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "5 minutes"
     },
     {
@@ -90,11 +123,17 @@
       "title": "Engineering Calculations",
       "component": "calculation-inputs",
       "statusGroup": "calculation",
-      "marks": 6,
+      "marks": 3.6,
       "bloomLevel": "L3 Apply",
       "co": "CO1",
-      "po": ["PO1", "PO2", "PO3"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO1",
+        "PO2",
+        "PO3"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "35 minutes"
     },
     {
@@ -103,11 +142,19 @@
       "title": "Material Selection",
       "component": "selection-cards",
       "statusGroup": "decision",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L3 Apply",
       "co": "CO1",
-      "po": ["PO1", "PO2", "PO5", "PO7"],
-      "pso": ["PSO1", "PSO2"],
+      "po": [
+        "PO1",
+        "PO2",
+        "PO5",
+        "PO7"
+      ],
+      "pso": [
+        "PSO1",
+        "PSO2"
+      ],
       "estimatedTime": "10 minutes"
     },
     {
@@ -116,11 +163,16 @@
       "title": "Stress Concentration",
       "component": "text-mcq",
       "statusGroup": "analysis",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L4 Analyse",
       "co": "CO1",
-      "po": ["PO2", "PO3"],
-      "pso": ["PSO1"],
+      "po": [
+        "PO2",
+        "PO3"
+      ],
+      "pso": [
+        "PSO1"
+      ],
       "estimatedTime": "5 minutes"
     },
     {
@@ -129,11 +181,19 @@
       "title": "Engineering Investigation",
       "component": "selection-cards",
       "statusGroup": "decision",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L4 Analyse",
       "co": "CO1",
-      "po": ["PO2", "PO3", "PO7", "PO8"],
-      "pso": ["PSO1", "PSO2"],
+      "po": [
+        "PO2",
+        "PO3",
+        "PO7",
+        "PO8"
+      ],
+      "pso": [
+        "PSO1",
+        "PSO2"
+      ],
       "estimatedTime": "10 minutes"
     },
     {
@@ -142,11 +202,20 @@
       "title": "Design Improvement",
       "component": "selection-cards",
       "statusGroup": "decision",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L5 Evaluate",
       "co": "CO1",
-      "po": ["PO2", "PO3", "PO7", "PO8", "PO11"],
-      "pso": ["PSO1", "PSO2"],
+      "po": [
+        "PO2",
+        "PO3",
+        "PO7",
+        "PO8",
+        "PO11"
+      ],
+      "pso": [
+        "PSO1",
+        "PSO2"
+      ],
       "estimatedTime": "10 minutes"
     },
     {
@@ -155,11 +224,20 @@
       "title": "Engineering Decision",
       "component": "recommendation",
       "statusGroup": "decision",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L5 Evaluate",
       "co": "CO1",
-      "po": ["PO2", "PO3", "PO7", "PO8", "PO11"],
-      "pso": ["PSO1", "PSO2"],
+      "po": [
+        "PO2",
+        "PO3",
+        "PO7",
+        "PO8",
+        "PO11"
+      ],
+      "pso": [
+        "PSO1",
+        "PSO2"
+      ],
       "estimatedTime": "10 minutes"
     },
     {
@@ -168,11 +246,17 @@
       "title": "Engineering Report and Reflection",
       "component": "reflection",
       "statusGroup": "reflection",
-      "marks": 1,
+      "marks": 0.8,
       "bloomLevel": "L5 Evaluate",
       "co": "CO1",
-      "po": ["PO8", "PO9", "PO11"],
-      "pso": ["PSO2"],
+      "po": [
+        "PO8",
+        "PO9",
+        "PO11"
+      ],
+      "pso": [
+        "PSO2"
+      ],
       "estimatedTime": "15 minutes"
     },
     {
@@ -183,8 +267,13 @@
       "marks": 0,
       "bloomLevel": "Submission",
       "co": "CO1",
-      "po": ["PO8", "PO11"],
-      "pso": ["PSO2"],
+      "po": [
+        "PO8",
+        "PO11"
+      ],
+      "pso": [
+        "PSO2"
+      ],
       "estimatedTime": "5 minutes"
     }
   ]

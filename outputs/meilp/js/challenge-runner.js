@@ -1709,25 +1709,38 @@ class ChallengeRunner {
     if (!host || !stepId) {
       return;
     }
-    host.querySelectorAll("[data-response]").forEach((input) => { value[input.dataset.response] = input.value.trim(); });
-    host.querySelectorAll("input[type='radio']:checked, [name='selection'], [name='decision']").forEach((input) => { if (input.name) value[input.name] = input.value; });
-    const ranking = {};
-    host.querySelectorAll("[data-rank]").forEach((input) => { ranking[input.dataset.rank] = input.type === "text" ? input.value.trim() : input.value; });
-    if (Object.keys(ranking).length) value.ranking = ranking;
-    host.querySelectorAll("[data-calc]").forEach((input) => { value[input.dataset.calc] = input.type === "text" ? input.value.trim() : input.value; });
-    host.querySelectorAll("[data-reflection]").forEach((input) => { value[input.dataset.reflection] = input.value.trim(); });
-    host.querySelectorAll("[data-accept-project]").forEach((input) => { value.accepted = input.checked; });
-    if (Object.keys(value).length === 0 && step.component === "image-label") {
-      Object.assign(value, this.response(stepId));
+    // Mounted components own their response schema. Generic DOM selectors must not erase it.
+    const component = this.activeComponent;
+    const ownsResponse = component && component.config && component.config.id === stepId;
+    const collectComponent = ownsResponse && (typeof component.getValue === 'function' ? component.getValue : component.collect);
+    if (typeof collectComponent === 'function') {
+      const snapshot = collectComponent.call(component);
+      if (!snapshot || typeof snapshot !== 'object' || Array.isArray(snapshot)) return false;
+      Object.assign(value, JSON.parse(JSON.stringify(snapshot)));
+    } else {
+      host.querySelectorAll("[data-response]").forEach((input) => { value[input.dataset.response] = input.value.trim(); });
+      host.querySelectorAll("input[type='radio']:checked, [name='selection'], [name='decision']").forEach((input) => { if (input.name) value[input.name] = input.value; });
+      const ranking = {};
+      host.querySelectorAll("[data-rank]").forEach((input) => { ranking[input.dataset.rank] = input.type === "text" ? input.value.trim() : input.value; });
+      if (Object.keys(ranking).length) value.ranking = ranking;
+      host.querySelectorAll("[data-calc]").forEach((input) => { value[input.dataset.calc] = input.type === "text" ? input.value.trim() : input.value; });
+      host.querySelectorAll("[data-reflection]").forEach((input) => { value[input.dataset.reflection] = input.value.trim(); });
+      host.querySelectorAll("[data-accept-project]").forEach((input) => { value.accepted = input.checked; });
+      if (Object.keys(value).length === 0 && step.component === "image-label") {
+        Object.assign(value, this.response(stepId));
+      }
+      if (Object.keys(value).length === 0 && step.component === "information-card") {
+        value.reviewed = true;
+      }
     }
-    if (Object.keys(value).length === 0 && step.component === "information-card") {
-      value.reviewed = true;
-    }
-    this.completed.add(stepId);
+    if (Object.keys(value).length) this.completed.add(stepId);
+    else this.completed.delete(stepId);
+
     this.services.stateManager.update((state) => ({ responses: { ...state.responses, [stepId]: value } }));
     this.persistProgress();
     this.autosaveAttempt();
     this.renderTaskNav();
+    return true;
   }
 
   /**
@@ -1738,8 +1751,7 @@ class ChallengeRunner {
     if (!step || !step.id) {
       return;
     }
-    this.saveStep(step.id);
-    this.completed.add(step.id);
+    if (this.saveStep(step.id) === false) return;
     this.persistProgress();
     this.autosaveAttempt();
     this.renderTaskNav();

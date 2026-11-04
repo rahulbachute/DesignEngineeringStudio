@@ -1,0 +1,721 @@
+{
+  "scope": "26 active catalogue entries: data/assignments.json. Local source audit, not a live student-sheet audit.",
+  "method": "Run the unchanged shared SubmissionEngine against each assignment workflow/rubric with nonempty placeholder responses. Compare rubric keys and combined maxima; inspect emitted suggestion fields. Grouped rubric criteria are summed for diagnostic comparisons only.",
+  "totals": {
+    "assignments": 26,
+    "rubricLookupDefect": 20,
+    "incorrectRecordedMaxima": 3,
+    "groupedRubricSchema": 3,
+    "definitionConflicts": 4,
+    "noSuggestedMarkOutput": 26
+  },
+  "excludedNonCatalogFolders": [
+    "2-ton mobile scissor lift",
+    "cotter joint",
+    "hydraulic press",
+    "recirculating ball screw"
+  ],
+  "mirroredSubmissionEngineIdentical": true,
+  "assignments": [
+    {
+      "id": "EC-01",
+      "title": "Safety Verification of Elevator Suspension Cables",
+      "slug": "elevator",
+      "totalMarks": 24,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "identify-components",
+        "working-principle",
+        "free-body-diagram",
+        "engineering-model",
+        "design-requirements",
+        "material-selection",
+        "engineering-calculations",
+        "engineering-decision"
+      ],
+      "incorrectRecordedMaxima": [
+        {
+          "activityId": "project-charter",
+          "rubricCombinedMax": 1,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "identify-components",
+          "rubricCombinedMax": 2,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "working-principle",
+          "rubricCombinedMax": 2,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "free-body-diagram",
+          "rubricCombinedMax": 2,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "engineering-model",
+          "rubricCombinedMax": 2,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "design-requirements",
+          "rubricCombinedMax": 2,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "material-selection",
+          "rubricCombinedMax": 2,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "engineering-calculations",
+          "rubricCombinedMax": 9,
+          "emittedMax": 0
+        },
+        {
+          "activityId": "engineering-decision",
+          "rubricCombinedMax": 2,
+          "emittedMax": 0
+        }
+      ],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-02",
+      "title": "Determine factor of safety of motorcycle stand and verify whether design is safe",
+      "slug": "motorcycle",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 7
+    },
+    {
+      "id": "EC-03",
+      "title": "Engineering Materials Selection in Two-Wheeler Components",
+      "slug": "materials-selection",
+      "totalMarks": 30,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 6
+    },
+    {
+      "id": "EC-04",
+      "title": "Ergonomic Design and Safety Verification of a Borewell Pump Hand Lever",
+      "slug": "borewell-pump",
+      "totalMarks": 24,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [
+        "mechanical-advantage: rubric activity is absent from workflow",
+        "human-effort: rubric activity is absent from workflow",
+        "reaction-forces: rubric activity is absent from workflow",
+        "bending-moment: rubric activity is absent from workflow",
+        "section-properties: rubric activity is absent from workflow",
+        "stress-analysis: rubric activity is absent from workflow",
+        "design-improvement: rubric activity is absent from workflow",
+        "Workflow maxima total 25 differs from declared assignment total 24"
+      ],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 16
+    },
+    {
+      "id": "EC-05",
+      "title": "Failure Analysis and Material Selection of a Failed Mechanical Component",
+      "slug": "failure-analysis",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [
+        "design-requirements: rubric activity is absent from workflow",
+        "loading-analysis: rubric activity is absent from workflow",
+        "bolt-geometry: rubric activity is absent from workflow",
+        "stress-analysis: rubric activity is absent from workflow",
+        "factor-of-safety: rubric activity is absent from workflow",
+        "Workflow maxima total 16.5 differs from declared assignment total 12"
+      ],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 16
+    },
+    {
+      "id": "EC-06",
+      "title": "Stress Concentration Analysis of a Plate with a Central Hole",
+      "slug": "stress-concentration",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 12
+    },
+    {
+      "id": "EC-07",
+      "title": "Design of Shaft for a Real-World Engineering Application",
+      "slug": "shafts",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 10
+    },
+    {
+      "id": "EC-08",
+      "title": "Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission",
+      "slug": "Keys",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "component-identification",
+        "working-principle",
+        "design-requirements",
+        "engineering-assumptions",
+        "key-design-calculation",
+        "failure-analysis-safety",
+        "engineering-decision",
+        "design-recommendation"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-09",
+      "title": "Identification and Selection of Couplings Used in Mechanical Power Transmission",
+      "slug": "coupling",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "component-identification",
+        "working-principle",
+        "coupling-classification",
+        "application-analysis",
+        "coupling-comparison",
+        "engineering-requirements",
+        "coupling-selection",
+        "engineering-justification",
+        "engineering-decision"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-10",
+      "title": "Design of a Cotter Joint for a Bicycle",
+      "slug": "cotter-joint",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "power-transmission-path",
+        "component-identification",
+        "working-principle",
+        "torque-calculation",
+        "design-assumptions",
+        "cotter-design-calculation",
+        "strength-safety-check",
+        "engineering-decision",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-11",
+      "title": "Design and Analysis of a Knuckle Joint for a Tractor–Trailer",
+      "slug": "kunckle joint",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "power-transmission-path",
+        "component-identification",
+        "working-principle",
+        "load-turning-analysis",
+        "design-assumptions",
+        "knuckle-design-calculation",
+        "failure-safety-check",
+        "engineering-decision",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-12",
+      "title": "Design of a Helical Compression Spring for Motorcycle Suspension",
+      "slug": "helical-spring-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "load-path",
+        "design-requirements",
+        "spring-geometry",
+        "spring-design-calculation",
+        "strength-deflection-check",
+        "application-evaluation",
+        "engineering-recommendation",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-13",
+      "title": "Construction and Design Verification of a Leaf Spring",
+      "slug": "leaf-spring-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "leaf-construction",
+        "load-path",
+        "engineering-model",
+        "design-requirements",
+        "bending-stress-verification",
+        "deflection-safety-check",
+        "engineering-judgement",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-14",
+      "title": "Comparative Study and Selection of Springs for Engineering Applications",
+      "slug": "spring-selection",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "application-function-match",
+        "loading-conditions-compare",
+        "construction-geometry-compare",
+        "design-requirements-compare",
+        "performance-advantages-compare",
+        "engineering-tradeoff",
+        "spring-selection-decision",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-15",
+      "title": "Analysis of an Automobile Suspension System",
+      "slug": "suspension-system-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "load-transmission-path",
+        "component-functions",
+        "spring-and-damper",
+        "suspension-movement",
+        "suspension-performance",
+        "fault-condition-analysis",
+        "engineering-decision-making",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-16",
+      "title": "Fatigue Design of an Automotive Propeller Shaft",
+      "slug": "shaft-fatigue-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "torque-transmission-path",
+        "critical-sections-stress-concentration",
+        "fluctuating-torsional-loading",
+        "fatigue-strength-factors",
+        "fatigue-design-criterion",
+        "shaft-diameter-verification",
+        "fatigue-failure-analysis",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-17",
+      "title": "Fatigue Analysis of a Connecting Rod",
+      "slug": "connecting-rod-fatigue",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "load-transmission-path",
+        "cyclic-loading-analysis",
+        "fatigue-critical-regions",
+        "fatigue-strength-factors",
+        "soderberg-fatigue-criterion",
+        "connecting-rod-cross-section",
+        "fatigue-failure-diagnosis",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-18",
+      "title": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism",
+      "slug": "bench-vice",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "motion-sequence",
+        "design-data",
+        "mean-diameter-helix",
+        "thread-torque",
+        "collar-total-torque",
+        "efficiency-selflocking",
+        "engineering-judgement",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-19",
+      "title": "Analysis of C-Clamp Screw and Collar Friction Effects",
+      "slug": "c-clamp-friction",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "motion-sequence",
+        "design-data",
+        "screw-geometry",
+        "thread-torque",
+        "collar-torque",
+        "total-torque-force",
+        "collar-friction-effect",
+        "engineering-judgement",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-20",
+      "title": "Design of a Power Screw for a Hydraulic Press",
+      "slug": "hydraulic-press",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "motion-sequence",
+        "design-data",
+        "screw-geometry",
+        "thread-torque",
+        "collar-torque",
+        "total-torque-efficiency",
+        "self-locking-safety",
+        "stress-verification",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-21",
+      "title": "Design of Automotive Steering Gear (Recirculating Ball Type)",
+      "slug": "recirculating-ball-steering",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "recirculating-ball-principle",
+        "ball-nut-kinematics",
+        "design-data",
+        "kinematic-analysis",
+        "rack-sector-engagement",
+        "torque-steering-ratio",
+        "complete-kinematic-sequence",
+        "engineering-recommendation",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-22",
+      "title": "Design of a 2-Ton Mobile Scissor Lift Power Screw",
+      "slug": "mobile-scissor-lift",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "component-identification",
+        "scissor-kinematics",
+        "design-data",
+        "screw-geometry",
+        "thread-torque",
+        "collar-torque",
+        "total-torque-efficiency",
+        "self-locking-safety",
+        "stress-verification",
+        "final-report"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-01",
+      "title": "Design of Helical Gears for High-Speed Rotary Equipment",
+      "slug": "helical-gear-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "engineering-visualisation",
+        "gear-geometry",
+        "material-selection",
+        "helical-force-understanding",
+        "strength-calculation",
+        "engineering-decision-canvas",
+        "reflection-synthesis"
+      ],
+      "incorrectRecordedMaxima": [
+        {
+          "activityId": "gear-geometry",
+          "rubricCombinedMax": 1.5,
+          "emittedMax": 1
+        }
+      ],
+      "groupedRubricActivities": [
+        {
+          "activityId": "gear-geometry",
+          "criterionCount": 2
+        },
+        {
+          "activityId": "helical-force-understanding",
+          "criterionCount": 2
+        },
+        {
+          "activityId": "strength-calculation",
+          "criterionCount": 3
+        },
+        {
+          "activityId": "engineering-decision-canvas",
+          "criterionCount": 2
+        }
+      ],
+      "definitionConflicts": [
+        "gear-geometry: workflow maximum 1 differs from combined rubric maximum 1.5"
+      ],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-02",
+      "title": "Design Parameters of Spur Gears for Industrial Conveyor Systems",
+      "slug": "spur-gear-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "conveyor-visualisation",
+        "transmission-requirements",
+        "spur-gear-geometry",
+        "material-and-failure",
+        "lewis-beam-strength",
+        "velocity-and-dynamic-loading",
+        "buckingham-wear-strength",
+        "failure-diagnosis",
+        "parametric-redesign",
+        "engineering-decision-canvas",
+        "reflection-synthesis"
+      ],
+      "incorrectRecordedMaxima": [
+        {
+          "activityId": "transmission-requirements",
+          "rubricCombinedMax": 0.5,
+          "emittedMax": 1
+        },
+        {
+          "activityId": "lewis-beam-strength",
+          "rubricCombinedMax": 2,
+          "emittedMax": 1.5
+        },
+        {
+          "activityId": "parametric-redesign",
+          "rubricCombinedMax": 1.5,
+          "emittedMax": 1
+        }
+      ],
+      "groupedRubricActivities": [
+        {
+          "activityId": "lewis-beam-strength",
+          "criterionCount": 2
+        }
+      ],
+      "definitionConflicts": [
+        "transmission-requirements: workflow maximum 1 differs from combined rubric maximum 0.5",
+        "lewis-beam-strength: workflow maximum 1.5 differs from combined rubric maximum 2",
+        "parametric-redesign: workflow maximum 1 differs from combined rubric maximum 1.5"
+      ],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-03",
+      "title": "Comparison of Spur and Helical Gears in Industrial Power Transmission",
+      "slug": "gear-comparison",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "gear-visualisation",
+        "gear-type-identification",
+        "tooth-engagement-kinematics",
+        "force-characteristics",
+        "bearing-consequences",
+        "dynamic-transmission-behaviour",
+        "manufacturing-and-maintenance",
+        "application-requirement-matrix",
+        "engineering-decision-canvas",
+        "reflection-synthesis"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-04",
+      "title": "Analysis of Spur Gears in a Car Transmission System",
+      "slug": "automotive-spur-gear-analysis",
+      "totalMarks": 12,
+      "rubricLookupDefect": true,
+      "missedRubricActivities": [
+        "project-charter",
+        "transmission-kinematics",
+        "spur-gear-forces",
+        "dynamic-loading",
+        "lewis-beam-strength",
+        "buckingham-wear-analysis",
+        "failure-diagnosis",
+        "gear-adequacy-assessment",
+        "engineering-recommendation",
+        "reflection-synthesis"
+      ],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [
+        {
+          "activityId": "lewis-beam-strength",
+          "criterionCount": 2
+        }
+      ],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 0,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    }
+  ]
+}

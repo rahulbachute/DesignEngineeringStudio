@@ -1,0 +1,426 @@
+{
+  "scope": "26 active catalogue entries: data/assignments.json. Local source audit, not a live student-sheet audit.",
+  "method": "Run the unchanged shared SubmissionEngine against each assignment workflow/rubric with nonempty placeholder responses. Compare rubric keys and combined maxima; inspect emitted suggestion fields. Grouped rubric criteria are summed for diagnostic comparisons only.",
+  "totals": {
+    "assignments": 26,
+    "rubricLookupDefect": 0,
+    "incorrectRecordedMaxima": 0,
+    "groupedRubricSchema": 5,
+    "definitionConflicts": 0,
+    "noSuggestedMarkOutput": 0
+  },
+  "excludedNonCatalogFolders": [
+    "2-ton mobile scissor lift",
+    "cotter joint",
+    "hydraulic press",
+    "recirculating ball screw"
+  ],
+  "mirroredSubmissionEngineIdentical": true,
+  "assignments": [
+    {
+      "id": "EC-01",
+      "title": "Safety Verification of Elevator Suspension Cables",
+      "slug": "elevator",
+      "totalMarks": 24,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 9,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-02",
+      "title": "Determine factor of safety of motorcycle stand and verify whether design is safe",
+      "slug": "motorcycle",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 8,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 7
+    },
+    {
+      "id": "EC-03",
+      "title": "Engineering Materials Selection in Two-Wheeler Components",
+      "slug": "materials-selection",
+      "totalMarks": 30,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 6
+    },
+    {
+      "id": "EC-04",
+      "title": "Ergonomic Design and Safety Verification of a Borewell Pump Hand Lever",
+      "slug": "borewell-pump",
+      "totalMarks": 24,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [
+        {
+          "activityId": "force-effort-analysis",
+          "criterionCount": 3
+        },
+        {
+          "activityId": "structural-analysis",
+          "criterionCount": 3
+        }
+      ],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 13,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 16
+    },
+    {
+      "id": "EC-05",
+      "title": "Failure Analysis and Material Selection of a Failed Mechanical Component",
+      "slug": "failure-analysis",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [
+        {
+          "activityId": "engineering-calculations",
+          "criterionCount": 5
+        }
+      ],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 13,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 16
+    },
+    {
+      "id": "EC-06",
+      "title": "Stress Concentration Analysis of a Plate with a Central Hole",
+      "slug": "stress-concentration",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 12,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 12
+    },
+    {
+      "id": "EC-07",
+      "title": "Design of Shaft for a Real-World Engineering Application",
+      "slug": "shafts",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 10
+    },
+    {
+      "id": "EC-08",
+      "title": "Design and Analysis of Keys Used in Real Mechanical Systems for Torque Transmission",
+      "slug": "Keys",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-09",
+      "title": "Identification and Selection of Couplings Used in Mechanical Power Transmission",
+      "slug": "coupling",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 11,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-10",
+      "title": "Design of a Cotter Joint for a Bicycle",
+      "slug": "cotter-joint",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-11",
+      "title": "Design and Analysis of a Knuckle Joint for a Tractor–Trailer",
+      "slug": "kunckle joint",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-12",
+      "title": "Design of a Helical Compression Spring for Motorcycle Suspension",
+      "slug": "helical-spring-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-13",
+      "title": "Construction and Design Verification of a Leaf Spring",
+      "slug": "leaf-spring-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-14",
+      "title": "Comparative Study and Selection of Springs for Engineering Applications",
+      "slug": "spring-selection",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-15",
+      "title": "Analysis of an Automobile Suspension System",
+      "slug": "suspension-system-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-16",
+      "title": "Fatigue Design of an Automotive Propeller Shaft",
+      "slug": "shaft-fatigue-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-17",
+      "title": "Fatigue Analysis of a Connecting Rod",
+      "slug": "connecting-rod-fatigue",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-18",
+      "title": "Torque Requirement and Efficiency Estimation of a Bench Vice Screw Mechanism",
+      "slug": "bench-vice",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 10,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-19",
+      "title": "Analysis of C-Clamp Screw and Collar Friction Effects",
+      "slug": "c-clamp-friction",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 11,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-20",
+      "title": "Design of a Power Screw for a Hydraulic Press",
+      "slug": "hydraulic-press",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 11,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EC-21",
+      "title": "Design of Automotive Steering Gear (Recirculating Ball Type)",
+      "slug": "recirculating-ball-steering",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 11,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-22",
+      "title": "Design of a 2-Ton Mobile Scissor Lift Power Screw",
+      "slug": "mobile-scissor-lift",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 11,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-01",
+      "title": "Design of Helical Gears for High-Speed Rotary Equipment",
+      "slug": "helical-gear-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [
+        {
+          "activityId": "gear-geometry",
+          "criterionCount": 2
+        },
+        {
+          "activityId": "helical-force-understanding",
+          "criterionCount": 2
+        },
+        {
+          "activityId": "strength-calculation",
+          "criterionCount": 3
+        },
+        {
+          "activityId": "engineering-decision-canvas",
+          "criterionCount": 2
+        }
+      ],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 8,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-02",
+      "title": "Design Parameters of Spur Gears for Industrial Conveyor Systems",
+      "slug": "spur-gear-design",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [
+        {
+          "activityId": "lewis-beam-strength",
+          "criterionCount": 2
+        }
+      ],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 12,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-03",
+      "title": "Comparison of Spur and Helical Gears in Industrial Power Transmission",
+      "slug": "gear-comparison",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 11,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    },
+    {
+      "id": "EA-TS-04",
+      "title": "Analysis of Spur Gears in a Car Transmission System",
+      "slug": "automotive-spur-gear-analysis",
+      "totalMarks": 12,
+      "rubricLookupDefect": false,
+      "missedRubricActivities": [],
+      "incorrectRecordedMaxima": [],
+      "groupedRubricActivities": [
+        {
+          "activityId": "lewis-beam-strength",
+          "criterionCount": 2
+        }
+      ],
+      "definitionConflicts": [],
+      "emittedSuggestedMarkCount": 11,
+      "allResponsesNonempty": true,
+      "explicitlyDisabledAutomaticCriteria": 0
+    }
+  ]
+}

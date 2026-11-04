@@ -174,6 +174,12 @@
                   </div>
                 </div>
 
+                <div id="bulkSystemMarks" class="border rounded-3 p-3 mb-3">
+                  <button class="btn btn-outline-primary" type="button" id="previewBulkSystemMarks" disabled>Prepare System Marks for All Students</button>
+                  <button class="btn btn-primary ms-2" type="button" id="saveBulkSystemMarks" disabled>Confirm Save Drafts</button>
+                  <p class="small text-muted mt-2 mb-0" id="bulkSystemMarksStatus" role="status" aria-live="polite">Switch to My Evaluation Queue and Submission-Details View. System suggestions are saved separately; unreviewed Faculty Marks stay blank.</p>
+                  <div id="bulkSystemMarksReport" class="mt-2"></div>
+                </div>
                 <div class="table-responsive">
                   <table class="table table-hover align-middle">
                     <thead class="table-light" id="submissionTableHead">
@@ -257,6 +263,8 @@
     <script src="js/data/config.js"></script>
     <script src="js/data/auth-service.js"></script>
     <script src="js/data/auth.js?v=20260831c"></script>
+    <script src="js/evaluation-policies.js"></script>
+    <script src="js/evaluation-rules.js"></script>
     <script src="js/data/models.js"></script>
     <script src="js/data/cache-service.js"></script>
     <script src="js/data/cache.js"></script>
@@ -266,6 +274,7 @@
     <script src="js/logger.js"></script>
     <script src="js/services/submission-service.js"></script>
     <script src="js/faculty-layout.js"></script>
+    <script src="js/services/bulk-evaluation-service.js"></script>
     <script src="js/submissions-browser.js"></script>
   </body>
 </html>

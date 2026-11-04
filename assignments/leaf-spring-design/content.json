@@ -34,48 +34,215 @@
   },
   "attemptMode": {
     "individual": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
-      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
-      { "name": "email", "label": "Email Address", "type": "email", "required": true },
-      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
     ],
     "group": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
-      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
-      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
-      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
     ]
   },
   "registration": {
     "attemptModes": [
-      { "id": "individual", "label": "Individual Mode", "description": "Complete leaf spring construction and design verification independently" },
-      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on commercial vehicle leaf spring design verification" }
+      {
+        "id": "individual",
+        "label": "Individual Mode",
+        "description": "Complete leaf spring construction and design verification independently"
+      },
+      {
+        "id": "group",
+        "label": "Group Mode (2-4 Students)",
+        "description": "Collaborate with peers on commercial vehicle leaf spring design verification"
+      }
     ],
     "fields": [
-      { "name": "fullName", "label": "Full Name", "required": true },
-      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
-      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
-      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
-      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
-      { "name": "division", "label": "Division / Section", "required": true },
-      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
-      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "Engineering College",
+        "required": true,
+        "type": "select"
+      },
+      {
+        "name": "branch",
+        "label": "Branch / Discipline",
+        "required": true,
+        "readonly": true,
+        "auto": "Mechanical Engineering"
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
     ]
   },
   "widgets": [
-    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
-    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
-    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
-    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO3 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    }
   ],
   "activities": {
     "project-charter": {
@@ -121,14 +288,62 @@
         "Rear Axle Assembly"
       ],
       "labels": [
-        { "componentNumber": 1, "x": 48, "y": 28, "correctAnswer": "Master Leaf", "feedback": "Longest top leaf with formed spring eyes carrying eye pin bushings." },
-        { "componentNumber": 2, "x": 48, "y": 42, "correctAnswer": "Graduated Leaves", "feedback": "Stack of progressively shorter spring leaves providing uniform bending strength." },
-        { "componentNumber": 3, "x": 15, "y": 25, "correctAnswer": "Front Spring Eye", "feedback": "Front eyelet connected directly to chassis front hanger bracket." },
-        { "componentNumber": 4, "x": 82, "y": 25, "correctAnswer": "Rear Spring Eye & Shackle", "feedback": "Rear eye connected to pivoting shackle accommodating spring length change during deflection." },
-        { "componentNumber": 5, "x": 48, "y": 55, "correctAnswer": "Centre Bolt", "feedback": "Central clamping pin holding leaves in alignment and locating spring on axle seat." },
-        { "componentNumber": 6, "x": 44, "y": 62, "correctAnswer": "U-Bolts (Rebound Clips)", "feedback": "U-shaped threaded rods clamping the spring assembly securely to the axle." },
-        { "componentNumber": 7, "x": 48, "y": 70, "correctAnswer": "Axle Seat / Axle Pad", "feedback": "Machined mounting pad on axle housing supporting the spring centre." },
-        { "componentNumber": 8, "x": 48, "y": 82, "correctAnswer": "Rear Axle Assembly", "feedback": "Commercial vehicle rear axle housing transmitting load to road wheels." }
+        {
+          "componentNumber": 1,
+          "x": 48,
+          "y": 28,
+          "correctAnswer": "Master Leaf",
+          "feedback": "Longest top leaf with formed spring eyes carrying eye pin bushings."
+        },
+        {
+          "componentNumber": 2,
+          "x": 48,
+          "y": 42,
+          "correctAnswer": "Graduated Leaves",
+          "feedback": "Stack of progressively shorter spring leaves providing uniform bending strength."
+        },
+        {
+          "componentNumber": 3,
+          "x": 15,
+          "y": 25,
+          "correctAnswer": "Front Spring Eye",
+          "feedback": "Front eyelet connected directly to chassis front hanger bracket."
+        },
+        {
+          "componentNumber": 4,
+          "x": 82,
+          "y": 25,
+          "correctAnswer": "Rear Spring Eye & Shackle",
+          "feedback": "Rear eye connected to pivoting shackle accommodating spring length change during deflection."
+        },
+        {
+          "componentNumber": 5,
+          "x": 48,
+          "y": 55,
+          "correctAnswer": "Centre Bolt",
+          "feedback": "Central clamping pin holding leaves in alignment and locating spring on axle seat."
+        },
+        {
+          "componentNumber": 6,
+          "x": 44,
+          "y": 62,
+          "correctAnswer": "U-Bolts (Rebound Clips)",
+          "feedback": "U-shaped threaded rods clamping the spring assembly securely to the axle."
+        },
+        {
+          "componentNumber": 7,
+          "x": 48,
+          "y": 70,
+          "correctAnswer": "Axle Seat / Axle Pad",
+          "feedback": "Machined mounting pad on axle housing supporting the spring centre."
+        },
+        {
+          "componentNumber": 8,
+          "x": 48,
+          "y": 82,
+          "correctAnswer": "Rear Axle Assembly",
+          "feedback": "Commercial vehicle rear axle housing transmitting load to road wheels."
+        }
       ]
     },
     "leaf-construction": {
@@ -137,10 +352,26 @@
       "mcq": {
         "question": "Why are multi-leaf springs constructed with leaves of progressively decreasing lengths from top to bottom?",
         "options": [
-          { "id": "opt1", "label": "To approximate a beam of uniform strength, maintaining uniform bending stress along the entire spring length while saving material weight.", "value": "correct" },
-          { "id": "opt2", "label": "To allow the top leaf to snap easily during heavy impacts.", "value": "incorrect1" },
-          { "id": "opt3", "label": "To create space for internal hydraulic oil flow between leaves.", "value": "incorrect2" },
-          { "id": "opt4", "label": "To ensure shorter leaves carry 100% of the load while the master leaf carries zero load.", "value": "incorrect3" }
+          {
+            "id": "opt1",
+            "label": "To approximate a beam of uniform strength, maintaining uniform bending stress along the entire spring length while saving material weight.",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "To allow the top leaf to snap easily during heavy impacts.",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "To create space for internal hydraulic oil flow between leaves.",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "To ensure shorter leaves carry 100% of the load while the master leaf carries zero load.",
+            "value": "incorrect3"
+          }
         ]
       }
     },
@@ -150,10 +381,26 @@
       "mcq": {
         "question": "Which sequence correctly describes the primary load transmission path from vehicle chassis to road wheels?",
         "options": [
-          { "id": "lp1", "label": "Chassis Frame → Spring Eyes & Hanger/Shackle → Multi-Leaf Spring → Axle Seat & U-Bolts → Axle → Wheels", "value": "correct" },
-          { "id": "lp2", "label": "Wheels → Master Leaf → Chassis Frame → Graduated Leaves → U-Bolts → Axle Seat", "value": "incorrect1" },
-          { "id": "lp3", "label": "Axle → Centre Bolt → Front Eye → Chassis Frame → Wheels → Shackle", "value": "incorrect2" },
-          { "id": "lp4", "label": "Graduated Leaves → Centre Bolt → Chassis Frame → Spring Eyes → Axle Seat → Wheels", "value": "incorrect3" }
+          {
+            "id": "lp1",
+            "label": "Chassis Frame → Spring Eyes & Hanger/Shackle → Multi-Leaf Spring → Axle Seat & U-Bolts → Axle → Wheels",
+            "value": "correct"
+          },
+          {
+            "id": "lp2",
+            "label": "Wheels → Master Leaf → Chassis Frame → Graduated Leaves → U-Bolts → Axle Seat",
+            "value": "incorrect1"
+          },
+          {
+            "id": "lp3",
+            "label": "Axle → Centre Bolt → Front Eye → Chassis Frame → Wheels → Shackle",
+            "value": "incorrect2"
+          },
+          {
+            "id": "lp4",
+            "label": "Graduated Leaves → Centre Bolt → Chassis Frame → Spring Eyes → Axle Seat → Wheels",
+            "value": "incorrect3"
+          }
         ]
       }
     },
@@ -168,9 +415,36 @@
         "Semi-span Length (L) = 1,000 / 2 = 500 mm"
       ],
       "fields": [
-        { "id": "centralLoad", "label": "Central Load per Leaf Spring (2P)", "unit": "kN", "placeholder": "20.0", "hint": "2P = 40 / 2 = 20.0 kN" },
-        { "id": "endReaction", "label": "End Reaction Force at Eye (P)", "unit": "kN", "placeholder": "10.0", "hint": "P = 20 / 2 = 10.0 kN" },
-        { "id": "semiSpan", "label": "Semi-span Length (L)", "unit": "mm", "placeholder": "500", "hint": "L = 1000 / 2 = 500 mm" }
+        {
+          "id": "centralLoad",
+          "label": "Central Load per Leaf Spring (2P)",
+          "unit": "kN",
+          "placeholder": "20.0",
+          "hint": "2P = 40 / 2 = 20.0 kN",
+          "expected": 20,
+          "tolerance": 0.2,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "endReaction",
+          "label": "End Reaction Force at Eye (P)",
+          "unit": "kN",
+          "placeholder": "10.0",
+          "hint": "P = 20 / 2 = 10.0 kN",
+          "expected": 10,
+          "tolerance": 0.1,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "semiSpan",
+          "label": "Semi-span Length (L)",
+          "unit": "mm",
+          "placeholder": "500",
+          "hint": "L = 1000 / 2 = 500 mm",
+          "expected": 500,
+          "tolerance": 5,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "design-requirements": {
@@ -185,9 +459,36 @@
         "Material Yield Strength (Syt) = 900 N/mm²"
       ],
       "fields": [
-        { "id": "totalLeaves", "label": "Total Number of Leaves (n)", "unit": "count", "placeholder": "10", "hint": "n = 10" },
-        { "id": "leafWidth", "label": "Leaf Width (b)", "unit": "mm", "placeholder": "60", "hint": "b = 60 mm" },
-        { "id": "leafThickness", "label": "Leaf Thickness (t)", "unit": "mm", "placeholder": "8", "hint": "t = 8 mm" }
+        {
+          "id": "totalLeaves",
+          "label": "Total Number of Leaves (n)",
+          "unit": "count",
+          "placeholder": "10",
+          "hint": "n = 10",
+          "expected": 10,
+          "tolerance": 0.1,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "leafWidth",
+          "label": "Leaf Width (b)",
+          "unit": "mm",
+          "placeholder": "60",
+          "hint": "b = 60 mm",
+          "expected": 60,
+          "tolerance": 0.6,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "leafThickness",
+          "label": "Leaf Thickness (t)",
+          "unit": "mm",
+          "placeholder": "8",
+          "hint": "t = 8 mm",
+          "expected": 8,
+          "tolerance": 0.08,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "bending-stress-verification": {
@@ -200,14 +501,50 @@
         "Leaf Thickness (t) = 8 mm"
       ],
       "formulas": [
-        { "name": "Maximum Bending Moment at Centre (M_max)", "formula": "M_{max} = P \\times L = 10,000 \\times 500 = 5,000,000 \\text{ N}\\cdot\\text{mm}" },
-        { "name": "Total Section Modulus (Z)", "formula": "Z = \\frac{n \\times b \\times t^2}{6} = \\frac{10 \\times 60 \\times 8^2}{6} = 6,400 \\text{ mm}^3" },
-        { "name": "Maximum Bending Stress (sigma_b)", "formula": "\\sigma_b = \\frac{M_{max}}{Z} = \\frac{6 P L}{n b t^2} = \\frac{5,000,000}{6,400} = 781.25 \\text{ N/mm}^2" }
+        {
+          "name": "Maximum Bending Moment at Centre (M_max)",
+          "formula": "M_{max} = P \\times L = 10,000 \\times 500 = 5,000,000 \\text{ N}\\cdot\\text{mm}"
+        },
+        {
+          "name": "Total Section Modulus (Z)",
+          "formula": "Z = \\frac{n \\times b \\times t^2}{6} = \\frac{10 \\times 60 \\times 8^2}{6} = 6,400 \\text{ mm}^3"
+        },
+        {
+          "name": "Maximum Bending Stress (sigma_b)",
+          "formula": "\\sigma_b = \\frac{M_{max}}{Z} = \\frac{6 P L}{n b t^2} = \\frac{5,000,000}{6,400} = 781.25 \\text{ N/mm}^2"
+        }
       ],
       "fields": [
-        { "id": "maxBendingMoment", "label": "Maximum Bending Moment (M_max)", "unit": "kN.mm", "placeholder": "5000", "hint": "M_max = 10 kN * 500 mm = 5000 kN.mm" },
-        { "id": "sectionModulus", "label": "Total Section Modulus (Z)", "unit": "mm³", "placeholder": "6400", "hint": "Z = (10 * 60 * 8^2) / 6 = 6400 mm³" },
-        { "id": "calculatedBendingStress", "label": "Calculated Bending Stress (sigma_b)", "unit": "N/mm²", "placeholder": "781.25", "hint": "sigma_b = (6 * 10000 * 500) / (10 * 60 * 8^2) = 781.25 N/mm²" }
+        {
+          "id": "maxBendingMoment",
+          "label": "Maximum Bending Moment (M_max)",
+          "unit": "kN.mm",
+          "placeholder": "5000",
+          "hint": "M_max = 10 kN * 500 mm = 5000 kN.mm",
+          "expected": 5000,
+          "tolerance": 50,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "sectionModulus",
+          "label": "Total Section Modulus (Z)",
+          "unit": "mm³",
+          "placeholder": "6400",
+          "hint": "Z = (10 * 60 * 8^2) / 6 = 6400 mm³",
+          "expected": 6400,
+          "tolerance": 64,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "calculatedBendingStress",
+          "label": "Calculated Bending Stress (sigma_b)",
+          "unit": "N/mm²",
+          "placeholder": "781.25",
+          "hint": "sigma_b = (6 * 10000 * 500) / (10 * 60 * 8^2) = 781.25 N/mm²",
+          "expected": 781.25,
+          "tolerance": 7.8125,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "deflection-safety-check": {
@@ -220,12 +557,36 @@
         "E = 207,000 N/mm², n = 10, b = 60 mm, t = 8 mm"
       ],
       "formulas": [
-        { "name": "Spring Deflection (delta)", "formula": "\\delta = \\frac{6 P L^3}{E n b t^3} = \\frac{6 \\times 10000 \\times 500^3}{207000 \\times 10 \\times 60 \\times 8^3} = 117.94 \\text{ mm}" },
-        { "name": "Factor of Safety (FoS)", "formula": "FoS = \\frac{S_{yt}}{\\sigma_b} = \\frac{900.0}{781.25} = 1.15" }
+        {
+          "name": "Spring Deflection (delta)",
+          "formula": "\\delta = \\frac{6 P L^3}{E n b t^3} = \\frac{6 \\times 10000 \\times 500^3}{207000 \\times 10 \\times 60 \\times 8^3} = 117.94 \\text{ mm}"
+        },
+        {
+          "name": "Factor of Safety (FoS)",
+          "formula": "FoS = \\frac{S_{yt}}{\\sigma_b} = \\frac{900.0}{781.25} = 1.15"
+        }
       ],
       "fields": [
-        { "id": "calculatedDeflection", "label": "Calculated Spring Deflection (delta)", "unit": "mm", "placeholder": "117.94", "hint": "delta = (6 * 10000 * 500^3) / (207000 * 10 * 60 * 8^3) = 117.94 mm" },
-        { "id": "actualFos", "label": "Calculated Factor of Safety (FoS)", "unit": "FoS", "placeholder": "1.15", "hint": "FoS = 900.0 / 781.25 = 1.15" }
+        {
+          "id": "calculatedDeflection",
+          "label": "Calculated Spring Deflection (delta)",
+          "unit": "mm",
+          "placeholder": "117.94",
+          "hint": "delta = (6 * 10000 * 500^3) / (207000 * 10 * 60 * 8^3) = 117.94 mm",
+          "expected": 117.9423309178744,
+          "tolerance": 1.179423309178744,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "actualFos",
+          "label": "Calculated Factor of Safety (FoS)",
+          "unit": "FoS",
+          "placeholder": "1.15",
+          "hint": "FoS = 900.0 / 781.25 = 1.15",
+          "expected": 1.152,
+          "tolerance": 0.011519999999999999,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "engineering-judgement": {

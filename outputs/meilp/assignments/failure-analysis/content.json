@@ -254,7 +254,7 @@
       "title": "Component Identification",
       "metadata": {
         "activityNumber": 3,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
         "po": [
@@ -350,7 +350,7 @@
       "title": "Working Principle",
       "metadata": {
         "activityNumber": 4,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
         "po": [
@@ -378,7 +378,7 @@
       "title": "Engineering Assumptions",
       "metadata": {
         "activityNumber": 6,
-        "marks": 0.5,
+        "marks": 0.4,
         "bloomLevel": "L2 Understand",
         "co": "CO1",
         "po": [
@@ -398,7 +398,7 @@
       "title": "Failure Observation",
       "metadata": {
         "activityNumber": 7,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
         "po": [
@@ -435,7 +435,7 @@
       "title": "Free Body Diagram",
       "metadata": {
         "activityNumber": 8,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
         "po": [
@@ -484,7 +484,7 @@
       "title": "Engineering Calculations",
       "metadata": {
         "activityNumber": 7,
-        "marks": 6,
+        "marks": 3.6,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
         "po": [
@@ -551,7 +551,7 @@
       "title": "Material Selection",
       "metadata": {
         "activityNumber": 12,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L3 Apply",
         "co": "CO1",
         "po": [
@@ -594,7 +594,7 @@
       "title": "Stress Concentration",
       "metadata": {
         "activityNumber": 13,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
         "po": [
@@ -621,7 +621,7 @@
       "title": "Engineering Investigation",
       "metadata": {
         "activityNumber": 15,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L4 Analyse",
         "co": "CO1",
         "po": [
@@ -669,7 +669,7 @@
       "title": "Design Improvement",
       "metadata": {
         "activityNumber": 16,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
         "po": [
@@ -718,7 +718,7 @@
       "title": "Engineering Decision",
       "metadata": {
         "activityNumber": 17,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
         "po": [
@@ -751,7 +751,7 @@
       "title": "Engineering Report",
       "metadata": {
         "activityNumber": 18,
-        "marks": 1,
+        "marks": 0.8,
         "bloomLevel": "L5 Evaluate",
         "co": "CO1",
         "po": [

@@ -315,14 +315,50 @@
         "Pinion Teeth: z1 = 20, Gear Teeth: z2 = 60"
       ],
       "formulas": [
-        { "name": "Transmission Ratio (i)", "formula": "i = N1 / N2 = z2 / z1" },
-        { "name": "Rated Pinion Torque (T1)", "formula": "T1 = (60 * 10^6 * P) / (2 * pi * N1) [N·mm]" },
-        { "name": "Rated Output Torque (T2)", "formula": "T2 = T1 * i [N·mm]" }
+        {
+          "name": "Transmission Ratio (i)",
+          "formula": "i = N1 / N2 = z2 / z1"
+        },
+        {
+          "name": "Rated Pinion Torque (T1)",
+          "formula": "T1 = (60 * 10^6 * P) / (2 * pi * N1) [N·mm]"
+        },
+        {
+          "name": "Rated Output Torque (T2)",
+          "formula": "T2 = T1 * i [N·mm]"
+        }
       ],
       "fields": [
-        { "id": "transmission_ratio", "label": "Kinematic Transmission Ratio (i)", "unit": "—", "placeholder": "3.00", "hint": "i = 960 / 320 = 3.00" },
-        { "id": "pinion_torque", "label": "Rated Pinion Torque (T1)", "unit": "N·mm", "placeholder": "109419.02", "hint": "T1 = (60 * 10^6 * 11) / (2 * pi * 960)" },
-        { "id": "gear_torque", "label": "Rated Output Torque (T2)", "unit": "N·mm", "placeholder": "328257.06", "hint": "T2 = 109419.02 * 3.00" }
+        {
+          "id": "transmission_ratio",
+          "label": "Kinematic Transmission Ratio (i)",
+          "unit": "—",
+          "placeholder": "3.00",
+          "hint": "i = 960 / 320 = 3.00",
+          "expected": 3,
+          "tolerance": 0.03,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "pinion_torque",
+          "label": "Rated Pinion Torque (T1)",
+          "unit": "N·mm",
+          "placeholder": "109419.02",
+          "hint": "T1 = (60 * 10^6 * 11) / (2 * pi * 960)",
+          "expected": 109419.02337567805,
+          "tolerance": 1094.1902337567806,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "gear_torque",
+          "label": "Rated Output Torque (T2)",
+          "unit": "N·mm",
+          "placeholder": "328257.06",
+          "hint": "T2 = 109419.02 * 3.00",
+          "expected": 328257.07012703415,
+          "tolerance": 3282.5707012703415,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "spur-gear-geometry": {
@@ -336,14 +372,50 @@
         "Tooth System: 20° Full-Depth Involute"
       ],
       "formulas": [
-        { "name": "Pinion Pitch Circle Diameter (d1)", "formula": "d1 = m * z1 [mm]" },
-        { "name": "Gear Pitch Circle Diameter (d2)", "formula": "d2 = m * z2 [mm]" },
-        { "name": "Standard Centre Distance (a)", "formula": "a = (d1 + d2) / 2 [mm]" }
+        {
+          "name": "Pinion Pitch Circle Diameter (d1)",
+          "formula": "d1 = m * z1 [mm]"
+        },
+        {
+          "name": "Gear Pitch Circle Diameter (d2)",
+          "formula": "d2 = m * z2 [mm]"
+        },
+        {
+          "name": "Standard Centre Distance (a)",
+          "formula": "a = (d1 + d2) / 2 [mm]"
+        }
       ],
       "fields": [
-        { "id": "d1", "label": "Pinion Pitch Diameter (d1)", "unit": "mm", "placeholder": "80.00", "hint": "d1 = 4 * 20 = 80.00 mm" },
-        { "id": "d2", "label": "Gear Pitch Diameter (d2)", "unit": "mm", "placeholder": "240.00", "hint": "d2 = 4 * 60 = 240.00 mm" },
-        { "id": "centre_distance", "label": "Standard Centre Distance (a)", "unit": "mm", "placeholder": "160.00", "hint": "a = (80 + 240) / 2 = 160.00 mm" }
+        {
+          "id": "d1",
+          "label": "Pinion Pitch Diameter (d1)",
+          "unit": "mm",
+          "placeholder": "80.00",
+          "hint": "d1 = 4 * 20 = 80.00 mm",
+          "expected": 80,
+          "tolerance": 0.8,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "d2",
+          "label": "Gear Pitch Diameter (d2)",
+          "unit": "mm",
+          "placeholder": "240.00",
+          "hint": "d2 = 4 * 60 = 240.00 mm",
+          "expected": 240,
+          "tolerance": 2.4,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "centre_distance",
+          "label": "Standard Centre Distance (a)",
+          "unit": "mm",
+          "placeholder": "160.00",
+          "hint": "a = (80 + 240) / 2 = 160.00 mm",
+          "expected": 160,
+          "tolerance": 1.6,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "material-and-failure": {
@@ -356,20 +428,54 @@
         "Design Basis: Factor of Safety on Ultimate Tensile Strength = 3.0"
       ],
       "formulas": [
-        { "name": "Permissible Bending Stress", "formula": "sigma_b = Sut / 3 [MPa]" }
+        {
+          "name": "Permissible Bending Stress",
+          "formula": "sigma_b = Sut / 3 [MPa]"
+        }
       ],
       "fields": [
-        { "id": "sigma_b1", "label": "Permissible Bending Stress - Pinion (sigma_b1)", "unit": "MPa", "placeholder": "266.67", "hint": "sigma_b1 = 800 / 3 = 266.67 MPa" },
-        { "id": "sigma_b2", "label": "Permissible Bending Stress - Gear (sigma_b2)", "unit": "MPa", "placeholder": "200.00", "hint": "sigma_b2 = 600 / 3 = 200.00 MPa" }
+        {
+          "id": "sigma_b1",
+          "label": "Permissible Bending Stress - Pinion (sigma_b1)",
+          "unit": "MPa",
+          "placeholder": "266.67",
+          "hint": "sigma_b1 = 800 / 3 = 266.67 MPa",
+          "expected": 266.6666666666667,
+          "tolerance": 2.666666666666667,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "sigma_b2",
+          "label": "Permissible Bending Stress - Gear (sigma_b2)",
+          "unit": "MPa",
+          "placeholder": "200.00",
+          "hint": "sigma_b2 = 600 / 3 = 200.00 MPa",
+          "expected": 200,
+          "tolerance": 2,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ],
       "mcq": {
         "question": "Which pair of failure mechanisms represents the two primary design criteria evaluated in spur gear transmission rating?",
         "options": [
-          { "id": "optA", "label": "Beam bending fatigue failure at tooth root and contact fatigue / surface pitting failure on tooth flank" },
-          { "id": "optB", "label": "Centrifugal rim bursting and shear failure of hub mounting bolts" },
-          { "id": "optC", "label": "Excessive torsional deflection of teeth and plastic yielding at the tip" },
-          { "id": "optD", "label": "High temperature creep deformation and oxidative tooth erosion" }
-        ]
+          {
+            "id": "optA",
+            "label": "Beam bending fatigue failure at tooth root and contact fatigue / surface pitting failure on tooth flank"
+          },
+          {
+            "id": "optB",
+            "label": "Centrifugal rim bursting and shear failure of hub mounting bolts"
+          },
+          {
+            "id": "optC",
+            "label": "Excessive torsional deflection of teeth and plastic yielding at the tip"
+          },
+          {
+            "id": "optD",
+            "label": "High temperature creep deformation and oxidative tooth erosion"
+          }
+        ],
+        "correctAnswer": "optA"
       }
     },
     "lewis-beam-strength": {
@@ -384,18 +490,84 @@
         "Target Factor of Safety: [FOS] = 1.50"
       ],
       "formulas": [
-        { "name": "Lewis Form Factor (Y)", "formula": "Y = 0.484 - (2.87 / z)" },
-        { "name": "Bending Strength Index", "formula": "Strength Index = sigma_b * Y [MPa]" },
-        { "name": "Lewis Beam Strength (Sb)", "formula": "Sb = m * b * sigma_b * Y [N] (evaluated for the weaker element)" },
-        { "name": "Bending Factor of Safety (FOSb)", "formula": "FOSb = Sb / Peff" }
+        {
+          "name": "Lewis Form Factor (Y)",
+          "formula": "Y = 0.484 - (2.87 / z)"
+        },
+        {
+          "name": "Bending Strength Index",
+          "formula": "Strength Index = sigma_b * Y [MPa]"
+        },
+        {
+          "name": "Lewis Beam Strength (Sb)",
+          "formula": "Sb = m * b * sigma_b * Y [N] (evaluated for the weaker element)"
+        },
+        {
+          "name": "Bending Factor of Safety (FOSb)",
+          "formula": "FOSb = Sb / Peff"
+        }
       ],
       "fields": [
-        { "id": "lewis_Y1", "label": "Lewis Form Factor - Pinion (Y1)", "unit": "—", "placeholder": "0.3405", "hint": "Y1 = 0.484 - 2.87 / 20 = 0.3405" },
-        { "id": "lewis_Y2", "label": "Lewis Form Factor - Gear (Y2)", "unit": "—", "placeholder": "0.4362", "hint": "Y2 = 0.484 - 2.87 / 60 = 0.4362" },
-        { "id": "pinion_strength_product", "label": "Pinion Strength Index (sigma_b1 * Y1)", "unit": "MPa", "placeholder": "90.80", "hint": "266.67 * 0.3405 = 90.80 MPa" },
-        { "id": "gear_strength_product", "label": "Gear Strength Index (sigma_b2 * Y2)", "unit": "MPa", "placeholder": "87.24", "hint": "200.00 * 0.4362 = 87.24 MPa (Weaker element: Gear)" },
-        { "id": "beam_strength_Sb", "label": "Lewis Beam Strength (Sb)", "unit": "N", "placeholder": "13957.33", "hint": "Sb = 4 * 40 * 200 * 0.4361667 = 13957.33 N" },
-        { "id": "FOS_bending", "label": "Bending Factor of Safety (FOSb)", "unit": "—", "placeholder": "2.00", "hint": "FOSb = Sb / Peff = 13957.33 / 6965.67 = 2.00 (Safe >= 1.50)" }
+        {
+          "id": "lewis_Y1",
+          "label": "Lewis Form Factor - Pinion (Y1)",
+          "unit": "—",
+          "placeholder": "0.3405",
+          "hint": "Y1 = 0.484 - 2.87 / 20 = 0.3405",
+          "expected": 0.34049999999999997,
+          "tolerance": 0.005,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "lewis_Y2",
+          "label": "Lewis Form Factor - Gear (Y2)",
+          "unit": "—",
+          "placeholder": "0.4362",
+          "hint": "Y2 = 0.484 - 2.87 / 60 = 0.4362",
+          "expected": 0.43616666666666665,
+          "tolerance": 0.005,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "pinion_strength_product",
+          "label": "Pinion Strength Index (sigma_b1 * Y1)",
+          "unit": "MPa",
+          "placeholder": "90.80",
+          "hint": "266.67 * 0.3405 = 90.80 MPa",
+          "expected": 90.8,
+          "tolerance": 0.908,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "gear_strength_product",
+          "label": "Gear Strength Index (sigma_b2 * Y2)",
+          "unit": "MPa",
+          "placeholder": "87.24",
+          "hint": "200.00 * 0.4362 = 87.24 MPa (Weaker element: Gear)",
+          "expected": 87.23333333333333,
+          "tolerance": 0.8723333333333334,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "beam_strength_Sb",
+          "label": "Lewis Beam Strength (Sb)",
+          "unit": "N",
+          "placeholder": "13957.33",
+          "hint": "Sb = 4 * 40 * 200 * 0.4361667 = 13957.33 N",
+          "expected": 13957.333333333332,
+          "tolerance": 139.57333333333332,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "FOS_bending",
+          "label": "Bending Factor of Safety (FOSb)",
+          "unit": "—",
+          "placeholder": "2.00",
+          "hint": "FOSb = Sb / Peff = 13957.33 / 6965.67 = 2.00 (Safe >= 1.50)",
+          "expected": 2.003733057076254,
+          "tolerance": 0.02003733057076254,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "velocity-and-dynamic-loading": {
@@ -410,16 +582,64 @@
         "Load Distribution Factor: Km = 1.25"
       ],
       "formulas": [
-        { "name": "Pitch-Line Velocity (v)", "formula": "v = (pi * d1 * N1) / (60 * 10^3) [m/s]" },
-        { "name": "Barth Velocity Factor (Cv)", "formula": "Cv = 5.6 / (5.6 + sqrt(v))" },
-        { "name": "Tangential Load (Pt)", "formula": "Pt = (2 * T1) / d1 [N]" },
-        { "name": "Effective Dynamic Load (Peff)", "formula": "Peff = (Ka * Km * Pt) / Cv [N]" }
+        {
+          "name": "Pitch-Line Velocity (v)",
+          "formula": "v = (pi * d1 * N1) / (60 * 10^3) [m/s]"
+        },
+        {
+          "name": "Barth Velocity Factor (Cv)",
+          "formula": "Cv = 5.6 / (5.6 + sqrt(v))"
+        },
+        {
+          "name": "Tangential Load (Pt)",
+          "formula": "Pt = (2 * T1) / d1 [N]"
+        },
+        {
+          "name": "Effective Dynamic Load (Peff)",
+          "formula": "Peff = (Ka * Km * Pt) / Cv [N]"
+        }
       ],
       "fields": [
-        { "id": "pitch_velocity", "label": "Pitch-Line Velocity (v)", "unit": "m/s", "placeholder": "4.02", "hint": "v = (pi * 80 * 960) / 60000 = 4.0212 m/s" },
-        { "id": "velocity_factor_Cv", "label": "Barth Velocity Factor (Cv)", "unit": "—", "placeholder": "0.7363", "hint": "Cv = 5.6 / (5.6 + sqrt(4.0212)) = 0.7363" },
-        { "id": "tangential_load", "label": "Tangential Tooth Load (Pt)", "unit": "N", "placeholder": "2735.48", "hint": "Pt = (2 * 109419.02) / 80 = 2735.48 N" },
-        { "id": "effective_load", "label": "Effective Dynamic Load (Peff)", "unit": "N", "placeholder": "6965.67", "hint": "Peff = (1.50 * 1.25 * 2735.48) / 0.7363 = 6965.67 N" }
+        {
+          "id": "pitch_velocity",
+          "label": "Pitch-Line Velocity (v)",
+          "unit": "m/s",
+          "placeholder": "4.02",
+          "hint": "v = (pi * 80 * 960) / 60000 = 4.0212 m/s",
+          "expected": 4.0212385965949355,
+          "tolerance": 0.04021238596594936,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "velocity_factor_Cv",
+          "label": "Barth Velocity Factor (Cv)",
+          "unit": "—",
+          "placeholder": "0.7363",
+          "hint": "Cv = 5.6 / (5.6 + sqrt(4.0212)) = 0.7363",
+          "expected": 0.736328359306939,
+          "tolerance": 0.00736328359306939,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "tangential_load",
+          "label": "Tangential Tooth Load (Pt)",
+          "unit": "N",
+          "placeholder": "2735.48",
+          "hint": "Pt = (2 * 109419.02) / 80 = 2735.48 N",
+          "expected": 2735.475584391951,
+          "tolerance": 27.354755843919513,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "effective_load",
+          "label": "Effective Dynamic Load (Peff)",
+          "unit": "N",
+          "placeholder": "6965.67",
+          "hint": "Peff = (1.50 * 1.25 * 2735.48) / 0.7363 = 6965.67 N",
+          "expected": 6965.665054056236,
+          "tolerance": 69.65665054056237,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "buckingham-wear-strength": {
@@ -434,16 +654,64 @@
         "Target Factor of Safety: [FOS] = 1.50"
       ],
       "formulas": [
-        { "name": "Ratio Factor (Q)", "formula": "Q = (2 * z2) / (z1 + z2)" },
-        { "name": "Load-Stress Factor (K)", "formula": "K = 0.16 * (BHN / 100)^2 [N/mm²]" },
-        { "name": "Buckingham Wear Strength (Sw)", "formula": "Sw = b * Q * d1 * K [N]" },
-        { "name": "Wear Factor of Safety (FOSw)", "formula": "FOSw = Sw / Peff" }
+        {
+          "name": "Ratio Factor (Q)",
+          "formula": "Q = (2 * z2) / (z1 + z2)"
+        },
+        {
+          "name": "Load-Stress Factor (K)",
+          "formula": "K = 0.16 * (BHN / 100)^2 [N/mm²]"
+        },
+        {
+          "name": "Buckingham Wear Strength (Sw)",
+          "formula": "Sw = b * Q * d1 * K [N]"
+        },
+        {
+          "name": "Wear Factor of Safety (FOSw)",
+          "formula": "FOSw = Sw / Peff"
+        }
       ],
       "fields": [
-        { "id": "ratio_factor_Q", "label": "Ratio Factor (Q)", "unit": "—", "placeholder": "1.50", "hint": "Q = (2 * 60) / (20 + 60) = 1.50" },
-        { "id": "load_stress_factor_K", "label": "Load-Stress Factor (K)", "unit": "N/mm²", "placeholder": "1.00", "hint": "K = 0.16 * (250 / 100)^2 = 1.00 N/mm²" },
-        { "id": "wear_strength_Sw", "label": "Buckingham Wear Strength (Sw)", "unit": "N", "placeholder": "4800.00", "hint": "Sw = 40 * 1.50 * 80 * 1.00 = 4800.00 N" },
-        { "id": "FOS_wear", "label": "Wear Factor of Safety (FOSw)", "unit": "—", "placeholder": "0.689", "hint": "FOSw = 4800 / 6965.67 = 0.689 (Unsafe < 1.50)" }
+        {
+          "id": "ratio_factor_Q",
+          "label": "Ratio Factor (Q)",
+          "unit": "—",
+          "placeholder": "1.50",
+          "hint": "Q = (2 * 60) / (20 + 60) = 1.50",
+          "expected": 1.5,
+          "tolerance": 0.015,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "load_stress_factor_K",
+          "label": "Load-Stress Factor (K)",
+          "unit": "N/mm²",
+          "placeholder": "1.00",
+          "hint": "K = 0.16 * (250 / 100)^2 = 1.00 N/mm²",
+          "expected": 1,
+          "tolerance": 0.01,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "wear_strength_Sw",
+          "label": "Buckingham Wear Strength (Sw)",
+          "unit": "N",
+          "placeholder": "4800.00",
+          "hint": "Sw = 40 * 1.50 * 80 * 1.00 = 4800.00 N",
+          "expected": 4800,
+          "tolerance": 48,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "FOS_wear",
+          "label": "Wear Factor of Safety (FOSw)",
+          "unit": "—",
+          "placeholder": "0.689",
+          "hint": "FOSw = 4800 / 6965.67 = 0.689 (Unsafe < 1.50)",
+          "expected": 0.6890942878749059,
+          "tolerance": 0.006890942878749059,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "failure-diagnosis": {
@@ -458,11 +726,24 @@
       "mcq": {
         "question": "Based on the calculated factors of safety (FOSb = 2.00 vs FOSw = 0.689 against target [FOS] = 1.50), what is the governing failure mode and required engineering action?",
         "options": [
-          { "id": "optA", "label": "Governing mode is Surface Wear / Pitting Fatigue (FOSw = 0.689 < 1.50, UNSAFE); beam bending strength is adequate (FOSb = 2.00 >= 1.50). Parametric redesign must enhance contact durability." },
-          { "id": "optB", "label": "Governing mode is Tooth Bending Fracture at the root; tooth wear durability is well within safe operating limits." },
-          { "id": "optC", "label": "Both bending and wear durability are fully compliant; no parametric redesign is necessary." },
-          { "id": "optD", "label": "Both bending and wear fail catastrophically; the gear transmission ratio must be completely inverted." }
-        ]
+          {
+            "id": "optA",
+            "label": "Governing mode is Surface Wear / Pitting Fatigue (FOSw = 0.689 < 1.50, UNSAFE); beam bending strength is adequate (FOSb = 2.00 >= 1.50). Parametric redesign must enhance contact durability."
+          },
+          {
+            "id": "optB",
+            "label": "Governing mode is Tooth Bending Fracture at the root; tooth wear durability is well within safe operating limits."
+          },
+          {
+            "id": "optC",
+            "label": "Both bending and wear durability are fully compliant; no parametric redesign is necessary."
+          },
+          {
+            "id": "optD",
+            "label": "Both bending and wear fail catastrophically; the gear transmission ratio must be completely inverted."
+          }
+        ],
+        "correctAnswer": "optA"
       }
     },
     "parametric-redesign": {
@@ -476,20 +757,110 @@
         "Option C: Increase module to m = 5 mm, face width b = 60 mm (gear hardness = 250 BHN)"
       ],
       "formulas": [
-        { "name": "Option A Wear Strength", "formula": "Sw_A = b_A * Q * d1 * K = 60 * 1.50 * 80 * 1.00 [N]" },
-        { "name": "Option B Load-Stress Factor & Wear Strength", "formula": "K_B = 0.16 * (400 / 100)^2 = 2.56 N/mm², Sw_B = 40 * 1.50 * 80 * 2.56 [N]" },
-        { "name": "Option C Pitch Diameter, Dynamic Load & Wear Strength", "formula": "d1_C = 5 * 20 = 100 mm, v_C = 5.03 m/s, Cv_C = 0.7141, Peff_C = 5745.89 N, Sw_C = 60 * 1.50 * 100 * 1.00 [N]" }
+        {
+          "name": "Option A Wear Strength",
+          "formula": "Sw_A = b_A * Q * d1 * K = 60 * 1.50 * 80 * 1.00 [N]"
+        },
+        {
+          "name": "Option B Load-Stress Factor & Wear Strength",
+          "formula": "K_B = 0.16 * (400 / 100)^2 = 2.56 N/mm², Sw_B = 40 * 1.50 * 80 * 2.56 [N]"
+        },
+        {
+          "name": "Option C Pitch Diameter, Dynamic Load & Wear Strength",
+          "formula": "d1_C = 5 * 20 = 100 mm, v_C = 5.03 m/s, Cv_C = 0.7141, Peff_C = 5745.89 N, Sw_C = 60 * 1.50 * 100 * 1.00 [N]"
+        }
       ],
       "fields": [
-        { "id": "option_A_Sw", "label": "Option A Wear Strength (b = 60 mm)", "unit": "N", "placeholder": "7200.00", "hint": "Sw = 60 * 1.50 * 80 * 1.00 = 7200.00 N" },
-        { "id": "option_A_FOSw", "label": "Option A Wear FOS (b = 60 mm)", "unit": "—", "placeholder": "1.034", "hint": "FOSw = 7200 / 6965.67 = 1.034 (Insufficient < 1.50)" },
-        { "id": "option_B_K", "label": "Option B Load-Stress Factor (400 BHN)", "unit": "N/mm²", "placeholder": "2.56", "hint": "K = 0.16 * (400 / 100)^2 = 2.56 N/mm²" },
-        { "id": "option_B_Sw", "label": "Option B Wear Strength (400 BHN)", "unit": "N", "placeholder": "12288.00", "hint": "Sw = 40 * 1.50 * 80 * 2.56 = 12288.00 N" },
-        { "id": "option_B_FOSw", "label": "Option B Wear FOS (400 BHN)", "unit": "—", "placeholder": "1.764", "hint": "FOSw = 12288 / 6965.67 = 1.764 (Satisfies Target >= 1.50)" },
-        { "id": "option_C_d1", "label": "Option C Pinion Pitch Diameter (m = 5 mm)", "unit": "mm", "placeholder": "100.00", "hint": "d1 = 5 * 20 = 100.00 mm" },
-        { "id": "option_C_Peff", "label": "Option C Effective Dynamic Load (m = 5 mm)", "unit": "N", "placeholder": "5745.89", "hint": "Peff = (1.50 * 1.25 * 2188.38) / 0.7141 = 5745.89 N" },
-        { "id": "option_C_Sw", "label": "Option C Wear Strength (m = 5 mm, b = 60 mm)", "unit": "N", "placeholder": "9000.00", "hint": "Sw = 60 * 1.50 * 100 * 1.00 = 9000.00 N" },
-        { "id": "option_C_FOSw", "label": "Option C Wear FOS (m = 5 mm)", "unit": "—", "placeholder": "1.566", "hint": "FOSw = 9000 / 5745.89 = 1.566 (Satisfies Target >= 1.50)" }
+        {
+          "id": "option_A_Sw",
+          "label": "Option A Wear Strength (b = 60 mm)",
+          "unit": "N",
+          "placeholder": "7200.00",
+          "hint": "Sw = 60 * 1.50 * 80 * 1.00 = 7200.00 N",
+          "expected": 7200,
+          "tolerance": 72,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_A_FOSw",
+          "label": "Option A Wear FOS (b = 60 mm)",
+          "unit": "—",
+          "placeholder": "1.034",
+          "hint": "FOSw = 7200 / 6965.67 = 1.034 (Insufficient < 1.50)",
+          "expected": 1.0336414318123588,
+          "tolerance": 0.010336414318123589,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_B_K",
+          "label": "Option B Load-Stress Factor (400 BHN)",
+          "unit": "N/mm²",
+          "placeholder": "2.56",
+          "hint": "K = 0.16 * (400 / 100)^2 = 2.56 N/mm²",
+          "expected": 2.56,
+          "tolerance": 0.0256,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_B_Sw",
+          "label": "Option B Wear Strength (400 BHN)",
+          "unit": "N",
+          "placeholder": "12288.00",
+          "hint": "Sw = 40 * 1.50 * 80 * 2.56 = 12288.00 N",
+          "expected": 12288,
+          "tolerance": 122.88,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_B_FOSw",
+          "label": "Option B Wear FOS (400 BHN)",
+          "unit": "—",
+          "placeholder": "1.764",
+          "hint": "FOSw = 12288 / 6965.67 = 1.764 (Satisfies Target >= 1.50)",
+          "expected": 1.7640813769597592,
+          "tolerance": 0.017640813769597592,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_C_d1",
+          "label": "Option C Pinion Pitch Diameter (m = 5 mm)",
+          "unit": "mm",
+          "placeholder": "100.00",
+          "hint": "d1 = 5 * 20 = 100.00 mm",
+          "expected": 100,
+          "tolerance": 1,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_C_Peff",
+          "label": "Option C Effective Dynamic Load (m = 5 mm)",
+          "unit": "N",
+          "placeholder": "5745.89",
+          "hint": "Peff = (1.50 * 1.25 * 2188.38) / 0.7141 = 5745.89 N",
+          "expected": 5745.9615862152,
+          "tolerance": 57.459615862152006,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_C_Sw",
+          "label": "Option C Wear Strength (m = 5 mm, b = 60 mm)",
+          "unit": "N",
+          "placeholder": "9000.00",
+          "hint": "Sw = 60 * 1.50 * 100 * 1.00 = 9000.00 N",
+          "expected": 9000,
+          "tolerance": 90,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "option_C_FOSw",
+          "label": "Option C Wear FOS (m = 5 mm)",
+          "unit": "—",
+          "placeholder": "1.566",
+          "hint": "FOSw = 9000 / 5745.89 = 1.566 (Satisfies Target >= 1.50)",
+          "expected": 1.566317467487317,
+          "tolerance": 0.01566317467487317,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "engineering-decision-canvas": {
@@ -503,9 +874,27 @@
         "Option C (Module m=5mm, b=60mm): FOSw = 1.566 (SATISFIES TARGET, Centre Distance increases to a = 200 mm)"
       ],
       "fields": [
-        { "id": "selected_option", "label": "Recommended Engineering Solution (Option B or Option C)", "unit": "—", "placeholder": "Option B (or Option C)", "hint": "State your selected engineering option for conveyor gearbox implementation." },
-        { "id": "casing_impact", "label": "Impact on Gearbox Casing Dimensions & Centre Distance", "unit": "—", "placeholder": "Option B preserves a = 160 mm; Option C increases a to 200 mm...", "hint": "Analyze whether existing casing envelopes can be maintained." },
-        { "id": "manufacturing_feasibility", "label": "Manufacturing & Heat Treatment Feasibility", "unit": "—", "placeholder": "Surface hardening 55C8 plain carbon steel vs re-tooling for m = 5 mm...", "hint": "Discuss induction hardening / flame hardening vs new hobbing tooling." }
+        {
+          "id": "selected_option",
+          "label": "Recommended Engineering Solution (Option B or Option C)",
+          "unit": "—",
+          "placeholder": "Option B (or Option C)",
+          "hint": "State your selected engineering option for conveyor gearbox implementation."
+        },
+        {
+          "id": "casing_impact",
+          "label": "Impact on Gearbox Casing Dimensions & Centre Distance",
+          "unit": "—",
+          "placeholder": "Option B preserves a = 160 mm; Option C increases a to 200 mm...",
+          "hint": "Analyze whether existing casing envelopes can be maintained."
+        },
+        {
+          "id": "manufacturing_feasibility",
+          "label": "Manufacturing & Heat Treatment Feasibility",
+          "unit": "—",
+          "placeholder": "Surface hardening 55C8 plain carbon steel vs re-tooling for m = 5 mm...",
+          "hint": "Discuss induction hardening / flame hardening vs new hobbing tooling."
+        }
       ]
     },
     "reflection-synthesis": {

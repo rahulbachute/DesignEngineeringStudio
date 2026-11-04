@@ -17,7 +17,7 @@ class GuidedWorkflowComponent extends window.MEILP.BaseComponent {
    * Escapes values for safe HTML output.
    */
   escape(value) {
-    return window.MEILP.escapeHtml ? window.MEILP.escapeHtml(value || "") : String(value || "");
+    return window.MEILP.escapeHtml ? window.MEILP.escapeHtml(value ?? "") : String(value ?? "");
   }
 
   static register(registry) {
@@ -59,16 +59,16 @@ class GuidedWorkflowComponent extends window.MEILP.BaseComponent {
     this.steps.forEach((step, index) => {
       const isLocked = false;
       const stepState = this.savedState[step.id] || {};
-      const isCompleted = stepState.value && stepState.value.trim() !== '';
+      const isCompleted = stepState.value !== undefined && stepState.value !== null && String(stepState.value).trim() !== '';
 
       const stepEl = document.createElement('div');
       stepEl.className = `guided-step mb-4 p-3 border rounded`;
       
       let inputHtml = '';
       if (step.type === 'numeric') {
-        inputHtml = `<input type="number" step="any" class="form-control guided-input" data-step-id="${this.escape(step.id)}" value="${this.escape(stepState.value || '')}">`;
+        inputHtml = `<input type="number" step="any" class="form-control guided-input" data-step-id="${this.escape(step.id)}" value="${this.escape(stepState.value ?? '')}">`;
       } else {
-        inputHtml = `<textarea class="form-control guided-input" rows="3" data-step-id="${this.escape(step.id)}">${this.escape(stepState.value || '')}</textarea>`;
+        inputHtml = `<textarea class="form-control guided-input" rows="3" data-step-id="${this.escape(step.id)}">${this.escape(stepState.value ?? '')}</textarea>`;
       }
 
       let statusHtml = '';

@@ -34,48 +34,215 @@
   },
   "attemptMode": {
     "individual": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "fullName", "label": "Full Name", "required": true, "nameOnly": true },
-      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
-      { "name": "email", "label": "Email Address", "type": "email", "required": true },
-      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
     ],
     "group": [
-      { "name": "collegeName", "label": "College / Institution", "type": "select", "required": true },
-      { "name": "groupNumber", "label": "Group Number", "required": true, "numeric": true },
-      { "name": "division", "label": "Division / Section", "type": "select", "options": ["A", "B", "C", "D"], "required": true },
-      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "nameOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "nameOnly": true },
-      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "collegeName",
+        "label": "College / Institution",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "groupNumber",
+        "label": "Group Number",
+        "required": true,
+        "numeric": true
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "type": "select",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "nameOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
     ]
   },
   "registration": {
     "attemptModes": [
-      { "id": "individual", "label": "Individual Mode", "description": "Complete cotter joint design challenge independently" },
-      { "id": "group", "label": "Group Mode (2-4 Students)", "description": "Collaborate with peers on bicycle power transmission cotter joint design" }
+      {
+        "id": "individual",
+        "label": "Individual Mode",
+        "description": "Complete cotter joint design challenge independently"
+      },
+      {
+        "id": "group",
+        "label": "Group Mode (2-4 Students)",
+        "description": "Collaborate with peers on bicycle power transmission cotter joint design"
+      }
     ],
     "fields": [
-      { "name": "fullName", "label": "Full Name", "required": true },
-      { "name": "email", "label": "Email Address", "required": true, "type": "email" },
-      { "name": "rollNo", "label": "Roll Number / Student ID", "required": true },
-      { "name": "collegeName", "label": "Engineering College", "required": true, "type": "select" },
-      { "name": "branch", "label": "Branch / Discipline", "required": true, "readonly": true, "auto": "Mechanical Engineering" },
-      { "name": "division", "label": "Division / Section", "required": true },
-      { "name": "student1", "label": "Lead Student (Group Lead)", "required": true, "groupOnly": true },
-      { "name": "student2", "label": "Student 2", "required": true, "groupOnly": true },
-      { "name": "student3", "label": "Student 3", "required": false, "nameOnly": true },
-      { "name": "student4", "label": "Student 4", "required": false, "nameOnly": true },
-      { "name": "academicYear", "label": "Academic Year", "required": true, "readonly": true, "auto": "academicYear" }
+      {
+        "name": "fullName",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "required": true,
+        "type": "email"
+      },
+      {
+        "name": "rollNo",
+        "label": "Roll Number / Student ID",
+        "required": true
+      },
+      {
+        "name": "collegeName",
+        "label": "Engineering College",
+        "required": true,
+        "type": "select"
+      },
+      {
+        "name": "branch",
+        "label": "Branch / Discipline",
+        "required": true,
+        "readonly": true,
+        "auto": "Mechanical Engineering"
+      },
+      {
+        "name": "division",
+        "label": "Division / Section",
+        "required": true
+      },
+      {
+        "name": "student1",
+        "label": "Lead Student (Group Lead)",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student2",
+        "label": "Student 2",
+        "required": true,
+        "groupOnly": true
+      },
+      {
+        "name": "student3",
+        "label": "Student 3",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "student4",
+        "label": "Student 4",
+        "required": false,
+        "nameOnly": true
+      },
+      {
+        "name": "academicYear",
+        "label": "Academic Year",
+        "required": true,
+        "readonly": true,
+        "auto": "academicYear"
+      }
     ]
   },
   "widgets": [
-    { "id": "progress", "title": "Progress Summary", "icon": "bi-graph-up", "cardType": "information" },
-    { "id": "responses", "title": "Current Responses", "icon": "bi-card-checklist", "cardType": "student-response" },
-    { "id": "cce", "title": "CCE Marks", "icon": "bi-award", "cardType": "result", "text": "Total: 12 marks." },
-    { "id": "obe", "title": "OBE Mapping", "icon": "bi-diagram-2", "cardType": "information", "text": "CO1 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2." }
+    {
+      "id": "progress",
+      "title": "Progress Summary",
+      "icon": "bi-graph-up",
+      "cardType": "information"
+    },
+    {
+      "id": "responses",
+      "title": "Current Responses",
+      "icon": "bi-card-checklist",
+      "cardType": "student-response"
+    },
+    {
+      "id": "cce",
+      "title": "CCE Marks",
+      "icon": "bi-award",
+      "cardType": "result",
+      "text": "Total: 12 marks."
+    },
+    {
+      "id": "obe",
+      "title": "OBE Mapping",
+      "icon": "bi-diagram-2",
+      "cardType": "information",
+      "text": "CO1 mapped to PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO11 and PSO1, PSO2."
+    }
   ],
   "activities": {
     "project-charter": {
@@ -110,10 +277,26 @@
       "mcq": {
         "question": "Which sequence correctly describes the flow of power and torque in a bicycle crank mechanism?",
         "options": [
-          { "id": "opt1", "label": "Pedal Force → Crank Arm → Cotter Joint → Spindle/Axle → Chainring", "value": "correct" },
-          { "id": "opt2", "label": "Pedal Force → Spindle/Axle → Cotter Joint → Crank Arm → Chainring", "value": "incorrect1" },
-          { "id": "opt3", "label": "Chainring → Cotter Joint → Crank Arm → Pedal Force → Spindle", "value": "incorrect2" },
-          { "id": "opt4", "label": "Pedal Force → Chainring → Cotter Joint → Spindle → Crank Arm", "value": "incorrect3" }
+          {
+            "id": "opt1",
+            "label": "Pedal Force → Crank Arm → Cotter Joint → Spindle/Axle → Chainring",
+            "value": "correct"
+          },
+          {
+            "id": "opt2",
+            "label": "Pedal Force → Spindle/Axle → Cotter Joint → Crank Arm → Chainring",
+            "value": "incorrect1"
+          },
+          {
+            "id": "opt3",
+            "label": "Chainring → Cotter Joint → Crank Arm → Pedal Force → Spindle",
+            "value": "incorrect2"
+          },
+          {
+            "id": "opt4",
+            "label": "Pedal Force → Chainring → Cotter Joint → Spindle → Crank Arm",
+            "value": "incorrect3"
+          }
         ]
       }
     },
@@ -132,13 +315,55 @@
         "Pedal Spindle Attachment"
       ],
       "labels": [
-        { "componentNumber": 1, "x": 50, "y": 60, "correctAnswer": "Crank Arm", "feedback": "Pedal crank arm transmitting foot force into torque." },
-        { "componentNumber": 2, "x": 62, "y": 42, "correctAnswer": "Crank Eye / Hub", "feedback": "Hub of crank arm with transverse hole for cotter pin." },
-        { "componentNumber": 3, "x": 60, "y": 45, "correctAnswer": "Spindle / Axle Shaft", "feedback": "Bottom bracket axle shaft with flat cotter seat." },
-        { "componentNumber": 4, "x": 62, "y": 46, "correctAnswer": "Tapered Cotter Pin", "feedback": "Wedge-shaped tapered steel pin driven into joint." },
-        { "componentNumber": 5, "x": 55, "y": 78, "correctAnswer": "Cotter Retaining Nut", "feedback": "Nut securing the threaded end of the cotter pin." },
-        { "componentNumber": 6, "x": 55, "y": 38, "correctAnswer": "Chainring / Sprocket", "feedback": "Drive sprocket delivering power to bicycle rear chain." },
-        { "componentNumber": 7, "x": 52, "y": 72, "correctAnswer": "Pedal Spindle Attachment", "feedback": "Threaded pedal spindle mounted at crank outer end." }
+        {
+          "componentNumber": 1,
+          "x": 50,
+          "y": 60,
+          "correctAnswer": "Crank Arm",
+          "feedback": "Pedal crank arm transmitting foot force into torque."
+        },
+        {
+          "componentNumber": 2,
+          "x": 62,
+          "y": 42,
+          "correctAnswer": "Crank Eye / Hub",
+          "feedback": "Hub of crank arm with transverse hole for cotter pin."
+        },
+        {
+          "componentNumber": 3,
+          "x": 60,
+          "y": 45,
+          "correctAnswer": "Spindle / Axle Shaft",
+          "feedback": "Bottom bracket axle shaft with flat cotter seat."
+        },
+        {
+          "componentNumber": 4,
+          "x": 62,
+          "y": 46,
+          "correctAnswer": "Tapered Cotter Pin",
+          "feedback": "Wedge-shaped tapered steel pin driven into joint."
+        },
+        {
+          "componentNumber": 5,
+          "x": 55,
+          "y": 78,
+          "correctAnswer": "Cotter Retaining Nut",
+          "feedback": "Nut securing the threaded end of the cotter pin."
+        },
+        {
+          "componentNumber": 6,
+          "x": 55,
+          "y": 38,
+          "correctAnswer": "Chainring / Sprocket",
+          "feedback": "Drive sprocket delivering power to bicycle rear chain."
+        },
+        {
+          "componentNumber": 7,
+          "x": 52,
+          "y": 72,
+          "correctAnswer": "Pedal Spindle Attachment",
+          "feedback": "Threaded pedal spindle mounted at crank outer end."
+        }
       ]
     },
     "working-principle": {
@@ -147,10 +372,26 @@
       "mcq": {
         "question": "What is the primary mechanical function of the tapered cotter pin in a bicycle crank joint?",
         "options": [
-          { "id": "wp1", "label": "To lock the crank and spindle together by wedge action, preventing relative rotation and transmitting torque.", "value": "correct" },
-          { "id": "wp2", "label": "To act as a flexible spring that absorbs shock loads during braking.", "value": "incorrect1" },
-          { "id": "wp3", "label": "To permanently weld the crank to the spindle without disassembling capability.", "value": "incorrect2" },
-          { "id": "wp4", "label": "To allow the crank arm to rotate freely around the spindle during pedaling.", "value": "incorrect3" }
+          {
+            "id": "wp1",
+            "label": "To lock the crank and spindle together by wedge action, preventing relative rotation and transmitting torque.",
+            "value": "correct"
+          },
+          {
+            "id": "wp2",
+            "label": "To act as a flexible spring that absorbs shock loads during braking.",
+            "value": "incorrect1"
+          },
+          {
+            "id": "wp3",
+            "label": "To permanently weld the crank to the spindle without disassembling capability.",
+            "value": "incorrect2"
+          },
+          {
+            "id": "wp4",
+            "label": "To allow the crank arm to rotate freely around the spindle during pedaling.",
+            "value": "incorrect3"
+          }
         ]
       }
     },
@@ -162,12 +403,36 @@
         "Spindle Outer Diameter (d) = 16 mm"
       ],
       "formulas": [
-        { "name": "Maximum Transmitted Torque (T)", "formula": "T = F \\times L" },
-        { "name": "Tangential Force at Spindle Surface (Pt)", "formula": "P_t = \\frac{2T}{d}" }
+        {
+          "name": "Maximum Transmitted Torque (T)",
+          "formula": "T = F \\times L"
+        },
+        {
+          "name": "Tangential Force at Spindle Surface (Pt)",
+          "formula": "P_t = \\frac{2T}{d}"
+        }
       ],
       "fields": [
-        { "id": "torque", "label": "Transmitted Torque (T)", "unit": "N-mm", "placeholder": "Enter torque in N-mm", "hint": "T = 600 N * 175 mm" },
-        { "id": "tangentialForce", "label": "Tangential Shear Force at Spindle (Pt)", "unit": "N", "placeholder": "Enter force in N", "hint": "Pt = (2 * T) / 16 mm" }
+        {
+          "id": "torque",
+          "label": "Transmitted Torque (T)",
+          "unit": "N-mm",
+          "placeholder": "Enter torque in N-mm",
+          "hint": "T = 600 N * 175 mm",
+          "expected": 105000,
+          "tolerance": 1050,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "tangentialForce",
+          "label": "Tangential Shear Force at Spindle (Pt)",
+          "unit": "N",
+          "placeholder": "Enter force in N",
+          "hint": "Pt = (2 * T) / 16 mm",
+          "expected": 13125,
+          "tolerance": 131.25,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "design-assumptions": {
@@ -199,12 +464,36 @@
         "Spindle Diameter at Cotter Seat (d) = 16 mm"
       ],
       "formulas": [
-        { "name": "Double Shear Stress in Cotter (tau)", "formula": "\\tau = \\frac{P_t}{2 \\times b \\times t}" },
-        { "name": "Crushing / Bearing Stress in Cotter (sigma_b)", "formula": "\\sigma_b = \\frac{P_t}{b \\times t}" }
+        {
+          "name": "Double Shear Stress in Cotter (tau)",
+          "formula": "\\tau = \\frac{P_t}{2 \\times b \\times t}"
+        },
+        {
+          "name": "Crushing / Bearing Stress in Cotter (sigma_b)",
+          "formula": "\\sigma_b = \\frac{P_t}{b \\times t}"
+        }
       ],
       "fields": [
-        { "id": "shearStress", "label": "Calculated Shear Stress in Cotter (tau)", "unit": "N/mm²", "placeholder": "Enter shear stress in N/mm²", "hint": "tau = Pt / (2 * b * t)" },
-        { "id": "bearingStress", "label": "Calculated Crushing Stress in Cotter (sigma_b)", "unit": "N/mm²", "placeholder": "Enter crushing stress in N/mm²", "hint": "sigma_b = Pt / (b * t)" }
+        {
+          "id": "shearStress",
+          "label": "Calculated Shear Stress in Cotter (tau)",
+          "unit": "N/mm²",
+          "placeholder": "Enter shear stress in N/mm²",
+          "hint": "tau = Pt / (2 * b * t)",
+          "expected": 68.359375,
+          "tolerance": 0.68359375,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "bearingStress",
+          "label": "Calculated Crushing Stress in Cotter (sigma_b)",
+          "unit": "N/mm²",
+          "placeholder": "Enter crushing stress in N/mm²",
+          "hint": "sigma_b = Pt / (b * t)",
+          "expected": 136.71875,
+          "tolerance": 1.3671875,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "strength-safety-check": {
@@ -216,12 +505,36 @@
         "Calculated Crushing Stress (sigma_b) = 136.72 N/mm²"
       ],
       "formulas": [
-        { "name": "Shear Factor of Safety (FoS_shear)", "formula": "FoS_{shear} = \\frac{\\tau_{allowable}}{\\tau_{actual}}" },
-        { "name": "Crushing Factor of Safety (FoS_crush)", "formula": "FoS_{crush} = \\frac{\\sigma_{b,allowable}}{\\sigma_{b,actual}}" }
+        {
+          "name": "Shear Factor of Safety (FoS_shear)",
+          "formula": "FoS_{shear} = \\frac{\\tau_{allowable}}{\\tau_{actual}}"
+        },
+        {
+          "name": "Crushing Factor of Safety (FoS_crush)",
+          "formula": "FoS_{crush} = \\frac{\\sigma_{b,allowable}}{\\sigma_{b,actual}}"
+        }
       ],
       "fields": [
-        { "id": "actualFosShear", "label": "Actual Factor of Safety (Shear)", "unit": "FoS", "placeholder": "Enter FoS value", "hint": "FoS = 75.0 / 68.36" },
-        { "id": "actualFosCrush", "label": "Actual Factor of Safety (Crushing)", "unit": "FoS", "placeholder": "Enter FoS value", "hint": "FoS = 150.0 / 136.72" }
+        {
+          "id": "actualFosShear",
+          "label": "Actual Factor of Safety (Shear)",
+          "unit": "FoS",
+          "placeholder": "Enter FoS value",
+          "hint": "FoS = 75.0 / 68.36",
+          "expected": 1.0971428571428572,
+          "tolerance": 0.010971428571428573,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        },
+        {
+          "id": "actualFosCrush",
+          "label": "Actual Factor of Safety (Crushing)",
+          "unit": "FoS",
+          "placeholder": "Enter FoS value",
+          "hint": "FoS = 150.0 / 136.72",
+          "expected": 1.0971428571428572,
+          "tolerance": 0.010971428571428573,
+          "assessmentBasis": "Stated assignment givens and equations; 1% numeric tolerance (minimum 0.005)."
+        }
       ]
     },
     "engineering-decision": {

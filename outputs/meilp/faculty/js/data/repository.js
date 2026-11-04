@@ -205,6 +205,23 @@
       });
     }
 
+    async getSubmissionForEvaluation(id) {
+      const user = global.DESAuth?.getCurrentUser?.() || {};
+      const response = await this.request('submission', {submissionId:id,facultyId:user.facultyId,authFacultyId:user.facultyId}, 'GET');
+      const detail = this.extractDetail(response);
+      if (!detail?.submissionData || !detail?.submission) throw new Error('Fresh submission details are unavailable.');
+      return this.normalizeSubmission(detail);
+    }
+
+    async getEvaluationCapabilities() {
+      const response = await this.request('evaluationCapabilities', {}, 'GET');
+      const capabilities = response?.data || response;
+      if (response?.success !== true || capabilities?.bulkDraftProtocol !== 'protected-draft-v2' || capabilities?.activityMarksReadback !== true || capabilities?.separateSystemMarks !== true) {
+        throw new Error('The deployed Apps Script backend does not support separate system/faculty marks with verified draft saves. Update the backend before saving.');
+      }
+      return capabilities;
+    }
+
     async getAnalytics() {
       return this.cached('analytics', async () => {
         try {
@@ -273,28 +290,30 @@
       if (global.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest") {
         return { ok: false, success: false, error: 'Guest users cannot perform evaluation.', message: 'Guest users cannot perform evaluation.' };
       }
-      try {
-        const response = await this.request('saveEvaluation', payload, 'POST');
-        this.cache?.clear?.();
-        return response || { ok: true, success: true };
-      } catch (error) {
-        console.warn('[DES] Save evaluation endpoint unreachable. Evaluation saved locally in session:', error.message);
-        this.cache?.clear?.();
-        return { ok: true, success: true, localOnly: true };
+      await this.getEvaluationCapabilities();
+      const result = await this.request('saveEvaluation', payload, 'POST');
+      const saved = result?.data || result;
+      const expectedScores = Object.fromEntries((payload.evaluation?.activities || []).map(a=>[a.id || a.activityId, a.facultyMarks ?? a.marks ?? null]));
+      const sortedScores = scores => JSON.stringify(Object.entries(scores || {}).sort(([left],[right])=>left.localeCompare(right)));
+      const activities = payload.evaluation?.activities || [];
+      const systemMarksMatch = saved?.systemMarksPersisted === true && saved?.systemMarks &&
+        Object.keys(saved.systemMarks).length === activities.length && activities.every(a=> {
+          const value = saved.systemMarks[a.id || a.activityId];
+          return value === null || (typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= Number(a.maxMarks));
+        });
+      const activityMarksMatch = saved?.activityMarksPersisted === true && sortedScores(saved.rubricScores) === sortedScores(expectedScores);
+      if (!systemMarksMatch || !activityMarksMatch || result?.success !== true || result.localOnly || saved?.localOnly || saved?.persisted !== true ||
+          String(saved.submissionId) !== String(payload.submissionId) ||
+          saved.status !== payload.status ||
+          JSON.stringify(saved.evaluation) !== JSON.stringify(payload.evaluation)) {
+        throw new Error('Backend persistence could not be verified. Reload the evaluation before retrying.');
       }
+      this.cache?.clear?.();
+      return { ...result, persisted: true };
     }
 
     async updateEvaluation(payload) {
-      if (global.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest") {
-        return { ok: false, success: false, error: 'Guest users cannot perform evaluation.', message: 'Guest users cannot perform evaluation.' };
-      }
-      try {
-        const response = await this.request('updateEvaluation', payload, 'POST');
-        return response || { ok: true, success: true };
-      } catch (error) {
-        console.warn('[DES] Update evaluation endpoint unreachable. Saved locally:', error.message);
-        return { ok: true, success: true, localOnly: true };
-      }
+      throw new Error('Evaluation updates require the verified saveEvaluation path.');
     }
 
     async getChallenges() {
@@ -406,7 +425,7 @@
       }
 
       let lastError = null;
-      for (let attempt = 0; attempt <= (config.retryCount || 0); attempt += 1) {
+      for (let attempt = 0; attempt <= (method === 'GET' ? (config.retryCount || 0) : 0); attempt += 1) {
         try {
           const response = await fetch(url, options);
           const data = await this.parseResponse(response);
@@ -712,12 +731,14 @@
       const activityResponses = payload.submissionData?.activityResponses;
       if (Array.isArray(activityResponses) && activityResponses.length) {
         return activityResponses.map((activity, index) => ({
+          ...activity,
           id: activity.id || activity.activityId || `activity-${index + 1}`,
           name: activity.title || activity.name || activity.activityTitle || activity.activityId || `Activity ${index + 1}`,
           response: this.summarizeResponse(activity.response ?? activity.studentResponse ?? activity.answers ?? activity),
-          maxMarks: Number(activity.maxMarks ?? activity.marks ?? activity.cceMarks ?? 0),
+          maxMarks: activity.maxMarks ?? activity.cceMarks ?? null,
+          rawResponse: activity.response ?? activity.studentResponse ?? activity.answers ?? null,
           category: activity.category || activity.component || activity.status || 'Activity',
-          systemSuggestedMarks: Number(activity.systemSuggestedMarks ?? activity.suggestedMarks ?? 0)
+          systemSuggestedMarks: activity.systemSuggestedMarks ?? activity.suggestedMarks ?? null
         }));
       }
       if (Array.isArray(row.activities) && row.activities.length) {

@@ -171,7 +171,7 @@ function saveEvaluation(payload) {
     var facultyName = (payload && payload.facultyName) || (payload && payload.evaluatorName) || evalFacultyId;
     var facultyEmail = (payload && payload.facultyEmail) || (payload && payload.evaluatedBy) || '';
     var evaluation = (payload && payload.evaluation) || (payload && (payload.marks !== undefined ? payload.marks : '')) || (payload && payload.hasEvaluation ? payload : '');
-    var facultyMarks = (payload && payload.facultyMarks) || (payload && payload.activities) || [];
+    var facultyMarks = (evaluation && Array.isArray(evaluation.activities) && evaluation.activities) || (payload && payload.facultyMarks) || (payload && payload.activities) || [];
     var feedback = (payload && (payload.feedback || payload.remarks)) || '';
     var rubricScores = normalizeRubricScores_((payload && payload.rubricScores) || {}, facultyMarks);
     var totalMarks = firstDefined_(
@@ -329,14 +329,26 @@ function saveEvaluation(payload) {
     var evaluationData = evaluationSheet.getDataRange().getValues();
     var evaluationHeaderMap = getHeaderMap(evaluationData[0]);
 
-    if (duplicateEvaluationCheck(evaluationData, evaluationHeaderMap, submissionId)) {
-      return response(
-        null,
-        false,
-        'Duplicate Evaluation: this submission has already been evaluated.',
-        409
-      );
+    var existingDraftRow = 0;
+    for (var eri = 1; eri < evaluationData.length; eri++) {
+      if (String(evaluationData[eri][evaluationHeaderMap['Submission ID']]) === String(submissionId)) {
+        if (evaluationData[eri][evaluationHeaderMap['Status']] !== 'Draft' ||
+            String(evaluationData[eri][evaluationHeaderMap['Faculty ID']]) !== evalFacultyId) {
+          return response(null, false, 'Duplicate Evaluation: reload the saved evaluation before proceeding.', 409);
+        }
+        existingDraftRow = eri + 1;
+      }
     }
+    if (payload.bulkAcceptance) {
+      var originalPayloadIndex = submissionsHeaderMap['Full JSON Payload'];
+      var originalPayload = originalPayloadIndex !== undefined ? safeJsonParse(submissionRow[originalPayloadIndex], null) : null;
+      var existingEvaluation = existingDraftRow ? safeJsonParse(evaluationData[existingDraftRow - 1][evaluationHeaderMap['Evaluation']], null) : null;
+      originalPayload = reassessSubmissionPayload_(originalPayload);
+      var bulkError = validateBulkAcceptance_(payload, originalPayload, existingEvaluation, challengeId, evalFacultyId);
+      if (bulkError) return response(null, false, bulkError, 409);
+    }
+    var validation = validateEvaluationMarks_(payload, challengeId);
+    if (validation) return response(null, false, validation, 400);
 
     // -------------------------------------------------------------------
     // Step 4: Build and append the Faculty_Evaluation row, dynamically,
@@ -344,8 +356,17 @@ function saveEvaluation(payload) {
     // field-resolution rules and the length-validation guard.
     // -------------------------------------------------------------------
     var evaluationTimestamp = new Date();
-    var finalStatus = 'Evaluated';
+    var finalStatus = payload.status === 'Draft' ? 'Draft' : 'Evaluated';
 
+    var activityCounts = {scored:0,pending:0};
+    for (var aci = 0; aci < facultyMarks.length; aci++) {
+      if (Number(facultyMarks[aci].maxMarks) > 0) {
+        if (evaluationNumber_(facultyMarks[aci].facultyMarks !== undefined ? facultyMarks[aci].facultyMarks : facultyMarks[aci].marks) === null) activityCounts.pending++;
+        else activityCounts.scored++;
+      }
+    }
+    var systemBreakdown = systemMarkBreakdown_(facultyMarks, submissionRow, submissionsHeaderMap);
+    var facultyTotal = activityCounts.scored ? Number(totalMarks) : null;
     var fieldValues = {
       'Timestamp': evaluationTimestamp,
       'Evaluation Time': evaluationTimestamp,
@@ -353,35 +374,79 @@ function saveEvaluation(payload) {
       'Challenge ID': challengeId,
       'Roll Number': rollNumber,
       'Student Name': studentName,
+      'Faculty ID': evalFacultyId,
       'Faculty Name': facultyName,
       'Faculty Email': facultyEmail,
       'Evaluation': (typeof evaluation === 'object') ? safeJsonStringify(evaluation) : evaluation,
       'Feedback': feedback,
       'Remarks': feedback,
       'Rubric Scores': safeJsonStringify(rubricScores),
-      'Marks': totalMarks,
-      'Total Marks': totalMarks,
+      'Faculty Marks': safeJsonStringify(rubricScores),
+      'Faculty Total': facultyTotal === null ? '' : facultyTotal,
+      'System Marks': safeJsonStringify(systemBreakdown.scores),
+      'System Total': systemBreakdown.total === null ? '' : systemBreakdown.total,
+      'System Scored Activities': systemBreakdown.scored,
+      'System Pending Activities': systemBreakdown.pending,
+      'Scored Activities': activityCounts.scored,
+      'Pending Activities': activityCounts.pending,
+      'Marks': facultyTotal === null ? '' : facultyTotal,
+      'Total Marks': facultyTotal === null ? '' : facultyTotal,
       'Max Marks': maxMarks,
-      'Percentage': percentage,
+      'Percentage': facultyTotal === null ? '' : percentage,
       'Status': finalStatus
     };
 
     if (rubricScores && typeof rubricScores === 'object') {
       for (var key in rubricScores) {
         if (rubricScores.hasOwnProperty(key)) {
-          fieldValues[key] = rubricScores[key];
+          fieldValues[key] = rubricScores[key] === null || rubricScores[key] === undefined ? '' : rubricScores[key];
         }
       }
     }
 
-    appendEvaluationRow(evaluationSheet, fieldValues);
+    for (var systemId in systemBreakdown.scores) {
+      fieldValues['System: ' + systemId] = systemBreakdown.scores[systemId] === null ? '' : systemBreakdown.scores[systemId];
+    }
+    var savedRowNumber = appendEvaluationRow(evaluationSheet, fieldValues, existingDraftRow);
 
     // -------------------------------------------------------------------
     // Step 5: Update the Student_Submissions row's Status to "Evaluated"
     // via header lookup (1-based row/column addressing for Range access).
     // -------------------------------------------------------------------
     var sheetRowNumber = submissionRowIndex + 1; // convert 0-based data index to 1-based sheet row
-    submissionsSheet.getRange(sheetRowNumber, subStatusIndex + 1).setValue(finalStatus);
+    SpreadsheetApp.flush();
+    // Read the stored row after flush; an append call alone is not persistence evidence.
+    var savedRows = evaluationSheet.getDataRange().getValues();
+    var savedMap = getHeaderMap(savedRows[0]);
+    var storedRow = savedRows[savedRowNumber - 1];
+    var storedEvaluation = safeJsonParse(storedRow[savedMap['Evaluation']], null);
+    var storedScores = safeJsonParse(storedRow[savedMap['Rubric Scores']], null);
+    var storedSystemScores = safeJsonParse(storedRow[savedMap['System Marks']], null);
+    var systemCells = {};
+    for (var sysId in systemBreakdown.scores) systemCells['System: ' + sysId] = systemBreakdown.scores[sysId];
+    var systemPersisted = verifyActivityMarks_(storedRow, savedMap, systemCells) &&
+      safeJsonStringify(storedSystemScores) === safeJsonStringify(systemBreakdown.scores) &&
+      verifyMarkTotal_(storedRow[savedMap['System Total']], systemBreakdown.total) &&
+      Number(storedRow[savedMap['System Scored Activities']]) === systemBreakdown.scored &&
+      Number(storedRow[savedMap['System Pending Activities']]) === systemBreakdown.pending;
+    var activitiesPersisted = verifyActivityMarks_(storedRow, savedMap, rubricScores) &&
+      storedScores !== null && safeJsonStringify(storedScores) === safeJsonStringify(rubricScores) &&
+      storedRow[savedMap['Faculty Marks']] === safeJsonStringify(rubricScores) &&
+      verifyMarkTotal_(storedRow[savedMap['Faculty Total']], facultyTotal) &&
+      Number(storedRow[savedMap['Scored Activities']]) === activityCounts.scored &&
+      Number(storedRow[savedMap['Pending Activities']]) === activityCounts.pending;
+    if (!systemPersisted || !activitiesPersisted || String(storedRow[savedMap['Submission ID']]) !== String(submissionId) ||
+        storedRow[savedMap['Status']] !== finalStatus ||
+        Number(storedRow[savedMap['Total Marks']]) !== Number(totalMarks) ||
+        Number(storedRow[savedMap['Max Marks']]) !== Number(maxMarks) ||
+        safeJsonStringify(storedEvaluation) !== safeJsonStringify(evaluation)) {
+      throw new Error('Evaluation persistence verification failed');
+    }
+    if (finalStatus === 'Evaluated') {
+      submissionsSheet.getRange(sheetRowNumber, subStatusIndex + 1).setValue(finalStatus);
+      SpreadsheetApp.flush();
+      if (submissionsSheet.getRange(sheetRowNumber, subStatusIndex + 1).getValues()[0][0] !== finalStatus) throw new Error('Submission status persistence verification failed');
+    }
 
     debugLog('saveEvaluation: evaluation saved and status updated', {
       submissionId: submissionId,
@@ -390,7 +455,16 @@ function saveEvaluation(payload) {
 
     return response({
       submissionId: submissionId,
-      status: finalStatus
+      status: finalStatus,
+      persisted: true,
+      activityMarksPersisted: true,
+      systemMarksPersisted: true,
+      systemMarks: storedSystemScores,
+      systemTotal: systemBreakdown.total,
+      facultyTotal: facultyTotal,
+      rubricScores: storedScores,
+      activityCounts: activityCounts,
+      evaluation: storedEvaluation
     });
 
   } catch (error) {
@@ -480,7 +554,7 @@ function duplicateEvaluationCheck(data, headerMap, submissionId) {
  *   against a future edit to fieldValues or CONFIG.HEADERS.EVALUATION
  *   silently producing a misaligned row.
  */
-function appendEvaluationRow(sheet, fieldValues) {
+function appendEvaluationRow(sheet, fieldValues, existingRowNumber) {
   var range = sheet.getRange(1, 1, 1, sheet.getLastColumn() || 1);
   var currentHeaders = range.getValues()[0];
   
@@ -513,7 +587,12 @@ function appendEvaluationRow(sheet, fieldValues) {
     rowData.push(value);
   }
 
+  if (existingRowNumber) {
+    sheet.getRange(existingRowNumber, 1, 1, rowData.length).setValues([rowData]);
+    return existingRowNumber;
+  }
   sheet.appendRow(rowData);
+  return sheet.getLastRow();
 }
 
 /**
@@ -818,15 +897,204 @@ function calculatePercentage_(totalMarks, maxMarks) {
 }
 
 function normalizeRubricScores_(rubricScores, activities) {
-  if (rubricScores && Object.keys(rubricScores).length > 0) return rubricScores;
-  if (Array.isArray(activities)) {
+  if (Array.isArray(activities) && activities.length) {
     var mapped = {};
     for (var i = 0; i < activities.length; i++) {
-      if (activities[i] && activities[i].id) {
-        mapped[activities[i].id] = activities[i].facultyMarks || 0;
-      }
+      var activity = activities[i], id = activity && (activity.id || activity.activityId);
+      if (id) mapped[id] = evaluationNumber_(activity.facultyMarks !== undefined ? activity.facultyMarks : activity.marks);
     }
     return mapped;
   }
-  return {};
+  return rubricScores || {};
+}
+
+/** Every scored activity gets its own cell; pending drafts remain blank rather than awarded zero. */
+function verifyActivityMarks_(row, headerMap, scores) {
+  for (var key in scores) {
+    if (!Object.prototype.hasOwnProperty.call(scores, key)) continue;
+    if (headerMap[key] === undefined) return false;
+    var stored = row[headerMap[key]], expected = evaluationNumber_(scores[key]);
+    if (expected === null) {
+      if (stored !== '' && stored !== null && stored !== undefined) return false;
+    } else if (evaluationNumber_(stored) !== expected) return false;
+  }
+  return true;
+}
+
+/** Validate the actual assignment policy, not a client-supplied maximum or total. */
+function evaluationNumber_(value) {
+  if ((typeof value !== 'number' && typeof value !== 'string') || String(value).trim() === '' || !isFinite(Number(value))) return null;
+  return Number(value);
+}
+function validateEvaluationMarks_(payload, challengeId) {
+  var id = String(challengeId || '').replace(/^EA-/i, 'EC-');
+  var policy = null;
+  for (var slug in DES_EVALUATION_POLICIES) {
+    if (DES_EVALUATION_POLICIES[slug].id === id || slug === id) policy = DES_EVALUATION_POLICIES[slug];
+  }
+  if (!policy) return 'Assignment evaluation policy unavailable.';
+  if (policy.errors.length) return 'Assignment mapping requires correction: ' + policy.errors.join('; ');
+  if (payload.challengeId && String(payload.challengeId).replace(/^EA-/i, 'EC-') !== policy.id) return 'Assignment identity mismatch.';
+  if (!payload.evaluation || !Array.isArray(payload.evaluation.activities)) return 'Activity evaluation details are required.';
+  var activities = payload.evaluation.activities, seen = {}, total = 0, maximum = 0;
+  var draft = payload.status === 'Draft';
+  for (var i = 0; i < activities.length; i++) {
+    var activity = activities[i], key = activity.id || activity.activityId;
+    var rule = policy.activities[key];
+    var max = evaluationNumber_(activity.maxMarks);
+    var mark = evaluationNumber_(activity.facultyMarks !== undefined ? activity.facultyMarks : activity.marks);
+    if (!rule || seen[key]) return 'Unmapped or duplicate activity: ' + key;
+    seen[key] = true;
+    if (max === null || max < 0 || max !== evaluationNumber_(rule.maxMarks)) return 'Invalid activity maximum: ' + key;
+    if (mark === null && (max === 0 || draft)) mark = 0;
+    if (mark === null || mark < 0 || mark > max) return 'Missing or out-of-range activity marks: ' + key;
+    if (activity.marks !== undefined && activity.marks !== null && evaluationNumber_(activity.marks) !== mark) return 'Inconsistent activity marks: ' + key;
+    if (payload.rubricScores && !(draft && payload.rubricScores[key] === null) && evaluationNumber_(payload.rubricScores[key]) !== mark) return 'Rubric score mismatch: ' + key;
+    total = Math.round((total + mark)*100)/100; maximum = Math.round((maximum + max)*100)/100;
+  }
+  for (var scoreKey in (payload.rubricScores || {})) {
+    if (!seen[scoreKey]) return 'Unmapped rubric score: ' + scoreKey;
+  }
+  for (var activityId in policy.activities) {
+    if (Number(policy.activities[activityId].maxMarks) > 0 && !seen[activityId]) return 'Missing scored activity: ' + activityId;
+  }
+  if (!activities.length || maximum !== policy.total || evaluationNumber_(payload.maxMarks) !== maximum ||
+      evaluationNumber_(payload.totalMarks) !== total || evaluationNumber_(payload.evaluation.totalMarks) !== total ||
+      evaluationNumber_(payload.evaluation.maxMarks) !== maximum) return 'Invalid evaluation or assignment total.';
+  var percentage = Number(((total / maximum) * 100).toFixed(2));
+  if (evaluationNumber_(payload.percentage) !== percentage || evaluationNumber_(payload.evaluation.percentage) !== percentage) return 'Invalid evaluation percentage.';
+  return '';
+}
+
+/** Called only after getSubmission has authorized access to the submission. */
+function attachSavedEvaluation_(fullPayload, submissionId) {
+  var sheet = getSheet(CONFIG.SHEETS.EVALUATION);
+  var rows = sheet.getDataRange().getValues();
+  var map = getHeaderMap(rows[0]);
+  for (var i = rows.length - 1; i > 0; i--) {
+    if (String(rows[i][map['Submission ID']]) === String(submissionId)) {
+      fullPayload.facultyEvaluation = {
+        evaluation: safeJsonParse(rows[i][map['Evaluation']], {}),
+        rubricScores: safeJsonParse(rows[i][map['Rubric Scores']], {}),
+        systemMarks: safeJsonParse(rows[i][map['System Marks']], {}),
+        systemTotal: map['System Total'] !== undefined ? rows[i][map['System Total']] : null,
+        facultyTotal: map['Faculty Total'] !== undefined ? rows[i][map['Faculty Total']] : null,
+        feedback: rows[i][map['Feedback']] || rows[i][map['Remarks']] || '',
+        status: rows[i][map['Status']]
+      };
+      break;
+    }
+  }
+  return fullPayload;
+}
+
+
+/** Bulk acceptance may fill only previously blank, policy-permitted automated marks. */
+function validateBulkAcceptance_(payload, source, currentEvaluation, challengeId, facultyId) {
+  if (payload.status !== 'Draft') return 'Bulk acceptance can save drafts only.';
+  if (!Object.prototype.hasOwnProperty.call(payload, 'expectedEvaluation') ||
+      safeJsonStringify(payload.expectedEvaluation) !== safeJsonStringify(currentEvaluation)) {
+    return 'Evaluation changed after preview. Reload and create a fresh preview.';
+  }
+  if (!source || !source.submissionData || !Array.isArray(source.submissionData.activityResponses)) return 'Original recorded activity responses are unavailable.';
+  var student = source.studentInformation || {};
+  var owner = String(student.facultyId || student.selectedFacultyId || (source.submission || {}).facultyId || source.facultyId || '').trim().toUpperCase();
+  if (owner !== String(facultyId).toUpperCase()) return 'Bulk acceptance requires a verified faculty allocation.';
+  var policy = null, normalizedId = String(challengeId).replace(/^EA-/i, 'EC-');
+  for (var slug in DES_EVALUATION_POLICIES) if (DES_EVALUATION_POLICIES[slug].id === normalizedId) policy = DES_EVALUATION_POLICIES[slug];
+  if (!policy || policy.errors.length) return 'Assignment evaluation policy is unavailable or conflicting.';
+  var acceptedIds = payload.bulkAcceptedActivityIds;
+  if (!Array.isArray(acceptedIds) || (!acceptedIds.length && !payload.suggestionsOnly)) return 'No accepted activity IDs supplied.';
+  if (payload.suggestionsOnly && acceptedIds.length) return 'Suggestion-only drafts cannot accept faculty marks.';
+  var accepted = {};
+  for (var i = 0; i < acceptedIds.length; i++) {
+    if (accepted[acceptedIds[i]]) return 'Duplicate accepted activity ID.';
+    accepted[acceptedIds[i]] = true;
+  }
+  var rows = payload.evaluation && payload.evaluation.activities;
+  if (!Array.isArray(rows)) return 'Activity evaluation details are required.';
+  var originals = source.submissionData.activityResponses;
+  var priorRows = (currentEvaluation && currentEvaluation.activities) || [];
+  for (var j = 0; j < rows.length; j++) {
+    var row = rows[j], id = row.id || row.activityId, rule = policy.activities[id];
+    var original = null, prior = null;
+    for (var oi = 0; oi < originals.length; oi++) if ((originals[oi].id || originals[oi].activityId) === id) original = originals[oi];
+    for (var pi = 0; pi < priorRows.length; pi++) if ((priorRows[pi].id || priorRows[pi].activityId) === id) prior = priorRows[pi];
+    if (!original || !rule) return 'Activity mapping changed. Create a fresh preview.';
+    var oldMark = prior && prior.facultyMarks !== null && prior.facultyMarks !== undefined ? prior.facultyMarks : original.facultyMarks;
+    if (oldMark === null || oldMark === undefined) oldMark = ((source.facultyEvaluation || {}).rubricScores || {})[id];
+    var oldValue = evaluationNumber_(oldMark);
+    var newValue = evaluationNumber_(row.facultyMarks);
+    if (!payload.suggestionsOnly && Number(rule.maxMarks) === 0) oldValue = 0;
+    if (accepted[id]) {
+      var suggestion = evaluationNumber_(original.systemSuggestedMarks !== undefined && original.systemSuggestedMarks !== null ? original.systemSuggestedMarks : original.suggestedMarks);
+      if (oldValue !== null || !rule.allowAutomated || rule.procedural || !(Number(rule.maxMarks) > 0) ||
+          suggestion === null || suggestion < 0 || suggestion > Number(rule.maxMarks) || newValue !== suggestion) return 'Bulk acceptance would replace faculty marks or use an invalid system suggestion: ' + id;
+      delete accepted[id];
+    } else if (newValue !== oldValue) return 'Independent faculty marks must remain unchanged: ' + id;
+    var oldReason = (prior && prior.reason) || original.reason || '';
+    if (String(row.reason || '') !== String(oldReason)) return 'Faculty remarks changed after preview: ' + id;
+  }
+  for (var remaining in accepted) return 'Accepted activity was not included: ' + remaining;
+  return '';
+}
+
+
+/** Reassess a returned payload in memory. Original spreadsheet responses are never rewritten here. */
+function reassessSubmissionPayload_(payload) {
+  if (!payload || !payload.submissionData || !Array.isArray(payload.submissionData.activityResponses)) return payload;
+  if (typeof DESAssessmentCore === 'undefined') return payload;
+  var id = String((payload.challengeMetadata || {}).id || '').replace(/^EA-/i, 'EC-');
+  var policy = null;
+  for (var slug in DES_EVALUATION_POLICIES) if (DES_EVALUATION_POLICIES[slug].id === id || slug === id) policy = DES_EVALUATION_POLICIES[slug];
+  if (!policy || policy.errors.length) return payload;
+  var corrections = [], rows = payload.submissionData.activityResponses;
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i], key = row.id || row.activityId, rule = policy.activities[key];
+    if (!rule || rule.maxMarks === null) continue;
+    var oldMaximum = row.maxMarks !== undefined && row.maxMarks !== null ? row.maxMarks : row.cceMarks;
+    if (evaluationNumber_(oldMaximum) !== Number(rule.maxMarks)) {
+      corrections.push({activityId:key,recordedMaximum:oldMaximum === undefined ? null : oldMaximum,correctedMaximum:rule.maxMarks});
+      row.recordedMaximum = oldMaximum === undefined ? null : oldMaximum;
+    }
+    row.maxMarks = rule.maxMarks;
+    row.cceMarks = rule.maxMarks;
+    var assessment = DESAssessmentCore.assess(rule.assessment, row.response !== undefined ? row.response : row.studentResponse);
+    // Recompute keyed suggestions even when an older/client score exists; blank answers stay unassessed.
+    if ((rule.assessment && rule.assessment.checks && rule.assessment.checks.length) || row.systemSuggestedMarks === undefined || row.systemSuggestedMarks === null) row.systemSuggestedMarks = assessment.marks;
+    if (!rule.allowAutomated) row.systemSuggestedMarks = null;
+    row.systemAssessment = assessment;
+    row.assessmentPolicyRevision = policy.revision;
+  }
+  payload.assessmentSummary = {version:'response-assessment-v2',policyRevision:policy.revision,maximumCorrections:corrections,source:'recorded-responses',persisted:false};
+  return payload;
+}
+
+
+/** System suggestions are advisory and never substitute for faculty awards. */
+function systemMarkBreakdown_(activities, submissionRow, headerMap) {
+  var payloadIndex = headerMap['Full JSON Payload'];
+  var original = payloadIndex !== undefined ? safeJsonParse(submissionRow[payloadIndex], null) : null;
+  original = reassessSubmissionPayload_(original);
+  var recorded = original && original.submissionData && original.submissionData.activityResponses || [];
+  var scores = {}, total = 0, scored = 0, pending = 0;
+  for (var i = 0; i < activities.length; i++) {
+    var activity = activities[i], id = activity.id || activity.activityId, max = evaluationNumber_(activity.maxMarks), suggestion = null;
+    for (var j = 0; j < recorded.length; j++) {
+      if ((recorded[j].id || recorded[j].activityId) === id) {
+        suggestion = evaluationNumber_(recorded[j].systemSuggestedMarks !== undefined ? recorded[j].systemSuggestedMarks : recorded[j].suggestedMarks);
+        break;
+      }
+    }
+    if (suggestion !== null && (max === null || suggestion < 0 || suggestion > max)) suggestion = null;
+    scores[id] = suggestion;
+    if (max > 0) {
+      if (suggestion === null) pending++;
+      else { scored++; total = Math.round((total + suggestion)*100)/100; }
+    }
+  }
+  return {scores:scores,total:scored?total:null,scored:scored,pending:pending};
+}
+function verifyMarkTotal_(stored, expected) {
+  return expected === null ? (stored === '' || stored === null || stored === undefined) : evaluationNumber_(stored) === expected;
 }

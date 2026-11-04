@@ -3,6 +3,7 @@ class EvaluationEngine {
     this.currentEvaluation = this.createEmptyEvaluation();
     this.activityState = [];
     this.isLoading = false;
+    this.isSaving = false;
     this.facultyName = window.DESAuth?.getCurrentUser?.().name || 'Faculty';
 
     this.elements = {
@@ -31,7 +32,7 @@ class EvaluationEngine {
     const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
     if (isGuest) {
       if (this.elements.saveButton) this.elements.saveButton.disabled = true;
-      if (this.elements.submitButton) this.elements.submitButton.disabled = true;
+    if (this.elements.submitButton) this.elements.submitButton.disabled = true;
       if (this.elements.acceptAllButton) this.elements.acceptAllButton.disabled = true;
       if (this.elements.resetButton) this.elements.resetButton.disabled = true;
     }
@@ -298,13 +299,8 @@ class EvaluationEngine {
   }
 
   createEvaluationFromSubmission(submission) {
-    let sourceActivities = submission.activities || [];
-    const isGenericPlaceholder = sourceActivities.length > 0 && sourceActivities.every((a) => a.id === 'act-1' || a.id === 'act-2' || a.name === 'Real-World Component Data' || a.name === 'Engineering Calculation Engine');
-    const expectedCount = this.getExpectedActivityCount(submission.challenge || submission.challengeId);
-
-    if (!sourceActivities.length || sourceActivities.length < expectedCount || isGenericPlaceholder) {
-      sourceActivities = this.getStepwiseActivitiesForChallenge(submission.challenge || submission.challengeId);
-    }
+    this.policy = DESEvaluationRules.policy(submission);
+    const sourceActivities = DESEvaluationRules.normalize(submission);
 
     return {
       studentName: submission.studentName,
@@ -323,7 +319,7 @@ class EvaluationEngine {
           ? submission.rawPayload.submission.isLate
           : null),
       activities: sourceActivities.map((activity) => {
-        const isCalc = this.isCalculationActivity(activity);
+        const isCalc = DESEvaluationRules.eligible(activity);
         return {
           ...activity,
           title: activity.name || activity.title,
@@ -331,7 +327,7 @@ class EvaluationEngine {
           subType: isCalc ? 'System Formula Evaluation' : 'Faculty Subjective Review',
           studentResponse: activity.response,
           correctAnswer: activity.correctAnswer || (isCalc ? 'Auto-evaluated calculation formula' : 'Faculty evaluation criterion'),
-          systemSuggestedMarks: Number(activity.systemSuggestedMarks) || Number(activity.maxMarks) || 2,
+          systemSuggestedMarks: activity.systemSuggestedMarks,
           category: activity.category || 'Activity'
         };
       })
@@ -341,8 +337,9 @@ class EvaluationEngine {
   createActivityState(activities) {
     return activities.map((activity) => ({
       ...activity,
-      facultyMarks: activity.systemSuggestedMarks,
-      reason: '',
+      facultyMarks: activity.facultyMarks ?? '',
+      reason: activity.reason || '',
+      markOrigin: DESEvaluationRules.has(activity.facultyMarks) ? 'faculty' : null,
       isModified: false,
       timestamp: new Date().toISOString(),
       facultyName: this.facultyName
@@ -362,19 +359,21 @@ class EvaluationEngine {
         return;
       }
 
-      const value = Number(input.value);
-      if (!Number.isNaN(value)) {
+      const value = input.value;
+      {
         activity.facultyMarks = value;
-        activity.isModified = value !== activity.systemSuggestedMarks;
+        activity.markOrigin = 'faculty';
+        activity.isModified = DESEvaluationRules.number(activity.systemSuggestedMarks) !== null && Number(value) !== Number(activity.systemSuggestedMarks);
         if (!activity.isModified) {
           activity.reason = '';
         }
         this.renderSummary();
-        this.renderActivityCard(activityId);
+        const hadReason = !!this.elements.activities.querySelector('[data-reason-input][data-activity-id="' + activityId + '"]');
+        if (hadReason !== activity.isModified) this.renderActivityCard(activityId);
       }
     });
 
-    this.elements.activities.addEventListener('change', (event) => {
+    this.elements.activities.addEventListener('input', (event) => {
       const reasonField = event.target.closest('[data-reason-input]');
       if (!reasonField) {
         return;
@@ -390,29 +389,23 @@ class EvaluationEngine {
       this.renderSummary();
     });
 
-    this.elements.acceptAllButton.addEventListener('click', () => {
-      this.activityState.forEach((activity) => {
-        activity.facultyMarks = activity.systemSuggestedMarks;
-        activity.isModified = false;
-        activity.reason = '';
-      });
-      this.renderActivities();
-      this.renderSummary();
-      this.showToast('All suggested marks accepted.');
-    });
-
+    this.elements.acceptAllButton.addEventListener('click', () => this.acceptSystemMarks());
     this.elements.resetButton.addEventListener('click', () => {
-      this.activityState.forEach((activity) => {
-        activity.facultyMarks = activity.systemSuggestedMarks;
-        activity.isModified = false;
-        activity.reason = '';
-      });
-      this.renderActivities();
-      this.renderSummary();
-      this.showToast('Marks reset to system suggestions.');
+      if (this.policy?.errors.length) { this.acceptSystemMarks(); return; }
+      if (window.confirm('Clear independently entered marks for eligible automated activities and accept their system suggestions?')) {
+        this.activityState.forEach(a => {
+          if (DESEvaluationRules.eligible(a) && DESEvaluationRules.number(a.systemSuggestedMarks) !== null &&
+              Number(a.systemSuggestedMarks) >= 0 && Number(a.systemSuggestedMarks) <= Number(a.maxMarks) &&
+              Number(a.maxMarks) === DESEvaluationRules.number(a.rule?.maxMarks)) {
+            a.facultyMarks = ''; a.markOrigin = null;
+          }
+        });
+        this.acceptSystemMarks();
+      }
     });
 
     this.elements.saveButton.addEventListener('click', async () => {
+      if (!window.confirm('Save this evaluation as a draft to the backend?')) return;
       try {
         await this.persistEvaluation('Draft');
         this.showToast('Evaluation saved through the repository layer.');
@@ -464,10 +457,17 @@ class EvaluationEngine {
       throw new Error('No submission is selected for evaluation.');
     }
 
+    if (this.isSaving) throw new Error('An evaluation save is already in progress.');
+    const validation = this.validateEvaluation(status !== 'Draft');
+    if (!validation.valid) throw new Error(validation.message);
     const payload = this.buildEvaluationPayload(status);
     payload.evaluatedBy = localStorage.getItem("loggedInFaculty") || "unknown";
-    const result = await DESEvaluationService.saveEvaluation(payload);
-    if (!result || result.success === false || result.ok === false || result.error) {
+    this.isSaving = true;
+    this.renderValidationReport();
+    let result;
+    try { result = await DESEvaluationService.saveEvaluation(payload); }
+    finally { this.isSaving = false; this.renderValidationReport(); }  
+    if (!result || result.persisted !== true || result.localOnly || result.success === false || result.ok === false || result.error) {
       throw new Error(result?.error || result?.message || 'Evaluation save failed.');
     }
     return result;
@@ -478,13 +478,13 @@ class EvaluationEngine {
       id: activity.id,
       activityId: activity.id,
       name: activity.title || activity.name,
-      marks: Number(activity.facultyMarks) || 0,
-      facultyMarks: Number(activity.facultyMarks) || 0,
+      marks: Number(activity.maxMarks) === 0 ? 0 : DESEvaluationRules.number(activity.facultyMarks),
+      facultyMarks: Number(activity.maxMarks) === 0 ? 0 : DESEvaluationRules.number(activity.facultyMarks),
       maxMarks: Number(activity.maxMarks) || 0,
       reason: activity.reason || ''
     }));
-    const totalMarks = facultyMarks.reduce((sum, activity) => sum + activity.marks, 0);
-    const maxMarks = facultyMarks.reduce((sum, activity) => sum + activity.maxMarks, 0);
+    const totalMarks = facultyMarks.reduce((sum, activity) => Math.round((sum + (activity.marks ?? 0))*100)/100, 0);
+    const maxMarks = facultyMarks.reduce((sum, activity) => Math.round((sum + activity.maxMarks)*100)/100, 0);
     const percentage = maxMarks ? Number(((totalMarks / maxMarks) * 100).toFixed(2)) : 0;
     const rubricScores = facultyMarks.reduce((scores, activity) => {
       scores[activity.id || activity.name] = activity.marks;
@@ -494,6 +494,7 @@ class EvaluationEngine {
 
     return {
       submissionId: this.currentEvaluation.submissionId,
+      challengeId: this.policy?.id,
       facultyId: currentUser.facultyId || '',
       authFacultyId: currentUser.facultyId || '',
       facultyName: currentUser.name || this.facultyName || 'Faculty',
@@ -603,20 +604,20 @@ class EvaluationEngine {
 
   renderActivityCardMarkup(activity) {
     const isGuest = window.DESAuth?.isGuest?.() || localStorage.getItem("loggedInFaculty")?.toLowerCase() === "guest";
-    const isCalc = this.isCalculationActivity(activity);
-    const facultyMarks = activity.facultyMarks ?? (isCalc ? activity.systemSuggestedMarks : '');
-    const systemDisplay = isCalc ? `${activity.systemSuggestedMarks}/${activity.maxMarks}` : 'N/A (Faculty Review)';
+    const isCalc = DESEvaluationRules.eligible(activity);
+    const facultyMarks = activity.facultyMarks ?? ''; 
+    const systemDisplay = isCalc ? `${activity.systemSuggestedMarks ?? 'Unavailable'}/${this.escapeHtml(activity.maxMarks ?? '')}` : 'N/A (Faculty Review)';
     const modified = activity.isModified;
     const disabledAttr = isGuest ? 'disabled readonly' : '';
     const reasonMarkup = modified ? `
       <div class="mt-3">
         <label class="form-label">Modification Reason</label>
-        <textarea class="form-control" rows="2" data-reason-input data-activity-id="${activity.id}" placeholder="Reason is required when marks are changed" ${disabledAttr}>${this.escapeHtml(activity.reason || '')}</textarea>
+        <textarea class="form-control" rows="2" data-reason-input data-activity-id="${this.escapeHtml(activity.id)}" placeholder="Reason is required when marks are changed" ${disabledAttr}>${this.escapeHtml(activity.reason || '')}</textarea>
       </div>
     ` : '';
 
     return `
-      <div class="card border-0 shadow-sm rounded-4 mb-4">
+      <div class="card border-0 shadow-sm rounded-4 mb-4" data-evaluation-activity-id="${this.escapeHtml(activity.id)}">
         <div class="card-body p-4">
           <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3 mb-3">
             <div>
@@ -632,7 +633,7 @@ class EvaluationEngine {
                 <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill px-2 py-1">${this.escapeHtml(activity.subType)}</span>
                 ${modified ? '<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-2 py-1">Modified by Faculty</span>' : ''}
               </div>
-              <p class="text-muted mb-0">Maximum Marks: ${activity.maxMarks}</p>
+              <p class="text-muted mb-0">Maximum Marks: ${this.escapeHtml(activity.maxMarks ?? '')}</p>
             </div>
             <div class="text-md-end">
               <p class="small text-muted mb-1">${isCalc ? 'Auto-Assessed Marks' : 'System Suggested Marks'}</p>
@@ -658,11 +659,11 @@ class EvaluationEngine {
           <div class="row g-4 mt-1">
             <div class="col-md-4">
               <label class="form-label">System Suggested Marks</label>
-              <input class="form-control" type="text" value="${isCalc ? activity.systemSuggestedMarks : 'N/A (Faculty Review)'}" readonly />
+              <input class="form-control" type="text" value="${this.escapeHtml(activity.systemSuggestedMarks ?? 'Not available — faculty review')}" readonly />
             </div>
             <div class="col-md-4">
               <label class="form-label">Faculty Marks</label>
-              <input class="form-control" type="number" min="0" max="${activity.maxMarks}" step="0.5" value="${facultyMarks !== null && facultyMarks !== undefined ? facultyMarks : ''}" placeholder="${isCalc ? '' : 'Enter marks'}" data-activity-input data-activity-id="${activity.id}" ${disabledAttr} />
+              <input class="form-control" type="number" min="0" max="${this.escapeHtml(activity.maxMarks ?? '')}" step="0.01" value="${this.escapeHtml(facultyMarks ?? '')}" placeholder="${isCalc ? '' : 'Enter marks'}" data-activity-input data-activity-id="${this.escapeHtml(activity.id)}" ${disabledAttr} />
               ${isCalc ? '<div class="form-text text-success small mt-1"><i class="bi bi-check2-circle me-1"></i>Auto-calculated by system</div>' : '<div class="form-text text-warning-emphasis small mt-1"><i class="bi bi-pencil-square me-1"></i>Faculty grading required</div>'}
             </div>
             <div class="col-md-4">
@@ -684,16 +685,17 @@ class EvaluationEngine {
     }
 
     const cardMarkup = this.renderActivityCardMarkup(activity);
-    const existingCard = this.elements.activities.querySelector(`[data-activity-id="${activityId}"]`);
+    const existingCard = Array.from(this.elements.activities.querySelectorAll('[data-evaluation-activity-id]')).find(card => card.dataset.evaluationActivityId === String(activityId));
     if (existingCard) {
       existingCard.outerHTML = cardMarkup;
     }
   }
 
   renderSummary() {
-    const totalMax = this.activityState.reduce((sum, activity) => sum + activity.maxMarks, 0);
-    const facultyTotal = this.activityState.reduce((sum, activity) => sum + Number(activity.facultyMarks || 0), 0);
-    const systemTotal = this.activityState.reduce((sum, activity) => sum + activity.systemSuggestedMarks, 0);
+    this.renderValidationReport();
+    const totalMax = this.activityState.reduce((sum, activity) => sum + (DESEvaluationRules.number(activity.maxMarks) ?? 0), 0);
+    const facultyTotal = this.activityState.reduce((sum, activity) => sum + (DESEvaluationRules.number(activity.facultyMarks) ?? 0), 0);
+    const systemTotal = this.activityState.reduce((sum, activity) => sum + (DESEvaluationRules.number(activity.systemSuggestedMarks) ?? 0), 0);
     const percentage = totalMax > 0 ? Math.round((facultyTotal / totalMax) * 100) : 0;
     const grade = this.calculateGrade(percentage);
 
@@ -741,35 +743,34 @@ class EvaluationEngine {
     `;
   }
 
-  validateEvaluation() {
-    const missingReasons = this.activityState.filter((activity) => activity.isModified && !activity.reason.trim());
-    if (missingReasons.length) {
-      return {
-        valid: false,
-        message: 'Please provide a modification reason for every overridden mark.'
-      };
-    }
+  validateEvaluation(complete = true) {
+    const result = DESEvaluationRules.validate(this.activityState, this.policy, complete);
+    const missingReasons = this.activityState.some(a => a.isModified && !String(a.reason || '').trim());
+    if (missingReasons) result.errors.push('Provide a reason for each overridden system mark.');
+    return { valid: result.errors.length === 0, errors: result.errors, message: result.errors.join('; ') || 'Ready to submit.' };
+  }
 
-    const invalidMarks = this.activityState.filter((activity) => Number(activity.facultyMarks) < 0 || Number(activity.facultyMarks) > activity.maxMarks);
-    if (invalidMarks.length) {
-      return {
-        valid: false,
-        message: 'Faculty marks cannot be negative or exceed the maximum marks.'
-      };
-    }
+  acceptSystemMarks() {
+    if (window.DESAuth?.isGuest?.()) return;
+    const report = DESEvaluationRules.accept(this.activityState, this.policy);
+    this.lastAcceptanceReport = report;
+    this.renderActivities();
+    this.renderSummary();
+  }
 
-    const incomplete = this.activityState.some((activity) => Number.isNaN(Number(activity.facultyMarks)) || Number(activity.facultyMarks) === 0);
-    if (incomplete) {
-      return {
-        valid: false,
-        message: 'All activities must be evaluated before submission.'
-      };
+  renderValidationReport() {
+    const validation = this.validateEvaluation();
+    const guest = window.DESAuth?.isGuest?.() || localStorage.getItem('loggedInFaculty')?.toLowerCase() === 'guest';
+    this.elements.activities.querySelectorAll('input, textarea').forEach(input => { input.disabled = guest || this.isSaving; });
+    if (this.elements.acceptAllButton) this.elements.acceptAllButton.disabled = guest || this.isSaving;
+    if (this.elements.resetButton) this.elements.resetButton.disabled = guest || this.isSaving;
+    if (this.elements.submitButton) this.elements.submitButton.disabled = guest || !validation.valid || this.isSaving;
+    if (this.elements.saveButton) this.elements.saveButton.disabled = guest || !this.validateEvaluation(false).valid || this.isSaving;
+    const report = document.getElementById('acceptanceReport');
+    if (report) {
+      report.classList.remove('d-none');
+      report.textContent = DESEvaluationRules.reportText({accepted: this.lastAcceptanceReport?.accepted || [], skipped: this.lastAcceptanceReport?.skipped || [], errors: validation.errors});
     }
-
-    return {
-      valid: true,
-      message: 'Ready to submit.'
-    };
   }
 
   calculateGrade(percentage) {

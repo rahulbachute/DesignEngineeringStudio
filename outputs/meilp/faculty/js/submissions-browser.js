@@ -3,6 +3,10 @@ class SubmissionsBrowser {
     this.data = [];
     this.filteredData = [];
     this.currentPage = 1;
+    this.evaluationSaving = false;
+    this.bulkEvaluationBusy = false;
+    this.bulkListLoading = false;
+    this.bulkPlan = null;
     this.pageSize = 10;
     this.sortField = 'submittedOn';
     this.sortDirection = 'desc';
@@ -36,7 +40,11 @@ class SubmissionsBrowser {
       launchEvaluationButton: document.getElementById('launchEvaluationButton'),
       evaluationModal: document.getElementById('evaluationWorkspaceModal'),
       evaluationContent: document.getElementById('evaluationWorkspaceContent'),
-      saveEvaluationButton: document.getElementById('saveEvaluationButton')
+      saveEvaluationButton: document.getElementById('saveEvaluationButton'),
+      bulkPreview: document.getElementById('previewBulkSystemMarks'),
+      bulkSave: document.getElementById('saveBulkSystemMarks'),
+      bulkStatus: document.getElementById('bulkSystemMarksStatus'),
+      bulkReport: document.getElementById('bulkSystemMarksReport')
     };
   }
 
@@ -74,6 +82,11 @@ class SubmissionsBrowser {
     const checkedView = document.querySelector('input[name="viewMode"]:checked');
     if (checkedView) {
       this.viewMode = checkedView.value;
+    }
+    if (new URLSearchParams(window.location.search).get('bulk') === '1') {
+      this.currentScope = 'my';
+      if (myScopeRadio) myScopeRadio.checked = true;
+      if (instScopeRadio) instScopeRadio.checked = false;
     }
     this.updateScopeUI();
     this.updateViewModeUI();
@@ -126,6 +139,8 @@ class SubmissionsBrowser {
   }
 
   async loadData() {
+    this.bulkListLoading = true;
+    this.invalidateBulkPlan();
     this.showLoadingState();
     this.lastLoadError = null;
     try {
@@ -153,10 +168,15 @@ class SubmissionsBrowser {
       this.lastLoadError = error;
       const message = error?.message || 'Failed to load submissions from server.';
       this.showError(`Error loading submissions: ${message}`);
+    } finally {
+      this.bulkListLoading = false;
+      this.updateBulkControls();
     }
   }
 
   bindEvents() {
+    this.elements.bulkPreview?.addEventListener('click', () => this.prepareBulkSystemMarks());
+    this.elements.bulkSave?.addEventListener('click', () => this.saveBulkSystemMarks());
     document.querySelectorAll('input[name="submissionScope"]').forEach((radio) => {
       radio.addEventListener('change', (event) => {
         this.currentScope = event.target.value;
@@ -260,9 +280,13 @@ class SubmissionsBrowser {
       }
 
       try {
+        if (this.evaluationSaving) return;
         this.elements.saveEvaluationButton.disabled = true;
         const payload = this.buildEvaluationPayload(this.currentDetailsRecord);
+        if (!window.confirm('Save final evaluation to the backend and mark this submission as evaluated?')) return;
         payload.evaluatedBy = localStorage.getItem("loggedInFaculty") || "unknown";
+        this.evaluationSaving = true;
+        this.updateEvaluationTotals();
         const result = await DESSubmissionService.saveEvaluation(payload);
         this.assertEvaluationSaved(result);
         this.markRecordEvaluated(payload);
@@ -275,7 +299,8 @@ class SubmissionsBrowser {
       } catch (error) {
         this.showPlaceholderNotice(error.message || 'Evaluation save failed.');
       } finally {
-        this.elements.saveEvaluationButton.disabled = false;
+        this.evaluationSaving = false;
+        this.updateEvaluationTotals();
       }
     });
 
@@ -292,6 +317,71 @@ class SubmissionsBrowser {
         this.renderPagination();
       }
     });
+  }
+
+  invalidateBulkPlan() {
+    if (this.bulkEvaluationBusy) return;
+    this.bulkPlan = null;
+    if (this.elements.bulkReport) this.elements.bulkReport.innerHTML = '';
+    this.updateBulkControls();
+  }
+
+  updateBulkControls() {
+    const guest = window.DESAuth?.isGuest?.() || localStorage.getItem('loggedInFaculty')?.toLowerCase() === 'guest';
+    const allowed = !guest && !this.bulkListLoading && !this.evaluationSaving && this.currentScope === 'my' && this.viewMode === 'details' && this.filteredData.length > 0;
+    if (this.elements.bulkPreview) this.elements.bulkPreview.disabled = !allowed || this.bulkEvaluationBusy;
+    if (this.elements.bulkSave) this.elements.bulkSave.disabled = !allowed || this.bulkEvaluationBusy || !this.bulkPlan || this.bulkPlan.completed || !!this.bulkPlan.saveError || !this.bulkPlan.items.some(i=>i.status==='Ready');
+    if (this.elements.bulkStatus && !this.bulkPlan && !this.bulkEvaluationBusy) this.elements.bulkStatus.textContent = allowed
+      ? 'Preview system marks for all '+this.filteredData.length+' filtered submissions across all pages. System suggestions are saved separately. Unreviewed Faculty Marks stay blank. Saving creates drafts only.'
+      : 'Use My Evaluation Queue and Submission-Details View, then filter the students/assignment to include.';
+  }
+
+  setBulkBusy(busy) {
+    this.bulkEvaluationBusy = busy;
+    this.elements.form?.querySelectorAll('input, select, button').forEach(e=>{e.disabled=busy;});
+    document.querySelectorAll('input[name="submissionScope"], input[name="viewMode"]').forEach(e=>{e.disabled=busy || (e.id==='scopeInstituteWide' && !this.isBulkAdmin());});
+    this.updateBulkControls();
+  }
+
+  isBulkAdmin() {
+    const user=window.DESAuth?.getCurrentUser?.()||{};
+    return window.DESAuth?.isAdmin?.() || window.DESAuth?.hasPermission?.('ADMIN') || String(user.role).toUpperCase()==='ADMIN';
+  }
+
+  renderBulkReport(plan) {
+    const saved=plan.items.filter(i=>i.status==='Saved draft').length;
+    const ready=plan.items.filter(i=>i.status==='Ready').length;
+    const failed=plan.items.filter(i=>i.status==='Failed').length;
+    if (this.elements.bulkStatus) this.elements.bulkStatus.textContent = plan.items.length+' submissions; '+ready+' ready; '+saved+' saved drafts; '+failed+' failed. '+(plan.saveError||'No student is finalized by this action.');
+    if (this.elements.bulkReport) this.elements.bulkReport.innerHTML = '<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Student</th><th>Assignment</th><th>Result</th><th>System suggestions / pending / errors</th></tr></thead><tbody>'+plan.items.map(item=>'<tr><td>'+this.escapeHtml(item.student)+'</td><td>'+this.escapeHtml(item.assignment)+'</td><td>'+this.escapeHtml(item.status)+'</td><td>'+this.escapeHtml(item.accepted.length+' suggestions; '+item.skipped.length+' skipped; '+(item.errors.join('; ') || item.summary || ''))+'<details><summary>Activity details</summary><div style="white-space:pre-line">'+this.escapeHtml([...(item.notices||[]),...item.accepted,...item.skipped,...item.errors].join('\n'))+'</div></details></td></tr>').join('')+'</tbody></table></div>';
+    this.updateBulkControls();
+  }
+
+  async prepareBulkSystemMarks() {
+    if (this.bulkEvaluationBusy || this.bulkListLoading || this.evaluationSaving || this.currentScope !== 'my' || this.viewMode !== 'details' || window.DESAuth?.isGuest?.() || localStorage.getItem('loggedInFaculty')?.toLowerCase()==='guest') return;
+    const records=this.filteredData.slice();
+    const user=window.DESAuth?.getCurrentUser?.()||{};
+    this.bulkService ||= new DESBulkEvaluation(DESSubmissionService);
+    this.bulkPlan=null;this.setBulkBusy(true);
+    if(this.elements.bulkStatus) this.elements.bulkStatus.textContent='Preparing '+records.length+' submissions. No marks have been saved.';
+    try {
+      this.bulkPlan=await this.bulkService.prepare(records,user,record=>this.canEvaluateRecord(record),plan=>this.renderBulkReport(plan));
+      this.renderBulkReport(this.bulkPlan);
+    } catch(error) {this.showPlaceholderNotice(error.message||'Bulk preview failed.');}
+    finally {this.setBulkBusy(false);}
+  }
+
+  async saveBulkSystemMarks() {
+    if(this.bulkEvaluationBusy||!this.bulkPlan||this.currentScope!=='my'||this.viewMode!=='details'||window.DESAuth?.isGuest?.()||localStorage.getItem('loggedInFaculty')?.toLowerCase()==='guest') return;
+    const count=this.bulkPlan.items.filter(i=>i.status==='Ready').length;
+    if(!count||this.bulkPlan.completed||this.bulkPlan.saveError) return;
+    if(!window.confirm('Save system suggestions separately as drafts for '+count+' submissions? Faculty marks will not be filled or approved. Existing faculty marks are preserved. Students will not be finalized.')) return;
+    this.setBulkBusy(true);
+    try {
+      await this.bulkService.save(this.bulkPlan,window.DESAuth?.getCurrentUser?.()||{},plan=>this.renderBulkReport(plan));
+      this.renderBulkReport(this.bulkPlan);
+    } catch(error) {this.showPlaceholderNotice(error.message||'Bulk saving failed.');}
+    finally {this.setBulkBusy(false);}
   }
 
   exportReportCsv() {
@@ -461,6 +551,7 @@ class SubmissionsBrowser {
   }
 
   applyFilters() {
+    this.invalidateBulkPlan();
     const filters = this.getFilters();
 
     const matchingRecords = this.data.filter((item) => {
@@ -553,6 +644,7 @@ class SubmissionsBrowser {
     this.renderSummary();
     this.renderTable();
     this.renderPagination();
+    this.updateBulkControls();
   }
 
   getFilters() {
@@ -920,6 +1012,7 @@ class SubmissionsBrowser {
       return;
     }
 
+    if (this.bulkEvaluationBusy) { this.showPlaceholderNotice('Wait for the bulk operation to finish.'); return; }
     this.currentDetailsRecord = record;
     this.elements.evaluationContent.innerHTML = this.loadingMarkup('Loading full submission for evaluation...');
     const modal = new bootstrap.Modal(this.elements.evaluationModal);
@@ -932,13 +1025,18 @@ class SubmissionsBrowser {
 
     const detailRecord = await this.loadSubmissionDetail(record);
     this.currentDetailsRecord = detailRecord;
+    this.evaluationPolicy = DESEvaluationRules.policy(detailRecord);
     const activities = this.evaluationActivities(detailRecord);
+    this.evaluationState = activities;
+    this.lastAcceptanceReport = null;
     const maxMarks = this.totalMaxMarks(activities);
     const suggestedMarks = this.totalSuggestedMarks(activities);
-    const initialTotal = this.hasFacultyMarks(activities) ? this.totalFacultyMarks(activities) : suggestedMarks;
+    const initialTotal = this.totalFacultyMarks(activities);
     const disabledAttr = isGuest ? 'disabled readonly' : '';
 
     this.elements.evaluationContent.innerHTML = `
+      <div class="mb-3"><button type="button" class="btn btn-outline-primary" data-accept-system ${disabledAttr}>Accept All System-Generated Marks</button></div>
+      <div class="alert alert-info" data-acceptance-report role="status" style="white-space: pre-line"></div>
       <div class="row g-4" data-evaluation-form>
         ${isGuest ? `
         <div class="col-12">
@@ -965,7 +1063,7 @@ class SubmissionsBrowser {
           <div class="border rounded-4 p-3 bg-white">
             <ul class="list-group list-group-flush">
               ${activities.map((activity) => {
-                const isCalc = this.isCalculationActivity(activity);
+                const isCalc = DESEvaluationRules.eligible(activity);
                 return `
                 <li class="list-group-item px-0 py-3 border-bottom">
                   <div class="row g-3 align-items-start">
@@ -987,9 +1085,9 @@ class SubmissionsBrowser {
                       <input class="form-control form-control-sm text-center" type="text" value="${Number(activity.maxMarks) || 0}" readonly />
                     </div>
                     <div class="col-sm-4 col-lg-3">
-                      <label class="form-label small text-muted mb-1">${isCalc ? 'Auto / Faculty Marks' : 'Faculty Marks'}</label>
-                      <input class="form-control form-control-sm text-center fw-bold" type="number" min="0" max="${Number(activity.maxMarks) || 0}" step="0.5" value="${this.initialFacultyMarks(activity)}" placeholder="${isCalc ? '' : 'Enter marks'}" data-eval-marks data-activity-id="${this.escapeHtml(activity.id)}" ${disabledAttr} />
-                      ${isCalc ? '<div class="form-text text-success small mt-1"><i class="bi bi-check2-circle me-1"></i>Auto-calculated by system</div>' : '<div class="form-text text-warning-emphasis small mt-1"><i class="bi bi-pencil-square me-1"></i>Faculty grading required</div>'}
+                      <label class="form-label small text-muted mb-1">Faculty Marks</label>
+                      <input class="form-control form-control-sm text-center fw-bold" type="number" min="0" max="${Number(activity.maxMarks) || 0}" step="0.01" value="${this.initialFacultyMarks(activity)}" placeholder="${isCalc ? '' : 'Enter marks'}" data-eval-marks data-activity-id="${this.escapeHtml(activity.id)}" ${disabledAttr} />
+                      <div class="form-text small mt-1">System suggestion: ${this.escapeHtml(activity.systemSuggestedMarks ?? 'Not available')} · Faculty review required before approval</div>
                     </div>
                   </div>
                 </li>
@@ -1017,20 +1115,36 @@ class SubmissionsBrowser {
       </div>
     `;
     this.elements.evaluationContent.querySelectorAll('[data-eval-marks]').forEach((input) => {
-      input.addEventListener('input', () => this.updateEvaluationTotals());
+      input.addEventListener('input', () => {
+        const activity = this.evaluationState.find(a => String(a.id) === input.dataset.activityId);
+        if (activity) { activity.facultyMarks = input.value; activity.markOrigin = 'faculty'; }
+        this.updateEvaluationTotals();
+      });
+    });
+    this.elements.evaluationContent.querySelector('[data-accept-system]')?.addEventListener('click', () => {
+      if (isGuest) return;
+      this.lastAcceptanceReport = DESEvaluationRules.accept(this.evaluationState, this.evaluationPolicy);
+      this.elements.evaluationContent.querySelectorAll('[data-eval-marks]').forEach(input => {
+        const activity = this.evaluationState.find(a => String(a.id) === input.dataset.activityId);
+        if (activity) input.value = activity.facultyMarks ?? '';
+      });
+      this.updateEvaluationTotals();
     });
     this.updateEvaluationTotals();
   }
 
   buildEvaluationPayload(record) {
-    const activities = this.evaluationActivities(record);
+    const activities = this.evaluationState || this.evaluationActivities(record);
+    const validation = DESEvaluationRules.validate(activities, this.evaluationPolicy);
+    if (!validation.valid) throw new Error(validation.message);
     const marksInputs = Array.from(this.elements.evaluationContent.querySelectorAll('[data-eval-marks]'));
     const remarks = this.elements.evaluationContent.querySelector('[data-eval-remarks]')?.value || '';
     const rubricScores = {};
     const evaluatedActivities = activities.map((activity) => {
       const input = marksInputs.find((item) => item.dataset.activityId === String(activity.id));
       const maxMarks = Number(activity.maxMarks) || 0;
-      const marks = Number(input?.value || 0);
+      const marks = maxMarks === 0 ? 0 : DESEvaluationRules.number(input?.value);
+      if (marks === null) throw new Error('Faculty marks are missing or invalid.');
       if (marks < 0 || marks > maxMarks) {
         throw new Error(`Marks for ${activity.name} must be between 0 and ${maxMarks}.`);
       }
@@ -1043,7 +1157,7 @@ class SubmissionsBrowser {
         facultyMarks: marks
       };
     });
-    const totalMarks = marksInputs.reduce((sum, input) => sum + Number(input.value || 0), 0);
+    const totalMarks = marksInputs.reduce((sum, input) => Math.round((sum + Number(input.value || 0))*100)/100, 0);
     const maxMarks = this.totalMaxMarks(activities);
     const percentage = maxMarks ? Number(((totalMarks / maxMarks) * 100).toFixed(2)) : 0;
     const currentUser = (window.DESAuth && window.DESAuth.getCurrentUser && window.DESAuth.getCurrentUser()) || {};
@@ -1051,6 +1165,7 @@ class SubmissionsBrowser {
 
     return {
       submissionId: record.id,
+      challengeId: this.evaluationPolicy?.id,
       facultyId: facultyId,
       authFacultyId: facultyId,
       facultyName: currentUser.name || 'Faculty',
@@ -1074,6 +1189,14 @@ class SubmissionsBrowser {
   }
 
   updateEvaluationTotals() {
+    if (this.evaluationState) {
+      const validation = DESEvaluationRules.validate(this.evaluationState, this.evaluationPolicy);
+      const guest = window.DESAuth?.isGuest?.() || localStorage.getItem('loggedInFaculty')?.toLowerCase() === 'guest';
+      this.elements.saveEvaluationButton.disabled = guest || !validation.valid || this.evaluationSaving;
+      this.elements.evaluationContent.querySelectorAll('[data-eval-marks], [data-eval-remarks], [data-accept-system]').forEach(input => { input.disabled = guest || this.evaluationSaving; });
+      const report = this.elements.evaluationContent.querySelector('[data-acceptance-report]');
+      if (report) report.textContent = DESEvaluationRules.reportText({accepted:this.lastAcceptanceReport?.accepted||[],skipped:this.lastAcceptanceReport?.skipped||[],errors:validation.errors});
+    }
     const total = Array.from(this.elements.evaluationContent.querySelectorAll('[data-eval-marks]'))
       .reduce((sum, input) => sum + Number(input.value || 0), 0);
     const totalInput = this.elements.evaluationContent.querySelector('[data-eval-total]');
@@ -1083,7 +1206,7 @@ class SubmissionsBrowser {
   }
 
   assertEvaluationSaved(result) {
-    if (!result || result.success === false || result.ok === false || result.error) {
+    if (!result || result.persisted !== true || result.localOnly || result.success === false || result.ok === false || result.error) {
       throw new Error(result?.error || result?.message || 'Evaluation save failed.');
     }
   }
@@ -1180,7 +1303,7 @@ class SubmissionsBrowser {
             <strong>${this.escapeHtml(activity.name)}</strong>
             <p class="mb-0 text-muted">${this.escapeHtml(activity.response)}</p>
           </div>
-          <span class="badge bg-light text-dark">${Number(activity.maxMarks) || 0} marks</span>
+          <span class="badge bg-light text-dark">Max: ${this.formatMarks(activity.maxMarks)}<br>System: ${activity.systemSuggestedMarks !== null && activity.systemSuggestedMarks !== undefined ? this.formatMarks(activity.systemSuggestedMarks) : 'Not assessed'}</span>
         </div>
       </li>
     `).join('');
@@ -1334,32 +1457,7 @@ class SubmissionsBrowser {
       return [];
     }
 
-    const savedEvaluation = record.rawPayload?.facultyEvaluation || {};
-    const savedRubricScores = savedEvaluation.rubricScores || {};
-    const rawActivityResponses = record.rawPayload?.submissionData?.activityResponses;
-    const sourceActivities = Array.isArray(record.activities) && record.activities.length
-      ? record.activities
-      : this.activitiesFromRawPayload(rawActivityResponses);
-    
-    let activities = Array.isArray(sourceActivities) ? sourceActivities.filter((activity) => activity.name || activity.response || Number(activity.maxMarks)) : [];
-
-    const isGenericPlaceholder = activities.length > 0 && activities.every((a) => a.id === 'act-1' || a.id === 'act-2' || a.name === 'Real-World Component Data' || a.name === 'Engineering Calculation Engine');
-    const expectedCount = this.getExpectedActivityCount(record.challenge || record.challengeId);
-
-    if (!activities.length || activities.length < expectedCount || isGenericPlaceholder) {
-      activities = this.getStepwiseActivitiesForChallenge(record.challenge || record.challengeId, record);
-    }
-
-    return activities.map((activity, index) => {
-      const isCalc = this.isCalculationActivity(activity);
-      return {
-        ...activity,
-        id: activity.id || `activity-${index + 1}`,
-        maxMarks: Number(activity.maxMarks) || 2,
-        systemSuggestedMarks: isCalc ? (Number(activity.systemSuggestedMarks) || Number(activity.maxMarks) || 2) : 'N/A (Faculty Review)',
-        facultyMarks: activity.facultyMarks ?? savedRubricScores[activity.id] ?? savedRubricScores[activity.name] ?? (isCalc ? (Number(activity.systemSuggestedMarks) || Number(activity.maxMarks) || 2) : null)
-      };
-    });
+    return DESEvaluationRules.normalize(record);
   }
 
   renderEvaluationPanel() {
@@ -1410,8 +1508,9 @@ class SubmissionsBrowser {
       id: activity.id || activity.activityId || `activity-${index + 1}`,
       name: activity.title || activity.name || activity.activityTitle || activity.activityId || `Activity ${index + 1}`,
       response: this.summarizeActivityResponse(activity.response ?? activity.studentResponse ?? activity.answers ?? activity),
-      maxMarks: Number(activity.maxMarks ?? activity.marks ?? activity.cceMarks ?? 0),
-      systemSuggestedMarks: Number(activity.systemSuggestedMarks ?? activity.suggestedMarks ?? 0),
+      ...activity,
+      maxMarks: activity.maxMarks ?? activity.cceMarks ?? null,
+      systemSuggestedMarks: activity.systemSuggestedMarks ?? activity.suggestedMarks ?? null,
       facultyMarks: activity.facultyMarks ?? null
     }));
   }
@@ -1480,12 +1579,12 @@ class SubmissionsBrowser {
   }
 
   totalMaxMarks(activities = []) {
-    return activities.reduce((total, activity) => total + (Number(activity.maxMarks) || 0), 0);
+    return activities.reduce((total, activity) => Math.round((total + (Number(activity.maxMarks) || 0))*100)/100, 0);
   }
 
   totalSuggestedMarks(activities = []) {
     return activities.reduce((total, activity) => {
-      const isCalc = this.isCalculationActivity(activity);
+      const isCalc = DESEvaluationRules.eligible(activity);
       return total + (isCalc ? (Number(activity.systemSuggestedMarks) || 0) : 0);
     }, 0);
   }
@@ -1507,8 +1606,7 @@ class SubmissionsBrowser {
     if (savedMarks !== null && savedMarks !== undefined && savedMarks !== '') {
       return Number(savedMarks);
     }
-    const isCalc = this.isCalculationActivity(activity);
-    return isCalc ? (Number(activity.systemSuggestedMarks) || 0) : '';
+    return ''; 
   }
 
   formatMarks(value) {
@@ -1550,6 +1648,10 @@ class SubmissionsBrowser {
   async loadSubmissionDetail(record) {
     if (!record) return record;
 
+    if (this.currentScope === 'my' && DESSubmissionService.getSubmissionForEvaluation) {
+      try { return await DESSubmissionService.getSubmissionForEvaluation(record.id); }
+      catch (error) { this.showPlaceholderNotice(error.message || 'Unable to reassess recorded responses.'); return record; }
+    }
     if (Array.isArray(record.activities) && record.activities.length > 0) {
       return record;
     }

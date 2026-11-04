@@ -25,6 +25,7 @@ const configContent = fs.readFileSync('Google Script/01_Config.gs', 'utf8');
 const registryContent = fs.readFileSync('Google Script/04_Registry.gs', 'utf8');
 const submissionContent = fs.readFileSync('Google Script/03_Submission.gs', 'utf8');
 const facultyContent = fs.readFileSync('Google Script/03_Faculty.gs', 'utf8');
+const policyContent = fs.readFileSync('Google Script/05_EvaluationPolicies.gs', 'utf8');
 
 const nowEpoch = Date.now();
 const oneDayMs = 86400000;
@@ -103,6 +104,7 @@ const mockEnv = {
     },
     LOCK_TIMEOUT_MS: 30000
   },
+  SpreadsheetApp: { flush() {} },
   LockService: {
     getScriptLock: () => ({
       waitLock: () => true,
@@ -124,8 +126,8 @@ const mockEnv = {
       getRange: (r, c, numRows, numCols) => ({
         setValue: (v) => { if (rows[r - 1]) rows[r - 1][c - 1] = v; },
         getValue: () => rows[r - 1] ? rows[r - 1][c - 1] : null,
-        getValues: () => [rows[0]],
-        setValues: (arr) => {}
+        getValues: () => Array.from({ length: numRows || 1 }, (_,i) => Array.from({ length: numCols || 1 }, (_,j) => rows[r+i-1]?.[c+j-1] ?? '')),
+        setValues: (arr) => { arr.forEach((values,i) => { rows[r+i-1] ??= []; values.forEach((v,j) => { rows[r+i-1][c+j-1] = v; }); }); }
       }),
       appendRow: (row) => rows.push(row)
     };
@@ -151,6 +153,7 @@ const mockEnv = {
     return false;
   },
   calculateAttemptNumber: () => 1,
+  safeJsonParse: (text, fallback) => { try { return JSON.parse(text); } catch { return fallback; } },
   safeJsonStringify: (obj) => JSON.stringify(obj),
   getUserEmail: () => "student@test.com",
   updateAnalyticsSafe_: () => {},
@@ -179,6 +182,7 @@ const scriptFunc = new Function('env', `
   with(env) {
     ${registryContent}
     ${submissionContent}
+    ${policyContent}
     ${facultyContent}
     return {
       createAssignmentFacultySelection,
@@ -605,9 +609,12 @@ async function runPhase1SecurityTests() {
       authFacultyId: "FAC001",
       facultyName: "Dr. Rahul Bachute",
       facultyEmail: "rahul.bachute@dypic.in",
-      evaluation: "Good work",
-      totalMarks: 10,
-      maxMarks: 12
+      evaluation: {
+        activities: Object.entries(JSON.parse(policyContent.slice(policyContent.indexOf('=') + 1).trim().replace(/;$/, ''))['elevator'].activities)
+          .map(([id, rule]) => ({ id, maxMarks: rule.maxMarks, facultyMarks: rule.maxMarks })),
+        totalMarks: 24, maxMarks: 24, percentage: 100
+      },
+      totalMarks: 24, maxMarks: 24, percentage: 100, status: 'Evaluated'
     });
     assert.strictEqual(res.success, true);
     assert.strictEqual(res.statusCode, 200);

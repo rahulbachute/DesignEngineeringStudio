@@ -40,7 +40,7 @@ class SubmissionEngine {
     const student = this.normalizeStudentInformation(state.student || {});
     const settings = state.settings || {};
     const attemptMode = student.attemptMode || settings.attemptMode || "individual";
-    const activityResponses = this.buildActivityResponses(learningSteps, state.responses || {}, rubric);
+    const activityResponses = this.buildActivityResponses(learningSteps, state.responses || {}, rubric, context.content || {});
     const completedActivities = completedTaskIds.filter((id) => learningStepIds.has(id)).length;
     const totalActivities = learningSteps.length;
     const completionPercent = totalActivities ? Math.round((completedActivities / totalActivities) * 100) : 0;
@@ -336,15 +336,20 @@ class SubmissionEngine {
   /**
    * Builds activity response rows for Google Sheets.
    */
-  buildActivityResponses(steps, responses, rubric) {
+  buildActivityResponses(steps, responses, rubric, content = {}) {
     const criteriaById = this.criteriaByActivityId(rubric);
     return steps.map((step) => {
       const criteria = criteriaById[step.id] || {};
+      const core = window.MEILP.AssessmentCore;
+      const definition = core ? core.compile(step, criteria.criteria ? criteria : null, content.activities?.[step.id] || {}) : null;
+      const assessment = core ? core.assess(definition, responses[step.id]) : { marks: null, status: 'not-assessed', reason: 'Assessment module unavailable' };
       return {
         activityId: step.id,
         title: criteria.title || step.title || "",
         component: step.component || "",
         cceMarks: criteria.marks !== undefined ? criteria.marks : (step.marks !== undefined ? step.marks : 0),
+        systemSuggestedMarks: assessment.marks,
+        systemAssessment: assessment,
         coMapping: criteria.coMapping || step.co || "",
         poMapping: Array.isArray(criteria.poMapping) ? criteria.poMapping : (step.po || []),
         psoMapping: Array.isArray(criteria.psoMapping) ? criteria.psoMapping : (step.pso || []),
@@ -704,10 +709,14 @@ class SubmissionEngine {
    * Builds a lookup table for rubric criteria.
    */
   criteriaByActivityId(rubric) {
-    return (Array.isArray(rubric.criteria) ? rubric.criteria : []).reduce((result, criteria) => {
-      if (criteria && criteria.activityId) {
-        result[criteria.activityId] = criteria;
-      }
+    if (window.MEILP.AssessmentCore) return window.MEILP.AssessmentCore.groups(rubric);
+    return (Array.isArray(rubric.criteria) ? rubric.criteria : []).reduce((result, criterion) => {
+      const id = criterion.stepId || criterion.activityId || criterion.id;
+      if (!id) return result;
+      result[id] ||= { ...criterion, marks: 0, criteria: [] };
+      const marks = Number(criterion.marks ?? criterion.maxMarks);
+      result[id].marks = Math.round((result[id].marks + marks) * 100) / 100;
+      result[id].criteria.push(criterion);
       return result;
     }, {});
   }

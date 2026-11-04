@@ -67,7 +67,8 @@
                 <p class="text-muted mb-0">Professional evaluation workspace for engineering education assessment.</p>
               </div>
               <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-outline-primary" type="button" id="acceptAllSuggestedMarks">Accept All Suggested Marks</button>
+                <a class="btn btn-outline-primary" href="submissions.html?bulk=1#bulkSystemMarks">Prepare System Marks for All Students…</a>
+                <button class="btn btn-outline-primary" type="button" id="acceptAllSuggestedMarks">Accept All System-Generated Marks</button>
                 <button class="btn btn-outline-secondary" type="button" id="resetToSystemMarks">Reset to System Marks</button>
                 <button class="btn btn-primary" type="button" id="saveEvaluation">Save Evaluation</button>
                 <button class="btn btn-success" type="button" id="submitFinalEvaluation">Submit Final Evaluation</button>
@@ -79,6 +80,7 @@
               <div class="card-body p-4" id="evaluationHeader"></div>
             </div>
 
+            <div class="alert alert-info d-none" id="acceptanceReport" role="status" style="white-space: pre-line"></div>
             <div class="mb-4" id="summaryPanel"></div>
             <div id="activityEvaluationList"></div>
           </div>
@@ -106,6 +108,8 @@
     <script src="js/data/config.js"></script>
     <script src="js/data/auth-service.js"></script>
     <script src="js/data/auth.js?v=20260831c"></script>
+    <script src="js/evaluation-policies.js"></script>
+    <script src="js/evaluation-rules.js"></script>
     <script src="js/data/models.js"></script>
     <script src="js/data/cache-service.js"></script>
     <script src="js/data/cache.js"></script>

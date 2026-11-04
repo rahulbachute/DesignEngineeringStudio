@@ -25,12 +25,13 @@ class ChallengeModel {
 
 class ActivityModel {
   constructor(data = {}) {
-    this.id = data.id || '';
-    this.name = data.name || '';
+    Object.assign(this, data);
+    this.id = data.id || data.activityId || '';
+    this.name = data.name || data.title || '';
     this.response = data.response || '';
-    this.maxMarks = data.maxMarks || 0;
+    this.maxMarks = data.maxMarks ?? null;
     this.category = data.category || 'Objective';
-    this.systemSuggestedMarks = data.systemSuggestedMarks || 0;
+    this.systemSuggestedMarks = data.systemSuggestedMarks ?? null;
     this.correctAnswer = data.correctAnswer || '';
   }
 }

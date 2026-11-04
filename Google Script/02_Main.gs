@@ -158,6 +158,9 @@ function routeAction(action, payload) {
     case "getInstituteSubmissionDetail":
       return getInstituteSubmissionDetail(payload);
 
+    case "evaluationCapabilities":
+      return response({ bulkDraftProtocol: typeof DESAssessmentCore !== "undefined" ? "protected-draft-v2" : null, verifiedPersistence: true, activityMarksReadback: true, separateSystemMarks: true, assessmentVersion: typeof DESAssessmentCore !== "undefined" ? "response-assessment-v2" : null });
+
     case "saveEvaluation":
     case "evaluate":
       return saveEvaluation(payload);

@@ -1094,7 +1094,7 @@ function getSubmission(payload) {
       }
     }
 
-    return response(fullPayload);
+    return response(attachSavedEvaluation_(reassessSubmissionPayload_(fullPayload), submissionId));
 
   } catch (error) {
     logError(error, payload);

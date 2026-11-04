@@ -12,6 +12,14 @@
       return global.DESRepository?.getSubmission?.(id) || null;
     },
 
+    async getSubmissionForEvaluation(id) {
+      return global.DESRepository.getSubmissionForEvaluation(id);
+    },
+
+    async getEvaluationCapabilities() {
+      return global.DESRepository.getEvaluationCapabilities();
+    },
+
     async getInstituteSubmissionDetail(id) {
       return global.DESRepository?.getInstituteSubmissionDetail?.(id) || null;
     },
